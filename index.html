@@ -90,12 +90,20 @@
         }
         .card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,255,136,0.1); }
 
-        /* YENI: IMAGEMASTER KARTINA ÖZEL ARKA PLAN (DÜZELTILDI) */
+        /* IMAGEMASTER KARTINA ÖZEL ARKA PLAN */
         .card-imagemaster {
             background: linear-gradient(to bottom, rgba(10,10,10,0.8) 0%, rgba(10,10,10,1) 100%), 
                         url('https://public-files.gumroad.com/9rwf7qjszhd5bgw8man7pbm6n3y1');
             background-size: cover;
             background-position: top;
+        }
+
+        /* YENI: SEO KARTINA ÖZEL ARKA PLAN */
+        .card-seo {
+            background: linear-gradient(to bottom, rgba(10,10,10,0.8) 0%, rgba(10,10,10,1) 100%), 
+                        url('https://public-files.gumroad.com/ko866iwsw3keew2mvigpxxnwolks');
+            background-size: cover;
+            background-position: center;
         }
 
         .card h3 { margin: 0; font-size: 1.5rem; color: #fff; font-weight: 700; position: relative; z-index: 2; }
@@ -155,7 +163,7 @@
                 <div class="card-footer"><span class="price">$3</span><div class="go-btn">→</div></div>
             </a>
 
-            <a href="https://studioers.gumroad.com/l/aslyqy" class="card">
+            <a href="https://studioers.gumroad.com/l/aslyqy" class="card card-seo">
                 <div>
                     <h3>Studioers AI: SEO</h3>
                     <p>Automated SEO auditing and professional report generation for business growth.</p>
