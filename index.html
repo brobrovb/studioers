@@ -88,10 +88,10 @@
             justify-content: space-between; min-height: 300px;
             position: relative; overflow: hidden;
         }
-        .card:hover { transform: translateY(-8px); border-color: var(--accent); }
+        .card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,255,136,0.1); }
 
-        /* SEO KARTINA ÖZEL ARKA PLAN */
-        .card-seo {
+        /* YENI: IMAGEMASTER KARTINA ÖZEL ARKA PLAN (DÜZELTILDI) */
+        .card-imagemaster {
             background: linear-gradient(to bottom, rgba(10,10,10,0.8) 0%, rgba(10,10,10,1) 100%), 
                         url('https://public-files.gumroad.com/9rwf7qjszhd5bgw8man7pbm6n3y1');
             background-size: cover;
@@ -147,20 +147,20 @@
                 <div class="card-footer"><span class="price">$1+</span><div class="go-btn">→</div></div>
             </a>
 
-            <a href="https://studioers.gumroad.com/l/aslyqy" class="card card-seo">
-                <div>
-                    <h3>Studioers AI: SEO</h3>
-                    <p>Automated SEO auditing and professional report generation for business growth.</p>
-                </div>
-                <div class="card-footer"><span class="price">$2.99</span><div class="go-btn">→</div></div>
-            </a>
-
-            <a href="https://studioers.gumroad.com/l/ipnot" class="card">
+            <a href="https://studioers.gumroad.com/l/ipnot" class="card card-imagemaster">
                 <div>
                     <h3>ImageMaster Pro</h3>
                     <p>Advanced bulk watermark and smart resizing suite for professional editors.</p>
                 </div>
                 <div class="card-footer"><span class="price">$3</span><div class="go-btn">→</div></div>
+            </a>
+
+            <a href="https://studioers.gumroad.com/l/aslyqy" class="card">
+                <div>
+                    <h3>Studioers AI: SEO</h3>
+                    <p>Automated SEO auditing and professional report generation for business growth.</p>
+                </div>
+                <div class="card-footer"><span class="price">$2.99</span><div class="go-btn">→</div></div>
             </a>
         </div>
 
