@@ -24,6 +24,10 @@
 
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
         
+        /* MAVİ YAZILARI ENGELLEME */
+        a { text-decoration: none; color: inherit; }
+        a:visited { color: inherit; }
+
         .hero-section {
             position: relative; width: 100%; min-height: 80vh; display: flex; flex-direction: column;
             background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,1) 100%), 
@@ -31,7 +35,7 @@
             background-size: cover; background-position: center; border-bottom: 1px solid var(--border);
         }
         .nav-container { max-width: 1000px; width: 100%; margin: 0 auto; padding: 30px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .logo-wrapper { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-wrapper { display: flex; align-items: center; gap: 12px; }
         .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent), #00aaff); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #000; font-size: 20px; box-shadow: 0 0 20px rgba(0,255,136,0.3); }
         .logo-text { font-size: 22px; font-weight: 800; letter-spacing: -1px; color: #fff; text-transform: uppercase; }
 
@@ -47,11 +51,11 @@
         .container { max-width: 1000px; margin: 0 auto; padding: 80px 20px; }
         .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 30px; display: block; }
 
-        /* FEATURED APP SECTION (PLAY STORE) */
+        /* STORE BUTTONS */
         .apps-showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 80px; }
         .store-button { 
             background: #111; border: 1px solid var(--border); border-radius: 20px; padding: 20px; 
-            display: flex; align-items: center; gap: 15px; text-decoration: none; transition: 0.3s;
+            display: flex; align-items: center; gap: 15px; transition: 0.3s;
         }
         .store-button:hover { border-color: var(--accent); background: #161616; transform: translateY(-3px); }
         .store-icon { width: 45px; height: 45px; object-fit: contain; }
@@ -59,24 +63,27 @@
         .store-text span:first-child { color: #888; font-size: 11px; font-weight: 600; text-transform: uppercase; }
         .store-text span:last-child { color: #fff; font-size: 18px; font-weight: 800; }
 
-        /* CARDS & GRID */
+        /* FEATURED */
         .featured-card {
             background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 100%), 
                         url('https://public-files.gumroad.com/7nian0p6ovu8w2cg9czevc53q7ae');
             background-size: cover; background-position: center; border-radius: 24px; border: 1px solid var(--accent);
-            padding: 50px; min-height: 400px; display: flex; flex-direction: column; justify-content: flex-end; margin-bottom: 50px; text-decoration: none; transition: 0.3s;
+            padding: 50px; min-height: 400px; display: flex; flex-direction: column; justify-content: flex-end; margin-bottom: 50px; transition: 0.3s;
         }
         .featured-card h2 { font-size: 2.5rem; font-weight: 800; margin: 0; color: #fff; }
         .featured-btn { background: #fff; color: #000; padding: 16px 32px; border-radius: 12px; font-weight: 800; display: inline-block; margin-top: 20px; }
 
+        /* GRID */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 80px; }
         .card { 
             background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 32px; 
-            transition: all 0.4s; text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; 
+            transition: all 0.4s; display: flex; flex-direction: column; justify-content: space-between; 
             min-height: 300px; position: relative; overflow: hidden;
         }
         .card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+        .card h3 { color: #fff !important; }
+        .card p { color: #aaa !important; }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; color: #fff !important; }
 
         /* AI LAB */
         .lab-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 40px; margin-bottom: 80px; position: relative; }
@@ -129,7 +136,7 @@
             </a>
         </div>
 
-        <section aria-label="Featured Product">
+        <section>
             <a href="https://studioers.gumroad.com/l/bakyau" class="featured-card">
                 <h2>Interactive TikTok Trivia Engine</h2>
                 <p>Monetize your live streams with our advanced interactive overlay system.</p>
