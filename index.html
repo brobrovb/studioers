@@ -7,11 +7,13 @@
     <meta name="google-site-verification" content="3v-dwgR_03wM3wWci6lWpWoqjjbpuBLlp27pDnS8hbY" />
 
     <title>STUDIOERS | Advanced AI Solutions & Android Development</title>
-    <meta name="description" content="STUDIOERS provides elite AI tools, crypto tracking software, and high-performance Android applications. Explore our digital ecosystem for professional growth.">
-    <meta name="keywords" content="AI tools, crypto whale tracking, Android app development, SEO auditing, digital products, Studioers">
+    <meta name="description" content="STUDIOERS provides elite AI tools, crypto tracking software, and high-performance Android applications.">
+    <meta name="keywords" content="AI tools, crypto whale tracking, Android app development, Gemini 2.5 Flash, Studioers">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
         :root { --accent: #00ff88; --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; }
         * { box-sizing: border-box; }
@@ -40,7 +42,7 @@
         .container { max-width: 1000px; margin: 0 auto; padding: 80px 20px; }
         .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 30px; display: block; }
 
-        /* FEATURED & CARDS */
+        /* FEATURED & GRID */
         .featured-card {
             background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 100%), 
                         url('https://public-files.gumroad.com/7nian0p6ovu8w2cg9czevc53q7ae');
@@ -64,8 +66,21 @@
         .card p { color: #aaa; font-size: 1rem; margin: 15px 0 25px; position: relative; z-index: 2; }
         .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; position: relative; z-index: 2; }
 
-        /* SEO CONTENT SECTION */
-        .about-section { padding: 60px 0; border-top: 1px solid var(--border); margin-top: 40px; }
+        /* STUDIOERS AI LAB SECTION */
+        .lab-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 40px; margin-bottom: 50px; transition: 0.3s; }
+        .lab-card:hover { border-color: var(--accent); }
+        .lab-header h3 { font-size: 1.8rem; margin: 0; color: #fff; }
+        .lab-header p { color: #888; margin: 10px 0 30px; }
+        .input-group { display: flex; gap: 10px; }
+        input[type="text"] { flex: 1; background: #111; border: 1px solid var(--border); padding: 15px 20px; border-radius: 12px; color: #fff; outline: none; }
+        input[type="text"]:focus { border-color: var(--accent); }
+        #genBtn { background: var(--accent); color: #000; border: none; padding: 0 30px; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        #genBtn:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(0,255,136,0.3); }
+        .result-box { margin-top: 30px; background: #000; border: 1px dashed var(--accent); padding: 20px; border-radius: 12px; position: relative; display: none; }
+        #finalPrompt { color: #ccc; line-height: 1.6; font-style: italic; margin-right: 80px; font-size: 0.95rem; }
+        .copy-btn { position: absolute; right: 15px; top: 15px; background: #fff; color: #000; border: none; padding: 8px 15px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; }
+
+        .about-section { padding: 60px 0; border-top: 1px solid var(--border); }
         .about-section h2 { font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 20px; }
         .about-section p { color: #888; line-height: 1.8; font-size: 1.1rem; }
 
@@ -73,15 +88,14 @@
         .app-card { background: #fff; color: #000; padding: 25px; border-radius: 20px; text-decoration: none; text-align: center; font-weight: 800; }
 
         footer { text-align: center; padding: 80px 20px; border-top: 1px solid var(--border); color: #444; font-size: 13px; }
-        
-        @media (max-width: 768px) { .hero-content h1 { font-size: 3.5rem; } .apps-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .hero-content h1 { font-size: 3.5rem; } .apps-grid { grid-template-columns: 1fr; .input-group { flex-direction: column; } #genBtn { padding: 15px; } } }
     </style>
 </head>
 <body>
 
     <section class="hero-section">
         <header class="nav-container">
-            <a href="/" class="logo-wrapper" aria-label="Studioers Home">
+            <a href="/" class="logo-wrapper">
                 <div class="logo-icon">S</div>
                 <div class="logo-text">STUDIOERS</div>
             </a>
@@ -96,11 +110,27 @@
     <main class="container">
         
         <section aria-label="Featured Product">
-            <a href="https://studioers.gumroad.com/l/bakyau" class="featured-card" title="TikTok Trivia Live Engine">
+            <a href="https://studioers.gumroad.com/l/bakyau" class="featured-card">
                 <h2>Interactive TikTok Trivia Engine</h2>
                 <p>Monetize your live streams with our advanced interactive overlay system.</p>
                 <div><span class="featured-btn">Get it now $39</span></div>
             </a>
+        </section>
+
+        <span class="section-label">Studioers AI: Lab</span>
+        <section class="lab-card">
+            <div class="lab-header">
+                <h3>Prompt Architect <span style="color:var(--accent); font-size: 0.9rem; vertical-align: middle;">Gemini 2.5 Flash</span></h3>
+                <p>Hayalindeki görseli anlat, AI senin için en iyi komutu hazırlasın.</p>
+            </div>
+            <div class="input-group">
+                <input type="text" id="userIdea" placeholder="Örn: Yağmurlu bir siberpunk sokak, neon ışıklar...">
+                <button onclick="generatePrompt()" id="genBtn">Oluştur</button>
+            </div>
+            <div id="resultArea" class="result-box">
+                <p id="finalPrompt"></p>
+                <button onclick="copyPrompt()" class="copy-btn">Kopyala</button>
+            </div>
         </section>
 
         <span class="section-label">Software Ecosystem</span>
@@ -110,13 +140,11 @@
                 <p>On-chain crypto whale tracking and real-time wallet analytics for professional traders.</p>
                 <div class="card-footer"><span style="color:var(--accent)">$1+</span><span>Details →</span></div>
             </a>
-
             <a href="https://studioers.gumroad.com/l/ipnot" class="card card-imagemaster">
                 <h3>ImageMaster Pro</h3>
                 <p>Batch image processing, watermarking, and smart resizing for digital creators.</p>
                 <div class="card-footer"><span style="color:var(--accent)">$3</span><span>Details →</span></div>
             </a>
-
             <a href="https://studioers.gumroad.com/l/aslyqy" class="card card-seo">
                 <h3>Studioers AI: SEO</h3>
                 <p>Automated SEO auditing tool providing professional reports for business optimization.</p>
@@ -128,10 +156,8 @@
             <h2>About Studioers</h2>
             <p>
                 Studioers is a high-end software development hub specializing in <strong>AI-powered solutions</strong> and 
-                <strong>Android application development</strong>. We focus on creating digital tools that provide 
-                real-world value, from <strong>crypto whale tracking</strong> to <strong>automated SEO audits</strong>. 
-                Our mission is to empower developers and entrepreneurs with scalable code and innovative products 
-                designed for the 2026 digital economy.
+                <strong>Android application development</strong>. Our mission is to empower developers and entrepreneurs 
+                with scalable code and innovative products designed for the 2026 digital economy.
             </p>
         </section>
 
@@ -140,12 +166,61 @@
             <a href="https://play.google.com/store/apps/details?id=com.studioers.notdefteri" target="_blank" class="app-card">Google Play Store (Kolay Not)</a>
             <a href="#" class="app-card" style="background:#1a1a1a; color:#fff;">Aptoide Store</a>
         </div>
-
     </main>
 
     <footer>
         &copy; 2026 STUDIOERS / Developed in Türkiye / Professional Software & AI Systems
     </footer>
 
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/generative-ai": "https://esm.run/@google/generative-ai"
+        }
+      }
+    </script>
+    <script type="module">
+      import { GoogleGenerativeAI } from "@google/generative-ai";
+
+      const API_KEY = "AIzaSyCH7ePt6AklH7m1zl8hC_C01d7m-mnZZdQ";
+      const genAI = new GoogleGenerativeAI(API_KEY);
+
+      window.generatePrompt = async function() {
+        const idea = document.getElementById('userIdea').value;
+        const resultArea = document.getElementById('resultArea');
+        const finalPrompt = document.getElementById('finalPrompt');
+        const btn = document.getElementById('genBtn');
+
+        if(!idea) return alert("Önce bir fikir yaz kanka!");
+
+        btn.innerText = "Gemini 2.5 Flash İşliyor...";
+        btn.disabled = true;
+
+        try {
+          const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+          const promptText = `Sen uzman bir görsel komut mühendisisin. Kullanıcının "${idea}" fikrini al ve bunu Midjourney, DALL-E 3 veya Stable Diffusion için profesyonel, detaylı, sanatsal bir İngilizce prompta dönüştür. Sadece komutu yaz.`;
+
+          const result = await model.generateContent(promptText);
+          const response = await result.response;
+          const text = response.text();
+
+          finalPrompt.innerText = text;
+          resultArea.style.display = 'block';
+        } catch (error) {
+          console.error(error);
+          finalPrompt.innerText = "Hata oluştu. Model ismi veya API kotası kontrol edilmeli.";
+          resultArea.style.display = 'block';
+        } finally {
+          btn.innerText = "Oluştur";
+          btn.disabled = false;
+        }
+      }
+
+      window.copyPrompt = function() {
+        const text = document.getElementById('finalPrompt').innerText;
+        navigator.clipboard.writeText(text);
+        alert("Prompt kopyalandı! 🔥");
+      }
+    </script>
 </body>
 </html>
