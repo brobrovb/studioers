@@ -17,6 +17,12 @@
     <style>
         :root { --accent: #00ff88; --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; }
         * { box-sizing: border-box; }
+        
+        /* CUSTOM SCROLLBAR */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, var(--accent), #00aaff); border-radius: 10px; }
+
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
         
         /* HERO SECTION */
@@ -35,6 +41,7 @@
         .status-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,255,136,0.1); color: var(--accent); padding: 8px 16px; border-radius: 50px; font-size: 13px; font-weight: 700; border: 1px solid rgba(0,255,136,0.2); margin-bottom: 25px; backdrop-filter: blur(5px); }
         .status-badge span { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } 100% { opacity: 1; transform: scale(1); } }
+        
         .hero-content h1 { font-size: clamp(3rem, 10vw, 5.5rem); margin: 0; font-weight: 800; line-height: 0.95; letter-spacing: -4px; }
         .hero-content span { background: linear-gradient(to bottom, #fff 40%, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero-content p { color: #ccc; font-size: 1.25rem; max-width: 600px; margin-top: 25px; line-height: 1.6; }
@@ -42,13 +49,14 @@
         .container { max-width: 1000px; margin: 0 auto; padding: 80px 20px; }
         .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 30px; display: block; }
 
-        /* FEATURED & GRID */
+        /* CARDS */
         .featured-card {
             background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 100%), 
                         url('https://public-files.gumroad.com/7nian0p6ovu8w2cg9czevc53q7ae');
             background-size: cover; background-position: center; border-radius: 24px; border: 1px solid var(--accent);
-            padding: 50px; min-height: 450px; display: flex; flex-direction: column; justify-content: flex-end; margin-bottom: 50px; text-decoration: none;
+            padding: 50px; min-height: 450px; display: flex; flex-direction: column; justify-content: flex-end; margin-bottom: 50px; text-decoration: none; transition: 0.3s;
         }
+        .featured-card:hover { transform: scale(1.01); }
         .featured-card h2 { font-size: 2.5rem; font-weight: 800; margin: 0; color: #fff; }
         .featured-btn { background: #fff; color: #000; padding: 16px 32px; border-radius: 12px; font-weight: 800; display: inline-block; margin-top: 20px; }
 
@@ -58,6 +66,8 @@
             transition: all 0.4s; text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; 
             min-height: 300px; position: relative; overflow: hidden;
         }
+        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        
         .card-whale { background: linear-gradient(to bottom, rgba(10,10,10,0.85) 0%, rgba(10,10,10,1) 100%), url('https://public-files.gumroad.com/ya39cdpadopl1829j234roh1a0gu'); background-size: cover; }
         .card-imagemaster { background: linear-gradient(to bottom, rgba(10,10,10,0.85) 0%, rgba(10,10,10,1) 100%), url('https://public-files.gumroad.com/9rwf7qjszhd5bgw8man7pbm6n3y1'); background-size: cover; }
         .card-seo { background: linear-gradient(to bottom, rgba(10,10,10,0.85) 0%, rgba(10,10,10,1) 100%), url('https://public-files.gumroad.com/ko866iwsw3keew2mvigpxxnwolks'); background-size: cover; }
@@ -66,8 +76,8 @@
         .card p { color: #aaa; font-size: 1rem; margin: 15px 0 25px; position: relative; z-index: 2; }
         .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; position: relative; z-index: 2; }
 
-        /* STUDIOERS AI LAB SECTION */
-        .lab-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 40px; margin-bottom: 50px; transition: 0.3s; }
+        /* STUDIOERS AI LAB */
+        .lab-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 40px; margin-bottom: 80px; position: relative; overflow: hidden; }
         .lab-card:hover { border-color: var(--accent); }
         .lab-header h3 { font-size: 1.8rem; margin: 0; color: #fff; }
         .lab-header p { color: #888; margin: 10px 0 30px; }
@@ -75,20 +85,24 @@
         input[type="text"] { flex: 1; background: #111; border: 1px solid var(--border); padding: 15px 20px; border-radius: 12px; color: #fff; outline: none; }
         input[type="text"]:focus { border-color: var(--accent); }
         #genBtn { background: var(--accent); color: #000; border: none; padding: 0 30px; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; }
-        #genBtn:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(0,255,136,0.3); }
         .result-box { margin-top: 30px; background: #000; border: 1px dashed var(--accent); padding: 20px; border-radius: 12px; position: relative; display: none; }
-        #finalPrompt { color: #ccc; line-height: 1.6; font-style: italic; margin-right: 80px; font-size: 0.95rem; }
+        #finalPrompt { color: #ccc; line-height: 1.6; font-style: italic; margin-right: 80px; }
         .copy-btn { position: absolute; right: 15px; top: 15px; background: #fff; color: #000; border: none; padding: 8px 15px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; }
 
+        /* TECH STACK SECTION */
+        .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 20px; margin-top: 20px; text-align: center; }
+        .stack-item { background: var(--card); border: 1px solid var(--border); padding: 20px; border-radius: 16px; font-weight: 700; color: #666; font-size: 0.9rem; transition: 0.3s; }
+        .stack-item:hover { color: var(--accent); border-color: var(--accent); }
+
         .about-section { padding: 60px 0; border-top: 1px solid var(--border); }
-        .about-section h2 { font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 20px; }
         .about-section p { color: #888; line-height: 1.8; font-size: 1.1rem; }
 
-        .apps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .app-card { background: #fff; color: #000; padding: 25px; border-radius: 20px; text-decoration: none; text-align: center; font-weight: 800; }
+        .apps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 50px; }
+        .app-card { background: #fff; color: #000; padding: 25px; border-radius: 20px; text-decoration: none; text-align: center; font-weight: 800; transition: 0.3s; }
+        .app-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
 
         footer { text-align: center; padding: 80px 20px; border-top: 1px solid var(--border); color: #444; font-size: 13px; }
-        @media (max-width: 768px) { .hero-content h1 { font-size: 3.5rem; } .apps-grid { grid-template-columns: 1fr; .input-group { flex-direction: column; } #genBtn { padding: 15px; } } }
+        @media (max-width: 768px) { .hero-content h1 { font-size: 3.5rem; } .apps-grid { grid-template-columns: 1fr; } .input-group { flex-direction: column; } #genBtn { padding: 15px; } }
     </style>
 </head>
 <body>
@@ -101,7 +115,7 @@
             </a>
         </header>
         <div class="hero-content">
-            <div class="status-badge"><span></span> STUDIOERS SYSTEMS v1.0 ONLINE</div>
+            <div class="status-badge"><span></span> STUDIOERS SYSTEMS v1.1 ONLINE</div>
             <h1><span>Next-Gen Software<br>& AI Solutions.</span></h1>
             <p>We build professional-grade AI tools, crypto analytics dashboards, and mobile experiences for the digital elite.</p>
         </div>
@@ -120,8 +134,8 @@
         <span class="section-label">Studioers AI: Lab</span>
         <section class="lab-card">
             <div class="lab-header">
-                <h3>Prompt Architect <span style="color:var(--accent); font-size: 0.9rem; vertical-align: middle;">Gemini 2.5 Flash</span></h3>
-                <p>Hayalindeki görseli anlat, AI senin için en iyi komutu hazırlasın.</p>
+                <h3>Prompt Architect <span style="color:var(--accent); font-size: 0.8rem; vertical-align: middle; border: 1px solid var(--accent); padding: 2px 8px; border-radius: 10px; margin-left: 10px;">Gemini 2.5 Flash</span></h3>
+                <p>Fikrini yaz, en iyi görsel komutuna (prompt) dönüşsün.</p>
             </div>
             <div class="input-group">
                 <input type="text" id="userIdea" placeholder="Örn: Yağmurlu bir siberpunk sokak, neon ışıklar...">
@@ -152,36 +166,41 @@
             </a>
         </div>
 
-        <section class="about-section">
+        <span class="section-label">Our Technology Stack</span>
+        <div class="stack-grid">
+            <div class="stack-item">Android SDK</div>
+            <div class="stack-item">Kotlin</div>
+            <div class="stack-item">Gemini AI</div>
+            <div class="stack-item">Godot Engine</div>
+            <div class="stack-item">Jetpack Compose</div>
+            <div class="stack-item">Python</div>
+        </div>
+
+        <section class="about-section" style="margin-top: 80px;">
             <h2>About Studioers</h2>
             <p>
                 Studioers is a high-end software development hub specializing in <strong>AI-powered solutions</strong> and 
-                <strong>Android application development</strong>. Our mission is to empower developers and entrepreneurs 
-                with scalable code and innovative products designed for the 2026 digital economy.
+                <strong>Android application development</strong>. We focus on creating digital tools that provide 
+                real-world value in the 2026 digital economy.
             </p>
         </section>
 
-        <span class="section-label">Mobile Apps</span>
+        <span class="section-label">Mobile Experiences</span>
         <div class="apps-grid">
             <a href="https://play.google.com/store/apps/details?id=com.studioers.notdefteri" target="_blank" class="app-card">Google Play Store (Kolay Not)</a>
-            <a href="#" class="app-card" style="background:#1a1a1a; color:#fff;">Aptoide Store</a>
+            <a href="#" class="app-card" style="background:#1a1a1a; color:#fff; border: 1px solid var(--border);">Aptoide Store (Coming Soon)</a>
         </div>
     </main>
 
     <footer>
-        &copy; 2026 STUDIOERS / Developed in Türkiye / Professional Software & AI Systems
+        &copy; 2026 STUDIOERS / Developed in Türkiye / Built with Gemini 2.5 Flash
     </footer>
 
     <script type="importmap">
-      {
-        "imports": {
-          "@google/generative-ai": "https://esm.run/@google/generative-ai"
-        }
-      }
+      { "imports": { "@google/generative-ai": "https://esm.run/@google/generative-ai" } }
     </script>
     <script type="module">
       import { GoogleGenerativeAI } from "@google/generative-ai";
-
       const API_KEY = "AIzaSyCH7ePt6AklH7m1zl8hC_C01d7m-mnZZdQ";
       const genAI = new GoogleGenerativeAI(API_KEY);
 
@@ -193,22 +212,18 @@
 
         if(!idea) return alert("Önce bir fikir yaz kanka!");
 
-        btn.innerText = "Gemini 2.5 Flash İşliyor...";
+        btn.innerText = "Gemini Thinking...";
         btn.disabled = true;
 
         try {
           const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-          const promptText = `Sen uzman bir görsel komut mühendisisin. Kullanıcının "${idea}" fikrini al ve bunu Midjourney, DALL-E 3 veya Stable Diffusion için profesyonel, detaylı, sanatsal bir İngilizce prompta dönüştür. Sadece komutu yaz.`;
-
+          const promptText = `Sen uzman bir görsel komut mühendisisin. Kullanıcının "${idea}" fikrini al ve bunu Midjourney veya DALL-E 3 için profesyonel, detaylı, İngilizce bir prompta dönüştür. Sadece komutu yaz.`;
           const result = await model.generateContent(promptText);
           const response = await result.response;
-          const text = response.text();
-
-          finalPrompt.innerText = text;
+          finalPrompt.innerText = response.text();
           resultArea.style.display = 'block';
         } catch (error) {
-          console.error(error);
-          finalPrompt.innerText = "Hata oluştu. Model ismi veya API kotası kontrol edilmeli.";
+          finalPrompt.innerText = "Hata oluştu. Kotayı veya bağlantıyı kontrol et kanka.";
           resultArea.style.display = 'block';
         } finally {
           btn.innerText = "Oluştur";
