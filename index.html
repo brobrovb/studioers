@@ -90,24 +90,32 @@
         }
         .card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,255,136,0.1); }
 
+        /* WHALEPULSE KARTINA ÖZEL ARKA PLAN (YENİ) */
+        .card-whale {
+            background: linear-gradient(to bottom, rgba(10,10,10,0.85) 0%, rgba(10,10,10,1) 100%), 
+                        url('https://public-files.gumroad.com/ya39cdpadopl1829j234roh1a0gu');
+            background-size: cover;
+            background-position: center;
+        }
+
         /* IMAGEMASTER KARTINA ÖZEL ARKA PLAN */
         .card-imagemaster {
-            background: linear-gradient(to bottom, rgba(10,10,10,0.8) 0%, rgba(10,10,10,1) 100%), 
+            background: linear-gradient(to bottom, rgba(10,10,10,0.85) 0%, rgba(10,10,10,1) 100%), 
                         url('https://public-files.gumroad.com/9rwf7qjszhd5bgw8man7pbm6n3y1');
             background-size: cover;
             background-position: top;
         }
 
-        /* YENI: SEO KARTINA ÖZEL ARKA PLAN */
+        /* SEO KARTINA ÖZEL ARKA PLAN */
         .card-seo {
-            background: linear-gradient(to bottom, rgba(10,10,10,0.8) 0%, rgba(10,10,10,1) 100%), 
+            background: linear-gradient(to bottom, rgba(10,10,10,0.85) 0%, rgba(10,10,10,1) 100%), 
                         url('https://public-files.gumroad.com/ko866iwsw3keew2mvigpxxnwolks');
             background-size: cover;
             background-position: center;
         }
 
         .card h3 { margin: 0; font-size: 1.5rem; color: #fff; font-weight: 700; position: relative; z-index: 2; }
-        .card p { color: #888; font-size: 1rem; margin: 15px 0 25px; line-height: 1.5; position: relative; z-index: 2; }
+        .card p { color: #aaa; font-size: 1rem; margin: 15px 0 25px; line-height: 1.5; position: relative; z-index: 2; }
         .card-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 2; }
         .price { font-weight: 700; color: var(--accent); font-size: 1.1rem; }
         .go-btn { background: #fff; color: #000; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
@@ -147,7 +155,7 @@
 
         <span class="section-label">Digital Ecosystem</span>
         <div class="grid">
-            <a href="https://studioers.gumroad.com/l/jposco" class="card">
+            <a href="https://studioers.gumroad.com/l/jposco" class="card card-whale">
                 <div>
                     <h3>WhalePulse AI</h3>
                     <p>Professional crypto whale tracking & real-time on-chain analytics dashboard.</p>
