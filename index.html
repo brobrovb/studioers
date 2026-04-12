@@ -84,13 +84,6 @@
         .card p { color: #aaa !important; }
         .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; color: #fff !important; }
 
-        /* AI LAB */
-        .lab-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 40px; margin-bottom: 80px; position: relative; }
-        .input-group { display: flex; gap: 10px; }
-        input[type="text"] { flex: 1; background: #111; border: 1px solid var(--border); padding: 15px 20px; border-radius: 12px; color: #fff; outline: none; }
-        #genBtn { background: var(--accent); color: #000; border: none; padding: 0 30px; border-radius: 12px; font-weight: 800; cursor: pointer; }
-        .result-box { margin-top: 30px; background: #000; border: 1px dashed var(--accent); padding: 20px; border-radius: 12px; position: relative; display: none; }
-
         /* SEO CONTENT SECTION */
         .about-section { padding: 40px 0; border-top: 1px solid var(--border); margin-bottom: 40px; }
         .about-section h2 { font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 20px; letter-spacing: -1px; }
@@ -102,7 +95,7 @@
         .stack-item { background: var(--card); border: 1px solid var(--border); padding: 20px; border-radius: 16px; font-weight: 700; color: #666; font-size: 0.9rem; }
 
         footer { text-align: center; padding: 80px 20px; border-top: 1px solid var(--border); color: #444; font-size: 13px; }
-        @media (max-width: 768px) { .hero-content h1 { font-size: 3.5rem; } .input-group { flex-direction: column; } }
+        @media (max-width: 768px) { .hero-content h1 { font-size: 3.5rem; } }
     </style>
 </head>
 <body>
@@ -147,22 +140,6 @@
                 <p>Monetize your live streams with our advanced interactive overlay system.</p>
                 <div><span class="featured-btn">Get it now $39</span></div>
             </a>
-        </section>
-
-        <span class="section-label">Studioers AI: Lab</span>
-        <section class="lab-card">
-            <div class="lab-header">
-                <h3>Prompt Architect <span style="color:var(--accent); font-size: 0.8rem; border: 1px solid var(--accent); padding: 2px 8px; border-radius: 10px; margin-left: 10px;">Gemini 2.5 Flash</span></h3>
-                <p>Hayalindeki görseli anlat, AI senin için en iyi komutu hazırlasın.</p>
-            </div>
-            <div class="input-group">
-                <input type="text" id="userIdea" placeholder="Örn: Yağmurlu bir siberpunk sokak, neon ışıklar...">
-                <button onclick="generatePrompt()" id="genBtn">Oluştur</button>
-            </div>
-            <div id="resultArea" class="result-box">
-                <p id="finalPrompt" style="color:#ccc; font-style:italic;"></p>
-                <button onclick="copyPrompt()" class="copy-btn" style="position: absolute; right: 15px; top: 15px; background: #fff; border: none; padding: 8px 15px; border-radius: 8px; font-weight: 800; cursor: pointer;">Kopyala</button>
-            </div>
         </section>
 
         <span class="section-label">Software Ecosystem</span>
@@ -213,45 +190,5 @@
         &copy; 2026 STUDIOERS / Developed in Türkiye
     </footer>
 
-    <script type="importmap">
-      { "imports": { "@google/generative-ai": "https://esm.run/@google/generative-ai" } }
-    </script>
-    <script type="module">
-      import { GoogleGenerativeAI } from "@google/generative-ai";
-      const API_KEY = "AIzaSyAZBiuSmP4JtO3GFzr6fzx2qSgmriA5X3g";
-      const genAI = new GoogleGenerativeAI(API_KEY);
-
-      window.generatePrompt = async function() {
-        const idea = document.getElementById('userIdea').value;
-        const resultArea = document.getElementById('resultArea');
-        const finalPrompt = document.getElementById('finalPrompt');
-        const btn = document.getElementById('genBtn');
-
-        if(!idea) return alert("Önce bir fikir yaz kanka!");
-        btn.innerText = "Gemini Düşünüyor...";
-        btn.disabled = true;
-
-        try {
-          const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" }); // Not: SDK'da henüz 2.5 ismi değişebilir, en güncel flash modeline yönlendirir
-          const promptText = `Sen uzman bir görsel komut mühendisisin. Kullanıcının "${idea}" fikrini al ve bunu Midjourney veya DALL-E 3 için profesyonel, detaylı, İngilizce bir prompta dönüştür. Sadece komutu yaz.`;
-          const result = await model.generateContent(promptText);
-          const response = await result.response;
-          finalPrompt.innerText = response.text();
-          resultArea.style.display = 'block';
-        } catch (error) {
-          finalPrompt.innerText = "Hata oluştu. Kotayı veya kısıtlamayı kontrol et kanka.";
-          resultArea.style.display = 'block';
-        } finally {
-          btn.innerText = "Oluştur";
-          btn.disabled = false;
-        }
-      }
-
-      window.copyPrompt = function() {
-        const text = document.getElementById('finalPrompt').innerText;
-        navigator.clipboard.writeText(text);
-        alert("Prompt kopyalandı! 🔥");
-      }
-    </script>
 </body>
 </html>
