@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        :root { --accent: #00ff88; --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; }
+        :root { --accent: #00ff88; --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; --download: #ffcc00; }
         * { box-sizing: border-box; }
         
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
@@ -31,6 +31,18 @@
 
         .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
         .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 40px; display: block; }
+
+        /* Free Tools Grid - Terminal Style */
+        .free-tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 80px; }
+        .terminal-card { background: #050505; border: 1px solid #222; border-radius: 12px; overflow: hidden; transition: 0.3s; }
+        .terminal-card:hover { border-color: var(--download); transform: translateY(-5px); }
+        .terminal-header { background: #1a1a1a; padding: 8px 15px; display: flex; gap: 6px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .terminal-body { padding: 25px; min-height: 180px; display: flex; flex-direction: column; justify-content: space-between; }
+        .terminal-body h4 { margin: 0 0 10px 0; color: var(--download); font-family: monospace; font-size: 1.1rem; }
+        .terminal-body p { font-size: 13px; color: #888; margin-bottom: 20px; line-height: 1.5; }
+        .download-btn { background: transparent; border: 1px solid var(--download); color: var(--download); padding: 10px; border-radius: 6px; text-align: center; font-weight: 700; font-size: 12px; transition: 0.3s; }
+        .download-btn:hover { background: var(--download); color: #000; }
 
         .apps-showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 60px; }
         .store-button { background: #111; border: 1px solid var(--border); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 15px; transition: 0.3s; }
@@ -54,8 +66,6 @@
             min-height: 300px; position: relative; overflow: hidden;
         }
         .card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .card h3 { color: #fff; margin-top: 0; }
-        .card p { color: #aaa; line-height: 1.6; }
         .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
 
         .about-section { padding: 40px 0; border-top: 1px solid var(--border); margin-bottom: 40px; }
@@ -63,22 +73,12 @@
         .about-section p { color: #888; line-height: 1.8; font-size: 1.1rem; margin-bottom: 20px; }
         .about-section strong { color: var(--accent); }
 
-        .stack-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 25px; 
-            margin-bottom: 80px; 
-        }
-        .stack-item { 
-            background: var(--card); border: 1px solid var(--border); padding: 40px 20px; border-radius: 28px; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; margin-bottom: 80px; }
+        .stack-item { background: var(--card); border: 1px solid var(--border); padding: 40px 20px; border-radius: 28px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; transition: all 0.4s; }
         .stack-item:hover { border-color: var(--accent); transform: translateY(-10px); background: #111; }
-        .stack-logo { width: 55px; height: 55px; object-fit: contain; filter: grayscale(1) brightness(1.2); transition: 0.4s; }
-        .stack-item:hover .stack-logo { filter: grayscale(0) brightness(1); transform: scale(1.1); }
+        .stack-logo { width: 55px; height: 55px; object-fit: contain; filter: grayscale(1) brightness(1.2); }
+        .stack-item:hover .stack-logo { filter: grayscale(0) brightness(1); }
         .stack-name { font-weight: 700; color: #555; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
-        .stack-item:hover .stack-name { color: #fff; }
 
         footer { text-align: center; padding: 60px 20px; border-top: 1px solid var(--border); color: #444; font-size: 13px; }
     </style>
@@ -122,6 +122,37 @@
             </a>
         </section>
 
+        <span class="section-label" style="color: var(--download);">Developer CLI Tools (Free)</span>
+        <div class="free-tools-grid">
+            
+            <div class="terminal-card">
+                <div class="terminal-header">
+                    <div class="dot" style="background: #ff5f56;"></div>
+                    <div class="dot" style="background: #ffbd2e;"></div>
+                    <div class="dot" style="background: #27c93f;"></div>
+                </div>
+                <div class="terminal-body">
+                    <h4>> webp_optimizer.exe</h4>
+                    <p>High-performance image compressor. Converts JPG/PNG assets to SEO-friendly WebP format instantly.</p>
+                    <a href="https://github.com/brobrovb/studioers/releases/download/v1.0.0/webp-optimizer.zip" class="download-btn">DOWNLOAD TOOL (.ZIP)</a>
+                </div>
+            </div>
+
+            <div class="terminal-card">
+                <div class="terminal-header">
+                    <div class="dot" style="background: #333;"></div>
+                    <div class="dot" style="background: #333;"></div>
+                    <div class="dot" style="background: #333;"></div>
+                </div>
+                <div class="terminal-body">
+                    <h4>> upcoming_tool.py</h4>
+                    <p>Next utility is currently under internal testing. New release expected soon.</p>
+                    <a href="#" class="download-btn" style="opacity: 0.5; cursor: not-allowed;">COMING SOON</a>
+                </div>
+            </div>
+
+        </div>
+
         <span class="section-label">Software Ecosystem</span>
         <div class="grid">
             <a href="https://studioers.gumroad.com/l/jposco" class="card" style="background: linear-gradient(to bottom, rgba(10,10,10,0.9), #0a0a0a), url('https://public-files.gumroad.com/ya39cdpadopl1829j234roh1a0gu'); background-size: cover;">
@@ -146,32 +177,16 @@
             <h2>The Future of Digital Development</h2>
             <p>
                 <strong>Studioers</strong> is a premier software development hub specializing in the intersection of <strong>Artificial Intelligence</strong> and <strong>High-Performance Mobile Applications</strong>. 
-                Our mission is to bridge the gap between complex algorithms and user-centric design, providing tools that empower digital entrepreneurs in the 2026 economy.
-            </p>
-            <p>
-                Whether it's <strong>Crypto Whale Tracking</strong> through real-time data analysis or <strong>Interactive Live Streaming Engines</strong> for TikTok, 
-                every product in our ecosystem is built with scalability and efficiency in mind.
+                Our mission is to bridge the gap between complex algorithms and user-centric design.
             </p>
         </section>
 
         <span class="section-label">Our Technology Stack</span>
         <div class="stack-grid">
-            <div class="stack-item">
-                <img src="https://www.vectorlogo.zone/logos/android/android-icon.svg" alt="Android" class="stack-logo">
-                <span class="stack-name">Android SDK</span>
-            </div>
-            <div class="stack-item">
-                <img src="https://www.vectorlogo.zone/logos/kotlinlang/kotlinlang-icon.svg" alt="Kotlin" class="stack-logo">
-                <span class="stack-name">Kotlin</span>
-            </div>
-            <div class="stack-item">
-                <img src="https://www.vectorlogo.zone/logos/python/python-icon.svg" alt="Python" class="stack-logo">
-                <span class="stack-name">Python</span>
-            </div>
-            <div class="stack-item">
-                <img src="https://www.vectorlogo.zone/logos/godotengine/godotengine-icon.svg" alt="Godot" class="stack-logo">
-                <span class="stack-name">Godot Engine</span>
-            </div>
+            <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/android/android-icon.svg" alt="Android" class="stack-logo"><span class="stack-name">Android SDK</span></div>
+            <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/kotlinlang/kotlinlang-icon.svg" alt="Kotlin" class="stack-logo"><span class="stack-name">Kotlin</span></div>
+            <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/python/python-icon.svg" alt="Python" class="stack-logo"><span class="stack-name">Python</span></div>
+            <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/godotengine/godotengine-icon.svg" alt="Godot" class="stack-logo"><span class="stack-name">Godot Engine</span></div>
         </div>
 
     </main>
