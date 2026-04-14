@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="3v-dwgR_03wM3wWci6lWpWoqjjbpuBLlp27pDnS8hbY" />
     <meta name="description" content="STUDIOERS - Advanced Android Development, AI-driven automation, and professional software solutions. Explore our open-source CLI tools and high-performance apps.">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00ff88">
 
     <title>STUDIOERS | Advanced AI Solutions & Android Development</title>
     
@@ -33,7 +36,6 @@
         .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
         .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 25px; display: block; opacity: 0.8; }
 
-        /* Free Tools Grid */
         .free-tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; margin-bottom: 50px; }
         .terminal-card { background: #050505; border: 1px solid #222; border-radius: 12px; overflow: hidden; transition: 0.3s; }
         .terminal-card:hover { border-color: var(--download); transform: translateY(-3px); }
@@ -42,8 +44,12 @@
         .terminal-body { padding: 20px; min-height: 160px; display: flex; flex-direction: column; justify-content: space-between; }
         .terminal-body h4 { margin: 0 0 8px 0; color: var(--download); font-family: monospace; font-size: 1rem; }
         .terminal-body p { font-size: 13px; color: #888; margin-bottom: 15px; line-height: 1.5; }
-        .download-btn { background: transparent; border: 1px solid var(--download); color: var(--download); padding: 8px; border-radius: 6px; text-align: center; font-weight: 700; font-size: 11px; transition: 0.3s; }
+        .download-btn { background: transparent; border: 1px solid var(--download); color: var(--download); padding: 8px; border-radius: 6px; text-align: center; font-weight: 700; font-size: 11px; transition: 0.3s; width: 100%; cursor: pointer; display: block; }
         .download-btn:hover { background: var(--download); color: #000; }
+
+        /* Purification Tool Input */
+        .purify-input { width: 100%; background: #111; border: 1px solid #222; color: #fff; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-family: monospace; outline: none; transition: 0.3s; }
+        .purify-input:focus { border-color: var(--accent); }
 
         .apps-showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 50px; }
         .store-button { background: #111; border: 1px solid var(--border); border-radius: 16px; padding: 15px; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
@@ -72,7 +78,6 @@
         .card p { font-size: 14px; color: #888; line-height: 1.6; }
         .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; margin-top: 15px; }
 
-        /* SEO & About Section */
         .about-section { padding: 30px 0; border-top: 1px solid var(--border); margin-bottom: 40px; }
         .about-section h2 { font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 15px; letter-spacing: -1px; }
         .about-section p { color: #aaa; line-height: 1.8; font-size: 1.05rem; margin-bottom: 15px; max-width: 900px; }
@@ -122,13 +127,20 @@
             </a>
         </div>
 
-        <section>
-            <a href="https://studioers.gumroad.com/l/bakyau" class="featured-card">
-                <h2>Interactive TikTok Trivia Engine</h2>
-                <p>Advanced overlay system for live stream monetization and audience engagement.</p>
-                <div><span class="featured-btn">Get License $39</span></div>
-            </a>
-        </section>
+        <span class="section-label" style="color: var(--accent);">Web Utility: Link Purifier</span>
+        <div class="terminal-card" style="margin-bottom: 50px; border-color: var(--accent);">
+            <div class="terminal-header">
+                <div class="dot" style="background: #ff5f56;"></div>
+                <div class="dot" style="background: #ffbd2e;"></div>
+                <div class="dot" style="background: #27c93f;"></div>
+            </div>
+            <div class="terminal-body" style="min-height: auto;">
+                <h4>> purifier_engine.run()</h4>
+                <p>Paste any URL to remove tracking parameters and junk codes instantly.</p>
+                <input type="text" id="urlInput" class="purify-input" placeholder="Paste link here (TikTok, Instagram, etc)...">
+                <button onclick="cleanUrl()" class="download-btn" style="border-color: var(--accent); color: var(--accent);">PURIFY & COPY LINK</button>
+            </div>
+        </div>
 
         <span class="section-label" style="color: var(--download);">Developer CLI Tools (Free)</span>
         <div class="free-tools-grid">
@@ -199,6 +211,32 @@
     <footer>
         &copy; 2026 STUDIOERS / Specialized Software Engineering Suite
     </footer>
+
+    <script>
+    function cleanUrl() {
+        let input = document.getElementById('urlInput');
+        let rawUrl = input.value.trim();
+        if (!rawUrl) return;
+        
+        let cleanUrl = rawUrl.split('?')[0];
+        input.value = cleanUrl;
+        
+        // Copy to Clipboard
+        navigator.clipboard.writeText(cleanUrl).then(() => {
+            let btn = event.target;
+            let originalText = btn.innerText;
+            btn.innerText = "COPIED TO CLIPBOARD! ✓";
+            btn.style.borderColor = "#fff";
+            btn.style.color = "#fff";
+            
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.borderColor = "var(--accent)";
+                btn.style.color = "var(--accent)";
+            }, 2000);
+        });
+    }
+    </script>
 
 </body>
 </html>
