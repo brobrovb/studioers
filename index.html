@@ -26,9 +26,15 @@
             background-size: cover; background-position: center; border-bottom: 1px solid var(--border);
         }
 
-        .nav-container { max-width: 1100px; width: 100%; margin: 0 auto; padding: 25px 20px; display: flex; align-items: center; }
+        .nav-container { max-width: 1100px; width: 100%; margin: 0 auto; padding: 25px 20px; display: flex; align-items: center; justify-content: space-between; }
+        .logo-flex { display: flex; align-items: center; }
         .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent), #00aaff); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #000; box-shadow: 0 0 20px rgba(0,255,136,0.3); }
         .logo-text { font-size: 22px; font-weight: 800; margin-left: 12px; letter-spacing: -1px; text-transform: uppercase; }
+        
+        /* Navigation Links */
+        .nav-links { display: flex; gap: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-links a { opacity: 0.6; transition: 0.3s; }
+        .nav-links a:hover { opacity: 1; color: var(--accent); }
 
         .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
         .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 25px; display: block; opacity: 0.8; }
@@ -112,14 +118,23 @@
         .stack-name { font-weight: 700; color: #444; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
 
         footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: #444; font-size: 12px; }
+        .footer-links { margin-bottom: 15px; }
+        .footer-links a { margin: 0 10px; color: #666; transition: 0.3s; }
+        .footer-links a:hover { color: #888; }
     </style>
 </head>
 <body>
 
     <section class="hero-section">
         <header class="nav-container">
-            <div class="logo-icon">S</div>
-            <div class="logo-text">STUDIOERS</div>
+            <div class="logo-flex">
+                <div class="logo-icon">S</div>
+                <div class="logo-text">STUDIOERS</div>
+            </div>
+            <nav class="nav-links">
+                <a href="guide.html">Revenue Guide</a>
+                <a href="privacy.html">Privacy</a>
+            </nav>
         </header>
         <div style="max-width: 1100px; margin: auto; padding: 0 20px; width: 100%;">
             <h1 style="font-size: clamp(2.5rem, 7vw, 4.5rem); font-weight: 800; line-height: 1.1;">Next-Gen<br><span style="color: var(--accent)">Software Ecosystem</span></h1>
@@ -227,6 +242,10 @@
     </main>
 
     <footer>
+        <div class="footer-links">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="mailto:admin@studioers.xyz">Contact</a>
+        </div>
         &copy; 2026 STUDIOERS / Specialized Software Engineering Suite
     </footer>
 
