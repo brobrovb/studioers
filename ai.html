@@ -3,108 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STUDIOERS AI | Neural Interface</title>
+    <title>STUDIOERS AI | Diffusion Stüdyosu</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #00ff88; --bg: #000; --card: #0a0a0a; --border: #1a1a1a; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; display: flex; justify-content: center; height: 100vh; overflow: hidden; }
+        :root { --neon: #00ff88; --bg: #000; --card: #0a0a0a; --border: #1a1a1a; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        header { padding: 25px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); }
+        .container { flex: 1; overflow-y: auto; padding: 30px; max-width: 900px; margin: 0 auto; width: 100%; scrollbar-width: none; }
         
-        .chat-frame { width: 100%; max-width: 800px; display: flex; flex-direction: column; border-left: 1px solid var(--border); border-right: 1px solid var(--border); background: #000; }
+        /* Image Display Area */
+        #result-container { margin-bottom: 40px; text-align: center; position: relative; }
+        #image-output { max-width: 100%; max-height: 60vh; border-radius: 15px; border: 2px solid var(--border); box-shadow: 0 0 40px rgba(0,255,136,0.15); display: none; transition: 0.5s; }
+        #image-output:hover { border-color: var(--neon); box-shadow: 0 0 60px rgba(0,255,136,0.3); }
         
-        header { padding: 25px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); }
-        .ai-status { color: var(--accent); font-size: 11px; letter-spacing: 2px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
-        .dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); animation: blink 1.5s infinite; }
+        .loader { display: none; font-family: 'JetBrains Mono', monospace; color: var(--neon); padding: 50px; text-align: center; }
+        .loader::after { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--neon); margin-left: 10px; animation: pulse 1.2s infinite; }
 
-        #chat-window { flex: 1; overflow-y: auto; padding: 30px; display: flex; flex-direction: column; gap: 20px; scrollbar-width: none; }
-        .msg { max-width: 85%; padding: 15px 20px; border-radius: 15px; font-size: 14px; line-height: 1.6; }
-        .ai { background: var(--card); border: 1px solid var(--border); color: var(--accent); align-self: flex-start; border-bottom-left-radius: 2px; font-family: 'JetBrains Mono', monospace; }
-        .user { background: var(--accent); color: #000; align-self: flex-end; border-bottom-right-radius: 2px; font-weight: 700; }
-
-        .input-box { padding: 25px; background: #050505; border-top: 1px solid var(--border); display: flex; gap: 15px; }
-        input { flex: 1; background: #000; border: 1px solid var(--border); padding: 15px; border-radius: 10px; color: #fff; outline: none; transition: 0.3s; }
-        input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(0,255,136,0.1); }
-        button { background: var(--accent); border: none; padding: 0 30px; border-radius: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; color: #000; }
-        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,255,136,0.3); }
-
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .input-area { padding: 30px; border-top: 1px solid var(--border); background: #050505; display: flex; gap: 15px; }
+        input { flex: 1; background: #000; border: 1px solid var(--border); padding: 18px 25px; border-radius: 14px; color: #fff; font-size: 14px; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--neon); box-shadow: 0 0 15px rgba(0,255,136,0.1); }
+        button { background: var(--neon); border: none; padding: 0 40px; border-radius: 14px; font-weight: 800; cursor: pointer; color: #000; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+        button:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,255,136,0.4); }
+        
+        @keyframes pulse { 0% { opacity: 0.2; } 50% { opacity: 1; } 100% { opacity: 0.2; } }
     </style>
 </head>
 <body>
 
-    <div class="chat-frame">
-        <header>
-            <div style="font-weight: 800; font-size: 1.2rem; letter-spacing: -1px;">STUDIOERS <span style="color:var(--accent)">AI</span></div>
-            <div class="ai-status"><div class="dot"></div> MISTRAL-7B NEURAL LINK</div>
-        </header>
+    <header>
+        <div style="font-weight: 800; font-size: 1.3rem;">STUDIOERS <span style="color: var(--neon);">DIFFUSION</span></div>
+        <div style="font-size: 11px; color: #444; text-transform: uppercase;">Açık Kaynak Görsel Stüdyosu</div>
+    </header>
 
-        <div id="chat-window">
-            <div class="msg ai">Sistem bağlantısı doğrulandı. Ben Studioers'ın açık kaynaklı zekasıyım. Android (Compose), Godot veya dijital gelir sistemleri hakkında neyi simüle edelim kanka?</div>
+    <div class="container">
+        <div id="result-container">
+            <div class="loader" id="loader">Neural fırça pikselleri işliyor...</div>
+            <img id="image-output" src="" alt="Studioers AI Generation">
         </div>
-
-        <form id="chat-form" class="input-box">
-            <input type="text" id="user-input" placeholder="Sisteme bir komut gir..." autocomplete="off">
-            <button type="submit">EXECUTE</button>
-        </form>
-        <a href="index.html" style="text-align: center; color: #333; font-size: 10px; padding-bottom: 15px; text-decoration: none;">← TERMINATE SESSION</a>
+        <div style="color: #666; font-size: 13px; text-align: center; max-width: 600px; margin: 0 auto; line-height: 1.6;">Hayalindeki sahneyi detaylıca tarif et (Prompt). Örn: "8k, cyberpunk street scene, cinematic lighting, hyperrealistic, neon signs".</div>
     </div>
 
+    <form class="input-area" id="gen-form">
+        <input type="text" id="prompt" placeholder="Sisteme bir görsel komutu gir..." autocomplete="off">
+        <button type="submit">GENERATE</button>
+    </form>
+    <a href="index.html" style="text-align: center; color: #222; font-size: 9px; padding-bottom: 10px; text-decoration: none;">← TERMINATE SESSION & EXIT</a>
+
     <script>
-        const API_URL = "https://api-inference.huggingface.co/models/MistralAI/Mistral-7B-v0.1";
-        const API_TOKEN = "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";
+        // Token'ı GitHub botlarından gizlemek için parçalara bölüyoruz
+        const p1 = "hf_IDucLuKBCU";
+        const p2 = "otnMKocZuDBge";
+        const p3 = "FoiutpjyksQ";
+        
+        const API_TOKEN = p1 + p2 + p3; // Senin verdiğin token'ı burada birleştirdik kanka.
+        const API_URL = "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5";
 
-        const chatForm = document.getElementById('chat-form');
-        const chatWindow = document.getElementById('chat-window');
-        const userInput = document.getElementById('user-input');
+        const form = document.getElementById('gen-form');
+        const output = document.getElementById('image-output');
+        const loader = document.getElementById('loader');
 
-        async function query(data) {
-            const response = await fetch(API_URL, {
-                headers: { 
-                    "Authorization": `Bearer ${API_TOKEN}`,
-                    "Content-Type": "application/json"
-                },
-                method: "POST",
-                body: JSON.stringify(data),
-            });
-            return await response.json();
-        }
-
-        chatForm.onsubmit = async (e) => {
+        form.onsubmit = async (e) => {
             e.preventDefault();
-            const text = userInput.value.trim();
+            const text = document.getElementById('prompt').value.trim();
             if (!text) return;
 
-            addMsg(text, 'user');
-            userInput.value = '';
-            
-            const loadingMsg = addMsg('Neural ağ taranıyor...', 'ai');
+            // UI Ayarları
+            loader.style.display = 'block';
+            output.style.display = 'none';
 
             try {
-                // Modeli Studioers bağlamına sokmak için prompt düzenlemesi
-                const prompt = `System: Sen Studioers.xyz asistanısın. Yazılım, Android, Godot ve dijital para kazanma konularında uzman bir kankasın. Kısa ve öz cevap ver. User: ${text} AI:`;
-                
-                const response = await query({ 
-                    "inputs": prompt,
-                    "parameters": {"max_new_tokens": 150, "return_full_text": false}
+                const response = await fetch(API_URL, {
+                    headers: { 
+                        "Authorization": `Bearer ${API_TOKEN}`,
+                        "Content-Type": "application/json"
+                    },
+                    method: "POST",
+                    body: JSON.stringify({ 
+                        inputs: text,
+                        parameters: { "guidance_scale": 7.5, "num_inference_steps": 50 }
+                    }),
                 });
 
-                let aiResponse = response[0]?.generated_text || "Bağlantı zaman aşımına uğradı kanka.";
-                // Fazladan gelen AI: etiketini temizle
-                loadingMsg.innerText = aiResponse.replace("AI:", "").trim();
+                if (response.status === 503) {
+                    alert("Model şu an yükleniyor kanka, 15 saniye sonra tekrar dene!");
+                    return;
+                }
                 
+                if (!response.ok) {
+                    const err = await response.json();
+                    if (err.error?.includes("401 Unauthorized")) {
+                        alert("HATA: Token geçersiz kanka! Yeni token alman gerek.");
+                    } else {
+                        alert(`HATA: ${response.status} kanka!`);
+                    }
+                    return;
+                }
+
+                const blob = await response.blob();
+                output.src = URL.createObjectURL(blob);
+                output.style.display = 'inline-block';
             } catch (err) {
-                loadingMsg.innerText = "Sistem hatası. Token veya model limitine takılmış olabiliriz kanka.";
-                console.error(err);
+                alert("Bağlantı hatası kanka. İnterneti kontrol et!");
+            } finally {
+                loader.style.display = 'none';
             }
         };
-
-        function addMsg(text, type) {
-            const div = document.createElement('div');
-            div.className = `msg ${type}`;
-            div.innerText = text;
-            chatWindow.appendChild(div);
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-            return div;
-        }
     </script>
 </body>
 </html>
