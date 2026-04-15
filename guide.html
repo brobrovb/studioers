@@ -8,10 +8,20 @@
     <style>
         :root { --neon: #00ff88; --bg: #050505; --card: #111; --text: #eee; --gold: #f3ba2f; --link: #00aaff; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.8; margin: 0; }
-        .container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; } /* Padding ayarlandı */
         
+        /* Back to Home Button Style */
+        .nav-header { display: flex; justify-content: flex-start; margin-bottom: 20px; }
+        .back-link { 
+            display: inline-flex; align-items: center; gap: 8px; 
+            color: #666; font-weight: 600; font-size: 13px; 
+            text-decoration: none; text-transform: uppercase; letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .back-link:hover { color: var(--neon); }
+
         header { text-align: center; margin-bottom: 60px; }
-        h1 { font-size: 3.5rem; letter-spacing: -3px; color: #fff; text-shadow: 0 0 20px rgba(0,255,136,0.3); }
+        h1 { font-size: 3.5rem; letter-spacing: -3px; color: #fff; text-shadow: 0 0 20px rgba(0,255,136,0.3); margin-top: 10px; }
         .grid-header { font-size: 1.2rem; color: var(--neon); font-weight: bold; text-transform: uppercase; }
 
         .method { background: var(--card); border: 1px solid #222; border-radius: 15px; padding: 35px; margin-bottom: 30px; transition: 0.3s; }
@@ -35,6 +45,10 @@
 <body>
 
 <div class="container">
+    <div class="nav-header">
+        <a href="index.html" class="back-link">← BACK TO HOME</a>
+    </div>
+
     <header>
         <div class="grid-header">2026 Execution Roadmap</div>
         <h1>10 METHODS TO BUILD DIGITAL WEALTH</h1>
