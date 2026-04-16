@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Studioers AI | Art Generation Engine</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
             --accent: #00ff88;
@@ -12,13 +11,12 @@
             --surface: #111113;
             --text: #ffffff;
             --gray: #666;
-            --border: #1f1f23;
         }
 
         body { 
             background: var(--bg); 
             color: var(--text); 
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
             display: flex; 
             flex-direction: column; 
             align-items: center; 
@@ -27,38 +25,9 @@
             min-height: 100vh;
         }
 
-        /* Home Button - Sleek & Modern */
-        .nav-header {
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            justify-content: flex-start;
-            margin-bottom: 20px;
-        }
-
-        .btn-home {
-            text-decoration: none;
-            color: var(--gray);
-            font-size: 14px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s;
-            padding: 8px 16px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-
-        .btn-home:hover {
-            color: var(--accent);
-            border-color: var(--accent);
-            background: rgba(0, 255, 136, 0.05);
-        }
-
         .box { 
             background: var(--surface); 
-            border: 1px solid var(--border); 
+            border: 1px solid #1f1f23; 
             padding: 40px; 
             border-radius: 32px; 
             width: 100%; 
@@ -68,41 +37,39 @@
         }
 
         h1 { 
-            font-size: 36px; 
+            font-size: 32px; 
             background: linear-gradient(135deg, var(--accent), #00bdff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 5px;
-            font-weight: 800;
-            letter-spacing: -1.5px;
+            font-weight: 900;
+            letter-spacing: -1px;
         }
 
         .subtitle { 
             color: var(--gray); 
-            font-size: 12px; 
+            font-size: 13px; 
             margin-bottom: 30px; 
             text-transform: uppercase; 
-            letter-spacing: 3px; 
-            font-weight: 700;
+            letter-spacing: 2px; 
         }
 
         input { 
-            width: calc(100% - 36px); 
+            width: 90%; 
             padding: 18px; 
             background: #000; 
-            border: 2px solid var(--border); 
+            border: 2px solid #1f1f23; 
             color: #fff; 
-            border-radius: 18px; 
+            border-radius: 16px; 
             outline: none; 
-            transition: 0.3s;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 16px;
             margin-bottom: 15px;
-            text-align: center;
         }
 
         input:focus { 
             border-color: var(--accent); 
-            box-shadow: 0 0 25px rgba(0,255,136,0.1); 
+            box-shadow: 0 0 20px rgba(0,255,136,0.1); 
         }
 
         .btn-generate { 
@@ -110,18 +77,33 @@
             color: #000; 
             border: none; 
             padding: 18px; 
-            border-radius: 18px; 
+            border-radius: 16px; 
             cursor: pointer; 
             font-weight: 800; 
             width: 100%; 
             font-size: 16px;
             transition: 0.3s;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .btn-generate:hover { 
             transform: translateY(-2px); 
             box-shadow: 0 10px 20px rgba(0,255,136,0.2);
+        }
+
+        .btn-download { 
+            background: #fff; 
+            color: #000; 
+            border: none; 
+            padding: 14px; 
+            border-radius: 14px; 
+            cursor: pointer; 
+            font-weight: 700; 
+            width: 100%; 
+            margin-top: 25px;
+            display: none; 
+            transition: 0.3s;
         }
 
         #res-container { 
@@ -130,69 +112,47 @@
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            border: 2px dashed var(--border); 
-            border-radius: 28px; 
+            border: 2px dashed #1f1f23; 
+            border-radius: 24px; 
             background: #000;
             position: relative;
             overflow: hidden;
         }
 
-        img { width: 100%; height: auto; border-radius: 24px; display: none; }
+        img { width: 100%; height: auto; border-radius: 22px; display: none; }
         
         .loading { 
             display: none; 
             color: var(--accent); 
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        .btn-download { 
-            background: #fff; 
-            color: #000; 
-            border: none; 
-            padding: 14px; 
-            border-radius: 16px; 
-            cursor: pointer; 
-            font-weight: 800; 
-            width: 100%; 
-            margin-top: 25px;
-            display: none; 
-            transition: 0.3s;
             font-size: 14px;
+            letter-spacing: 1px;
         }
 
         .footer { 
             margin-top: 50px; 
-            color: #1a1a1c; 
+            color: #222; 
             font-size: 11px; 
-            letter-spacing: 5px; 
-            font-weight: 900;
+            letter-spacing: 4px; 
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <div class="nav-header">
-        <a href="index.html" class="btn-home">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-            BACK TO HOME
-        </a>
-    </div>
-
     <div class="box">
         <h1>STUDIOERS <span style="color:#fff">AI</span></h1>
-        <p class="subtitle">Neural Vision Engine</p>
+        <p class="subtitle">Next-Gen Image Synthesis</p>
         
-        <input type="text" id="prompt" placeholder="E.g. Astronaut on Mars, cinematic lighting...">
-        <button class="btn-generate" onclick="generate()">Generate Masterpiece</button>
+        <input type="text" id="prompt" placeholder="Describe your vision (e.g. Neon Samurai)...">
+        <button class="btn-generate" onclick="generate()">Generate Art</button>
         
         <div id="res-container">
-            <div id="loader" class="loading">ANALYZING PROMPT...</div>
+            <div id="loader" class="loading">SYNCING PIXELS...</div>
             <img id="result" alt="Studioers AI Generation">
         </div>
 
-        <button id="dlBtn" class="btn-download" onclick="download()">DOWNLOAD ARTWORK (PNG)</button>
+        <button id="dlBtn" class="btn-download" onclick="download()">Download Artwork</button>
     </div>
 
     <p class="footer">STUDIOERS.XYZ // 2026</p>
@@ -204,14 +164,15 @@
             const img = document.getElementById('result');
             const dlBtn = document.getElementById('dlBtn');
 
-            if(!prompt) return alert("Please enter a description!");
+            if(!prompt) return alert("Please enter a description first!");
 
+            // UI Reset
             loader.style.display = 'block';
             img.style.display = 'none';
             dlBtn.style.display = 'none';
 
             const seed = Math.floor(Math.random() * 9999999);
-            // High Resolution Engine (1024x1024)
+            // Using Flux model for high-end results
             const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1024&height=1024&seed=${seed}&nologo=true&model=flux`;
 
             img.src = url;
@@ -224,7 +185,7 @@
 
             img.onerror = () => {
                 loader.style.display = 'none';
-                alert("Generation failed. Check your network.");
+                alert("Generation failed. Please check your connection.");
             };
         }
 
@@ -236,16 +197,17 @@
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `StudioersAI_Art_${Date.now()}.png`;
+                a.download = `StudioersAI_${Date.now()}.png`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
                 window.URL.revokeObjectURL(url);
             } catch (err) {
-                alert("Download error. Please long-press the image to save.");
+                alert("Download failed. Try right-clicking the image.");
             }
         }
 
+        // Enter key support
         document.getElementById('prompt').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') generate();
         });
