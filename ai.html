@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studioers AI | Art Generation Engine</title>
+    <title>Studioers AI | Art Engine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
             --accent: #00ff88;
@@ -11,12 +12,13 @@
             --surface: #111113;
             --text: #ffffff;
             --gray: #666;
+            --border: #1f1f23;
         }
 
         body { 
             background: var(--bg); 
             color: var(--text); 
-            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             display: flex; 
             flex-direction: column; 
             align-items: center; 
@@ -25,13 +27,40 @@
             min-height: 100vh;
         }
 
+        .nav-header {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .btn-home {
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.3s;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .btn-home:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
         .box { 
             background: var(--surface); 
-            border: 1px solid #1f1f23; 
-            padding: 40px; 
-            border-radius: 32px; 
+            border: 1px solid var(--border); 
+            padding: 35px; 
+            border-radius: 28px; 
             width: 100%; 
-            max-width: 500px; 
+            max-width: 460px; 
             text-align: center; 
             box-shadow: 0 40px 100px rgba(0,0,0,0.8); 
         }
@@ -42,54 +71,66 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 5px;
-            font-weight: 900;
-            letter-spacing: -1px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
         }
 
         .subtitle { 
             color: var(--gray); 
-            font-size: 13px; 
-            margin-bottom: 30px; 
+            font-size: 11px; 
+            margin-bottom: 25px; 
             text-transform: uppercase; 
             letter-spacing: 2px; 
         }
 
         input { 
-            width: 90%; 
-            padding: 18px; 
+            width: calc(100% - 32px); 
+            padding: 16px; 
             background: #000; 
-            border: 2px solid #1f1f23; 
+            border: 2px solid var(--border); 
             color: #fff; 
-            border-radius: 16px; 
+            border-radius: 14px; 
             outline: none; 
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 16px;
+            transition: 0.3s;
+            font-size: 15px;
             margin-bottom: 15px;
+            text-align: center;
         }
 
-        input:focus { 
-            border-color: var(--accent); 
-            box-shadow: 0 0 20px rgba(0,255,136,0.1); 
-        }
+        input:focus { border-color: var(--accent); }
 
         .btn-generate { 
             background: var(--accent); 
             color: #000; 
             border: none; 
-            padding: 18px; 
-            border-radius: 16px; 
+            padding: 16px; 
+            border-radius: 14px; 
             cursor: pointer; 
             font-weight: 800; 
             width: 100%; 
-            font-size: 16px;
+            font-size: 15px;
             transition: 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .btn-generate:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 10px 20px rgba(0,255,136,0.2);
+        #res-container { 
+            margin-top: 25px; 
+            min-height: 320px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: 2px dashed var(--border); 
+            border-radius: 24px; 
+            background: #000;
+            overflow: hidden;
+        }
+
+        img { width: 100%; height: auto; border-radius: 20px; display: none; }
+        
+        .loading { 
+            display: none; 
+            color: var(--accent); 
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
         }
 
         .btn-download { 
@@ -99,82 +140,58 @@
             padding: 14px; 
             border-radius: 14px; 
             cursor: pointer; 
-            font-weight: 700; 
+            font-weight: 800; 
             width: 100%; 
-            margin-top: 25px;
+            margin-top: 20px;
             display: none; 
-            transition: 0.3s;
+            font-size: 13px;
         }
 
-        #res-container { 
-            margin-top: 30px; 
-            min-height: 350px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            border: 2px dashed #1f1f23; 
-            border-radius: 24px; 
-            background: #000;
-            position: relative;
-            overflow: hidden;
-        }
-
-        img { width: 100%; height: auto; border-radius: 22px; display: none; }
-        
-        .loading { 
-            display: none; 
-            color: var(--accent); 
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            letter-spacing: 1px;
-        }
-
-        .footer { 
-            margin-top: 50px; 
-            color: #222; 
-            font-size: 11px; 
-            letter-spacing: 4px; 
-            font-weight: bold;
-        }
+        .footer { margin-top: 40px; color: #1a1a1c; font-size: 10px; letter-spacing: 4px; }
     </style>
 </head>
 <body>
 
+    <div class="nav-header">
+        <a href="index.html" class="btn-home">← BACK TO HOME</a>
+    </div>
+
     <div class="box">
         <h1>STUDIOERS <span style="color:#fff">AI</span></h1>
-        <p class="subtitle">Next-Gen Image Synthesis</p>
+        <p class="subtitle">Fast Generation Engine</p>
         
-        <input type="text" id="prompt" placeholder="Describe your vision (e.g. Neon Samurai)...">
-        <button class="btn-generate" onclick="generate()">Generate Art</button>
+        <input type="text" id="prompt" placeholder="Describe anything (e.g. Neon City)...">
+        <button class="btn-generate" onclick="generate()">GENERATE ART</button>
         
         <div id="res-container">
             <div id="loader" class="loading">SYNCING PIXELS...</div>
-            <img id="result" alt="Studioers AI Generation">
+            <img id="result" alt="AI Generation">
         </div>
 
-        <button id="dlBtn" class="btn-download" onclick="download()">Download Artwork</button>
+        <button id="dlBtn" class="btn-download" onclick="download()">DOWNLOAD (PNG)</button>
     </div>
 
     <p class="footer">STUDIOERS.XYZ // 2026</p>
 
     <script>
-        async function generate() {
+        function generate() {
             const prompt = document.getElementById('prompt').value.trim();
             const loader = document.getElementById('loader');
             const img = document.getElementById('result');
             const dlBtn = document.getElementById('dlBtn');
 
-            if(!prompt) return alert("Please enter a description first!");
+            if(!prompt) return alert("Enter a prompt!");
 
-            // UI Reset
             loader.style.display = 'block';
             img.style.display = 'none';
             dlBtn.style.display = 'none';
 
-            const seed = Math.floor(Math.random() * 9999999);
-            // Using Flux model for high-end results
-            const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1024&height=1024&seed=${seed}&nologo=true&model=flux`;
+            const seed = Math.floor(Math.random() * 999999);
+            // 512px resolution for maximum stability & speed
+            const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&seed=${seed}&nologo=true`;
 
+            // Reset image and try to load
+            img.src = ""; 
             img.src = url;
 
             img.onload = () => {
@@ -185,7 +202,7 @@
 
             img.onerror = () => {
                 loader.style.display = 'none';
-                alert("Generation failed. Please check your connection.");
+                alert("Connection glitch. The AI server might be busy. Please try again!");
             };
         }
 
@@ -201,13 +218,11 @@
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
-                window.URL.revokeObjectURL(url);
             } catch (err) {
-                alert("Download failed. Try right-clicking the image.");
+                alert("Use long-press or right-click to save.");
             }
         }
 
-        // Enter key support
         document.getElementById('prompt').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') generate();
         });
