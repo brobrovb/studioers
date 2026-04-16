@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studioers AI | Art Engine</title>
+    <title>Studioers AI | Art Generation Engine</title>
     <style>
         :root {
             --accent: #00ff88;
             --bg: #0a0a0b;
             --surface: #111113;
             --text: #ffffff;
+            --gray: #666;
         }
 
         body { 
             background: var(--bg); 
             color: var(--text); 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
             display: flex; 
             flex-direction: column; 
             align-items: center; 
@@ -27,12 +28,12 @@
         .box { 
             background: var(--surface); 
             border: 1px solid #1f1f23; 
-            padding: 35px; 
-            border-radius: 30px; 
+            padding: 40px; 
+            border-radius: 32px; 
             width: 100%; 
             max-width: 500px; 
             text-align: center; 
-            box-shadow: 0 40px 100px rgba(0,0,0,0.7); 
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8); 
         }
 
         h1 { 
@@ -42,97 +43,119 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 5px;
             font-weight: 900;
+            letter-spacing: -1px;
         }
 
-        .subtitle { color: #666; font-size: 13px; margin-bottom: 25px; letter-spacing: 1px; }
+        .subtitle { 
+            color: var(--gray); 
+            font-size: 13px; 
+            margin-bottom: 30px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+        }
 
         input { 
             width: 90%; 
-            padding: 16px; 
+            padding: 18px; 
             background: #000; 
             border: 2px solid #1f1f23; 
             color: #fff; 
-            border-radius: 15px; 
+            border-radius: 16px; 
             outline: none; 
-            transition: 0.3s;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 16px;
             margin-bottom: 15px;
         }
 
-        input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(0,255,136,0.1); }
+        input:focus { 
+            border-color: var(--accent); 
+            box-shadow: 0 0 20px rgba(0,255,136,0.1); 
+        }
 
         .btn-generate { 
             background: var(--accent); 
             color: #000; 
             border: none; 
-            padding: 16px; 
-            border-radius: 15px; 
+            padding: 18px; 
+            border-radius: 16px; 
             cursor: pointer; 
             font-weight: 800; 
             width: 100%; 
             font-size: 16px;
             transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .btn-generate:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .btn-generate:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 10px 20px rgba(0,255,136,0.2);
+        }
 
         .btn-download { 
             background: #fff; 
             color: #000; 
             border: none; 
-            padding: 12px; 
-            border-radius: 12px; 
+            padding: 14px; 
+            border-radius: 14px; 
             cursor: pointer; 
             font-weight: 700; 
             width: 100%; 
-            margin-top: 20px;
-            display: none; /* Başta gizli */
+            margin-top: 25px;
+            display: none; 
             transition: 0.3s;
         }
 
         #res-container { 
             margin-top: 30px; 
-            min-height: 300px; 
+            min-height: 350px; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
             border: 2px dashed #1f1f23; 
-            border-radius: 20px; 
+            border-radius: 24px; 
             background: #000;
             position: relative;
             overflow: hidden;
         }
 
-        img { width: 100%; border-radius: 18px; display: none; }
+        img { width: 100%; height: auto; border-radius: 22px; display: none; }
         
         .loading { 
             display: none; 
             color: var(--accent); 
-            font-family: monospace;
-            font-weight: bold;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            letter-spacing: 1px;
         }
 
-        .footer { margin-top: 40px; color: #333; font-size: 10px; letter-spacing: 3px; }
+        .footer { 
+            margin-top: 50px; 
+            color: #222; 
+            font-size: 11px; 
+            letter-spacing: 4px; 
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
     <div class="box">
         <h1>STUDIOERS <span style="color:#fff">AI</span></h1>
-        <p class="subtitle">POWERED BY FLUX ENGINE</p>
+        <p class="subtitle">Next-Gen Image Synthesis</p>
         
-        <input type="text" id="prompt" placeholder="İngilizce hayal et (örn: astronaut cat)...">
-        <button class="btn-generate" onclick="generate()">GÖRSELİ ÜRET</button>
+        <input type="text" id="prompt" placeholder="Describe your vision (e.g. Neon Samurai)...">
+        <button class="btn-generate" onclick="generate()">Generate Art</button>
         
         <div id="res-container">
-            <div id="loader" class="loading">PIKSELLER ISLENIYOR...</div>
-            <img id="result" alt="AI Output">
+            <div id="loader" class="loading">SYNCING PIXELS...</div>
+            <img id="result" alt="Studioers AI Generation">
         </div>
 
-        <button id="dlBtn" class="btn-download" onclick="download()">BİLGİSAYARA İNDİR</button>
+        <button id="dlBtn" class="btn-download" onclick="download()">Download Artwork</button>
     </div>
 
-    <p class="footer">STUDIOERS.XYZ | 2026</p>
+    <p class="footer">STUDIOERS.XYZ // 2026</p>
 
     <script>
         async function generate() {
@@ -141,46 +164,50 @@
             const img = document.getElementById('result');
             const dlBtn = document.getElementById('dlBtn');
 
-            if(!prompt) return alert("Kanka bir şeyler yazman lazım!");
+            if(!prompt) return alert("Please enter a description first!");
 
             // UI Reset
             loader.style.display = 'block';
             img.style.display = 'none';
             dlBtn.style.display = 'none';
 
-            const seed = Math.floor(Math.random() * 999999);
-            // En hızlı ve kaliteli sonuç için Flux modeli + 512px
-            const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&seed=${seed}&nologo=true&model=flux`;
+            const seed = Math.floor(Math.random() * 9999999);
+            // Using Flux model for high-end results
+            const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1024&height=1024&seed=${seed}&nologo=true&model=flux`;
 
             img.src = url;
 
             img.onload = () => {
                 loader.style.display = 'none';
                 img.style.display = 'block';
-                dlBtn.style.display = 'block'; // Görsel gelince indir butonu gelsin
+                dlBtn.style.display = 'block';
             };
 
             img.onerror = () => {
                 loader.style.display = 'none';
-                alert("Hata oluştu kanka, bir daha dene!");
+                alert("Generation failed. Please check your connection.");
             };
         }
 
         async function download() {
-            const img = document.getElementById('result');
-            const response = await fetch(img.src);
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `studioers_ai_${Date.now()}.png`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
+            try {
+                const img = document.getElementById('result');
+                const response = await fetch(img.src);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `StudioersAI_${Date.now()}.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            } catch (err) {
+                alert("Download failed. Try right-clicking the image.");
+            }
         }
 
-        // Enter tuşu ile üretim
+        // Enter key support
         document.getElementById('prompt').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') generate();
         });
