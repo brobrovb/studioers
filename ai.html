@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studioers AI | Art Engine</title>
+    <title>Studioers AI | Art Generation Engine</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -27,9 +27,10 @@
             min-height: 100vh;
         }
 
+        /* Home Button Container */
         .nav-header {
             width: 100%;
-            max-width: 500px;
+            max-width: 460px;
             display: flex;
             justify-content: flex-start;
             margin-bottom: 20px;
@@ -42,14 +43,19 @@
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             transition: 0.3s;
-            padding: 8px 14px;
-            border-radius: 10px;
+            padding: 10px 16px;
+            border-radius: 12px;
             border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
         }
 
-        .btn-home:hover { color: var(--accent); border-color: var(--accent); }
+        .btn-home:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: rgba(0, 255, 136, 0.05);
+        }
 
         .box { 
             background: var(--surface); 
@@ -75,12 +81,12 @@
         .subtitle { color: var(--gray); font-size: 11px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; }
 
         input { 
-            width: calc(100% - 32px); 
-            padding: 16px; 
+            width: calc(100% - 36px); 
+            padding: 18px; 
             background: #000; 
             border: 2px solid var(--border); 
             color: #fff; 
-            border-radius: 14px; 
+            border-radius: 16px; 
             outline: none; 
             transition: 0.3s;
             font-size: 15px;
@@ -94,8 +100,8 @@
             background: var(--accent); 
             color: #000; 
             border: none; 
-            padding: 16px; 
-            border-radius: 14px; 
+            padding: 18px; 
+            border-radius: 16px; 
             cursor: pointer; 
             font-weight: 800; 
             width: 100%; 
@@ -119,7 +125,6 @@
 
         img { width: 100%; height: auto; border-radius: 20px; display: none; }
         
-        /* Modern Spinner */
         .spinner {
             display: none;
             width: 40px;
@@ -155,40 +160,43 @@
             font-size: 13px;
         }
 
-        .footer { margin-top: 40px; color: #1a1a1c; font-size: 10px; letter-spacing: 4px; }
+        .footer { margin-top: 40px; color: #1a1a1c; font-size: 10px; letter-spacing: 4px; font-weight: bold;}
     </style>
 </head>
 <body>
 
     <div class="nav-header">
-        <a href="index.html" class="btn-home">← BACK TO HOME</a>
+        <a href="index.html" class="btn-home">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            BACK TO HOME
+        </a>
     </div>
 
     <div class="box">
         <h1>STUDIOERS <span style="color:#fff">AI</span></h1>
-        <p class="subtitle">Fast Generation Engine</p>
+        <p class="subtitle">Next-Gen Vision Engine</p>
         
-        <input type="text" id="prompt" placeholder="Describe anything (e.g. Neon City)...">
+        <input type="text" id="prompt" placeholder="Describe anything (e.g. Cyberpunk City)...">
         <button class="btn-generate" onclick="generate()">GENERATE ART</button>
         
         <div id="res-container">
             <div id="spinner" class="spinner"></div>
-            <div id="loaderText" class="loading-text">PLEASE WAIT...</div>
+            <div id="loaderText" class="loading-text">INITIALIZING...</div>
             <img id="result" alt="AI Generation">
         </div>
 
-        <button id="dlBtn" class="btn-download" onclick="download()">DOWNLOAD (PNG)</button>
+        <button id="dlBtn" class="btn-download" onclick="download()">DOWNLOAD ARTWORK (PNG)</button>
     </div>
 
     <p class="footer">STUDIOERS.XYZ // 2026</p>
 
     <script>
         const loadingMessages = [
-            "PLEASE WAIT...",
             "SYNCING PIXELS...",
             "DREAMING CONTENT...",
             "STYLIZING ART...",
-            "ALMOST READY..."
+            "ALMOST READY...",
+            "FINALIZING..."
         ];
 
         let messageInterval;
@@ -200,15 +208,13 @@
             const img = document.getElementById('result');
             const dlBtn = document.getElementById('dlBtn');
 
-            if(!prompt) return alert("Enter a prompt!");
+            if(!prompt) return alert("Please enter a description!");
 
-            // UI Reset
             spinner.style.display = 'block';
             loaderText.style.display = 'block';
             img.style.display = 'none';
             dlBtn.style.display = 'none';
 
-            // Start random message rotation
             let i = 0;
             clearInterval(messageInterval);
             messageInterval = setInterval(() => {
@@ -216,7 +222,7 @@
                 i++;
             }, 2000);
 
-            const seed = Math.floor(Math.random() * 999999);
+            const seed = Math.floor(Math.random() * 9999999);
             const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&seed=${seed}&nologo=true`;
 
             img.src = url;
@@ -250,7 +256,7 @@
                 a.click();
                 document.body.removeChild(a);
             } catch (err) {
-                alert("Use long-press or right-click to save.");
+                alert("Please right-click the image to save.");
             }
         }
 
