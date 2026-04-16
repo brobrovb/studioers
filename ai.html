@@ -49,10 +49,7 @@
             border: 1px solid var(--border);
         }
 
-        .btn-home:hover {
-            color: var(--accent);
-            border-color: var(--accent);
-        }
+        .btn-home:hover { color: var(--accent); border-color: var(--accent); }
 
         .box { 
             background: var(--surface); 
@@ -75,13 +72,7 @@
             letter-spacing: -1.5px;
         }
 
-        .subtitle { 
-            color: var(--gray); 
-            font-size: 11px; 
-            margin-bottom: 25px; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-        }
+        .subtitle { color: var(--gray); font-size: 11px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; }
 
         input { 
             width: calc(100% - 32px); 
@@ -116,21 +107,38 @@
             margin-top: 25px; 
             min-height: 320px; 
             display: flex; 
+            flex-direction: column;
             align-items: center; 
             justify-content: center; 
             border: 2px dashed var(--border); 
             border-radius: 24px; 
             background: #000;
             overflow: hidden;
+            position: relative;
         }
 
         img { width: 100%; height: auto; border-radius: 20px; display: none; }
         
-        .loading { 
+        /* Modern Spinner */
+        .spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 255, 136, 0.1);
+            border-left-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loading-text { 
             display: none; 
             color: var(--accent); 
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
+            text-transform: uppercase;
         }
 
         .btn-download { 
@@ -164,7 +172,8 @@
         <button class="btn-generate" onclick="generate()">GENERATE ART</button>
         
         <div id="res-container">
-            <div id="loader" class="loading">SYNCING PIXELS...</div>
+            <div id="spinner" class="spinner"></div>
+            <div id="loaderText" class="loading-text">PLEASE WAIT...</div>
             <img id="result" alt="AI Generation">
         </div>
 
@@ -174,35 +183,57 @@
     <p class="footer">STUDIOERS.XYZ // 2026</p>
 
     <script>
+        const loadingMessages = [
+            "PLEASE WAIT...",
+            "SYNCING PIXELS...",
+            "DREAMING CONTENT...",
+            "STYLIZING ART...",
+            "ALMOST READY..."
+        ];
+
+        let messageInterval;
+
         function generate() {
             const prompt = document.getElementById('prompt').value.trim();
-            const loader = document.getElementById('loader');
+            const spinner = document.getElementById('spinner');
+            const loaderText = document.getElementById('loaderText');
             const img = document.getElementById('result');
             const dlBtn = document.getElementById('dlBtn');
 
             if(!prompt) return alert("Enter a prompt!");
 
-            loader.style.display = 'block';
+            // UI Reset
+            spinner.style.display = 'block';
+            loaderText.style.display = 'block';
             img.style.display = 'none';
             dlBtn.style.display = 'none';
 
+            // Start random message rotation
+            let i = 0;
+            clearInterval(messageInterval);
+            messageInterval = setInterval(() => {
+                loaderText.innerText = loadingMessages[i % loadingMessages.length];
+                i++;
+            }, 2000);
+
             const seed = Math.floor(Math.random() * 999999);
-            // 512px resolution for maximum stability & speed
             const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&seed=${seed}&nologo=true`;
 
-            // Reset image and try to load
-            img.src = ""; 
             img.src = url;
 
             img.onload = () => {
-                loader.style.display = 'none';
+                clearInterval(messageInterval);
+                spinner.style.display = 'none';
+                loaderText.style.display = 'none';
                 img.style.display = 'block';
                 dlBtn.style.display = 'block';
             };
 
             img.onerror = () => {
-                loader.style.display = 'none';
-                alert("Connection glitch. The AI server might be busy. Please try again!");
+                clearInterval(messageInterval);
+                spinner.style.display = 'none';
+                loaderText.style.display = 'none';
+                alert("Connection glitch. Please try again!");
             };
         }
 
