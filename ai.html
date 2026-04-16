@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studioers AI | Visual Engine</title>
+    <title>Studioers AI | Art Engine</title>
     <style>
-        /* STUDIOERS DARK THEME v2.0 */
         :root {
-            --primary: #00ff88;
+            --accent: #00ff88;
             --bg: #0a0a0b;
             --surface: #111113;
-            --border: #1f1f23;
+            --text: #ffffff;
         }
 
         body { 
             background: var(--bg); 
-            color: #fff; 
-            font-family: 'Inter', system-ui, sans-serif; 
+            color: var(--text); 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             display: flex; 
             flex-direction: column; 
             align-items: center; 
@@ -27,27 +26,25 @@
 
         .box { 
             background: var(--surface); 
-            border: 1px solid var(--border); 
+            border: 1px solid #1f1f23; 
             padding: 35px; 
-            border-radius: 28px; 
+            border-radius: 30px; 
             width: 100%; 
-            max-width: 480px; 
+            max-width: 500px; 
             text-align: center; 
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8); 
+            box-shadow: 0 40px 100px rgba(0,0,0,0.7); 
         }
 
         h1 { 
-            font-size: 28px; 
-            background: linear-gradient(135deg, var(--primary), #00bdff);
+            font-size: 32px; 
+            background: linear-gradient(135deg, var(--accent), #00bdff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-            font-weight: 800;
+            margin-bottom: 5px;
+            font-weight: 900;
         }
 
-        p.subtitle { color: #666; font-size: 14px; margin-bottom: 25px; }
-
-        .input-group { position: relative; margin-bottom: 20px; }
+        .subtitle { color: #666; font-size: 13px; margin-bottom: 25px; letter-spacing: 1px; }
 
         input { 
             width: 90%; 
@@ -55,140 +52,137 @@
             background: #000; 
             border: 2px solid #1f1f23; 
             color: #fff; 
-            border-radius: 14px; 
+            border-radius: 15px; 
             outline: none; 
-            transition: 0.4s;
+            transition: 0.3s;
             font-size: 16px;
-            text-align: center;
+            margin-bottom: 15px;
         }
 
-        input:focus { 
-            border-color: var(--primary); 
-            box-shadow: 0 0 20px rgba(0,255,136,0.15); 
-        }
+        input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(0,255,136,0.1); }
 
-        button { 
-            background: var(--primary); 
+        .btn-generate { 
+            background: var(--accent); 
             color: #000; 
             border: none; 
             padding: 16px; 
-            border-radius: 14px; 
+            border-radius: 15px; 
             cursor: pointer; 
-            font-weight: 900; 
-            width: 98%; 
-            font-size: 15px;
-            letter-spacing: 1px;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 800; 
+            width: 100%; 
+            font-size: 16px;
+            transition: 0.3s;
         }
 
-        button:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,255,136,0.3); }
-        button:active { transform: scale(0.96); }
+        .btn-generate:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+        .btn-download { 
+            background: #fff; 
+            color: #000; 
+            border: none; 
+            padding: 12px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: 700; 
+            width: 100%; 
+            margin-top: 20px;
+            display: none; /* Başta gizli */
+            transition: 0.3s;
+        }
 
         #res-container { 
             margin-top: 30px; 
-            min-height: 320px; 
+            min-height: 300px; 
             display: flex; 
-            flex-direction: column;
             align-items: center; 
             justify-content: center; 
-            border: 2px dashed var(--border); 
+            border: 2px dashed #1f1f23; 
             border-radius: 20px; 
-            overflow: hidden;
             background: #000;
             position: relative;
+            overflow: hidden;
         }
 
-        img { width: 100%; height: auto; border-radius: 18px; display: none; }
+        img { width: 100%; border-radius: 18px; display: none; }
         
         .loading { 
             display: none; 
-            color: var(--primary); 
-            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent); 
+            font-family: monospace;
             font-weight: bold;
-            font-size: 14px; 
-            text-transform: uppercase;
         }
 
-        .loading::after {
-            content: "";
-            animation: dots 1.5s steps(4, end) infinite;
-        }
-
-        @keyframes dots {
-            0%, 20% { content: ""; }
-            40% { content: "."; }
-            60% { content: ".."; }
-            80%, 100% { content: "..."; }
-        }
-
-        .footer { margin-top: 30px; font-size: 11px; color: #333; letter-spacing: 2px; }
+        .footer { margin-top: 40px; color: #333; font-size: 10px; letter-spacing: 3px; }
     </style>
 </head>
 <body>
 
     <div class="box">
         <h1>STUDIOERS <span style="color:#fff">AI</span></h1>
-        <p class="subtitle">Imagination to Pixels Engine</p>
+        <p class="subtitle">POWERED BY FLUX ENGINE</p>
         
-        <div class="input-group">
-            <input type="text" id="promptInput" placeholder="Write in English (e.g. Cyberpunk Dog)">
-        </div>
-        
-        <button onclick="generateImage()">GENERATE PIXELS</button>
+        <input type="text" id="prompt" placeholder="İngilizce hayal et (örn: astronaut cat)...">
+        <button class="btn-generate" onclick="generate()">GÖRSELİ ÜRET</button>
         
         <div id="res-container">
-            <div id="loader" class="loading">Processing Pixels</div>
-            <img id="outputImage" alt="Studioers AI Image Result">
+            <div id="loader" class="loading">PIKSELLER ISLENIYOR...</div>
+            <img id="result" alt="AI Output">
         </div>
-        
-        <div class="footer">STABLE DIFFUSION FLUX ENGINE</div>
+
+        <button id="dlBtn" class="btn-download" onclick="download()">BİLGİSAYARA İNDİR</button>
     </div>
 
-    <script>
-        function generateImage() {
-            const promptField = document.getElementById('promptInput');
-            const loader = document.getElementById('loader');
-            const img = document.getElementById('outputImage');
-            const prompt = promptField.value.trim();
+    <p class="footer">STUDIOERS.XYZ | 2026</p>
 
-            if(!prompt) {
-                alert("Please enter a prompt first!");
-                return;
-            }
+    <script>
+        async function generate() {
+            const prompt = document.getElementById('prompt').value.trim();
+            const loader = document.getElementById('loader');
+            const img = document.getElementById('result');
+            const dlBtn = document.getElementById('dlBtn');
+
+            if(!prompt) return alert("Kanka bir şeyler yazman lazım!");
 
             // UI Reset
             loader.style.display = 'block';
             img.style.display = 'none';
-            console.log("Generating for: " + prompt);
+            dlBtn.style.display = 'none';
 
-            // Random seed ensures a new image every time
-            const seed = Math.floor(Math.random() * 9999999);
-            
-            // Fast & Reliable API URL
-            const apiUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&seed=${seed}&nologo=true&model=flux`;
+            const seed = Math.floor(Math.random() * 999999);
+            // En hızlı ve kaliteli sonuç için Flux modeli + 512px
+            const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&seed=${seed}&nologo=true&model=flux`;
 
-            // Setup Image Loading
-            img.crossOrigin = "anonymous"; // Bypass potential CORS issues
-            img.src = apiUrl;
+            img.src = url;
 
-            img.onload = function() {
+            img.onload = () => {
                 loader.style.display = 'none';
                 img.style.display = 'block';
-                console.log("Pixels gathered successfully.");
+                dlBtn.style.display = 'block'; // Görsel gelince indir butonu gelsin
             };
 
-            img.onerror = function() {
+            img.onerror = () => {
                 loader.style.display = 'none';
-                alert("Connection glitch! Try again or check your internet.");
-                console.error("Image load failed.");
+                alert("Hata oluştu kanka, bir daha dene!");
             };
         }
 
-        // Enter key support
-        document.getElementById('promptInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                generateImage();
-            }
+        async function download() {
+            const img = document.getElementById('result');
+            const response = await fetch(img.src);
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `studioers_ai_${Date.now()}.png`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Enter tuşu ile üretim
+        document.getElementById('prompt').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') generate();
         });
     </script>
 
