@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        :root { --accent: #00ff88; --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; --download: #ffcc00; --guide: #00aaff; --ai-magic: #8a2be2; --hostinger: #673ab7; --bybit: #f7a600; --etsy: #eb6d20; }
+        :root { --accent: #00ff88; --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; --download: #ffcc00; --guide: #00aaff; --ai-magic: #8a2be2; --hostinger: #673ab7; --bybit: #f7a600; --etsy: #eb6d20; --youtube: #ff0000; --tiktok: #ff0050; }
         * { box-sizing: border-box; }
         
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
@@ -107,17 +107,32 @@
             background: linear-gradient(135deg, #0a0a0a 0%, #111 100%); 
             padding: 40px; border: 1px solid rgba(0, 255, 136, 0.2);
             border-radius: 28px; margin-bottom: 50px;
-            display: flex; align-items: center; gap: 35px; flex-wrap: wrap;
+            display: flex; align-items: flex-start; gap: 35px; flex-wrap: nowrap;
         }
         .hq-img-box { width: 180px; height: 180px; border-radius: 24px; overflow: hidden; border: 2px solid var(--accent); flex-shrink: 0; transform: rotate(-2deg); }
         .hq-img { width: 100%; height: 100%; object-fit: cover; }
         
+        .social-links { display: flex; gap: 15px; margin-top: 20px; }
+        .social-btn { padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 800; text-transform: uppercase; transition: 0.3s; }
+        .yt-btn { border: 1px solid var(--youtube); color: var(--youtube); }
+        .tt-btn { border: 1px solid var(--tiktok); color: var(--tiktok); }
+        .social-btn:hover { background: rgba(255,255,255,0.05); }
+
+        .seo-text-box { margin-top: 50px; border-top: 1px solid var(--border); padding-top: 40px; }
+        .seo-text { font-size: 13px; color: #555; line-height: 1.8; text-align: justify; }
+
         .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 50px; }
         .stack-item { background: var(--card); border: 1px solid var(--border); padding: 30px 15px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; transition: 0.3s; }
         .stack-logo { width: 45px; height: 45px; filter: grayscale(1); }
         .stack-item:hover .stack-logo { filter: grayscale(0); }
         
         footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: #444; font-size: 12px; }
+
+        @media (max-width: 768px) {
+            .hq-container { flex-direction: column; text-align: center; flex-wrap: wrap; }
+            .hq-img-box { transform: none; margin: 0 auto 20px auto; }
+            .social-links { justify-content: center; }
+        }
     </style>
 </head>
 <body>
@@ -231,7 +246,7 @@
             </div>
             <div class="referral-banner bybit">
                 <div class="referral-content">
-                    <h2>Bybit Trading</h2>
+                    <h2>Bybit Trading (Ref: 6L9ZDXJ)</h2>
                     <p>Secure your assets on a top-tier exchange with exclusive rewards.</p>
                 </div>
                 <a href="https://www.bybit.com/invite?ref=6L9ZDXJ" target="_blank" class="referral-btn bybit-btn">JOIN BYBIT →</a>
@@ -251,10 +266,22 @@
                     <br><br>
                     Right by my side is <strong>Joker</strong>, our loyal co-pilot and the true heart of Studioers. Whether we're parked by a quiet lake or deep in the mountains, Joker ensures the morale stays high while I push the limits of mobile engineering. Every tool and app in this ecosystem is crafted under the stars.
                 </p>
+                <div class="social-links">
+                    <a href="https://youtube.com/@studioers" target="_blank" class="social-btn yt-btn">YouTube Channel</a>
+                    <a href="https://tiktok.com/@studioers" target="_blank" class="social-btn tt-btn">TikTok Live</a>
+                </div>
             </div>
         </div>
 
-        <span class="section-label">Core Technology Stack</span>
+        <div class="seo-text-box">
+            <span class="section-label">Engineering Insights & SEO</span>
+            <div class="seo-text">
+                <p>Welcome to <strong>Studioers</strong>, the premier hub for high-performance software development, AI-driven automation, and cutting-edge mobile engineering. Our ecosystem is meticulously designed to bridge the gap between complex algorithmic solutions and user-centric digital experiences. As a leader in the Android development space, Studioers focuses on creating lightweight yet powerful applications using <strong>Kotlin</strong> and <strong>Android Native</strong> architectures, ensuring maximum compatibility with the latest API 35/36 standards. Our expertise extends into the realm of game development, utilizing the <strong>Godot Engine</strong> to build interactive 2D and 3D experiences that push the boundaries of cross-platform performance.</p>
+                <p>In addition to mobile tech, we specialize in <strong>AI Art Generation</strong> through advanced neural engines, providing creators with professional tools for digital assets. Our developer suite includes custom-built <strong>CLI tools</strong> for image optimization (WebP conversion) and local security vault generation, emphasizing privacy and efficiency. Whether you are looking for monetization strategies via our <strong>TikTok Trivia Engine</strong> or seeking technical guidance through our comprehensive digital revenue guides, Studioers provides the infrastructure needed for success in the 2026 digital economy. Explore our open-source projects on GitHub or find our premium assets on Gumroad and Etsy.</p>
+            </div>
+        </div>
+
+        <span class="section-label" style="margin-top: 50px;">Core Technology Stack</span>
         <div class="stack-grid">
             <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/android/android-icon.svg" alt="Android" class="stack-logo"><span class="stack-name">Android Native</span></div>
             <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/kotlinlang/kotlinlang-icon.svg" alt="Kotlin" class="stack-logo"><span class="stack-name">Kotlin</span></div>
