@@ -138,6 +138,18 @@
 
         footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: #444; font-size: 12px; }
         .footer-links a { margin: 0 10px; color: #666; transition: 0.3s; }
+
+        /* HQ Photo Design */
+        .hq-container {
+            margin-bottom: 50px; border-radius: 24px; overflow: hidden; 
+            border: 1px solid var(--accent); position: relative;
+            box-shadow: 0 20px 40px rgba(0,255,136,0.1);
+        }
+        .hq-img { width: 100%; height: auto; display: block; filter: brightness(0.9); }
+        .hq-overlay {
+            position: absolute; bottom: 0; left: 0; right: 0; 
+            background: linear-gradient(transparent, rgba(0,0,0,0.95)); padding: 30px;
+        }
     </style>
 </head>
 <body>
@@ -248,6 +260,17 @@
                 <p>Launch your website or app on a professional infrastructure. This is the engine behind <strong>Studioers.xyz</strong>.</p>
             </div>
             <a href="https://www.hostinger.com/tr?REFERRALCODE=VDOCOINKRREB" target="_blank" class="referral-btn">GET SPECIAL DISCOUNT →</a>
+        </div>
+
+        <span class="section-label">The Studioers Journey</span>
+        <div class="hq-container">
+            <img src="studioers-hq.jpg.jpg" alt="Studioers HQ - Karavan Office" class="hq-img">
+            <div class="hq-overlay">
+                <p style="margin: 0; font-size: 14px; font-weight: 800; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase;">Mobile HQ: Live from the Road</p>
+                <p style="margin: 8px 0 0 0; font-size: 13px; color: #fff; line-height: 1.6; max-width: 600px; opacity: 0.9;">
+                    For over 2 years, we've been traveling and developing from our caravan with my wife and our loyal co-pilot <strong>Joker</strong>. Every line of code here is born from the freedom of the open road.
+                </p>
+            </div>
         </div>
 
         <span class="section-label">Engineering the Future</span>
