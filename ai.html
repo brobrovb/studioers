@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studioers AI Art Generator | Free Stable Diffusion Engine</title>
+    <title>Studioers AI Art Generator | Free Stable Diffusion & Flux Engine</title>
+    <meta name="description" content="Generate professional AI art for free. Studioers AI uses Stable Diffusion and Neural Vision technology to create masterpieces from text.">
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
@@ -14,7 +15,7 @@
             --text: #ffffff;
             --gray: #888;
             --border: #1f1f23;
-            --bybit: #f7a600; /* Bybit Gold */
+            --bybit: #f7a600;
         }
 
         body { 
@@ -47,7 +48,6 @@
         .btn-generate { background: var(--accent); color: #000; border: none; padding: 18px; border-radius: 16px; cursor: pointer; font-weight: 800; width: 100%; font-size: 16px; transition: 0.3s; text-transform: uppercase; margin-bottom: 10px; }
         .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,255,136,0.2); }
 
-        /* PROMO AREA - PATREON & BYBIT */
         .promo-area { display: flex; gap: 10px; margin-bottom: 25px; }
         .btn-promo { 
             flex: 1; text-decoration: none; font-size: 10px; font-weight: 800; padding: 12px; 
@@ -64,6 +64,14 @@
         .loading-text { display: none; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
 
         .btn-download { background: #fff; color: #000; border: none; padding: 14px; border-radius: 16px; cursor: pointer; font-weight: 800; width: 100%; margin-top: 25px; display: none; font-size: 14px; }
+
+        /* DELİ SEO SECTION */
+        .seo-content { max-width: 800px; text-align: left; line-height: 1.8; color: #a1a1a6; font-size: 15px; padding-bottom: 100px; border-top: 1px solid var(--border); padding-top: 50px; }
+        .seo-content h2 { color: var(--accent); font-size: 28px; margin-top: 40px; letter-spacing: -1px; }
+        .seo-content h3 { color: #fff; font-size: 20px; margin-top: 30px; }
+        .seo-content p { margin-bottom: 20px; }
+        .highlight { color: var(--accent); font-weight: 600; }
+        .white-bold { color: #fff; font-weight: 700; }
 
         .footer-tag { margin-top: 20px; color: #222; font-size: 10px; letter-spacing: 5px; text-align: center; }
     </style>
@@ -86,17 +94,34 @@
         
         <div class="promo-area">
             <a href="https://www.patreon.com/studioers" target="_blank" class="btn-promo">Support Lab</a>
-            <a href="https://www.bybit.com/invite?ref=YOUR_REF_CODE" target="_blank" class="btn-promo bybit">Trade on Bybit</a>
+            <a href="https://www.bybit.com/invite?ref=6L9ZDXJ" target="_blank" class="btn-promo bybit">Trade on Bybit</a>
         </div>
 
         <div id="res-container">
             <div id="spinner" class="spinner"></div>
             <div id="loaderText" class="loading-text">INITIALIZING...</div>
-            <img id="result" alt="Studioers AI Generation">
+            <img id="result" alt="Studioers AI Image Generator">
         </div>
 
         <button id="dlBtn" class="btn-download" onclick="download()">DOWNLOAD ARTWORK (PNG)</button>
     </div>
+
+    <article class="seo-content">
+        <h2>Unleashing the Power of Generative AI: The Studioers Vision</h2>
+        <p>Welcome to the frontier of digital creativity. At <span class="highlight">Studioers.xyz</span>, we leverage cutting-edge <span class="white-bold">Stable Diffusion</span> and <span class="white-bold">FLUX.1</span> models to provide a seamless, free AI art generation experience. Our engine is not just a tool; it's a bridge between human imagination and machine precision.</p>
+
+        <h3>Why Choose Studioers AI for Your Creative Projects?</h3>
+        <p>In the rapidly evolving landscape of <span class="highlight">Artificial Intelligence</span>, speed and quality are paramount. Whether you are a game developer working in <span class="white-bold">Godot Engine</span>, an Android architect building the next top-tier app, or a digital nomad looking for unique social media assets, our Neural Vision Engine delivers high-fidelity results in seconds. We optimize every prompt through advanced <span class="white-bold">CLIP guidance</span> and latent space denoising to ensure your vision is captured perfectly.</p>
+
+        <h3>The Science of Latent Diffusion Models</h3>
+        <p>Behind every "Generate" click lies a complex web of <span class="highlight">Neural Networks</span>. Our system utilizes <strong>Latent Diffusion</strong>, a process where AI starts with pure Gaussian noise and incrementally refines it into a clear, high-resolution image. This technology allows for unprecedented control over style, lighting, and composition, making it the industry standard for professional <span class="white-bold">AI Art Generation</span> in 2026.</p>
+
+        <h3>Building a Future for Developers and Nomads</h3>
+        <p>Studioers was born in the heart of the <span class="highlight">Nomad Tech Lifestyle</span>. We understand the need for lightweight, powerful tools that work anywhere—from a caravan in Antalya to a high-rise in Tokyo. By integrating AI into your workflow, you bypass the need for expensive stock photography and generic assets. You create, you iterate, and you deploy.</p>
+
+        <h3>Financial Freedom & High-Tech Synergy</h3>
+        <p>As we push the boundaries of software, we also believe in financial empowerment. That's why we partner with platforms like <span class="white-bold">Bybit</span>. Just as AI democratizes design, decentralized finance democratizes opportunity. By using our curated tools and links, you support the ongoing development of free, open-access AI technology for everyone.</p>
+    </article>
 
     <p class="footer-tag">STUDIOERS.XYZ // EST. 2026</p>
 
@@ -126,7 +151,7 @@
             }, 2000);
 
             const seed = Math.floor(Math.random() * 9999999);
-            const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&seed=${seed}&nologo=true`;
+            const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1024&height=1024&seed=${seed}&nologo=true`;
 
             img.src = url;
             img.onload = () => {
