@@ -16,6 +16,8 @@
             --text: #ffffff;
             --gray: #888;
             --border: #1f1f23;
+            --patreon: #ff424d;
+            --gumroad: #eb6d20;
         }
 
         body { 
@@ -61,6 +63,13 @@
 
         .btn-download { background: #fff; color: #000; border: none; padding: 14px; border-radius: 16px; cursor: pointer; font-weight: 800; width: 100%; margin-top: 25px; display: none; font-size: 14px; }
 
+        /* MONETIZATION BUTTONS */
+        .support-box { margin-top: 30px; padding-top: 25px; border-top: 1px solid var(--border); display: none; flex-direction: column; gap: 10px; }
+        .monetize-btn { text-decoration: none; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 12px; transition: 0.3s; text-transform: uppercase; }
+        .patreon-style { background: var(--patreon); color: #fff; }
+        .gumroad-style { border: 1px solid var(--gumroad); color: var(--gumroad); }
+        .monetize-btn:hover { opacity: 0.8; transform: scale(1.02); }
+
         /* SEO SECTION - THE ARTICLE */
         .seo-content { max-width: 700px; text-align: left; line-height: 1.8; color: #a1a1a6; font-size: 15px; padding-bottom: 100px; border-top: 1px solid var(--border); padding-top: 50px; }
         .seo-content h2 { color: var(--accent); font-size: 24px; margin-top: 30px; }
@@ -94,6 +103,12 @@
         </div>
 
         <button id="dlBtn" class="btn-download" onclick="download()">DOWNLOAD ARTWORK (PNG)</button>
+
+        <div id="supportArea" class="support-box">
+            <p style="font-size: 11px; color: var(--gray); margin-bottom: 10px;">PROMPT WORKED? SUPPORT THE NOMAD LAB</p>
+            <a href="https://www.patreon.com/studioers" target="_blank" class="monetize-btn patreon-style">Become a Patron (Unlimited Art)</a>
+            <a href="https://studioers.gumroad.com" target="_blank" class="monetize-btn gumroad-style">Get Premium Prompt Packs</a>
+        </div>
     </div>
 
     <article class="seo-content">
@@ -125,6 +140,7 @@
             const loaderText = document.getElementById('loaderText');
             const img = document.getElementById('result');
             const dlBtn = document.getElementById('dlBtn');
+            const supportArea = document.getElementById('supportArea');
 
             if(!prompt) return alert("Please enter a description!");
 
@@ -132,6 +148,7 @@
             loaderText.style.display = 'block';
             img.style.display = 'none';
             dlBtn.style.display = 'none';
+            supportArea.style.display = 'none';
 
             let i = 0;
             clearInterval(messageInterval);
@@ -150,6 +167,7 @@
                 loaderText.style.display = 'none';
                 img.style.display = 'block';
                 dlBtn.style.display = 'block';
+                supportArea.style.display = 'flex'; // Görsel hazır olunca butonlar gelir
             };
             img.onerror = () => {
                 clearInterval(messageInterval);
