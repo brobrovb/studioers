@@ -141,19 +141,20 @@
 
         /* OPTIMIZED HQ & Joker Section */
         .hq-container {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: 24px; padding: 30px; margin-bottom: 50px;
-            display: flex; align-items: center; gap: 25px; flex-wrap: wrap;
+            background: linear-gradient(135deg, #0a0a0a 0%, #111 100%); 
+            padding: 40px; border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 28px; margin-bottom: 50px;
+            display: flex; align-items: center; gap: 35px; flex-wrap: wrap;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
         .hq-img-box {
-            width: 130px; height: 130px; border-radius: 50%;
+            width: 180px; height: 180px; border-radius: 24px;
             overflow: hidden; border: 2px solid var(--accent);
-            box-shadow: 0 0 20px rgba(0,255,136,0.2);
-            flex-shrink: 0;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            flex-shrink: 0; transform: rotate(-2deg);
         }
-        .hq-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.95); }
-        .hq-content { flex: 1; min-width: 250px; }
+        .hq-img { width: 100%; height: 100%; object-fit: cover; }
+        .hq-content { flex: 1; min-width: 300px; }
     </style>
 </head>
 <body>
@@ -266,15 +267,18 @@
             <a href="https://www.hostinger.com/tr?REFERRALCODE=VDOCOINKRREB" target="_blank" class="referral-btn">GET SPECIAL DISCOUNT →</a>
         </div>
 
-        <span class="section-label">Our Story</span>
+        <span class="section-label">The Nomad Lab</span>
         <div class="hq-container">
             <div class="hq-img-box">
-                <img src="studioers-hq.jpg.jpg" alt="Studioers HQ - Karavan Office with Joker" class="hq-img">
+                <img src="studioers-hq.jpg.jpg" alt="Studioers HQ - Caravan Office with Joker" class="hq-img">
             </div>
             <div class="hq-content">
-                <p style="margin: 0; font-size: 14px; font-weight: 800; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase;">Mobil Genel Merkez: Yollardan Canlı Yayın</p>
-                <p style="margin: 10px 0 0 0; font-size: 13px; color: #fff; line-height: 1.7; opacity: 0.9;">
-                    Tam 2 yıldır, eşim ve sadık co-pilotumuz <strong>Joker</strong> ile birlikte karavanımızdan hem dünyayı geziyor hem de bu projeleri geliştiriyoruz. Studioers'daki her satır kod, açık yolların özgürlüğünden doğuyor.
+                <p style="margin: 0; font-size: 12px; font-weight: 800; color: var(--accent); letter-spacing: 2px; text-transform: uppercase;">HQ Status: 24 Months on the Road</p>
+                <h3 style="margin: 12px 0; font-size: 1.6rem; color: #fff;">Code, Freedom, and a Dog Named <span style="color: var(--accent)">Joker</span></h3>
+                <p style="margin: 0; font-size: 14px; color: #bbb; line-height: 1.8;">
+                    For the past two years, my wife and I have traded traditional office walls for the boundless freedom of caravan life. Living and working full-time from the road isn't just a lifestyle—it's the ultimate stress-test for our software. 
+                    <br><br>
+                    Right by my side is <strong>Joker</strong>, our loyal co-pilot and the true heart of Studioers. Whether we're parked by a quiet lake or deep in the mountains, Joker ensures the morale stays high while I push the limits of mobile engineering. Every tool and app in this ecosystem is crafted under the stars, tested through the challenges of the road, and inspired by the wild.
                 </p>
             </div>
         </div>
