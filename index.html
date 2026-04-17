@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        :root { --accent: #00ff88; --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; --download: #ffcc00; --guide: #00aaff; --ai-magic: #8a2be2; }
+        :root { --accent: #00ff88; --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; --download: #ffcc00; --guide: #00aaff; --ai-magic: #8a2be2; --hostinger: #673ab7; }
         * { box-sizing: border-box; }
         
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
@@ -46,7 +46,6 @@
         .store-text span:first-child { font-size: 10px; opacity: 0.6; }
         .store-text span:last-child { font-size: 16px; font-weight: 800; display: block; }
 
-        /* NEW AI BANNER STYLE */
         .ai-promo-banner {
             background: linear-gradient(135deg, #050505 0%, #0d0d12 100%);
             border: 1px solid var(--accent);
@@ -108,6 +107,22 @@
         }
         .guide-content h2 { font-size: 1.8rem; margin: 0 0 10px 0; color: var(--guide); }
         .guide-btn { background: var(--guide); color: #000; padding: 15px 30px; border-radius: 12px; font-weight: 800; transition: 0.3s; }
+
+        /* Referral Banner Style */
+        .referral-banner {
+            background: linear-gradient(135deg, #050505 0%, #0f0a1a 100%);
+            border: 1px solid var(--hostinger); border-radius: 20px; padding: 35px;
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 50px; gap: 25px; flex-wrap: wrap; position: relative; overflow: hidden;
+        }
+        .referral-content h2 { font-size: 1.6rem; margin: 0 0 10px 0; color: #fff; }
+        .referral-content p { color: #888; margin: 0; max-width: 550px; font-size: 14px; }
+        .referral-btn { 
+            background: var(--hostinger); color: #fff; padding: 14px 28px; 
+            border-radius: 12px; font-weight: 800; white-space: nowrap; 
+            box-shadow: 0 10px 30px rgba(103, 58, 183, 0.2); transition: 0.3s;
+        }
+        .referral-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(103, 58, 183, 0.4); }
 
         .about-section { padding: 30px 0; border-top: 1px solid var(--border); margin-bottom: 40px; }
         .about-section h2 { font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 15px; }
@@ -224,6 +239,15 @@
                 <p>Learn the 10 proven methods to scale your digital income. From Etsy stores to Crypto infrastructure and YouTube niche strategies.</p>
             </div>
             <a href="guide.html" class="guide-btn">READ THE GUIDE →</a>
+        </div>
+
+        <span class="section-label" style="color: var(--hostinger);">Cloud Infrastructure</span>
+        <div class="referral-banner">
+            <div class="referral-content">
+                <h2>Build Your Own Project</h2>
+                <p>Launch your website or app on a professional infrastructure. This is the engine behind <strong>Studioers.xyz</strong>.</p>
+            </div>
+            <a href="https://www.hostinger.com/tr?REFERRALCODE=VDOCOINKRREB" target="_blank" class="referral-btn">GET SPECIAL DISCOUNT →</a>
         </div>
 
         <span class="section-label">Engineering the Future</span>
