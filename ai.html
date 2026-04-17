@@ -14,6 +14,7 @@
             --text: #ffffff;
             --gray: #888;
             --border: #1f1f23;
+            --bybit: #f7a600; /* Bybit Gold */
         }
 
         body { 
@@ -46,7 +47,7 @@
         .btn-generate { background: var(--accent); color: #000; border: none; padding: 18px; border-radius: 16px; cursor: pointer; font-weight: 800; width: 100%; font-size: 16px; transition: 0.3s; text-transform: uppercase; margin-bottom: 10px; }
         .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,255,136,0.2); }
 
-        /* YENİ BUTONLAR - SABİT */
+        /* PROMO AREA - PATREON & BYBIT */
         .promo-area { display: flex; gap: 10px; margin-bottom: 25px; }
         .btn-promo { 
             flex: 1; text-decoration: none; font-size: 10px; font-weight: 800; padding: 12px; 
@@ -54,7 +55,7 @@
             transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
         }
         .btn-promo:hover { border-color: #ff424d; color: #ff424d; background: rgba(255, 66, 77, 0.05); }
-        .btn-promo.gumroad:hover { border-color: #eb6d20; color: #eb6d20; background: rgba(235, 109, 32, 0.05); }
+        .btn-promo.bybit:hover { border-color: var(--bybit); color: var(--bybit); background: rgba(247, 166, 0, 0.05); }
 
         #res-container { margin-top: 10px; min-height: 350px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed var(--border); border-radius: 28px; background: #000; overflow: hidden; position: relative; }
         img { width: 100%; border-radius: 24px; display: none; }
@@ -64,10 +65,6 @@
 
         .btn-download { background: #fff; color: #000; border: none; padding: 14px; border-radius: 16px; cursor: pointer; font-weight: 800; width: 100%; margin-top: 25px; display: none; font-size: 14px; }
 
-        .seo-content { max-width: 700px; text-align: left; line-height: 1.8; color: #a1a1a6; font-size: 15px; padding-bottom: 100px; border-top: 1px solid var(--border); padding-top: 50px; }
-        .seo-content h2 { color: var(--accent); font-size: 24px; margin-top: 30px; }
-        .seo-content h3 { color: #fff; font-size: 18px; }
-        .highlight { color: #fff; font-weight: 600; }
         .footer-tag { margin-top: 20px; color: #222; font-size: 10px; letter-spacing: 5px; text-align: center; }
     </style>
 </head>
@@ -89,7 +86,7 @@
         
         <div class="promo-area">
             <a href="https://www.patreon.com/studioers" target="_blank" class="btn-promo">Support Lab</a>
-            <a href="https://studioers.gumroad.com" target="_blank" class="btn-promo gumroad">Prompt Packs</a>
+            <a href="https://www.bybit.com/invite?ref=YOUR_REF_CODE" target="_blank" class="btn-promo bybit">Trade on Bybit</a>
         </div>
 
         <div id="res-container">
@@ -100,15 +97,6 @@
 
         <button id="dlBtn" class="btn-download" onclick="download()">DOWNLOAD ARTWORK (PNG)</button>
     </div>
-
-    <article class="seo-content">
-        <h2>The Architecture of Modern Generative Intelligence</h2>
-        <p>At <span class="highlight">Studioers.xyz</span>, we believe that AI image generation isn't just about pixels. We bridge the gap between heavy-duty GPU clusters and your web browser.</p>
-        <h3>Understanding Stable Diffusion & FLUX.1</h3>
-        <p>Our generator leverages the latest advancements in the <span class="highlight">Stable Diffusion</span> ecosystem. It strategically removes noise to reveal the latent masterpiece hidden within the data.</p>
-        <h3>Engineering for Performance</h3>
-        <p>Whether you are generating art for a mobile game in <strong>Godot</strong> or creating unique UI assets for an <strong>Android app</strong>, our engine is designed for high fidelity.</p>
-    </article>
 
     <p class="footer-tag">STUDIOERS.XYZ // EST. 2026</p>
 
