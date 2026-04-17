@@ -3,23 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="STUDIOERS - Advanced Android Development and AI Solutions.">
-    <title>STUDIOERS | Advanced AI Solutions</title>
+    <meta name="google-site-verification" content="3v-dwgR_03wM3wWci6lWpWoqjjbpuBLlp27pDnS8hbY" />
+    <meta name="description" content="STUDIOERS - Advanced Android Development, AI-driven automation, and professional software solutions. Explore our open-source CLI tools and high-performance apps.">
+
+    <title>STUDIOERS | Advanced AI Solutions & Android Development</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --accent: #00ff88; --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; --download: #ffcc00; --guide: #00aaff; --bybit: #f7a600; --patreon: #ff424d; --etsy: #eb6d20; --surface: #111113; --gray: #888; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; -webkit-font-smoothing: antialiased; }
+        :root { --accent: #00ff88; --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; --download: #ffcc00; --guide: #00aaff; --ai-magic: #8a2be2; --hostinger: #673ab7; --bybit: #f7a600; --etsy: #eb6d20; }
+        * { box-sizing: border-box; }
+        
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
         a { text-decoration: none; color: inherit; }
+
+        .hero-section {
+            position: relative; width: 100%; min-height: 60vh; display: flex; flex-direction: column;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,1) 100%), 
+                        url('https://public-files.gumroad.com/ya39cdpadopl1829j234roh1a0gu');
+            background-size: cover; background-position: center; border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container { max-width: 1100px; width: 100%; margin: 0 auto; padding: 25px 20px; display: flex; align-items: center; justify-content: space-between; }
+        .logo-flex { display: flex; align-items: center; }
+        .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent), #00aaff); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #000; box-shadow: 0 0 20px rgba(0,255,136,0.3); }
+        .logo-text { font-size: 22px; font-weight: 800; margin-left: 12px; letter-spacing: -1px; text-transform: uppercase; }
+        
+        .nav-links { display: flex; gap: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-links a { opacity: 0.6; transition: 0.3s; }
+        .nav-links a:hover { opacity: 1; color: var(--accent); }
+        .nav-ai-link { color: var(--accent) !important; opacity: 1 !important; text-shadow: 0 0 10px rgba(0,255,136,0.5); }
+
         .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
-        .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 25px; display: block; }
-        
-        /* Grid Yapısı */
+        .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 25px; display: block; opacity: 0.8; }
+
+        .apps-showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 50px; }
+        .store-button { background: #111; border: 1px solid var(--border); border-radius: 16px; padding: 15px; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
+        .store-button:hover { border-color: var(--accent); }
+        .store-icon { width: 32px; height: 32px; }
+        .store-text span:first-child { font-size: 10px; opacity: 0.6; }
+        .store-text span:last-child { font-size: 16px; font-weight: 800; display: block; }
+
+        .ai-promo-banner {
+            background: linear-gradient(135deg, #050505 0%, #0d0d12 100%);
+            border: 1px solid var(--accent);
+            border-radius: 20px; padding: 35px;
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 50px; gap: 25px; flex-wrap: wrap;
+            position: relative; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 255, 136, 0.05);
+        }
+        .ai-promo-content h2 { font-size: 1.8rem; margin: 0 0 10px 0; color: #fff; }
+        .ai-promo-content p { color: #888; margin: 0; max-width: 550px; font-size: 14px; }
+        .ai-launch-btn { 
+            background: var(--accent); color: #000; padding: 14px 28px; 
+            border-radius: 12px; font-weight: 800; white-space: nowrap; 
+            box-shadow: 0 10px 30px rgba(0,255,136,0.2); transition: 0.3s;
+        }
+
+        .featured-card {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 100%), 
+                        url('https://public-files.gumroad.com/7nian0p6ovu8w2cg9czevc53q7ae');
+            background-size: cover; background-position: center; border-radius: 20px; border: 1px solid var(--accent);
+            padding: 40px; min-height: 350px; display: flex; flex-direction: column; justify-content: flex-end; margin-bottom: 50px; transition: 0.3s;
+        }
+        .featured-card h2 { font-size: 2.2rem; font-weight: 800; margin: 0; color: #fff; }
+        .featured-btn { background: #fff; color: #000; padding: 14px 28px; border-radius: 10px; font-weight: 800; display: inline-block; margin-top: 15px; }
+
+        .free-tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; margin-bottom: 50px; }
+        .terminal-card { background: #050505; border: 1px solid #222; border-radius: 12px; overflow: hidden; transition: 0.3s; }
+        .terminal-card:hover { border-color: var(--download); transform: translateY(-3px); }
+        .terminal-header { background: #1a1a1a; padding: 8px 15px; display: flex; gap: 6px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .terminal-body { padding: 20px; min-height: 160px; display: flex; flex-direction: column; justify-content: space-between; }
+        .terminal-body h4 { margin: 0 0 8px 0; color: var(--download); font-family: monospace; font-size: 1rem; }
+        .terminal-body p { font-size: 13px; color: #888; margin-bottom: 15px; line-height: 1.5; }
+        .download-btn { background: transparent; border: 1px solid var(--download); color: var(--download); padding: 8px; border-radius: 6px; text-align: center; font-weight: 700; font-size: 11px; transition: 0.3s; }
+
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-bottom: 50px; }
-        
-        /* Premium Kart Stili */
         .card { 
             background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 25px; 
-            transition: 0.3s; display: flex; flex-direction: column; justify-content: space-between; 
+            transition: all 0.3s; display: flex; flex-direction: column; justify-content: space-between; 
             min-height: 260px; position: relative; overflow: hidden;
         }
         .card:hover { border-color: var(--accent); transform: translateY(-3px); }
@@ -27,26 +93,102 @@
         .card p { font-size: 14px; color: #888; line-height: 1.6; }
         .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; margin-top: 15px; }
 
-        /* Bannerlar */
-        .banner { border-radius: 20px; padding: 35px; display: flex; align-items: center; justify-content: space-between; gap: 25px; flex-wrap: wrap; margin-bottom: 50px; border: 1px solid var(--border); }
-        .etsy-banner { background: linear-gradient(135deg, #111 0%, #1a0f0a 100%); border-color: var(--etsy); }
-        .btn { padding: 14px 28px; border-radius: 12px; font-weight: 800; transition: 0.3s; }
+        .partners-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 15px; margin-bottom: 50px; }
+        .referral-banner { background: #050505; border-radius: 20px; padding: 35px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; transition: 0.3s; }
+        .referral-banner.hostinger { border: 1px solid var(--hostinger); }
+        .referral-banner.bybit { border: 1px solid var(--bybit); }
+        .referral-banner.etsy { border: 1px solid var(--etsy); background: linear-gradient(135deg, #0a0a0a 0%, #1a0f0a 100%); }
+        .referral-btn { padding: 14px 28px; border-radius: 12px; font-weight: 800; white-space: nowrap; transition: 0.3s; }
+        .hostinger-btn { background: var(--hostinger); color: #fff; }
+        .bybit-btn { background: var(--bybit); color: #000; }
+        .etsy-btn { background: var(--etsy); color: #fff; }
+
+        .hq-container {
+            background: linear-gradient(135deg, #0a0a0a 0%, #111 100%); 
+            padding: 40px; border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 28px; margin-bottom: 50px;
+            display: flex; align-items: center; gap: 35px; flex-wrap: wrap;
+        }
+        .hq-img-box { width: 180px; height: 180px; border-radius: 24px; overflow: hidden; border: 2px solid var(--accent); flex-shrink: 0; transform: rotate(-2deg); }
+        .hq-img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 50px; }
+        .stack-item { background: var(--card); border: 1px solid var(--border); padding: 30px 15px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; transition: 0.3s; }
+        .stack-logo { width: 45px; height: 45px; filter: grayscale(1); }
+        .stack-item:hover .stack-logo { filter: grayscale(0); }
+        
+        footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: #444; font-size: 12px; }
     </style>
 </head>
 <body>
 
-    <main class="container">
-        <span class="section-label">The Nomad Stack</span>
-        <div class="grid">
-            <div class="card" style="min-height: 150px;">
-                <div style="color: var(--accent); font-weight: 800; font-size: 11px;">CREATIVE CODE</div>
-                <h3>Live Overlays</h3>
-                <p>Dynamic assets for social streams.</p>
+    <section class="hero-section">
+        <header class="nav-container">
+            <div class="logo-flex">
+                <div class="logo-icon">S</div>
+                <div class="logo-text">STUDIOERS</div>
             </div>
-            <div class="card" style="min-height: 150px;">
-                <div style="color: var(--accent); font-weight: 800; font-size: 11px;">MOBILE OS</div>
-                <h3>Native Android</h3>
-                <p>API 35/36 Development.</p>
+            <nav class="nav-links">
+                <a href="ai.html" class="nav-ai-link">AI Art Engine</a>
+                <a href="guide.html">Revenue Guide</a>
+                <a href="privacy.html">Privacy</a>
+            </nav>
+        </header>
+        <div style="max-width: 1100px; margin: auto; padding: 0 20px; width: 100%;">
+            <h1 style="font-size: clamp(2.5rem, 7vw, 4.5rem); font-weight: 800; line-height: 1.1;">Next-Gen<br><span style="color: var(--accent)">Software Ecosystem</span></h1>
+        </div>
+    </section>
+
+    <main class="container">
+        <span class="section-label">Neural Generation</span>
+        <div class="ai-promo-banner">
+            <div class="ai-promo-content">
+                <h2>Studioers AI Art Generator</h2>
+                <p>Experience the power of Stable Diffusion and Flux. Transform your ideas into high-fidelity digital art instantly with our free neural engine.</p>
+            </div>
+            <a href="ai.html" class="ai-launch-btn">LAUNCH AI ENGINE →</a>
+        </div>
+
+        <span class="section-label">Mobile Hub</span>
+        <div class="apps-showcase">
+            <a href="https://play.google.com/store/apps/details?id=com.studioers.notdefteri" target="_blank" class="store-button">
+                <img src="https://www.vectorlogo.zone/logos/google_play/google_play-icon.svg" alt="Play" class="store-icon">
+                <div class="store-text"><span>EASY NOT PAD</span><span>Google Play</span></div>
+            </a>
+            <a href="https://studioers.gumroad.com/l/ubsxdc" target="_blank" class="store-button">
+                <svg class="store-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="35" y="10" width="30" height="30" rx="4" fill="#00ff88"/><rect x="35" y="42" width="30" height="30" rx="4" fill="#00ff88"/>
+                    <rect x="3" y="42" width="30" height="30" rx="4" fill="#00aaff"/><rect x="67" y="42" width="30" height="30" rx="4" fill="#00aaff"/>
+                </svg>
+                <div class="store-text"><span>DOWNLOAD APK</span><span>ProTetris Game</span></div>
+            </a>
+        </div>
+
+        <section>
+            <a href="https://studioers.gumroad.com/l/bakyau" class="featured-card">
+                <h2>Interactive TikTok Trivia Engine</h2>
+                <p>Advanced overlay system for live stream monetization and audience engagement.</p>
+                <div><span class="featured-btn">Get License</span></div>
+            </a>
+        </section>
+
+        <span class="section-label" style="color: var(--download);">Developer CLI Tools (Free)</span>
+        <div class="free-tools-grid">
+            <div class="terminal-card">
+                <div class="terminal-header"><div class="dot" style="background: #ff5f56;"></div><div class="dot" style="background: #ffbd2e;"></div><div class="dot" style="background: #27c93f;"></div></div>
+                <div class="terminal-body">
+                    <h4>> webp_optimizer.exe</h4>
+                    <p>Batch convert JPG/PNG to WebP. Optimize your web assets for faster loading and better SEO rankings.</p>
+                    <a href="https://github.com/brobrovb/studioers/releases/download/v1.0.0/webp-optimizer.zip" class="download-btn">DOWNLOAD TOOL (.ZIP)</a>
+                </div>
+            </div>
+            <div class="terminal-card">
+                <div class="terminal-header"><div class="dot" style="background: #ff5f56;"></div><div class="dot" style="background: #ffbd2e;"></div><div class="dot" style="background: #27c93f;"></div></div>
+                <div class="terminal-body">
+                    <h4>> vault_gen.exe</h4>
+                    <p>Secure password generator with visual entropy scanning. Create and log unbreakable keys locally.</p>
+                    <a href="https://github.com/brobrovb/studioers/releases/download/v1.0/vault_gen.zip" class="download-btn">DOWNLOAD TOOL (.ZIP)</a>
+                </div>
             </div>
         </div>
 
@@ -55,39 +197,80 @@
             <a href="https://studioers.gumroad.com/l/jposco" class="card" style="background: linear-gradient(to bottom, rgba(10,10,10,0.92), #0a0a0a), url('https://public-files.gumroad.com/ya39cdpadopl1829j234roh1a0gu'); background-size: cover;">
                 <h3>WhalePulse AI</h3>
                 <p>Real-time on-chain crypto analytics. Track whale movements and smart money wallets instantly.</p>
-                <div class="card-footer"><span style="color:var(--accent)">$1+</span><span>View on Gumroad →</span></div>
+                <div class="card-footer"><span style="color:var(--accent)">$1+</span><span>View Details →</span></div>
             </a>
-
             <a href="https://studioers.gumroad.com/l/ipnot" class="card" style="background: linear-gradient(to bottom, rgba(10,10,10,0.92), #0a0a0a), url('https://public-files.gumroad.com/9rwf7qjszhd5bgw8man7pbm6n3y1'); background-size: cover;">
                 <h3>ImageMaster Pro</h3>
                 <p>Professional batch watermarking and resizing toolkit for digital asset management.</p>
-                <div class="card-footer"><span style="color:var(--accent)">$3</span><span>View on Gumroad →</span></div>
+                <div class="card-footer"><span style="color:var(--accent)">$3</span><span>View Details →</span></div>
             </a>
-
             <a href="https://studioers.gumroad.com/l/aslyqy" class="card" style="background: linear-gradient(to bottom, rgba(10,10,10,0.92), #0a0a0a), url('https://public-files.gumroad.com/ko866iwsw3keew2mvigpxxnwolks'); background-size: cover;">
                 <h3>Studioers AI: SEO</h3>
                 <p>Automated SEO auditing engine. Generate comprehensive technical reports for websites.</p>
-                <div class="card-footer"><span style="color:var(--accent)">$2.99</span><span>View on Gumroad →</span></div>
+                <div class="card-footer"><span style="color:var(--accent)">$2.99</span><span>View Details →</span></div>
             </a>
         </div>
 
-        <div class="banner etsy-banner">
-            <div>
-                <h3 style="margin: 0;">Digital AI Online (Etsy)</h3>
-                <p style="margin: 5px 0 0; font-size: 14px; color: #888;">Professional AI Prompts & Digital Designs.</p>
+        <span class="section-label" style="color: var(--guide);">Specialized Knowledge</span>
+        <div class="ai-promo-banner" style="border-color: var(--guide);">
+            <div class="ai-promo-content">
+                <h2 style="color: var(--guide);">Ultimate Digital Revenue Guide 2026</h2>
+                <p>Learn the 10 proven methods to scale your digital income. From Etsy stores to Crypto infrastructure and YouTube niche strategies.</p>
             </div>
-            <a href="https://digitalaionline.etsy.com" class="btn" style="background: var(--etsy); color: #fff;">SHOP ON ETSY →</a>
+            <a href="guide.html" class="ai-launch-btn" style="background: var(--guide);">READ THE GUIDE →</a>
         </div>
 
-        <span class="section-label">Support the Journey</span>
-        <div class="banner" style="border-color: var(--bybit); background: rgba(247, 166, 0, 0.05);">
-            <div>
-                <h3 style="color: var(--bybit); margin: 0;">Trade on Bybit</h3>
-                <p style="margin: 5px 0 0; font-size: 14px; color: #888;">Support Studioers by using our official referral link.</p>
+        <span class="section-label">Global Partners & Marketplace</span>
+        <div class="partners-grid">
+            <div class="referral-banner etsy">
+                <div class="referral-content">
+                    <h2>Digital AI Online (Etsy)</h2>
+                    <p>Professional AI Prompts & Digital Designs for creators.</p>
+                </div>
+                <a href="https://digitalaionline.etsy.com" target="_blank" class="referral-btn etsy-btn">VISIT SHOP →</a>
             </div>
-            <a href="https://www.bybit.com/invite?ref=6L9ZDXJ" class="btn" style="background: var(--bybit); color: #000;">JOIN BYBIT (Ref: 6L9ZDXJ) →</a>
+            <div class="referral-banner bybit">
+                <div class="referral-content">
+                    <h2>Bybit Trading (Ref: 6L9ZDXJ)</h2>
+                    <p>Secure your assets on a top-tier exchange with exclusive rewards.</p>
+                </div>
+                <a href="https://www.bybit.com/invite?ref=6L9ZDXJ" target="_blank" class="referral-btn bybit-btn">JOIN BYBIT →</a>
+            </div>
+        </div>
+
+        <span class="section-label">The Nomad Lab</span>
+        <div class="hq-container">
+            <div class="hq-img-box">
+                <img src="studioers-hq.jpg.jpg" alt="Studioers HQ" class="hq-img">
+            </div>
+            <div class="hq-content">
+                <p style="margin: 0; font-size: 12px; font-weight: 800; color: var(--accent); letter-spacing: 2px; text-transform: uppercase;">HQ Status: 24 Months on the Road</p>
+                <h3 style="margin: 12px 0; font-size: 1.6rem; color: #fff;">Code, Freedom, and a Dog Named <span style="color: var(--accent)">Joker</span></h3>
+                <p style="margin: 0; font-size: 14px; color: #bbb; line-height: 1.8;">
+                    For the past two years, my wife and I have traded traditional office walls for the boundless freedom of caravan life. Living and working full-time from the road isn't just a lifestyle—it's the ultimate stress-test for our software. 
+                    <br><br>
+                    Right by my side is <strong>Joker</strong>, our loyal co-pilot and the true heart of Studioers. Whether we're parked by a quiet lake or deep in the mountains, Joker ensures the morale stays high while I push the limits of mobile engineering. Every tool and app in this ecosystem is crafted under the stars.
+                </p>
+            </div>
+        </div>
+
+        <span class="section-label">Core Technology Stack</span>
+        <div class="stack-grid">
+            <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/android/android-icon.svg" alt="Android" class="stack-logo"><span class="stack-name">Android Native</span></div>
+            <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/kotlinlang/kotlinlang-icon.svg" alt="Kotlin" class="stack-logo"><span class="stack-name">Kotlin</span></div>
+            <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/python/python-icon.svg" alt="Python" class="stack-logo"><span class="stack-name">Python CLI</span></div>
+            <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/godotengine/godotengine-icon.svg" alt="Godot" class="stack-logo"><span class="stack-name">Godot 4.x</span></div>
         </div>
 
     </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="mailto:admin@studioers.xyz">Contact</a>
+        </div>
+        &copy; 2026 STUDIOERS / Specialized Software Engineering Suite
+    </footer>
+
 </body>
 </html>
