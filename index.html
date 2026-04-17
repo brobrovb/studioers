@@ -13,8 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        /* PATREON Rengi eklendi, COFFEE rengi korundu */
-        :root { --accent: #00ff88; --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; --download: #ffcc00; --guide: #00aaff; --ai-magic: #8a2be2; --hostinger: #673ab7; --bybit: #f7a600; --coffee: #ff813f; --patreon: #ff424d; --etsy: #eb6d20; --youtube: #ff0000; --tiktok: #ff0050; }
+        :root { --accent: #00ff88; --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; --download: #ffcc00; --guide: #00aaff; --ai-magic: #8a2be2; --hostinger: #673ab7; --bybit: #f7a600; --coffee: #ff813f; --patreon: #ff424d; --etsy: #eb6d20; --youtube: #ff0000; --tiktok: #ff0050; --surface: #111113; --gray: #888; }
         * { box-sizing: border-box; }
         
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
@@ -40,13 +39,7 @@
         .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
         .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 25px; display: block; opacity: 0.8; }
 
-        .apps-showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 50px; }
-        .store-button { background: #111; border: 1px solid var(--border); border-radius: 16px; padding: 15px; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
-        .store-button:hover { border-color: var(--accent); }
-        .store-icon { width: 32px; height: 32px; }
-        .store-text span:first-child { font-size: 10px; opacity: 0.6; }
-        .store-text span:last-child { font-size: 16px; font-weight: 800; display: block; }
-
+        /* AI PROMO & HEADER ICONS */
         .ai-promo-banner {
             background: linear-gradient(135deg, #050505 0%, #0d0d12 100%);
             border: 1px solid var(--accent);
@@ -59,6 +52,21 @@
         .ai-promo-content h2 { font-size: 1.8rem; margin: 0 0 10px 0; color: #fff; }
         .ai-promo-content p { color: #888; margin: 0; max-width: 550px; font-size: 14px; }
         .ai-launch-btn { background: var(--accent); color: #000; padding: 14px 28px; border-radius: 12px; font-weight: 800; white-space: nowrap; transition: 0.3s; }
+
+        /* TECH STACK CARDS */
+        .tech-card { background: var(--surface); border: 1px solid var(--border); padding: 20px; border-radius: 20px; text-align: left; transition: 0.3s; }
+        .tech-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .tech-label { color: var(--accent); font-weight: 800; font-size: 11px; margin-bottom: 5px; text-transform: uppercase; }
+        .tech-title { font-size: 15px; font-weight: 700; color: #fff; }
+        .tech-desc { color: var(--gray); font-size: 11px; margin-top: 5px; }
+
+        /* OTHER STYLES PRESERVED */
+        .apps-showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 50px; }
+        .store-button { background: #111; border: 1px solid var(--border); border-radius: 16px; padding: 15px; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
+        .store-button:hover { border-color: var(--accent); }
+        .store-icon { width: 32px; height: 32px; }
+        .store-text span:first-child { font-size: 10px; opacity: 0.6; }
+        .store-text span:last-child { font-size: 16px; font-weight: 800; display: block; }
 
         .featured-card {
             background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 100%), 
@@ -90,39 +98,12 @@
         .card p { font-size: 14px; color: #888; line-height: 1.6; }
         .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; margin-top: 15px; }
 
-        .etsy-banner {
-            background: linear-gradient(135deg, #111 0%, #1a0f0a 100%);
-            border: 1px solid var(--etsy); border-radius: 20px; padding: 30px;
-            display: flex; align-items: center; justify-content: space-between;
-            margin-bottom: 50px; gap: 20px; flex-wrap: wrap;
-        }
-        .etsy-btn { background: var(--etsy); color: #fff; padding: 12px 24px; border-radius: 12px; font-weight: 800; transition: 0.3s; }
-
-        .guide-banner {
-            background: linear-gradient(90deg, #050505 0%, #0a110f 100%);
-            border: 1px solid var(--guide); border-radius: 20px; padding: 40px;
-            display: flex; align-items: center; justify-content: space-between;
-            margin-bottom: 50px; gap: 30px; flex-wrap: wrap; position: relative; overflow: hidden;
-        }
-        .guide-btn { background: var(--guide); color: #000; padding: 15px 30px; border-radius: 12px; font-weight: 800; transition: 0.3s; }
-
-        /* Social Cards */
-        .social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 25px; }
-        .social-card { 
-            background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 15px; padding: 15px;
-            display: flex; align-items: center; gap: 12px; transition: 0.3s;
-        }
-        .social-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-        .social-icon { width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-
-        /* Support Section - PATREON GÜNCELLEMESİ */
         .support-card {
             background: linear-gradient(135deg, #0a0a0a 0%, #150d0a 100%);
             border: 1px solid var(--patreon); border-radius: 24px; padding: 35px;
             display: flex; align-items: center; justify-content: space-between;
             margin-bottom: 50px; gap: 25px; flex-wrap: wrap;
         }
-        .support-btns { display: flex; gap: 12px; }
         .patreon-btn { 
             background: var(--patreon); color: #fff; padding: 14px 24px; 
             border-radius: 12px; font-weight: 800; display: flex; align-items: center; gap: 10px; transition: 0.3s;
@@ -142,13 +123,13 @@
         }
         .hq-img-box { width: 180px; height: 180px; border-radius: 24px; overflow: hidden; border: 2px solid var(--accent); flex-shrink: 0; transform: rotate(-2deg); }
         .hq-img { width: 100%; height: 100%; object-fit: cover; }
-        .hq-content { flex: 1; min-width: 300px; }
-
-        .about-section { padding: 30px 0; border-top: 1px solid var(--border); margin-bottom: 40px; }
-        .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 50px; }
-        .stack-item { background: var(--card); border: 1px solid var(--border); padding: 30px 15px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; transition: 0.3s; }
-        .stack-logo { width: 45px; height: 45px; object-fit: contain; filter: grayscale(1); }
-        .stack-name { font-weight: 700; color: #444; font-size: 0.8rem; text-transform: uppercase; }
+        
+        .social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 25px; }
+        .social-card { 
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 15px; padding: 15px;
+            display: flex; align-items: center; gap: 12px; transition: 0.3s;
+        }
+        .social-icon { width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
 
         footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: #444; font-size: 12px; }
     </style>
@@ -198,6 +179,30 @@
             </a>
         </div>
 
+        <span class="section-label">The Nomad Stack</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin-bottom: 50px;">
+            <div class="tech-card">
+                <div class="tech-label">CREATIVE CODE</div>
+                <div class="tech-title">Live Overlays</div>
+                <div class="tech-desc">Dynamic assets for high-engagement social streams.</div>
+            </div>
+            <div class="tech-card">
+                <div class="tech-label">MOBILE OS</div>
+                <div class="tech-title">Native Android</div>
+                <div class="tech-desc">API 35/36 compliance and system architecture.</div>
+            </div>
+            <div class="tech-card">
+                <div class="tech-label">INTELLIGENCE</div>
+                <div class="tech-title">Stable Diffusion</div>
+                <div class="tech-desc">Latent diffusion and prompt engineering.</div>
+            </div>
+            <div class="tech-card">
+                <div class="tech-label">AUTOMATION</div>
+                <div class="tech-title">n8n & Python</div>
+                <div class="tech-desc">Scalable, passive workflow environments.</div>
+            </div>
+        </div>
+
         <section>
             <a href="https://studioers.gumroad.com/l/bakyau" class="featured-card">
                 <h2>Interactive TikTok Trivia Engine</h2>
@@ -226,80 +231,18 @@
             </div>
         </div>
 
-        <span class="section-label">Premium Digital Assets</span>
-        <div class="grid">
-            <a href="https://studioers.gumroad.com/l/jposco" class="card" style="background: linear-gradient(to bottom, rgba(10,10,10,0.92), #0a0a0a), url('https://public-files.gumroad.com/ya39cdpadopl1829j234roh1a0gu'); background-size: cover;">
-                <h3>WhalePulse AI</h3>
-                <p>Real-time on-chain crypto analytics. Track whale movements and smart money wallets instantly.</p>
-                <div class="card-footer"><span style="color:var(--accent)">$1+</span><span>View Details →</span></div>
-            </a>
-            <a href="https://studioers.gumroad.com/l/ipnot" class="card" style="background: linear-gradient(to bottom, rgba(10,10,10,0.92), #0a0a0a), url('https://public-files.gumroad.com/9rwf7qjszhd5bgw8man7pbm6n3y1'); background-size: cover;">
-                <h3>ImageMaster Pro</h3>
-                <p>Professional batch watermarking and resizing toolkit for digital asset management.</p>
-                <div class="card-footer"><span style="color:var(--accent)">$3</span><span>View Details →</span></div>
-            </a>
-            <a href="https://studioers.gumroad.com/l/aslyqy" class="card" style="background: linear-gradient(to bottom, rgba(10,10,10,0.92), #0a0a0a), url('https://public-files.gumroad.com/ko866iwsw3keew2mvigpxxnwolks'); background-size: cover;">
-                <h3>Studioers AI: SEO</h3>
-                <p>Automated SEO auditing engine. Generate comprehensive technical reports for websites.</p>
-                <div class="card-footer"><span style="color:var(--accent)">$2.99</span><span>View Details →</span></div>
-            </a>
-        </div>
-
-        <div class="etsy-banner">
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <span style="font-size: 30px;">🎨</span>
-                <div>
-                    <h3 style="margin: 0; color: #fff;">Digital AI Online (Etsy)</h3>
-                    <p style="margin: 0; font-size: 13px; color: #888;">Exclusive AI Art Prompts & Professional Digital Designs.</p>
-                </div>
-            </div>
-            <a href="https://digitalaionline.etsy.com" target="_blank" class="etsy-btn">SHOP ON ETSY →</a>
-        </div>
-
-        <span class="section-label" style="color: var(--guide);">Specialized Knowledge</span>
-        <div class="guide-banner">
-            <div class="guide-content">
-                <h2>Ultimate Digital Revenue Guide 2026</h2>
-                <p>Learn the 10 proven methods to scale your digital income. From Etsy stores to Crypto infrastructure and YouTube niche strategies.</p>
-            </div>
-            <a href="guide.html" class="guide-btn">READ THE GUIDE →</a>
-        </div>
-
         <span class="section-label">Support the Journey</span>
         <div class="support-card">
             <div class="support-content">
                 <h2 style="color: var(--patreon); margin:0 0 10px 0;">Fuel the Nomad Lab</h2>
-                <p style="color: #aaa; margin: 0; font-size: 14px; line-height: 1.6;">Most of our code is written under the stars, right from our caravan. If you'd like to support our journey or buy Joker a treat, we appreciate the love!</p>
+                <p style="color: #aaa; margin: 0; font-size: 14px; line-height: 1.6;">Written under the stars from our caravan. Buy Joker a treat or support the dev!</p>
             </div>
-            <div class="support-btns">
-                <a href="https://www.patreon.com/studioers" target="_blank" class="patreon-btn">
-                    Become a Patron
-                </a>
-                <a href="https://www.bybit.com/invite?ref=6L9ZDXJ" target="_blank" class="patreon-btn" style="background: var(--bybit); color: #000;">
-                    🚀 Crypto Support
-                </a>
+            <div style="display: flex; gap: 12px;">
+                <a href="https://www.patreon.com/studioers" target="_blank" class="patreon-btn">Become a Patron</a>
+                <a href="https://www.bybit.com/invite?ref=6L9ZDXJ" target="_blank" class="patreon-btn" style="background: var(--bybit); color: #000;">🚀 Trade on Bybit</a>
             </div>
         </div>
 
-        <span class="section-label">Global Partners</span>
-        <div class="partners-grid">
-            <div class="referral-banner hostinger">
-                <div class="referral-content">
-                    <h2>Cloud Infrastructure</h2>
-                    <p>Launch your projects on the professional engine behind <strong>Studioers.xyz</strong>.</p>
-                </div>
-                <a href="https://www.hostinger.com/tr?REFERRALCODE=VDOCOINKRREB" target="_blank" class="referral-btn" style="background:var(--hostinger); color:#fff;">GET DISCOUNT →</a>
-            </div>
-            <div class="referral-banner bybit">
-                <div class="referral-content">
-                    <h2>Trading & Liquidity</h2>
-                    <p>Secure your assets on a top-tier exchange with exclusive bonus rewards.</p>
-                </div>
-                <a href="https://www.bybit.com/invite?ref=6L9ZDXJ" target="_blank" class="referral-btn" style="background:var(--bybit); color:#000;">JOIN BYBIT →</a>
-            </div>
-        </div>
-
-        <span class="section-label">The Nomad Lab</span>
         <div class="hq-container">
             <div class="hq-img-box">
                 <img src="studioers-hq.jpg.jpg" alt="Studioers HQ" class="hq-img">
@@ -308,9 +251,7 @@
                 <p style="margin: 0; font-size: 12px; font-weight: 800; color: var(--accent); letter-spacing: 2px; text-transform: uppercase;">HQ Status: 24 Months on the Road</p>
                 <h3 style="margin: 12px 0; font-size: 1.6rem; color: #fff;">Code, Freedom, and a Dog Named <span style="color: var(--accent)">Joker</span></h3>
                 <p style="margin: 0; font-size: 14px; color: #bbb; line-height: 1.8;">
-                    For the past two years, my wife and I have traded traditional office walls for the boundless freedom of caravan life. Living and working full-time from the road is the ultimate stress-test for our software.
-                    <br><br>
-                    Right by my side is <strong>Joker</strong>, our loyal co-pilot and the true heart of Studioers. Follow our journey and technical updates on our social channels:
+                    My wife and I live and work full-time from the road. Joker is our loyal co-pilot and the true heart of Studioers.
                 </p>
                 <div class="social-grid">
                     <a href="https://www.youtube.com/@Bilmedikleriniz" target="_blank" class="social-card">
@@ -323,20 +264,6 @@
                     </a>
                 </div>
             </div>
-        </div>
-
-        <span class="section-label">Engineering the Future</span>
-        <section class="about-section">
-            <h2>High-Performance Software Solutions</h2>
-            <p><strong>Studioers</strong> is a specialized software development collective focused on building the next generation of <strong>digital ecosystems</strong>. Our expertise spans across Android Application Development (utilizing Kotlin and Jetpack Compose), 2D/3D Game Design via the Godot Engine, and advanced Workflow Automation.</p>
-        </section>
-
-        <span class="section-label">Core Technology Stack</span>
-        <div class="stack-grid">
-            <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/android/android-icon.svg" alt="Android" class="stack-logo"><span class="stack-name">Android Native</span></div>
-            <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/kotlinlang/kotlinlang-icon.svg" alt="Kotlin" class="stack-logo"><span class="stack-name">Kotlin</span></div>
-            <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/python/python-icon.svg" alt="Python" class="stack-logo"><span class="stack-name">Python CLI</span></div>
-            <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/godotengine/godotengine-icon.svg" alt="Godot" class="stack-logo"><span class="stack-name">Godot 4.x</span></div>
         </div>
 
     </main>
