@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High-Performance 2D Mechanics in Godot 4 | Studioers Blog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --accent: #00ff88; --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; --text-dim: #888; --godot: #478cbf; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; line-height: 1.7; margin: 0; padding: 0; }
+        .nav-back { padding: 40px 20px; max-width: 800px; margin: 0 auto; }
+        .nav-back a { color: var(--accent); font-weight: 800; font-size: 12px; text-transform: uppercase; text-decoration: none; }
+        
+        article { max-width: 800px; margin: 0 auto; padding: 0 20px 100px 20px; }
+        h1 { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 20px; }
+        .meta { color: var(--text-dim); font-size: 14px; margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+        
+        h2 { color: var(--godot); margin-top: 50px; border-left: 3px solid var(--accent); padding-left: 15px; }
+        p { margin-bottom: 20px; color: #ccc; }
+        
+        .code-block { 
+            background: #050505; border: 1px solid var(--border); padding: 20px; 
+            border-radius: 12px; font-family: monospace; font-size: 14px; 
+            overflow-x: auto; margin: 30px 0; color: #e0e0e0;
+        }
+        .code-keyword { color: #ff79c6; }
+        .code-func { color: #50fa7b; }
+        .code-comment { color: #6272a4; }
+
+        .highlight-box { 
+            background: linear-gradient(135deg, rgba(71, 140, 191, 0.1) 0%, rgba(0, 255, 136, 0.05) 100%);
+            border: 1px solid rgba(71, 140, 191, 0.3);
+            padding: 25px; border-radius: 16px; margin: 40px 0;
+        }
+
+        footer { text-align: center; padding: 60px 20px; border-top: 1px solid var(--border); color: #444; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-back">
+        <a href="../index.html">← Back to Ecosystem</a>
+    </nav>
+
+    <article>
+        <span style="color: var(--godot); font-weight: 800; font-size: 12px; text-transform: uppercase;">Game Engineering</span>
+        <h1>High-Performance 2D Mechanics in Godot 4: Beyond the Basics</h1>
+        
+        <div class="meta">
+            Published on April 10, 2026 • 10 min read • By Studioers Game Lab
+        </div>
+
+        <p>Godot 4 has revolutionized the indie game development scene with its refined <strong>GDExtension</strong> support and the highly optimized <strong>Forward+</strong> renderer. For mobile developers, however, the real magic lies in how we handle 2D physics and input latency. At Studioers, we focus on mechanics that feel "snappy" even on mid-range Android devices.</p>
+
+        <h2>1. The MoveAndSlide Revolution</h2>
+        <p>In Godot 4, the <code>CharacterBody2D</code> node replaces the old KinematicBody. The implementation of <code>move_and_slide()</code> no longer requires parameters, as properties like <code>up_direction</code> and <code>floor_max_angle</code> are now part of the node's state. This centralization leads to cleaner code and fewer physics bugs.</p>
+        
+        <div class="code-block">
+            <span class="code-keyword">extends</span> CharacterBody2D<br><br>
+            <span class="code-keyword">func</span> <span class="code-func">_physics_process</span>(delta):<br>
+            &nbsp;&nbsp;<span class="code-comment"># Add gravity</span><br>
+            &nbsp;&nbsp;velocity.y += <span class="code-func">get_gravity()</span> * delta<br>
+            &nbsp;&nbsp;<span class="code-comment"># Modern Godot 4 sliding physics</span><br>
+            &nbsp;&nbsp;<span class="code-func">move_and_slide()</span>
+        </div>
+
+        <h2>2. Dynamic TileMapLayers</h2>
+        <p>One of the most significant updates in <strong>Godot 4.3+</strong> is the move from a single TileMap node to individual <code>TileMapLayer</code> nodes. This allows for much more flexible level design and better performance when updating specific sections of a map programmatically—crucial for procedural generation.</p>
+
+        <div class="highlight-box">
+            <strong>Studioers Insight:</strong> We use TileMapLayers to separate "Collision Logic" from "Visual Decorations." This reduces the physics engine's workload significantly, as it only processes tiles that actually impact gameplay.
+        </div>
+
+        <h2>3. Optimizing for Mobile Input</h2>
+        <p>Mobile players expect zero lag. Using the <code>InputMap</code> is great for prototyping, but for high-performance games, we recommend handling signals directly through a custom <strong>Virtual Joystick</strong> system. This bypasses the standard event queue and provides more immediate feedback for player movement.</p>
+
+        <h2>4. Signal-Driven Architecture</h2>
+        <p>To keep your project scalable, avoid "Spaghetti Code" by utilizing Godot’s <strong>Signal</strong> system. Instead of nodes checking each other's status every frame (polling), let them communicate through events. This decoupling is the secret behind the smooth performance of Studioers apps.</p>
+
+        <div class="code-block">
+            <span class="code-comment"># Best practice: Signal-up, Call-down</span><br>
+            <span class="code-keyword">signal</span> player_health_changed(new_value)<br><br>
+            <span class="code-keyword">func</span> <span class="code-func">take_damage</span>(amount):<br>
+            &nbsp;&nbsp;health -= amount<br>
+            &nbsp;&nbsp;player_health_changed.<span class="code-func">emit</span>(health)
+        </div>
+
+        <h2>Conclusion</h2>
+        <p>Mastering Godot 4 isn't just about learning the new syntax; it's about understanding the engine's new philosophy. By leveraging <code>TileMapLayer</code>, refined 2D physics, and signal-driven logic, you can build mobile games that rival native applications in performance and responsiveness.</p>
+    </article>
+
+    <footer>
+        &copy; 2026 STUDIOERS | Built with Godot 4.x for the Next Generation of Gaming.
+    </footer>
+
+</body>
+</html>
