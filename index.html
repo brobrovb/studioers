@@ -274,6 +274,37 @@
             </div>
         </div>
 
+        <span class="section-label" style="color: var(--accent); margin-top: 50px;">Engineering Blog & Dev Logs</span>
+        <div id="blog-container" style="background: #050505; border: 1px solid var(--border); border-radius: 20px; padding: 25px; margin-bottom: 50px;">
+            <div id="article-list">
+                <p style="color: #444; font-size: 13px;">Loading latest insights...</p>
+            </div>
+        </div>
+
+        <script>
+            fetch('articles-list.json')
+                .then(response => response.json())
+                .then(data => {
+                    const list = document.getElementById('article-list');
+                    list.innerHTML = ''; 
+                    data.forEach(item => {
+                        list.innerHTML += `
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #1a1a1a;">
+                                <div style="display: flex; flex-direction: column; gap: 5px;">
+                                    <span style="font-size: 10px; color: var(--accent); font-weight: 800; text-transform: uppercase;">${item.category || 'Tech'}</span>
+                                    <a href="${item.path}" style="font-size: 1.1rem; font-weight: 600; color: #fff; transition: 0.3s;" onmouseover="this.style.color='#00ff88'" onmouseout="this.style.color='#fff'">
+                                        ${item.title}
+                                    </a>
+                                </div>
+                                <span style="font-size: 12px; color: #444; font-family: monospace;">${item.date}</span>
+                            </div>
+                        `;
+                    });
+                })
+                .catch(err => {
+                    document.getElementById('article-list').innerHTML = '<p style="color: #ff0050;">Blog feeds temporarily unavailable.</p>';
+                });
+        </script>
         <div class="seo-text-box">
             <span class="section-label">Engineering Insights & SEO</span>
             <div class="seo-text">
