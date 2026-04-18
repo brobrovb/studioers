@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Mastering Android API 35/36: Migration Guide",
+    "path": "articles/android-migration.html",
+    "date": "2026-04-18",
+    "category": "Development"
+  },
+  {
+    "title": "High-Performance 2D Game Mechanics in Godot 4",
+    "path": "articles/godot-mechanics.html",
+    "date": "2026-04-10",
+    "category": "Game Dev"
+  },
+  {
+    "title": "Monetizing AI Content: Gumroad & Etsy Strategies",
+    "path": "articles/digital-monetization.html",
+    "date": "2026-04-05",
+    "category": "Revenue"
+  }
+]
