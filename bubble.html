@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Neon Blast Pro Mobile</title>
+    <title>Neon Blast: Laser Edition</title>
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
@@ -12,34 +12,13 @@
             height: 100vh; width: 100vw; overflow: hidden; 
             font-family: 'Segoe UI', sans-serif; position: fixed;
         }
-        #game-container {
-            position: relative; width: 100%; height: 100%;
-            max-width: 500px; /* Maksimum genişlik sınırı */
-            display: flex; justify-content: center; align-items: center;
-        }
-        canvas { 
-            background: #020617; touch-action: none; 
-            max-width: 100%; max-height: 100%;
-        }
-        #ui { 
-            position: absolute; top: 20px; left: 20px; 
-            color: #00ff88; font-size: 16px; font-weight: bold; 
-            pointer-events: none; z-index: 10;
-        }
-        .modal { 
-            position: absolute; inset: 0; background: rgba(0, 0, 0, 0.96); 
-            display: none; flex-direction: column; justify-content: center; 
-            align-items: center; z-index: 1000; backdrop-filter: blur(10px);
-            padding: 20px; text-align: center;
-        }
-        .msg { font-size: 32px; font-weight: 900; margin: 0; }
-        button { 
-            padding: 15px 40px; font-size: 18px; background: #00ff88; color: #000; 
-            border: none; border-radius: 8px; cursor: pointer; font-weight: bold; 
-            margin-top: 25px; box-shadow: 0 5px 15px rgba(0,255,136,0.3);
-        }
+        #game-container { position: relative; width: 100%; height: 100%; max-width: 500px; display: flex; justify-content: center; align-items: center; }
+        canvas { background: #020617; touch-action: none; max-width: 100%; max-height: 100%; }
+        #ui { position: absolute; top: 20px; left: 20px; color: #00ff88; font-size: 16px; font-weight: bold; pointer-events: none; z-index: 10; text-shadow: 0 0 10px rgba(0,255,136,0.5); }
+        .modal { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.96); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(10px); padding: 20px; text-align: center; }
+        button { padding: 15px 40px; font-size: 18px; background: #00ff88; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 25px; box-shadow: 0 5px 15px rgba(0,255,136,0.3); }
         .progress-bar { width: 120px; height: 6px; background: #333; margin-top: 5px; border-radius: 3px; overflow: hidden; }
-        #fill { width: 0%; height: 100%; background: #00ff88; }
+        #fill { width: 0%; height: 100%; background: #00ff88; transition: width 0.3s; }
     </style>
 </head>
 <body>
@@ -54,14 +33,13 @@
         <canvas id="game"></canvas>
 
         <div id="gameover" class="modal">
-            <h1 class="msg" style="color:#ff3366;">GAME OVER</h1>
-            <p style="color:white; opacity:0.8;">FINAL SCORE: <span id="finalscore">0</span></p>
+            <h1 style="color:#ff3366; font-size: 40px;">GAME OVER</h1>
+            <p style="color:white;">SCORE: <span id="finalscore">0</span></p>
             <button onclick="restart()">TRY AGAIN</button>
         </div>
 
         <div id="levelclear" class="modal">
-            <h1 class="msg" style="color:#00ff88;">LEVEL UP</h1>
-            <p style="color:white;">TARGET REACHED!</p>
+            <h1 style="color:#00ff88; font-size: 40px;">LEVEL UP!</h1>
             <button onclick="nextLevel()">NEXT LEVEL</button>
         </div>
     </div>
@@ -71,10 +49,9 @@ const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 const container = document.getElementById('game-container');
 
-// Oyun sabitleri
 const COLS = 10, ROWS = 18;
 const COLORS = ['#FF1E56', '#00F5FF', '#F9D923', '#A125FB', '#32FF6A'];
-const DEADLINE_OFFSET_RATIO = 0.2; // Ekranın %20'si kala Game Over
+const DEADLINE_OFFSET_RATIO = 0.22;
 
 let width, height, ballRadius, animationId;
 let grid = [], score = 0, level = 1, scoreGoal = 1000;
@@ -82,33 +59,25 @@ let currentBubble = null, nextBubble = null, angle = -Math.PI / 2;
 let missCount = 0, isProcessing = false, particles = [], gameOver = false;
 
 function resize() {
-    width = container.clientWidth;
-    height = container.clientHeight;
-    canvas.width = width;
-    canvas.height = height;
-    ballRadius = width / (COLS * 2.1);
+    width = container.clientWidth; height = container.clientHeight;
+    canvas.width = width; canvas.height = height;
+    ballRadius = width / (COLS * 2.15);
 }
 
 window.addEventListener('resize', resize);
 
 function init() {
     resize();
-    score = 0; level = 1; scoreGoal = 1000;
-    gameOver = false;
+    score = 0; level = 1; scoreGoal = 1000; gameOver = false;
     document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
     startLevel();
     if (animationId) cancelAnimationFrame(animationId);
     requestAnimationFrame(loop);
 }
 
-// Akıllı Renk Seçici (Sadece ekranda olanlar gelsin)
 function getAvailableColors() {
     let activeColors = new Set();
-    for(let r=0; r<ROWS; r++) {
-        for(let c=0; c<COLS; c++) {
-            if(grid[r][c] && grid[r][c].active) activeColors.add(grid[r][c].color);
-        }
-    }
+    for(let r=0; r<ROWS; r++) for(let c=0; c<COLS; c++) if(grid[r][c] && grid[r][c].active) activeColors.add(grid[r][c].color);
     return activeColors.size > 0 ? Array.from(activeColors) : COLORS;
 }
 
@@ -147,10 +116,34 @@ function drawBubble(x, y, color, scale = 1) {
     ctx.translate(x, y); ctx.scale(scale, scale);
     let grad = ctx.createRadialGradient(-ballRadius/3, -ballRadius/3, ballRadius/10, 0, 0, ballRadius);
     grad.addColorStop(0, "#fff"); grad.addColorStop(0.3, color); grad.addColorStop(1, "#000");
-    ctx.shadowBlur = 10; ctx.shadowColor = color;
+    ctx.shadowBlur = 15; ctx.shadowColor = color;
     ctx.beginPath(); ctx.arc(0, 0, ballRadius - 2, 0, Math.PI * 2);
     ctx.fillStyle = grad; ctx.fill();
     ctx.restore();
+}
+
+function drawLaser() {
+    if (currentBubble.fired || isProcessing || gameOver) return;
+    
+    const laserCount = 8; // Kaç nokta olacak?
+    const dist = 120; // Lazer uzunluğu
+    
+    for (let i = 1; i <= laserCount; i++) {
+        const lx = width / 2 + Math.cos(angle) * (i * (dist / laserCount));
+        const ly = (height - 100) + Math.sin(angle) * (i * (dist / laserCount));
+        const size = (laserCount - i + 2) * 0.8; // Uca doğru küçülen noktalar
+        
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = currentBubble.color;
+        ctx.fillStyle = currentBubble.color;
+        ctx.globalAlpha = 1 - (i / (laserCount + 2)); // Uca doğru şeffaflaşma
+        
+        ctx.beginPath();
+        ctx.arc(lx, ly, size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
 }
 
 function loop() {
@@ -158,13 +151,13 @@ function loop() {
     ctx.fillStyle = "#020617";
     ctx.fillRect(0, 0, width, height);
 
-    // Deadline Çizgisi
-    ctx.strokeStyle = "rgba(255, 51, 102, 0.2)";
+    // Deadline
+    ctx.strokeStyle = "rgba(255, 51, 102, 0.15)";
     ctx.setLineDash([5, 5]);
     ctx.beginPath(); ctx.moveTo(0, height * (1 - DEADLINE_OFFSET_RATIO)); ctx.lineTo(width, height * (1 - DEADLINE_OFFSET_RATIO)); ctx.stroke();
     ctx.setLineDash([]);
 
-    // Parçacıklar
+    // Particles
     for (let i = particles.length - 1; i >= 0; i--) {
         let p = particles[i]; p.x += p.vx; p.y += p.vy; p.vy += 0.2; p.life -= 0.02;
         if (p.life <= 0) particles.splice(i, 1);
@@ -172,7 +165,7 @@ function loop() {
     }
     ctx.globalAlpha = 1;
 
-    // Izgara
+    // Grid
     for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
             if (grid[r][c] && grid[r][c].active) {
@@ -183,11 +176,7 @@ function loop() {
         }
     }
 
-    if (!currentBubble.fired && !isProcessing) {
-        ctx.beginPath(); ctx.moveTo(width / 2, height - 100);
-        ctx.lineTo(width / 2 + Math.cos(angle) * 60, height - 100 + Math.sin(angle) * 60);
-        ctx.strokeStyle = "rgba(0, 255, 136, 0.5)"; ctx.lineWidth = 4; ctx.stroke();
-    }
+    drawLaser();
 
     if (currentBubble.fired && currentBubble.active) {
         currentBubble.x += currentBubble.vx; currentBubble.y += currentBubble.vy;
@@ -238,11 +227,8 @@ function snap() {
         document.getElementById('levelclear').style.display = 'flex';
     } else {
         let overflow = false;
-        for(let r=0; r<ROWS; r++) {
-            for(let c=0; c<COLS; c++) {
-                if(grid[r][c] && grid[r][c].active && getPos(r,c).y > height * (1 - DEADLINE_OFFSET_RATIO)) overflow = true;
-            }
-        }
+        for(let r=0; r<ROWS; r++) for(let c=0; c<COLS; c++) if(grid[r][c] && grid[r][c].active && getPos(r,c).y > height * (1 - DEADLINE_OFFSET_RATIO)) overflow = true;
+        
         if (overflow) {
             gameOver = true;
             document.getElementById('finalscore').textContent = score;
@@ -297,22 +283,26 @@ function nextLevel() {
 function restart() { init(); }
 
 const handleInput = (e) => {
+    e.preventDefault();
     const rect = canvas.getBoundingClientRect();
-    const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
-    const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+    const touch = e.touches ? e.touches[0] : e;
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
     angle = Math.atan2(y - (height - 100), x - (width / 2));
 };
 
-window.addEventListener("touchstart", (e) => { e.preventDefault(); handleInput(e); }, {passive: false});
+// Takip için touchmove ekledik
+window.addEventListener("touchstart", handleInput, {passive: false});
+window.addEventListener("touchmove", handleInput, {passive: false});
 window.addEventListener("touchend", (e) => {
     if (gameOver || isProcessing || currentBubble.fired) return;
-    currentBubble.vx = Math.cos(angle) * 16; currentBubble.vy = Math.sin(angle) * 16;
+    currentBubble.vx = Math.cos(angle) * 17; currentBubble.vy = Math.sin(angle) * 17;
     currentBubble.fired = true;
 });
 window.addEventListener("mousemove", handleInput);
 window.addEventListener("mousedown", () => {
     if (gameOver || isProcessing || currentBubble.fired) return;
-    currentBubble.vx = Math.cos(angle) * 16; currentBubble.vy = Math.sin(angle) * 16;
+    currentBubble.vx = Math.cos(angle) * 17; currentBubble.vy = Math.sin(angle) * 17;
     currentBubble.fired = true;
 });
 
