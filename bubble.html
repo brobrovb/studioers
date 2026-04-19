@@ -2,86 +2,106 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Neon Blast: Score Rush</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Neon Blast Pro Mobile</title>
     <style>
-        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; font-family: 'Segoe UI', sans-serif; }
-        canvas { background: #020617; touch-action: none; cursor: crosshair; }
-        #ui { position: absolute; top: 25px; left: 25px; color: #00ff88; font-size: 18px; font-weight: bold; pointer-events: none; z-index: 10; letter-spacing: 1px; line-height: 1.4;}
-        #gameover, #levelclear { 
-            position: absolute; inset: 0; background: rgba(0, 0, 0, 0.95); 
-            display: none; flex-direction: column; justify-content: center; align-items: center; 
-            z-index: 1000; backdrop-filter: blur(15px);
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { 
+            margin: 0; padding: 0; background: #000; 
+            display: flex; justify-content: center; align-items: center; 
+            height: 100vh; width: 100vw; overflow: hidden; 
+            font-family: 'Segoe UI', sans-serif; position: fixed;
         }
-        .msg { font-size: 40px; font-weight: 900; margin: 0; text-align: center; }
-        button { padding: 18px 50px; font-size: 18px; background: #00ff88; color: #000; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 25px; text-transform: uppercase; }
-        .progress-bar { width: 150px; height: 8px; background: #333; margin-top: 5px; border-radius: 4px; overflow: hidden; }
-        #fill { width: 0%; height: 100%; background: #00ff88; transition: width 0.3s; }
+        #game-container {
+            position: relative; width: 100%; height: 100%;
+            max-width: 500px; /* Maksimum genişlik sınırı */
+            display: flex; justify-content: center; align-items: center;
+        }
+        canvas { 
+            background: #020617; touch-action: none; 
+            max-width: 100%; max-height: 100%;
+        }
+        #ui { 
+            position: absolute; top: 20px; left: 20px; 
+            color: #00ff88; font-size: 16px; font-weight: bold; 
+            pointer-events: none; z-index: 10;
+        }
+        .modal { 
+            position: absolute; inset: 0; background: rgba(0, 0, 0, 0.96); 
+            display: none; flex-direction: column; justify-content: center; 
+            align-items: center; z-index: 1000; backdrop-filter: blur(10px);
+            padding: 20px; text-align: center;
+        }
+        .msg { font-size: 32px; font-weight: 900; margin: 0; }
+        button { 
+            padding: 15px 40px; font-size: 18px; background: #00ff88; color: #000; 
+            border: none; border-radius: 8px; cursor: pointer; font-weight: bold; 
+            margin-top: 25px; box-shadow: 0 5px 15px rgba(0,255,136,0.3);
+        }
+        .progress-bar { width: 120px; height: 6px; background: #333; margin-top: 5px; border-radius: 3px; overflow: hidden; }
+        #fill { width: 0%; height: 100%; background: #00ff88; }
     </style>
 </head>
 <body>
 
-    <div id="ui">
-        LEVEL: <span id="level">1</span><br>
-        SCORE: <span id="score">0</span> / <span id="goal">1000</span>
-        <div class="progress-bar"><div id="fill"></div></div>
-    </div>
-    <canvas id="game"></canvas>
+    <div id="game-container">
+        <div id="ui">
+            LEVEL: <span id="level">1</span><br>
+            SCORE: <span id="score">0</span> / <span id="goal">1000</span>
+            <div class="progress-bar"><div id="fill"></div></div>
+        </div>
+        
+        <canvas id="game"></canvas>
 
-    <div id="gameover">
-        <h1 class="msg" style="color:#ff3366;">GAME OVER</h1>
-        <div style="color:white; margin-top:10px;">FINAL SCORE: <span id="finalscore">0</span></div>
-        <button onclick="restart()">TRY AGAIN</button>
-    </div>
+        <div id="gameover" class="modal">
+            <h1 class="msg" style="color:#ff3366;">GAME OVER</h1>
+            <p style="color:white; opacity:0.8;">FINAL SCORE: <span id="finalscore">0</span></p>
+            <button onclick="restart()">TRY AGAIN</button>
+        </div>
 
-    <div id="levelclear">
-        <h1 class="msg" style="color:#00ff88;">LEVEL COMPLETE</h1>
-        <div style="color:white; margin-top:10px;">TARGET REACHED!</div>
-        <button onclick="nextLevel()">NEXT LEVEL</button>
+        <div id="levelclear" class="modal">
+            <h1 class="msg" style="color:#00ff88;">LEVEL UP</h1>
+            <p style="color:white;">TARGET REACHED!</p>
+            <button onclick="nextLevel()">NEXT LEVEL</button>
+        </div>
     </div>
 
 <script>
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
-const scoreEl = document.getElementById('score');
-const levelEl = document.getElementById('level');
-const goalEl = document.getElementById('goal');
-const fillEl = document.getElementById('fill');
+const container = document.getElementById('game-container');
 
+// Oyun sabitleri
 const COLS = 10, ROWS = 18;
 const COLORS = ['#FF1E56', '#00F5FF', '#F9D923', '#A125FB', '#32FF6A'];
-const DEADLINE_OFFSET = 120;
+const DEADLINE_OFFSET_RATIO = 0.2; // Ekranın %20'si kala Game Over
 
 let width, height, ballRadius, animationId;
 let grid = [], score = 0, level = 1, scoreGoal = 1000;
 let currentBubble = null, nextBubble = null, angle = -Math.PI / 2;
 let missCount = 0, isProcessing = false, particles = [], gameOver = false;
 
+function resize() {
+    width = container.clientWidth;
+    height = container.clientHeight;
+    canvas.width = width;
+    canvas.height = height;
+    ballRadius = width / (COLS * 2.1);
+}
+
+window.addEventListener('resize', resize);
+
 function init() {
-    if (animationId) cancelAnimationFrame(animationId);
-    width = Math.min(window.innerWidth, 480);
-    height = window.innerHeight;
-    canvas.width = width; canvas.height = height;
-    ballRadius = width / (COLS * 2.15);
-    
+    resize();
     score = 0; level = 1; scoreGoal = 1000;
-    updateUI();
     gameOver = false;
-    document.getElementById('gameover').style.display = "none";
-    document.getElementById('levelclear').style.display = "none";
-    
+    document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
     startLevel();
+    if (animationId) cancelAnimationFrame(animationId);
     requestAnimationFrame(loop);
 }
 
-function updateUI() {
-    scoreEl.textContent = score;
-    levelEl.textContent = level;
-    goalEl.textContent = scoreGoal;
-    let percent = Math.min((score / scoreGoal) * 100, 100);
-    fillEl.style.width = percent + "%";
-}
-
+// Akıllı Renk Seçici (Sadece ekranda olanlar gelsin)
 function getAvailableColors() {
     let activeColors = new Set();
     for(let r=0; r<ROWS; r++) {
@@ -94,22 +114,22 @@ function getAvailableColors() {
 
 function startLevel() {
     grid = [];
-    let initialRows = 5;
     for (let r = 0; r < ROWS; r++) {
         grid[r] = [];
         for (let c = 0; c < COLS; c++) {
-            if (r < initialRows) grid[r][c] = { color: COLORS[Math.floor(Math.random() * COLORS.length)], active: true, scale: 1 };
+            if (r < 5) grid[r][c] = { color: COLORS[Math.floor(Math.random() * COLORS.length)], active: true, scale: 1 };
             else grid[r][c] = null;
         }
     }
     nextBubble = { color: COLORS[Math.floor(Math.random() * COLORS.length)] };
     spawnNext();
+    updateUI();
 }
 
 function spawnNext() {
     const avail = getAvailableColors();
     currentBubble = { 
-        x: width / 2, y: height - 80, 
+        x: width / 2, y: height - 100, 
         color: avail.includes(nextBubble.color) ? nextBubble.color : avail[Math.floor(Math.random()*avail.length)], 
         vx: 0, vy: 0, fired: false, active: true 
     };
@@ -124,8 +144,7 @@ function getPos(r, c) {
 
 function drawBubble(x, y, color, scale = 1) {
     ctx.save();
-    ctx.translate(x, y);
-    ctx.scale(scale, scale);
+    ctx.translate(x, y); ctx.scale(scale, scale);
     let grad = ctx.createRadialGradient(-ballRadius/3, -ballRadius/3, ballRadius/10, 0, 0, ballRadius);
     grad.addColorStop(0, "#fff"); grad.addColorStop(0.3, color); grad.addColorStop(1, "#000");
     ctx.shadowBlur = 10; ctx.shadowColor = color;
@@ -139,20 +158,21 @@ function loop() {
     ctx.fillStyle = "#020617";
     ctx.fillRect(0, 0, width, height);
 
-    // Deadline Line
+    // Deadline Çizgisi
     ctx.strokeStyle = "rgba(255, 51, 102, 0.2)";
-    ctx.beginPath(); ctx.moveTo(0, height - DEADLINE_OFFSET); ctx.lineTo(width, height - DEADLINE_OFFSET); ctx.stroke();
+    ctx.setLineDash([5, 5]);
+    ctx.beginPath(); ctx.moveTo(0, height * (1 - DEADLINE_OFFSET_RATIO)); ctx.lineTo(width, height * (1 - DEADLINE_OFFSET_RATIO)); ctx.stroke();
+    ctx.setLineDash([]);
 
-    // Particles
+    // Parçacıklar
     for (let i = particles.length - 1; i >= 0; i--) {
-        let p = particles[i];
-        p.x += p.vx; p.y += p.vy; p.vy += 0.2; p.life -= 0.02;
+        let p = particles[i]; p.x += p.vx; p.y += p.vy; p.vy += 0.2; p.life -= 0.02;
         if (p.life <= 0) particles.splice(i, 1);
         else { ctx.fillStyle = p.color; ctx.globalAlpha = p.life; ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.fill(); }
     }
     ctx.globalAlpha = 1;
 
-    // Grid
+    // Izgara
     for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
             if (grid[r][c] && grid[r][c].active) {
@@ -164,10 +184,9 @@ function loop() {
     }
 
     if (!currentBubble.fired && !isProcessing) {
-        ctx.beginPath();
-        ctx.moveTo(width / 2, height - 80);
-        ctx.lineTo(width / 2 + Math.cos(angle) * 80, height - 80 + Math.sin(angle) * 80);
-        ctx.strokeStyle = "rgba(0, 255, 136, 0.5)"; ctx.lineWidth = 3; ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(width / 2, height - 100);
+        ctx.lineTo(width / 2 + Math.cos(angle) * 60, height - 100 + Math.sin(angle) * 60);
+        ctx.strokeStyle = "rgba(0, 255, 136, 0.5)"; ctx.lineWidth = 4; ctx.stroke();
     }
 
     if (currentBubble.fired && currentBubble.active) {
@@ -181,13 +200,13 @@ function loop() {
 }
 
 function checkCollision() {
-    let hit = (currentBubble.y < ballRadius + 55);
+    let hit = (currentBubble.y < 60);
     if (!hit) {
         for (let r = 0; r < ROWS; r++) {
             for (let c = 0; c < COLS; c++) {
                 if (grid[r][c] && grid[r][c].active) {
                     let p = getPos(r, c);
-                    if (Math.hypot(currentBubble.x - p.x, currentBubble.y - p.y) < ballRadius * 1.6) { hit = true; break; }
+                    if (Math.hypot(currentBubble.x - p.x, currentBubble.y - p.y) < ballRadius * 1.55) { hit = true; break; }
                 }
             }
             if(hit) break;
@@ -209,27 +228,28 @@ function snap() {
     }
     grid[tr][tc] = { color: currentBubble.color, active: true, scale: 0.2 };
     
-    let matched = checkMatches(tr, tc);
-    if (!matched) missCount++;
+    if (!checkMatches(tr, tc)) missCount++;
     else missCount = Math.max(0, missCount - 1);
 
     if (missCount >= 6) { shiftDown(); missCount = 0; }
-
     updateUI();
 
-    // WIN CONDITION: Score Goal
     if (score >= scoreGoal) {
-        triggerLevelClear();
+        document.getElementById('levelclear').style.display = 'flex';
     } else {
-        // LOSE CONDITION: Overflow
         let overflow = false;
         for(let r=0; r<ROWS; r++) {
             for(let c=0; c<COLS; c++) {
-                if(grid[r][c] && grid[r][c].active && getPos(r,c).y > height - DEADLINE_OFFSET) overflow = true;
+                if(grid[r][c] && grid[r][c].active && getPos(r,c).y > height * (1 - DEADLINE_OFFSET_RATIO)) overflow = true;
             }
         }
-        if (overflow) triggerGameOver();
-        else setTimeout(spawnNext, 50);
+        if (overflow) {
+            gameOver = true;
+            document.getElementById('finalscore').textContent = score;
+            document.getElementById('gameover').style.display = 'flex';
+        } else {
+            setTimeout(spawnNext, 50);
+        }
     }
 }
 
@@ -248,11 +268,10 @@ function checkMatches(r, c) {
     if (matches.length >= 3) {
         matches.forEach(([mr, mc]) => {
             let p = getPos(mr, mc);
-            for(let k=0; k<12; k++) particles.push({ x: p.x, y: p.y, vx: Math.random()*6-3, vy: Math.random()*6-3, life: 1, color: color });
+            for(let k=0; k<10; k++) particles.push({ x: p.x, y: p.y, vx: Math.random()*4-2, vy: Math.random()*4-2, life: 1, color: color });
             grid[mr][mc].active = false;
         });
-        score += matches.length * 20;
-        return true;
+        score += matches.length * 20; return true;
     }
     return false;
 }
@@ -262,46 +281,41 @@ function shiftDown() {
     grid.pop();
 }
 
-function triggerLevelClear() {
-    isProcessing = true;
-    document.getElementById('levelclear').style.display = "flex";
+function updateUI() {
+    document.getElementById('score').textContent = score;
+    document.getElementById('level').textContent = level;
+    document.getElementById('goal').textContent = scoreGoal;
+    document.getElementById('fill').style.width = Math.min((score / scoreGoal) * 100, 100) + "%";
 }
 
 function nextLevel() {
-    level++;
-    scoreGoal += 1000; // Her levelda hedef 1000 puan artar
-    document.getElementById('levelclear').style.display = "none";
+    level++; scoreGoal += 1000;
+    document.getElementById('levelclear').style.display = 'none';
     startLevel();
-    updateUI();
 }
 
-function triggerGameOver() {
-    gameOver = true;
-    document.getElementById('finalscore').textContent = score;
-    document.getElementById('gameover').style.display = "flex";
-}
+function restart() { init(); }
 
 const handleInput = (e) => {
     const rect = canvas.getBoundingClientRect();
     const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
     const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
-    angle = Math.atan2(y - (height - 80), x - (width / 2));
+    angle = Math.atan2(y - (height - 100), x - (width / 2));
 };
 
+window.addEventListener("touchstart", (e) => { e.preventDefault(); handleInput(e); }, {passive: false});
+window.addEventListener("touchend", (e) => {
+    if (gameOver || isProcessing || currentBubble.fired) return;
+    currentBubble.vx = Math.cos(angle) * 16; currentBubble.vy = Math.sin(angle) * 16;
+    currentBubble.fired = true;
+});
 window.addEventListener("mousemove", handleInput);
 window.addEventListener("mousedown", () => {
     if (gameOver || isProcessing || currentBubble.fired) return;
-    currentBubble.vx = Math.cos(angle) * 17; currentBubble.vy = Math.sin(angle) * 17;
+    currentBubble.vx = Math.cos(angle) * 16; currentBubble.vy = Math.sin(angle) * 16;
     currentBubble.fired = true;
 });
-window.addEventListener("touchstart", (e) => {
-    e.preventDefault(); handleInput(e);
-    if (gameOver || isProcessing || currentBubble.fired) return;
-    currentBubble.vx = Math.cos(angle) * 17; currentBubble.vy = Math.sin(angle) * 17;
-    currentBubble.fired = true;
-}, {passive: false});
 
-function restart() { init(); }
 init();
 </script>
 </body>
