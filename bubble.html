@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Neon Blast: Score Rush</title>
+    <style>
+        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; font-family: 'Segoe UI', sans-serif; }
+        canvas { background: #020617; touch-action: none; cursor: crosshair; }
+        #ui { position: absolute; top: 25px; left: 25px; color: #00ff88; font-size: 18px; font-weight: bold; pointer-events: none; z-index: 10; letter-spacing: 1px; line-height: 1.4;}
+        #gameover, #levelclear { 
+            position: absolute; inset: 0; background: rgba(0, 0, 0, 0.95); 
+            display: none; flex-direction: column; justify-content: center; align-items: center; 
+            z-index: 1000; backdrop-filter: blur(15px);
+        }
+        .msg { font-size: 40px; font-weight: 900; margin: 0; text-align: center; }
+        button { padding: 18px 50px; font-size: 18px; background: #00ff88; color: #000; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 25px; text-transform: uppercase; }
+        .progress-bar { width: 150px; height: 8px; background: #333; margin-top: 5px; border-radius: 4px; overflow: hidden; }
+        #fill { width: 0%; height: 100%; background: #00ff88; transition: width 0.3s; }
+    </style>
+</head>
+<body>
+
+    <div id="ui">
+        LEVEL: <span id="level">1</span><br>
+        SCORE: <span id="score">0</span> / <span id="goal">1000</span>
+        <div class="progress-bar"><div id="fill"></div></div>
+    </div>
+    <canvas id="game"></canvas>
+
+    <div id="gameover">
+        <h1 class="msg" style="color:#ff3366;">GAME OVER</h1>
+        <div style="color:white; margin-top:10px;">FINAL SCORE: <span id="finalscore">0</span></div>
+        <button onclick="restart()">TRY AGAIN</button>
+    </div>
+
+    <div id="levelclear">
+        <h1 class="msg" style="color:#00ff88;">LEVEL COMPLETE</h1>
+        <div style="color:white; margin-top:10px;">TARGET REACHED!</div>
+        <button onclick="nextLevel()">NEXT LEVEL</button>
+    </div>
+
+<script>
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+const scoreEl = document.getElementById('score');
+const levelEl = document.getElementById('level');
+const goalEl = document.getElementById('goal');
+const fillEl = document.getElementById('fill');
+
+const COLS = 10, ROWS = 18;
+const COLORS = ['#FF1E56', '#00F5FF', '#F9D923', '#A125FB', '#32FF6A'];
+const DEADLINE_OFFSET = 120;
+
+let width, height, ballRadius, animationId;
+let grid = [], score = 0, level = 1, scoreGoal = 1000;
+let currentBubble = null, nextBubble = null, angle = -Math.PI / 2;
+let missCount = 0, isProcessing = false, particles = [], gameOver = false;
+
+function init() {
+    if (animationId) cancelAnimationFrame(animationId);
+    width = Math.min(window.innerWidth, 480);
+    height = window.innerHeight;
+    canvas.width = width; canvas.height = height;
+    ballRadius = width / (COLS * 2.15);
+    
+    score = 0; level = 1; scoreGoal = 1000;
+    updateUI();
+    gameOver = false;
+    document.getElementById('gameover').style.display = "none";
+    document.getElementById('levelclear').style.display = "none";
+    
+    startLevel();
+    requestAnimationFrame(loop);
+}
+
+function updateUI() {
+    scoreEl.textContent = score;
+    levelEl.textContent = level;
+    goalEl.textContent = scoreGoal;
+    let percent = Math.min((score / scoreGoal) * 100, 100);
+    fillEl.style.width = percent + "%";
+}
+
+function getAvailableColors() {
+    let activeColors = new Set();
+    for(let r=0; r<ROWS; r++) {
+        for(let c=0; c<COLS; c++) {
+            if(grid[r][c] && grid[r][c].active) activeColors.add(grid[r][c].color);
+        }
+    }
+    return activeColors.size > 0 ? Array.from(activeColors) : COLORS;
+}
+
+function startLevel() {
+    grid = [];
+    let initialRows = 5;
+    for (let r = 0; r < ROWS; r++) {
+        grid[r] = [];
+        for (let c = 0; c < COLS; c++) {
+            if (r < initialRows) grid[r][c] = { color: COLORS[Math.floor(Math.random() * COLORS.length)], active: true, scale: 1 };
+            else grid[r][c] = null;
+        }
+    }
+    nextBubble = { color: COLORS[Math.floor(Math.random() * COLORS.length)] };
+    spawnNext();
+}
+
+function spawnNext() {
+    const avail = getAvailableColors();
+    currentBubble = { 
+        x: width / 2, y: height - 80, 
+        color: avail.includes(nextBubble.color) ? nextBubble.color : avail[Math.floor(Math.random()*avail.length)], 
+        vx: 0, vy: 0, fired: false, active: true 
+    };
+    nextBubble = { color: avail[Math.floor(Math.random()*avail.length)] };
+    isProcessing = false;
+}
+
+function getPos(r, c) {
+    let offset = (r % 2) * ballRadius;
+    return { x: c * (ballRadius * 2) + ballRadius + offset, y: r * (ballRadius * 1.75) + ballRadius + 60 };
+}
+
+function drawBubble(x, y, color, scale = 1) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(scale, scale);
+    let grad = ctx.createRadialGradient(-ballRadius/3, -ballRadius/3, ballRadius/10, 0, 0, ballRadius);
+    grad.addColorStop(0, "#fff"); grad.addColorStop(0.3, color); grad.addColorStop(1, "#000");
+    ctx.shadowBlur = 10; ctx.shadowColor = color;
+    ctx.beginPath(); ctx.arc(0, 0, ballRadius - 2, 0, Math.PI * 2);
+    ctx.fillStyle = grad; ctx.fill();
+    ctx.restore();
+}
+
+function loop() {
+    if (gameOver) return;
+    ctx.fillStyle = "#020617";
+    ctx.fillRect(0, 0, width, height);
+
+    // Deadline Line
+    ctx.strokeStyle = "rgba(255, 51, 102, 0.2)";
+    ctx.beginPath(); ctx.moveTo(0, height - DEADLINE_OFFSET); ctx.lineTo(width, height - DEADLINE_OFFSET); ctx.stroke();
+
+    // Particles
+    for (let i = particles.length - 1; i >= 0; i--) {
+        let p = particles[i];
+        p.x += p.vx; p.y += p.vy; p.vy += 0.2; p.life -= 0.02;
+        if (p.life <= 0) particles.splice(i, 1);
+        else { ctx.fillStyle = p.color; ctx.globalAlpha = p.life; ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.fill(); }
+    }
+    ctx.globalAlpha = 1;
+
+    // Grid
+    for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+            if (grid[r][c] && grid[r][c].active) {
+                let p = getPos(r, c);
+                if (grid[r][c].scale < 1) grid[r][c].scale += 0.15;
+                drawBubble(p.x, p.y, grid[r][c].color, grid[r][c].scale);
+            }
+        }
+    }
+
+    if (!currentBubble.fired && !isProcessing) {
+        ctx.beginPath();
+        ctx.moveTo(width / 2, height - 80);
+        ctx.lineTo(width / 2 + Math.cos(angle) * 80, height - 80 + Math.sin(angle) * 80);
+        ctx.strokeStyle = "rgba(0, 255, 136, 0.5)"; ctx.lineWidth = 3; ctx.stroke();
+    }
+
+    if (currentBubble.fired && currentBubble.active) {
+        currentBubble.x += currentBubble.vx; currentBubble.y += currentBubble.vy;
+        if (currentBubble.x < ballRadius || currentBubble.x > width - ballRadius) currentBubble.vx *= -1;
+        checkCollision();
+    }
+
+    if (currentBubble.active) drawBubble(currentBubble.x, currentBubble.y, currentBubble.color);
+    animationId = requestAnimationFrame(loop);
+}
+
+function checkCollision() {
+    let hit = (currentBubble.y < ballRadius + 55);
+    if (!hit) {
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                if (grid[r][c] && grid[r][c].active) {
+                    let p = getPos(r, c);
+                    if (Math.hypot(currentBubble.x - p.x, currentBubble.y - p.y) < ballRadius * 1.6) { hit = true; break; }
+                }
+            }
+            if(hit) break;
+        }
+    }
+    if (hit) snap();
+}
+
+function snap() {
+    isProcessing = true; currentBubble.active = false;
+    let bestDist = Infinity, tr = 0, tc = 0;
+    for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+            if (grid[r][c] && grid[r][c].active) continue;
+            let p = getPos(r, c);
+            let d = Math.hypot(currentBubble.x - p.x, currentBubble.y - p.y);
+            if (d < bestDist) { bestDist = d; tr = r; tc = c; }
+        }
+    }
+    grid[tr][tc] = { color: currentBubble.color, active: true, scale: 0.2 };
+    
+    let matched = checkMatches(tr, tc);
+    if (!matched) missCount++;
+    else missCount = Math.max(0, missCount - 1);
+
+    if (missCount >= 6) { shiftDown(); missCount = 0; }
+
+    updateUI();
+
+    // WIN CONDITION: Score Goal
+    if (score >= scoreGoal) {
+        triggerLevelClear();
+    } else {
+        // LOSE CONDITION: Overflow
+        let overflow = false;
+        for(let r=0; r<ROWS; r++) {
+            for(let c=0; c<COLS; c++) {
+                if(grid[r][c] && grid[r][c].active && getPos(r,c).y > height - DEADLINE_OFFSET) overflow = true;
+            }
+        }
+        if (overflow) triggerGameOver();
+        else setTimeout(spawnNext, 50);
+    }
+}
+
+function checkMatches(r, c) {
+    let color = grid[r][c].color, matches = [[r, c]], visited = new Set([r + "," + c]), i = 0;
+    while(i < matches.length) {
+        let [currR, currC] = matches[i++];
+        let n = currR % 2 === 0 ? [[0,-1],[0,1],[-1,0],[-1,-1],[1,0],[1,-1]] : [[0,-1],[0,1],[-1,0],[-1,1],[1,0],[1,1]];
+        for(let [dr, dc] of n) {
+            let nr = currR + dr, nc = currC + dc;
+            if(nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && grid[nr][nc] && grid[nr][nc].active && grid[nr][nc].color === color && !visited.has(nr + "," + nc)) {
+                visited.add(nr + "," + nc); matches.push([nr, nc]);
+            }
+        }
+    }
+    if (matches.length >= 3) {
+        matches.forEach(([mr, mc]) => {
+            let p = getPos(mr, mc);
+            for(let k=0; k<12; k++) particles.push({ x: p.x, y: p.y, vx: Math.random()*6-3, vy: Math.random()*6-3, life: 1, color: color });
+            grid[mr][mc].active = false;
+        });
+        score += matches.length * 20;
+        return true;
+    }
+    return false;
+}
+
+function shiftDown() {
+    grid.unshift(new Array(COLS).fill(null).map(() => ({ color: COLORS[Math.floor(Math.random() * COLORS.length)], active: true, scale: 1 })));
+    grid.pop();
+}
+
+function triggerLevelClear() {
+    isProcessing = true;
+    document.getElementById('levelclear').style.display = "flex";
+}
+
+function nextLevel() {
+    level++;
+    scoreGoal += 1000; // Her levelda hedef 1000 puan artar
+    document.getElementById('levelclear').style.display = "none";
+    startLevel();
+    updateUI();
+}
+
+function triggerGameOver() {
+    gameOver = true;
+    document.getElementById('finalscore').textContent = score;
+    document.getElementById('gameover').style.display = "flex";
+}
+
+const handleInput = (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+    const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+    angle = Math.atan2(y - (height - 80), x - (width / 2));
+};
+
+window.addEventListener("mousemove", handleInput);
+window.addEventListener("mousedown", () => {
+    if (gameOver || isProcessing || currentBubble.fired) return;
+    currentBubble.vx = Math.cos(angle) * 17; currentBubble.vy = Math.sin(angle) * 17;
+    currentBubble.fired = true;
+});
+window.addEventListener("touchstart", (e) => {
+    e.preventDefault(); handleInput(e);
+    if (gameOver || isProcessing || currentBubble.fired) return;
+    currentBubble.vx = Math.cos(angle) * 17; currentBubble.vy = Math.sin(angle) * 17;
+    currentBubble.fired = true;
+}, {passive: false});
+
+function restart() { init(); }
+init();
+</script>
+</body>
+</html>
