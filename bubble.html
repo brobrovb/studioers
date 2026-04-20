@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Neon Blast: Studioers Edition</title>
+    <title>Neon Blast: Studioers Fix</title>
     <style>
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { 
             margin: 0; padding: 0; background: #000; 
             display: flex; justify-content: center; align-items: center; 
@@ -13,10 +13,24 @@
             font-family: 'Segoe UI', sans-serif; position: fixed;
         }
         #game-container { position: relative; width: 100%; height: 100%; max-width: 500px; display: flex; justify-content: center; align-items: center; }
-        canvas { background: #020617; touch-action: none; max-width: 100%; max-height: 100%; }
+        canvas { background: #020617; touch-action: none; max-width: 100%; max-height: 100%; display: block; }
+        
         #ui { position: absolute; top: 20px; left: 20px; color: #00ff88; font-size: 16px; font-weight: bold; pointer-events: none; z-index: 10; text-shadow: 0 0 10px rgba(0,255,136,0.5); }
-        .modal { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.96); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(10px); padding: 20px; text-align: center; }
-        button { padding: 15px 40px; font-size: 18px; background: #00ff88; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 25px; box-shadow: 0 5px 15px rgba(0,255,136,0.3); text-transform: uppercase; }
+        
+        .modal { 
+            position: absolute; inset: 0; background: rgba(0, 0, 0, 0.96); 
+            display: none; flex-direction: column; justify-content: center; 
+            align-items: center; z-index: 2000; /* Daha yüksek z-index */
+            backdrop-filter: blur(10px); padding: 20px; text-align: center;
+        }
+        
+        button { 
+            padding: 18px 45px; font-size: 20px; background: #00ff88; color: #000; 
+            border: none; border-radius: 12px; cursor: pointer; font-weight: bold; 
+            margin-top: 25px; box-shadow: 0 0 20px rgba(0,255,136,0.4); 
+            text-transform: uppercase; pointer-events: auto !important;
+        }
+        
         .progress-bar { width: 120px; height: 6px; background: #333; margin-top: 5px; border-radius: 3px; overflow: hidden; }
         #fill { width: 0%; height: 100%; background: #00ff88; transition: width 0.3s; }
     </style>
@@ -35,13 +49,13 @@
         <div id="gameover" class="modal">
             <h1 style="color:#ff3366; font-size: 40px; margin:0;">GAME OVER</h1>
             <p style="color:white; margin-top:10px;">FINAL SCORE: <span id="finalscore">0</span></p>
-            <button onclick="restart()">TRY AGAIN</button>
+            <button id="restartBtn">TRY AGAIN</button>
         </div>
 
         <div id="levelclear" class="modal">
             <h1 style="color:#00ff88; font-size: 40px; margin:0;">LEVEL UP!</h1>
             <p style="color:white; margin-top:10px;">TARGET REACHED</p>
-            <button onclick="nextLevel()">START NEXT LEVEL</button>
+            <button id="nextBtn">START NEXT LEVEL</button>
         </div>
     </div>
 
@@ -69,7 +83,7 @@ window.addEventListener('resize', resize);
 
 function init() {
     resize();
-    score = 0; level = 1; scoreGoal = 1000; gameOver = false;
+    score = 0; level = 1; scoreGoal = 1000; gameOver = false; isProcessing = false;
     document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
     startLevel();
     if (animationId) cancelAnimationFrame(animationId);
@@ -84,7 +98,6 @@ function getAvailableColors() {
 
 function startLevel() {
     grid = [];
-    // Seviye arttıkça başlangıçtaki satır sayısını hafifçe artıralım
     let rowsToFill = Math.min(4 + level, 9);
     for (let r = 0; r < ROWS; r++) {
         grid[r] = [];
@@ -119,7 +132,6 @@ function drawBubble(x, y, color, scale = 1) {
     ctx.translate(x, y); ctx.scale(scale, scale);
     let grad = ctx.createRadialGradient(-ballRadius/3, -ballRadius/3, ballRadius/10, 0, 0, ballRadius);
     grad.addColorStop(0, "#fff"); grad.addColorStop(0.3, color); grad.addColorStop(1, "#000");
-    ctx.shadowBlur = 15; ctx.shadowColor = color;
     ctx.beginPath(); ctx.arc(0, 0, ballRadius - 2, 0, Math.PI * 2);
     ctx.fillStyle = grad; ctx.fill();
     ctx.restore();
@@ -127,8 +139,7 @@ function drawBubble(x, y, color, scale = 1) {
 
 function drawLaser() {
     if (currentBubble.fired || isProcessing || gameOver) return;
-    const laserCount = 10;
-    const dist = 140;
+    const laserCount = 10; const dist = 140;
     for (let i = 1; i <= laserCount; i++) {
         const lx = width / 2 + Math.cos(angle) * (i * (dist / laserCount));
         const ly = (height - 100) + Math.sin(angle) * (i * (dist / laserCount));
@@ -170,13 +181,11 @@ function loop() {
     }
 
     drawLaser();
-
     if (currentBubble.fired && currentBubble.active) {
         currentBubble.x += currentBubble.vx; currentBubble.y += currentBubble.vy;
         if (currentBubble.x < ballRadius || currentBubble.x > width - ballRadius) currentBubble.vx *= -1;
         checkCollision();
     }
-
     if (currentBubble.active) drawBubble(currentBubble.x, currentBubble.y, currentBubble.color);
     animationId = requestAnimationFrame(loop);
 }
@@ -209,21 +218,17 @@ function snap() {
         }
     }
     grid[tr][tc] = { color: currentBubble.color, active: true, scale: 0.2 };
-    
-    if (!checkMatches(tr, tc)) missCount++;
-    else missCount = Math.max(0, missCount - 1);
-
+    if (!checkMatches(tr, tc)) missCount++; else missCount = Math.max(0, missCount - 1);
     if (missCount >= 6) { shiftDown(); missCount = 0; }
     updateUI();
 
     if (score >= scoreGoal) {
         document.getElementById('levelclear').style.display = 'flex';
-        // Oyun döngüsünü durduruyoruz ki arka planda çalışmasın
-        isProcessing = true; 
+        // Android'de mermi fırlatmayı durdurmak için kritik
+        isProcessing = true;
     } else {
         let overflow = false;
         for(let r=0; r<ROWS; r++) for(let c=0; c<COLS; c++) if(grid[r][c] && grid[r][c].active && getPos(r,c).y > height * (1 - DEADLINE_OFFSET_RATIO)) overflow = true;
-        
         if (overflow) {
             gameOver = true;
             document.getElementById('finalscore').textContent = score;
@@ -269,20 +274,33 @@ function updateUI() {
     document.getElementById('fill').style.width = Math.min((score / scoreGoal) * 100, 100) + "%";
 }
 
-// BU KISIM TAMİR EDİLDİ
+// ANDROID FIX: ZORLANMIŞ RESET
 function nextLevel() {
+    document.getElementById('levelclear').style.display = 'none';
     level++; 
     scoreGoal += 1000;
-    isProcessing = false; // Kilidi aç
-    document.getElementById('levelclear').style.display = 'none';
-    startLevel(); // Izgarayı yenile
-    // Loop zaten çalışıyor olacak, sadece grid ve hedefler güncellendi
+    isProcessing = false;
+    gameOver = false;
+    startLevel();
 }
 
 function restart() { init(); }
 
+// BUTON OLAYLARI (Android'de click garantisi)
+document.getElementById('nextBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    nextLevel();
+});
+document.getElementById('restartBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    restart();
+});
+
 const handleInput = (e) => {
-    e.preventDefault();
+    // Eğer modal açıksa input alma
+    if(document.getElementById('levelclear').style.display === 'flex' || 
+       document.getElementById('gameover').style.display === 'flex') return;
+
     const rect = canvas.getBoundingClientRect();
     const touch = e.touches ? e.touches[0] : e;
     const x = touch.clientX - rect.left;
