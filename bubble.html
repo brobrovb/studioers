@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Neon Blast: Laser Edition</title>
+    <title>Neon Blast: Studioers Edition</title>
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
@@ -16,7 +16,7 @@
         canvas { background: #020617; touch-action: none; max-width: 100%; max-height: 100%; }
         #ui { position: absolute; top: 20px; left: 20px; color: #00ff88; font-size: 16px; font-weight: bold; pointer-events: none; z-index: 10; text-shadow: 0 0 10px rgba(0,255,136,0.5); }
         .modal { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.96); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(10px); padding: 20px; text-align: center; }
-        button { padding: 15px 40px; font-size: 18px; background: #00ff88; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 25px; box-shadow: 0 5px 15px rgba(0,255,136,0.3); }
+        button { padding: 15px 40px; font-size: 18px; background: #00ff88; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 25px; box-shadow: 0 5px 15px rgba(0,255,136,0.3); text-transform: uppercase; }
         .progress-bar { width: 120px; height: 6px; background: #333; margin-top: 5px; border-radius: 3px; overflow: hidden; }
         #fill { width: 0%; height: 100%; background: #00ff88; transition: width 0.3s; }
     </style>
@@ -33,14 +33,15 @@
         <canvas id="game"></canvas>
 
         <div id="gameover" class="modal">
-            <h1 style="color:#ff3366; font-size: 40px;">GAME OVER</h1>
-            <p style="color:white;">SCORE: <span id="finalscore">0</span></p>
+            <h1 style="color:#ff3366; font-size: 40px; margin:0;">GAME OVER</h1>
+            <p style="color:white; margin-top:10px;">FINAL SCORE: <span id="finalscore">0</span></p>
             <button onclick="restart()">TRY AGAIN</button>
         </div>
 
         <div id="levelclear" class="modal">
-            <h1 style="color:#00ff88; font-size: 40px;">LEVEL UP!</h1>
-            <button onclick="nextLevel()">NEXT LEVEL</button>
+            <h1 style="color:#00ff88; font-size: 40px; margin:0;">LEVEL UP!</h1>
+            <p style="color:white; margin-top:10px;">TARGET REACHED</p>
+            <button onclick="nextLevel()">START NEXT LEVEL</button>
         </div>
     </div>
 
@@ -83,10 +84,12 @@ function getAvailableColors() {
 
 function startLevel() {
     grid = [];
+    // Seviye arttıkça başlangıçtaki satır sayısını hafifçe artıralım
+    let rowsToFill = Math.min(4 + level, 9);
     for (let r = 0; r < ROWS; r++) {
         grid[r] = [];
         for (let c = 0; c < COLS; c++) {
-            if (r < 5) grid[r][c] = { color: COLORS[Math.floor(Math.random() * COLORS.length)], active: true, scale: 1 };
+            if (r < rowsToFill) grid[r][c] = { color: COLORS[Math.floor(Math.random() * COLORS.length)], active: true, scale: 1 };
             else grid[r][c] = null;
         }
     }
@@ -124,26 +127,19 @@ function drawBubble(x, y, color, scale = 1) {
 
 function drawLaser() {
     if (currentBubble.fired || isProcessing || gameOver) return;
-    
-    const laserCount = 8; // Kaç nokta olacak?
-    const dist = 120; // Lazer uzunluğu
-    
+    const laserCount = 10;
+    const dist = 140;
     for (let i = 1; i <= laserCount; i++) {
         const lx = width / 2 + Math.cos(angle) * (i * (dist / laserCount));
         const ly = (height - 100) + Math.sin(angle) * (i * (dist / laserCount));
-        const size = (laserCount - i + 2) * 0.8; // Uca doğru küçülen noktalar
-        
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = currentBubble.color;
+        const size = (laserCount - i + 3) * 0.7; 
+        ctx.globalAlpha = 1 - (i / (laserCount + 1));
         ctx.fillStyle = currentBubble.color;
-        ctx.globalAlpha = 1 - (i / (laserCount + 2)); // Uca doğru şeffaflaşma
-        
-        ctx.beginPath();
-        ctx.arc(lx, ly, size, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(lx, ly, size * 1.8, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#fff";
+        ctx.beginPath(); ctx.arc(lx, ly, size * 0.5, 0, Math.PI * 2); ctx.fill();
     }
     ctx.globalAlpha = 1;
-    ctx.shadowBlur = 0;
 }
 
 function loop() {
@@ -151,13 +147,11 @@ function loop() {
     ctx.fillStyle = "#020617";
     ctx.fillRect(0, 0, width, height);
 
-    // Deadline
     ctx.strokeStyle = "rgba(255, 51, 102, 0.15)";
     ctx.setLineDash([5, 5]);
     ctx.beginPath(); ctx.moveTo(0, height * (1 - DEADLINE_OFFSET_RATIO)); ctx.lineTo(width, height * (1 - DEADLINE_OFFSET_RATIO)); ctx.stroke();
     ctx.setLineDash([]);
 
-    // Particles
     for (let i = particles.length - 1; i >= 0; i--) {
         let p = particles[i]; p.x += p.vx; p.y += p.vy; p.vy += 0.2; p.life -= 0.02;
         if (p.life <= 0) particles.splice(i, 1);
@@ -165,7 +159,6 @@ function loop() {
     }
     ctx.globalAlpha = 1;
 
-    // Grid
     for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
             if (grid[r][c] && grid[r][c].active) {
@@ -225,6 +218,8 @@ function snap() {
 
     if (score >= scoreGoal) {
         document.getElementById('levelclear').style.display = 'flex';
+        // Oyun döngüsünü durduruyoruz ki arka planda çalışmasın
+        isProcessing = true; 
     } else {
         let overflow = false;
         for(let r=0; r<ROWS; r++) for(let c=0; c<COLS; c++) if(grid[r][c] && grid[r][c].active && getPos(r,c).y > height * (1 - DEADLINE_OFFSET_RATIO)) overflow = true;
@@ -274,10 +269,14 @@ function updateUI() {
     document.getElementById('fill').style.width = Math.min((score / scoreGoal) * 100, 100) + "%";
 }
 
+// BU KISIM TAMİR EDİLDİ
 function nextLevel() {
-    level++; scoreGoal += 1000;
+    level++; 
+    scoreGoal += 1000;
+    isProcessing = false; // Kilidi aç
     document.getElementById('levelclear').style.display = 'none';
-    startLevel();
+    startLevel(); // Izgarayı yenile
+    // Loop zaten çalışıyor olacak, sadece grid ve hedefler güncellendi
 }
 
 function restart() { init(); }
@@ -291,7 +290,6 @@ const handleInput = (e) => {
     angle = Math.atan2(y - (height - 100), x - (width / 2));
 };
 
-// Takip için touchmove ekledik
 window.addEventListener("touchstart", handleInput, {passive: false});
 window.addEventListener("touchmove", handleInput, {passive: false});
 window.addEventListener("touchend", (e) => {
