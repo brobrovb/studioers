@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Neon Blast: Studioers Fix</title>
+    <title>Neon Blast: Board Clear Edition</title>
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { 
@@ -14,25 +14,10 @@
         }
         #game-container { position: relative; width: 100%; height: 100%; max-width: 500px; display: flex; justify-content: center; align-items: center; }
         canvas { background: #020617; touch-action: none; max-width: 100%; max-height: 100%; display: block; }
-        
         #ui { position: absolute; top: 20px; left: 20px; color: #00ff88; font-size: 16px; font-weight: bold; pointer-events: none; z-index: 10; text-shadow: 0 0 10px rgba(0,255,136,0.5); }
-        
-        .modal { 
-            position: absolute; inset: 0; background: rgba(0, 0, 0, 0.96); 
-            display: none; flex-direction: column; justify-content: center; 
-            align-items: center; z-index: 2000; /* Daha yüksek z-index */
-            backdrop-filter: blur(10px); padding: 20px; text-align: center;
-        }
-        
-        button { 
-            padding: 18px 45px; font-size: 20px; background: #00ff88; color: #000; 
-            border: none; border-radius: 12px; cursor: pointer; font-weight: bold; 
-            margin-top: 25px; box-shadow: 0 0 20px rgba(0,255,136,0.4); 
-            text-transform: uppercase; pointer-events: auto !important;
-        }
-        
-        .progress-bar { width: 120px; height: 6px; background: #333; margin-top: 5px; border-radius: 3px; overflow: hidden; }
-        #fill { width: 0%; height: 100%; background: #00ff88; transition: width 0.3s; }
+        .modal { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.96); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(10px); padding: 20px; text-align: center; }
+        button { padding: 18px 45px; font-size: 20px; background: #00ff88; color: #000; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; margin-top: 25px; box-shadow: 0 0 20px rgba(0,255,136,0.4); text-transform: uppercase; pointer-events: auto !important; }
+        .miss-indicator { font-size: 12px; color: #ff3366; }
     </style>
 </head>
 <body>
@@ -40,8 +25,8 @@
     <div id="game-container">
         <div id="ui">
             LEVEL: <span id="level">1</span><br>
-            SCORE: <span id="score">0</span> / <span id="goal">1000</span>
-            <div class="progress-bar"><div id="fill"></div></div>
+            SCORE: <span id="score">0</span><br>
+            <div class="miss-indicator">DANGER: <span id="misses">0</span>/3</div>
         </div>
         
         <canvas id="game"></canvas>
@@ -53,9 +38,9 @@
         </div>
 
         <div id="levelclear" class="modal">
-            <h1 style="color:#00ff88; font-size: 40px; margin:0;">LEVEL UP!</h1>
-            <p style="color:white; margin-top:10px;">TARGET REACHED</p>
-            <button id="nextBtn">START NEXT LEVEL</button>
+            <h1 style="color:#00ff88; font-size: 40px; margin:0;">BOARD CLEARED!</h1>
+            <p style="color:white; margin-top:10px;">FANTASTIC WORK</p>
+            <button id="nextBtn">NEXT LEVEL</button>
         </div>
     </div>
 
@@ -69,7 +54,7 @@ const COLORS = ['#FF1E56', '#00F5FF', '#F9D923', '#A125FB', '#32FF6A'];
 const DEADLINE_OFFSET_RATIO = 0.22;
 
 let width, height, ballRadius, animationId;
-let grid = [], score = 0, level = 1, scoreGoal = 1000;
+let grid = [], score = 0, level = 1;
 let currentBubble = null, nextBubble = null, angle = -Math.PI / 2;
 let missCount = 0, isProcessing = false, particles = [], gameOver = false;
 
@@ -83,7 +68,7 @@ window.addEventListener('resize', resize);
 
 function init() {
     resize();
-    score = 0; level = 1; scoreGoal = 1000; gameOver = false; isProcessing = false;
+    score = 0; level = 1; gameOver = false; isProcessing = false; missCount = 0;
     document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
     startLevel();
     if (animationId) cancelAnimationFrame(animationId);
@@ -92,17 +77,17 @@ function init() {
 
 function getAvailableColors() {
     let activeColors = new Set();
-    for(let r=0; r<ROWS; r++) for(let c=0; c<COLS; c++) if(grid[r][c] && grid[r][c].active) activeColors.add(grid[r][c].color);
+    for(let r=0; r<ROWS; r++) for(let c=0; c<COLS; c++) if(grid[r][c] && grid[r][c].active && grid[r][c].gravity === 0) activeColors.add(grid[r][c].color);
     return activeColors.size > 0 ? Array.from(activeColors) : COLORS;
 }
 
 function startLevel() {
     grid = [];
-    let rowsToFill = Math.min(4 + level, 9);
+    let rowsToFill = Math.min(4 + level, 7);
     for (let r = 0; r < ROWS; r++) {
         grid[r] = [];
         for (let c = 0; c < COLS; c++) {
-            if (r < rowsToFill) grid[r][c] = { color: COLORS[Math.floor(Math.random() * COLORS.length)], active: true, scale: 1 };
+            if (r < rowsToFill) grid[r][c] = { color: COLORS[Math.floor(Math.random() * COLORS.length)], active: true, scale: 1, y_drift: 0, gravity: 0, bounce: 0 };
             else grid[r][c] = null;
         }
     }
@@ -128,13 +113,11 @@ function getPos(r, c) {
 }
 
 function drawBubble(x, y, color, scale = 1) {
-    ctx.save();
-    ctx.translate(x, y); ctx.scale(scale, scale);
+    ctx.save(); ctx.translate(x, y); ctx.scale(scale, scale);
     let grad = ctx.createRadialGradient(-ballRadius/3, -ballRadius/3, ballRadius/10, 0, 0, ballRadius);
     grad.addColorStop(0, "#fff"); grad.addColorStop(0.3, color); grad.addColorStop(1, "#000");
     ctx.beginPath(); ctx.arc(0, 0, ballRadius - 2, 0, Math.PI * 2);
-    ctx.fillStyle = grad; ctx.fill();
-    ctx.restore();
+    ctx.fillStyle = grad; ctx.fill(); ctx.restore();
 }
 
 function drawLaser() {
@@ -155,11 +138,8 @@ function drawLaser() {
 
 function loop() {
     if (gameOver) return;
-    ctx.fillStyle = "#020617";
-    ctx.fillRect(0, 0, width, height);
-
-    ctx.strokeStyle = "rgba(255, 51, 102, 0.15)";
-    ctx.setLineDash([5, 5]);
+    ctx.fillStyle = "#020617"; ctx.fillRect(0, 0, width, height);
+    ctx.strokeStyle = "rgba(255, 51, 102, 0.15)"; ctx.setLineDash([5, 5]);
     ctx.beginPath(); ctx.moveTo(0, height * (1 - DEADLINE_OFFSET_RATIO)); ctx.lineTo(width, height * (1 - DEADLINE_OFFSET_RATIO)); ctx.stroke();
     ctx.setLineDash([]);
 
@@ -170,14 +150,33 @@ function loop() {
     }
     ctx.globalAlpha = 1;
 
+    let activeInGrid = 0;
     for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
             if (grid[r][c] && grid[r][c].active) {
+                if (grid[r][c].gravity === 0) activeInGrid++; // Hâlâ tavana bağlı mı?
+                
                 let p = getPos(r, c);
                 if (grid[r][c].scale < 1) grid[r][c].scale += 0.15;
-                drawBubble(p.x, p.y, grid[r][c].color, grid[r][c].scale);
+                
+                if (grid[r][c].gravity > 0) {
+                    grid[r][c].y_drift += grid[r][c].gravity;
+                    grid[r][c].gravity *= 1.05;
+                    if (grid[r][c].y_drift > height) grid[r][c].active = false;
+                } else if (grid[r][c].bounce > 0) {
+                    grid[r][c].y_drift = Math.sin(Date.now() * 0.01 + r*c) * grid[r][c].bounce;
+                    grid[r][c].bounce *= 0.95;
+                    if (grid[r][c].bounce < 0.1) grid[r][c].bounce = 0;
+                }
+                drawBubble(p.x, p.y + grid[r][c].y_drift, grid[r][c].color, grid[r][c].scale);
             }
         }
+    }
+
+    // KAZANMA KONTROLÜ: Ekranda top kalmadıysa
+    if (activeInGrid === 0 && !isProcessing && !gameOver && currentBubble && !currentBubble.fired) {
+        document.getElementById('levelclear').style.display = 'flex';
+        isProcessing = true;
     }
 
     drawLaser();
@@ -195,7 +194,7 @@ function checkCollision() {
     if (!hit) {
         for (let r = 0; r < ROWS; r++) {
             for (let c = 0; c < COLS; c++) {
-                if (grid[r][c] && grid[r][c].active) {
+                if (grid[r][c] && grid[r][c].active && grid[r][c].gravity === 0) {
                     let p = getPos(r, c);
                     if (Math.hypot(currentBubble.x - p.x, currentBubble.y - p.y) < ballRadius * 1.55) { hit = true; break; }
                 }
@@ -217,25 +216,34 @@ function snap() {
             if (d < bestDist) { bestDist = d; tr = r; tc = c; }
         }
     }
-    grid[tr][tc] = { color: currentBubble.color, active: true, scale: 0.2 };
-    if (!checkMatches(tr, tc)) missCount++; else missCount = Math.max(0, missCount - 1);
-    if (missCount >= 6) { shiftDown(); missCount = 0; }
+    grid[tr][tc] = { color: currentBubble.color, active: true, scale: 0.2, y_drift: 0, gravity: 0, bounce: 0 };
+    
+    let matched = checkMatches(tr, tc);
+    
+    // YENİ KURAL: 3 hakkın var!
+    if (!matched) {
+        missCount++;
+    } else {
+        handleFloatingBubbles();
+        // Eşleşme olunca missCount sıfırlanmasın, sadece artmasın mı istersin? 
+        // Genelde temizlik oyunlarında her eşleşme hakkı biraz geri verir:
+        missCount = Math.max(0, missCount - 1);
+    }
+
+    if (missCount >= 3) { 
+        shiftDown(); 
+        missCount = 0; 
+    }
     updateUI();
 
-    if (score >= scoreGoal) {
-        document.getElementById('levelclear').style.display = 'flex';
-        // Android'de mermi fırlatmayı durdurmak için kritik
-        isProcessing = true;
+    let overflow = false;
+    for(let r=0; r<ROWS; r++) for(let c=0; c<COLS; c++) if(grid[r][c] && grid[r][c].active && grid[r][c].gravity === 0 && getPos(r,c).y > height * (1 - DEADLINE_OFFSET_RATIO)) overflow = true;
+    if (overflow) {
+        gameOver = true;
+        document.getElementById('finalscore').textContent = score;
+        document.getElementById('gameover').style.display = 'flex';
     } else {
-        let overflow = false;
-        for(let r=0; r<ROWS; r++) for(let c=0; c<COLS; c++) if(grid[r][c] && grid[r][c].active && getPos(r,c).y > height * (1 - DEADLINE_OFFSET_RATIO)) overflow = true;
-        if (overflow) {
-            gameOver = true;
-            document.getElementById('finalscore').textContent = score;
-            document.getElementById('gameover').style.display = 'flex';
-        } else {
-            setTimeout(spawnNext, 50);
-        }
+        setTimeout(spawnNext, 50);
     }
 }
 
@@ -254,7 +262,7 @@ function checkMatches(r, c) {
     if (matches.length >= 3) {
         matches.forEach(([mr, mc]) => {
             let p = getPos(mr, mc);
-            for(let k=0; k<10; k++) particles.push({ x: p.x, y: p.y, vx: Math.random()*4-2, vy: Math.random()*4-2, life: 1, color: color });
+            for(let k=0; k<12; k++) particles.push({ x: p.x, y: p.y, vx: Math.random()*6-3, vy: Math.random()*6-3, life: 1, color: color });
             grid[mr][mc].active = false;
         });
         score += matches.length * 20; return true;
@@ -262,49 +270,58 @@ function checkMatches(r, c) {
     return false;
 }
 
+function handleFloatingBubbles() {
+    let connected = new Set(); let queue = [];
+    for (let c = 0; c < COLS; c++) if (grid[0][c] && grid[0][c].active) { connected.add("0," + c); queue.push([0, c]); }
+    let i = 0;
+    while (i < queue.length) {
+        let [currR, currC] = queue[i++];
+        let n = currR % 2 === 0 ? [[0,-1],[0,1],[-1,0],[-1,-1],[1,0],[1,-1]] : [[0,-1],[0,1],[-1,0],[-1,1],[1,0],[1,1]];
+        for (let [dr, dc] of n) {
+            let nr = currR + dr, nc = currC + dc;
+            if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && grid[nr][nc] && grid[nr][nc].active && !connected.has(nr + "," + nc)) {
+                connected.add(nr + "," + nc); queue.push([nr, nc]);
+            }
+        }
+    }
+    for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+            if (grid[r][c] && grid[r][c].active && !connected.has(r + "," + c)) {
+                grid[r][c].gravity = 0.5; grid[r][c].bounce = 5;
+                score += 40;
+            }
+        }
+    }
+}
+
 function shiftDown() {
-    grid.unshift(new Array(COLS).fill(null).map(() => ({ color: COLORS[Math.floor(Math.random() * COLORS.length)], active: true, scale: 1 })));
+    grid.unshift(new Array(COLS).fill(null).map(() => ({ color: COLORS[Math.floor(Math.random() * COLORS.length)], active: true, scale: 1, y_drift: 0, gravity: 0, bounce: 0 })));
     grid.pop();
 }
 
 function updateUI() {
     document.getElementById('score').textContent = score;
     document.getElementById('level').textContent = level;
-    document.getElementById('goal').textContent = scoreGoal;
-    document.getElementById('fill').style.width = Math.min((score / scoreGoal) * 100, 100) + "%";
+    document.getElementById('misses').textContent = missCount;
 }
 
-// ANDROID FIX: ZORLANMIŞ RESET
 function nextLevel() {
-    document.getElementById('levelclear').style.display = 'none';
-    level++; 
-    scoreGoal += 1000;
+    level++;
     isProcessing = false;
-    gameOver = false;
+    document.getElementById('levelclear').style.display = 'none';
     startLevel();
 }
 
 function restart() { init(); }
 
-// BUTON OLAYLARI (Android'de click garantisi)
-document.getElementById('nextBtn').addEventListener('click', (e) => {
-    e.stopPropagation();
-    nextLevel();
-});
-document.getElementById('restartBtn').addEventListener('click', (e) => {
-    e.stopPropagation();
-    restart();
-});
+document.getElementById('nextBtn').addEventListener('click', (e) => { e.stopPropagation(); nextLevel(); });
+document.getElementById('restartBtn').addEventListener('click', (e) => { e.stopPropagation(); restart(); });
 
 const handleInput = (e) => {
-    // Eğer modal açıksa input alma
-    if(document.getElementById('levelclear').style.display === 'flex' || 
-       document.getElementById('gameover').style.display === 'flex') return;
-
+    if(document.getElementById('levelclear').style.display === 'flex' || document.getElementById('gameover').style.display === 'flex') return;
     const rect = canvas.getBoundingClientRect();
     const touch = e.touches ? e.touches[0] : e;
-    const x = touch.clientX - rect.left;
-    const y = touch.clientY - rect.top;
+    const x = touch.clientX - rect.left; const y = touch.clientY - rect.top;
     angle = Math.atan2(y - (height - 100), x - (width / 2));
 };
 
