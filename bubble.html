@@ -116,7 +116,6 @@ let width, height, ballRadius, animationId;
 let grid = [], score = 0, level = 1, missCount = 0;
 let currentBubble = null, nextBubble = null, angle = -Math.PI / 2;
 let isProcessing = true, particles = [], gameOver = false;
-// YENİ: Patlama/Efekt dizisi
 let effects = []; 
 
 function resize() {
@@ -174,7 +173,6 @@ function getPos(r, c) {
     return { x: c * (ballRadius * 2) + ballRadius + offset, y: r * (ballRadius * 1.72) + ballRadius + 85 };
 }
 
-// YENİ: Patlama efekti tetikleyici
 function burstEffect(x, y, color) {
     effects.push({ x, y, color, size: ballRadius, life: 1 });
 }
@@ -199,7 +197,6 @@ function loop() {
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = "#020617"; ctx.fillRect(0,0,width,height);
     
-    // Aesthetic Deadline
     ctx.setLineDash([10, 10]); ctx.strokeStyle = "rgba(255, 30, 86, 0.2)"; ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(0, height * 0.8); ctx.lineTo(width, height * 0.8); ctx.stroke();
     ctx.setLineDash([]);
@@ -234,7 +231,6 @@ function loop() {
             checkCollision();
             drawBubble(currentBubble.x, currentBubble.y, currentBubble.color, 1, true);
         } else if (!isProcessing) {
-            // Lazer Hedef Çizgisi
             for (let i = 1; i <= 6; i++) {
                 ctx.fillStyle = currentBubble.color; ctx.globalAlpha = 1 - (i/7);
                 ctx.beginPath(); ctx.arc(width/2 + Math.cos(angle)*(i*18), (height-80) + Math.sin(angle)*(i*18), 3, 0, Math.PI*2); ctx.fill();
@@ -244,7 +240,6 @@ function loop() {
         }
     }
 
-    // YENİ: Efektleri Çiz ve Temizle
     for (let i = effects.length - 1; i >= 0; i--) {
         let e = effects[i];
         ctx.save();
@@ -253,20 +248,20 @@ function loop() {
         ctx.shadowColor = e.color;
         
         ctx.beginPath();
-        ctx.strokeStyle = "rgba(255,255,255, 0.5)"; // Dış halka
+        ctx.strokeStyle = "rgba(255,255,255, 0.5)"; 
         ctx.lineWidth = 3 * e.life;
         ctx.arc(e.x, e.y, e.size * 1.5 * (2 - e.life), 0, Math.PI * 2); 
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.strokeStyle = e.color; // Renkli halka
+        ctx.strokeStyle = e.color; 
         ctx.lineWidth = 1;
         ctx.arc(e.x, e.y, e.size * 2 * (1.5 - e.life), 0, Math.PI * 2); 
         ctx.stroke();
 
         ctx.restore();
         
-        e.life *= 0.85; // Efekt sönümlenmesi
+        e.life *= 0.85; 
         if (e.life < 0.1) effects.splice(i, 1);
     }
 
@@ -309,7 +304,6 @@ function snap() {
         }
     }
     
-    // Estetik Yerleşme: Topun geldiği yönü hesapla ve animasyon ver
     let finalP = getPos(tr, tc);
     grid[tr][tc] = { 
         color: currentBubble.color, active: true, scale: 1, y_drift: 0, gravity: 0,
@@ -317,11 +311,13 @@ function snap() {
     };
     currentBubble.active = false;
 
+    // DÜZELTME BURADA: Eğer eşleşme varsa missCount sıfırlanır
     if (checkMatches(tr, tc)) {
         AudioEngine.play('pop');
-        //shake(); // Titreşim kaldırıldı
+        missCount = 0; // BAŞARILI ATIŞ: Hata sayacını sıfırla
         handleFloating();
     } else {
+        // EŞLEŞME YOKSA: Hata ekle
         missCount++;
         if (missCount >= 3) {
             grid.unshift(new Array(COLS).fill(null).map(() => ({ color: COLORS[Math.floor(Math.random()*COLORS.length)], active: true, scale: 1, y_drift: 0, gravity: 0, animX: 0, animY: -20 })));
@@ -353,7 +349,6 @@ function checkMatches(r, c) {
         matches.forEach(([mr, mc]) => {
             let p = getPos(mr, mc);
             for(let k=0; k<6; k++) particles.push({ x: p.x, y: p.y, vx: Math.random()*2-1, vy: Math.random()*2-1, life: 1, color: color });
-            // Patlama efekti tetikle
             burstEffect(p.x, p.y, color);
             grid[mr][mc].active = false;
         });
@@ -380,7 +375,7 @@ function handleFloating() {
         for (let c = 0; c < COLS; c++) {
             if (grid[r][c] && grid[r][c].active && !connected.has(r+","+c)) {
                 let p = getPos(r,c);
-                burstEffect(p.x, p.y, grid[r][c].color); // Düşen toplar için de efekt
+                burstEffect(p.x, p.y, grid[r][c].color); 
                 grid[r][c].gravity = 1;
             }
         }
