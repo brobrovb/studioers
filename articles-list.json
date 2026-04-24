@@ -16,5 +16,17 @@
     "path": "digital-monetization.html",
     "date": "2026-04-05",
     "category": "Revenue"
+  },
+  {
+    "title": "Building a Telegram Bot with n8n: Deep Dive",
+    "path": "articles/telegram-bot-n8n.html",
+    "date": "2026-04-24",
+    "category": "Automation"
+  },
+  {
+    "title": "Autonomous AI Content Pipelines with n8n",
+    "path": "articles/ai-automation-n8n.html",
+    "date": "2026-04-24",
+    "category": "AI Tech"
   }
 ]
