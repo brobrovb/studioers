@@ -16,30 +16,30 @@
         :root { --accent: #00ff88; --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; --download: #ffcc00; --guide: #00aaff; --ai-magic: #8a2be2; --hostinger: #673ab7; --bybit: #f7a600; --etsy: #eb6d20; --youtube: #ff0000; --tiktok: #ff0050; }
         * { box-sizing: border-box; }
         
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; }
 
         .hero-section {
-            position: relative; width: 100%; min-height: 60vh; display: flex; flex-direction: column;
+            position: relative; width: 100%; min-height: 50vh; display: flex; flex-direction: column;
             background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,1) 100%), 
                         url('https://public-files.gumroad.com/ya39cdpadopl1829j234roh1a0gu');
             background-size: cover; background-position: center; border-bottom: 1px solid var(--border);
         }
 
-        .nav-container { max-width: 1100px; width: 100%; margin: 0 auto; padding: 25px 20px; display: flex; align-items: center; justify-content: space-between; }
+        .nav-container { max-width: 1100px; width: 100%; margin: 0 auto; padding: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; }
         .logo-flex { display: flex; align-items: center; }
-        .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent), #00aaff); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #000; box-shadow: 0 0 20px rgba(0,255,136,0.3); }
-        .logo-text { font-size: 22px; font-weight: 800; margin-left: 12px; letter-spacing: -1px; text-transform: uppercase; }
+        .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), #00aaff); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #000; box-shadow: 0 0 20px rgba(0,255,136,0.3); }
+        .logo-text { font-size: 20px; font-weight: 800; margin-left: 10px; letter-spacing: -1px; text-transform: uppercase; }
         
-        .nav-links { display: flex; gap: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; flex-wrap: wrap; }
         .nav-links a { opacity: 0.6; transition: 0.3s; }
         .nav-links a:hover { opacity: 1; color: var(--accent); }
         .nav-ai-link { color: var(--accent) !important; opacity: 1 !important; text-shadow: 0 0 10px rgba(0,255,136,0.5); }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
-        .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 25px; display: block; opacity: 0.8; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+        .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 20px; display: block; opacity: 0.8; }
 
-        .apps-showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 50px; }
+        .apps-showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; margin-bottom: 40px; }
         .store-button { background: #111; border: 1px solid var(--border); border-radius: 16px; padding: 15px; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
         .store-button:hover { border-color: var(--accent); }
         .store-icon { width: 32px; height: 32px; }
@@ -49,16 +49,16 @@
         .ai-promo-banner {
             background: linear-gradient(135deg, #050505 0%, #0d0d12 100%);
             border: 1px solid var(--accent);
-            border-radius: 20px; padding: 35px;
+            border-radius: 20px; padding: 25px;
             display: flex; align-items: center; justify-content: space-between;
-            margin-bottom: 50px; gap: 25px; flex-wrap: wrap;
+            margin-bottom: 40px; gap: 20px; flex-wrap: wrap;
             position: relative; overflow: hidden;
             box-shadow: 0 20px 50px rgba(0, 255, 136, 0.05);
         }
-        .ai-promo-content h2 { font-size: 1.8rem; margin: 0 0 10px 0; color: #fff; }
+        .ai-promo-content h2 { font-size: 1.5rem; margin: 0 0 10px 0; color: #fff; }
         .ai-promo-content p { color: #888; margin: 0; max-width: 550px; font-size: 14px; }
         .ai-launch-btn { 
-            background: var(--accent); color: #000; padding: 14px 28px; 
+            background: var(--accent); color: #000; padding: 12px 24px; 
             border-radius: 12px; font-weight: 800; white-space: nowrap; 
             box-shadow: 0 10px 30px rgba(0,255,136,0.2); transition: 0.3s;
         }
@@ -67,12 +67,12 @@
             background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 100%), 
                         url('https://public-files.gumroad.com/7nian0p6ovu8w2cg9czevc53q7ae');
             background-size: cover; background-position: center; border-radius: 20px; border: 1px solid var(--accent);
-            padding: 40px; min-height: 350px; display: flex; flex-direction: column; justify-content: flex-end; margin-bottom: 50px; transition: 0.3s;
+            padding: 30px; min-height: 300px; display: flex; flex-direction: column; justify-content: flex-end; margin-bottom: 40px; transition: 0.3s;
         }
-        .featured-card h2 { font-size: 2.2rem; font-weight: 800; margin: 0; color: #fff; }
-        .featured-btn { background: #fff; color: #000; padding: 14px 28px; border-radius: 10px; font-weight: 800; display: inline-block; margin-top: 15px; }
+        .featured-card h2 { font-size: 1.8rem; font-weight: 800; margin: 0; color: #fff; }
+        .featured-btn { background: #fff; color: #000; padding: 12px 24px; border-radius: 10px; font-weight: 800; display: inline-block; margin-top: 15px; }
 
-        .free-tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; margin-bottom: 50px; }
+        .free-tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 40px; }
         .terminal-card { background: #050505; border: 1px solid #222; border-radius: 12px; overflow: hidden; transition: 0.3s; }
         .terminal-card:hover { border-color: var(--download); transform: translateY(-3px); }
         .terminal-header { background: #1a1a1a; padding: 8px 15px; display: flex; gap: 6px; }
@@ -82,56 +82,59 @@
         .terminal-body p { font-size: 13px; color: #888; margin-bottom: 15px; line-height: 1.5; }
         .download-btn { background: transparent; border: 1px solid var(--download); color: var(--download); padding: 8px; border-radius: 6px; text-align: center; font-weight: 700; font-size: 11px; transition: 0.3s; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-bottom: 50px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 40px; }
         .card { 
             background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 25px; 
             transition: all 0.3s; display: flex; flex-direction: column; justify-content: space-between; 
-            min-height: 260px; position: relative; overflow: hidden;
+            min-height: 240px; position: relative; overflow: hidden;
         }
         .card:hover { border-color: var(--accent); transform: translateY(-3px); }
-        .card h3 { font-size: 1.4rem; margin: 0 0 10px 0; }
+        .card h3 { font-size: 1.3rem; margin: 0 0 10px 0; }
         .card p { font-size: 14px; color: #888; line-height: 1.6; }
         .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; margin-top: 15px; }
 
-        .partners-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 15px; margin-bottom: 50px; }
-        .referral-banner { background: #050505; border-radius: 20px; padding: 35px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; transition: 0.3s; }
+        .partners-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-bottom: 40px; }
+        .referral-banner { background: #050505; border-radius: 20px; padding: 25px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; transition: 0.3s; }
         .referral-banner.hostinger { border: 1px solid var(--hostinger); }
         .referral-banner.bybit { border: 1px solid var(--bybit); }
         .referral-banner.etsy { border: 1px solid var(--etsy); background: linear-gradient(135deg, #0a0a0a 0%, #1a0f0a 100%); }
-        .referral-btn { padding: 14px 28px; border-radius: 12px; font-weight: 800; white-space: nowrap; transition: 0.3s; }
+        .referral-btn { padding: 12px 24px; border-radius: 12px; font-weight: 800; white-space: nowrap; transition: 0.3s; }
         .hostinger-btn { background: var(--hostinger); color: #fff; }
         .bybit-btn { background: var(--bybit); color: #000; }
         .etsy-btn { background: var(--etsy); color: #fff; }
 
         .hq-container {
             background: linear-gradient(135deg, #0a0a0a 0%, #111 100%); 
-            padding: 40px; border: 1px solid rgba(0, 255, 136, 0.2);
-            border-radius: 28px; margin-bottom: 50px;
-            display: flex; align-items: flex-start; gap: 35px; flex-wrap: nowrap;
+            padding: 30px; border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 28px; margin-bottom: 40px;
+            display: flex; align-items: flex-start; gap: 30px; flex-wrap: nowrap;
         }
-        .hq-img-box { width: 180px; height: 180px; border-radius: 24px; overflow: hidden; border: 2px solid var(--accent); flex-shrink: 0; transform: rotate(-2deg); }
+        .hq-img-box { width: 150px; height: 150px; border-radius: 24px; overflow: hidden; border: 2px solid var(--accent); flex-shrink: 0; transform: rotate(-2deg); }
         .hq-img { width: 100%; height: 100%; object-fit: cover; }
         
-        .social-links { display: flex; gap: 15px; margin-top: 20px; }
-        .social-btn { padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 800; text-transform: uppercase; transition: 0.3s; }
+        .social-links { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+        .social-btn { padding: 8px 14px; border-radius: 8px; font-size: 11px; font-weight: 800; text-transform: uppercase; transition: 0.3s; }
         .yt-btn { border: 1px solid var(--youtube); color: var(--youtube); }
         .tt-btn { border: 1px solid var(--tiktok); color: var(--tiktok); }
         .social-btn:hover { background: rgba(255,255,255,0.05); }
 
-        .seo-text-box { margin-top: 50px; border-top: 1px solid var(--border); padding-top: 40px; }
+        .seo-text-box { margin-top: 40px; border-top: 1px solid var(--border); padding-top: 30px; }
         .seo-text { font-size: 13px; color: #555; line-height: 1.8; text-align: justify; }
 
-        .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 50px; }
-        .stack-item { background: var(--card); border: 1px solid var(--border); padding: 30px 15px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; transition: 0.3s; }
-        .stack-logo { width: 45px; height: 45px; filter: grayscale(1); }
+        .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-bottom: 40px; }
+        .stack-item { background: var(--card); border: 1px solid var(--border); padding: 20px 10px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; transition: 0.3s; }
+        .stack-logo { width: 40px; height: 40px; filter: grayscale(1); }
         .stack-item:hover .stack-logo { filter: grayscale(0); }
         
-        footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: #444; font-size: 12px; }
+        footer { text-align: center; padding: 30px 20px; border-top: 1px solid var(--border); color: #444; font-size: 12px; }
 
         @media (max-width: 768px) {
-            .hq-container { flex-direction: column; text-align: center; flex-wrap: wrap; }
-            .hq-img-box { transform: none; margin: 0 auto 20px auto; }
+            .nav-container { justify-content: center; text-align: center; padding: 15px; }
+            .nav-links { justify-content: center; }
+            .hq-container { flex-direction: column; text-align: center; align-items: center; }
+            .hq-img-box { transform: none; margin-bottom: 10px; }
             .social-links { justify-content: center; }
+            .hero-section h1 { text-align: center; }
         }
     </style>
 </head>
@@ -144,14 +147,14 @@
                 <div class="logo-text">STUDIOERS</div>
             </div>
             <nav class="nav-links">
-                <a href="ai.html" class="nav-ai-link">AI Art Engine</a>
-                <a href="guide.html">Revenue Guide</a>
+                <a href="ai.html" class="nav-ai-link">AI Art</a>
+                <a href="guide.html">Revenue</a>
                 <a href="contact.html">Contact</a>
                 <a href="privacy.html">Privacy</a>
             </nav>
         </header>
-        <div style="max-width: 1100px; margin: auto; padding: 0 20px; width: 100%;">
-            <h1 style="font-size: clamp(2.5rem, 7vw, 4.5rem); font-weight: 800; line-height: 1.1;">Next-Gen<br><span style="color: var(--accent)">Software Ecosystem</span></h1>
+        <div style="max-width: 1100px; margin: auto; padding: 20px; width: 100%;">
+            <h1 style="font-size: clamp(2rem, 8vw, 4rem); font-weight: 800; line-height: 1.1; margin: 0;">Next-Gen<br><span style="color: var(--accent)">Software Ecosystem</span></h1>
         </div>
     </section>
 
@@ -160,7 +163,7 @@
         <div class="ai-promo-banner">
             <div class="ai-promo-content">
                 <h2>Studioers AI Art Generator</h2>
-                <p>Experience the power of Stable Diffusion and Flux. Transform your ideas into high-fidelity digital art instantly with our free neural engine.</p>
+                <p>Experience the power of Stable Diffusion and Flux. Transform your ideas into high-fidelity digital art instantly.</p>
             </div>
             <a href="ai.html" class="ai-launch-btn">LAUNCH AI ENGINE →</a>
         </div>
@@ -194,7 +197,7 @@
                 <div class="terminal-header"><div class="dot" style="background: #ff5f56;"></div><div class="dot" style="background: #ffbd2e;"></div><div class="dot" style="background: #27c93f;"></div></div>
                 <div class="terminal-body">
                     <h4>> webp_optimizer.exe</h4>
-                    <p>Batch convert JPG/PNG to WebP. Optimize your web assets for faster loading and better SEO rankings.</p>
+                    <p>Batch convert JPG/PNG to WebP. Optimize your web assets for faster loading and better SEO.</p>
                     <a href="https://github.com/brobrovb/studioers/releases/download/v1.0.0/webp-optimizer.zip" class="download-btn">DOWNLOAD TOOL (.ZIP)</a>
                 </div>
             </div>
@@ -202,7 +205,7 @@
                 <div class="terminal-header"><div class="dot" style="background: #ff5f56;"></div><div class="dot" style="background: #ffbd2e;"></div><div class="dot" style="background: #27c93f;"></div></div>
                 <div class="terminal-body">
                     <h4>> vault_gen.exe</h4>
-                    <p>Secure password generator with visual entropy scanning. Create and log unbreakable keys locally.</p>
+                    <p>Secure password generator with visual entropy scanning. Create unbreakable keys locally.</p>
                     <a href="https://github.com/brobrovb/studioers/releases/download/v1.0/vault_gen.zip" class="download-btn">DOWNLOAD TOOL (.ZIP)</a>
                 </div>
             </div>
@@ -212,17 +215,17 @@
         <div class="grid">
             <a href="https://studioers.gumroad.com/l/jposco" class="card" style="background: linear-gradient(to bottom, rgba(10,10,10,0.92), #0a0a0a), url('https://public-files.gumroad.com/ya39cdpadopl1829j234roh1a0gu'); background-size: cover;">
                 <h3>WhalePulse AI</h3>
-                <p>Real-time on-chain crypto analytics. Track whale movements and smart money wallets instantly.</p>
+                <p>Real-time on-chain crypto analytics. Track whale movements instantly.</p>
                 <div class="card-footer"><span style="color:var(--accent)">$1+</span><span>View Details →</span></div>
             </a>
             <a href="https://studioers.gumroad.com/l/ipnot" class="card" style="background: linear-gradient(to bottom, rgba(10,10,10,0.92), #0a0a0a), url('https://public-files.gumroad.com/9rwf7qjszhd5bgw8man7pbm6n3y1'); background-size: cover;">
                 <h3>ImageMaster Pro</h3>
-                <p>Professional batch watermarking and resizing toolkit for digital asset management.</p>
+                <p>Professional batch watermarking and resizing toolkit for management.</p>
                 <div class="card-footer"><span style="color:var(--accent)">$3</span><span>View Details →</span></div>
             </a>
             <a href="https://studioers.gumroad.com/l/aslyqy" class="card" style="background: linear-gradient(to bottom, rgba(10,10,10,0.92), #0a0a0a), url('https://public-files.gumroad.com/ko866iwsw3keew2mvigpxxnwolks'); background-size: cover;">
                 <h3>Studioers AI: SEO</h3>
-                <p>Automated SEO auditing engine. Generate comprehensive technical reports for websites.</p>
+                <p>Automated SEO auditing engine. Generate technical reports for websites.</p>
                 <div class="card-footer"><span style="color:var(--accent)">$2.99</span><span>View Details →</span></div>
             </a>
         </div>
@@ -231,7 +234,7 @@
         <div class="ai-promo-banner" style="border-color: var(--guide);">
             <div class="ai-promo-content">
                 <h2 style="color: var(--guide);">Ultimate Digital Revenue Guide 2026</h2>
-                <p>Learn the 10 proven methods to scale your digital income. From Etsy stores to Crypto infrastructure and YouTube niche strategies.</p>
+                <p>Learn 10 proven methods to scale digital income. From Etsy stores to Crypto infrastructure.</p>
             </div>
             <a href="guide.html" class="ai-launch-btn" style="background: var(--guide);">READ THE GUIDE →</a>
         </div>
@@ -260,22 +263,20 @@
                 <img src="studioers-hq.jpg.jpg" alt="Studioers HQ" class="hq-img">
             </div>
             <div class="hq-content">
-                <p style="margin: 0; font-size: 12px; font-weight: 800; color: var(--accent); letter-spacing: 2px; text-transform: uppercase;">HQ Status: 24 Months on the Road</p>
-                <h3 style="margin: 12px 0; font-size: 1.6rem; color: #fff;">Code, Freedom, and a Dog Named <span style="color: var(--accent)">Joker</span></h3>
-                <p style="margin: 0; font-size: 14px; color: #bbb; line-height: 1.8;">
-                    For the past two years, my wife and I have traded traditional office walls for the boundless freedom of caravan life. Living and working full-time from the road isn't just a lifestyle—it's the ultimate stress-test for our software. 
-                    <br><br>
-                    Right by my side is <strong>Joker</strong>, our loyal co-pilot and the true heart of Studioers. Whether we're parked by a quiet lake or deep in the mountains, Joker ensures the morale stays high while I push the limits of mobile engineering. Every tool and app in this ecosystem is crafted under the stars.
+                <p style="margin: 0; font-size: 11px; font-weight: 800; color: var(--accent); letter-spacing: 2px; text-transform: uppercase;">HQ Status: 24 Months on the Road</p>
+                <h3 style="margin: 10px 0; font-size: 1.5rem; color: #fff;">Code, Freedom, and a Dog Named <span style="color: var(--accent)">Joker</span></h3>
+                <p style="margin: 0; font-size: 14px; color: #bbb; line-height: 1.6;">
+                    For the past two years, we've traded traditional office walls for the freedom of caravan life. Right by my side is Joker, our loyal co-pilot. Every tool in this ecosystem is crafted under the stars.
                 </p>
                 <div class="social-links">
-                    <a href="https://youtube.com/@Bilmedikleriniz" target="_blank" class="social-btn yt-btn">YouTube Channel</a>
+                    <a href="https://youtube.com/@Bilmedikleriniz" target="_blank" class="social-btn yt-btn">YouTube</a>
                     <a href="https://tiktok.com/@karavanjoker" target="_blank" class="social-btn tt-btn">TikTok Live</a>
                 </div>
             </div>
         </div>
 
-        <span class="section-label" style="color: var(--accent); margin-top: 50px;">Engineering Blog & Dev Logs</span>
-        <div id="blog-container" style="background: #050505; border: 1px solid var(--border); border-radius: 20px; padding: 25px; margin-bottom: 50px;">
+        <span class="section-label" style="color: var(--accent); margin-top: 40px;">Engineering Blog & Dev Logs</span>
+        <div id="blog-container" style="background: #050505; border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 40px;">
             <div id="article-list">
                 <p style="color: #444; font-size: 13px;">Loading latest insights...</p>
             </div>
@@ -289,14 +290,14 @@
                     list.innerHTML = ''; 
                     data.forEach(item => {
                         list.innerHTML += `
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #1a1a1a;">
-                                <div style="display: flex; flex-direction: column; gap: 5px;">
-                                    <span style="font-size: 10px; color: var(--accent); font-weight: 800; text-transform: uppercase;">${item.category || 'Tech'}</span>
-                                    <a href="${item.path}" style="font-size: 1.1rem; font-weight: 600; color: #fff; transition: 0.3s;" onmouseover="this.style.color='#00ff88'" onmouseout="this.style.color='#fff'">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #1a1a1a;">
+                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                    <span style="font-size: 9px; color: var(--accent); font-weight: 800; text-transform: uppercase;">${item.category || 'Tech'}</span>
+                                    <a href="${item.path}" style="font-size: 1rem; font-weight: 600; color: #fff; transition: 0.3s;" onmouseover="this.style.color='#00ff88'" onmouseout="this.style.color='#fff'">
                                         ${item.title}
                                     </a>
                                 </div>
-                                <span style="font-size: 12px; color: #444; font-family: monospace;">${item.date}</span>
+                                <span style="font-size: 11px; color: #444; font-family: monospace;">${item.date}</span>
                             </div>
                         `;
                     });
@@ -305,15 +306,15 @@
                     document.getElementById('article-list').innerHTML = '<p style="color: #ff0050;">Blog feeds temporarily unavailable.</p>';
                 });
         </script>
+        
         <div class="seo-text-box">
             <span class="section-label">Engineering Insights & SEO</span>
             <div class="seo-text">
-                <p>Welcome to <strong>Studioers</strong>, the premier hub for high-performance software development, AI-driven automation, and cutting-edge mobile engineering. Our ecosystem is meticulously designed to bridge the gap between complex algorithmic solutions and user-centric digital experiences. As a leader in the Android development space, Studioers focuses on creating lightweight yet powerful applications using <strong>Kotlin</strong> and <strong>Android Native</strong> architectures, ensuring maximum compatibility with the latest API 35/36 standards. Our expertise extends into the realm of game development, utilizing the <strong>Godot Engine</strong> to build interactive 2D and 3D experiences that push the boundaries of cross-platform performance.</p>
-                <p>In addition to mobile tech, we specialize in <strong>AI Art Generation</strong> through advanced neural engines, providing creators with professional tools for digital assets. Our developer suite includes custom-built <strong>CLI tools</strong> for image optimization (WebP conversion) and local security vault generation, emphasizing privacy and efficiency. Whether you are looking for monetization strategies via our <strong>TikTok Trivia Engine</strong> or seeking technical guidance through our comprehensive digital revenue guides, Studioers provides the infrastructure needed for success in the 2026 digital economy. Explore our open-source projects on GitHub or find our premium assets on Gumroad and Etsy.</p>
+                <p>Welcome to <strong>Studioers</strong>, the premier hub for high-performance software development, AI-driven automation, and cutting-edge mobile engineering. As a leader in the Android development space, Studioers focuses on creating lightweight yet powerful applications using <strong>Kotlin</strong> and <strong>Android Native</strong> architectures. Our expertise extends into the realm of game development, utilizing the <strong>Godot Engine</strong> to build interactive 2D experiences.</p>
             </div>
         </div>
 
-        <span class="section-label" style="margin-top: 50px;">Core Technology Stack</span>
+        <span class="section-label" style="margin-top: 40px;">Core Technology Stack</span>
         <div class="stack-grid">
             <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/android/android-icon.svg" alt="Android" class="stack-logo"><span class="stack-name">Android Native</span></div>
             <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/kotlinlang/kotlinlang-icon.svg" alt="Kotlin" class="stack-logo"><span class="stack-name">Kotlin</span></div>
@@ -323,25 +324,23 @@
 
     </main>
 
-    <footer style="padding: 2rem 0; text-align: center; border-top: 1px solid #333; margin-top: 3rem;">
-    <div class="footer-seo-tags" style="font-size: 0.8rem; color: #666; margin-bottom: 1.5rem; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6;">
-        <strong>Focus:</strong> Mobile Game Development (Godot 2/4) • Android API 35/36 Compliance • 
-        TikTok Live Stream Overlay Architecture • Digital Asset Monetization • 
-        Automated Passive Income Systems • Custom Gradle Configurations • UI/UX for Interactive Media
-    </div>
+    <footer style="padding: 2rem 0; text-align: center; border-top: 1px solid #333; margin-top: 2rem;">
+        <div class="footer-seo-tags" style="font-size: 0.75rem; color: #666; margin-bottom: 1.5rem; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6; padding: 0 15px;">
+            <strong>Focus:</strong> Mobile Game Development (Godot) • Android API 35/36 • TikTok Live Overlay • Digital Asset Monetization • Automated Passive Income • UI/UX
+        </div>
 
-    <div class="footer-links" style="margin-bottom: 1rem;">
-        <a href="privacy.html" style="margin: 0 10px; text-decoration: none; color: #00ffcc;">Privacy Policy</a>
-        <a href="contact.html" style="margin: 0 10px; text-decoration: none; color: #00ffcc;">Contact</a>
-        <a href="https://www.bybit.com/invite?ref=6L9ZDXJ" target="_blank" style="margin: 0 10px; text-decoration: none; color: #ffb700;">Trading Partner</a>
-    </div>
+        <div class="footer-links" style="margin-bottom: 1rem;">
+            <a href="privacy.html" style="margin: 0 10px; text-decoration: none; color: #00ffcc;">Privacy</a>
+            <a href="contact.html" style="margin: 0 10px; text-decoration: none; color: #00ffcc;">Contact</a>
+            <a href="https://www.bybit.com/invite?ref=6L9ZDXJ" target="_blank" style="margin: 0 10px; text-decoration: none; color: #ffb700;">Trading Partner</a>
+        </div>
 
-    <div class="copyright" style="font-size: 0.9rem; color: #aaa;">
-        &copy; 2026 <strong>STUDIOERS</strong> | Specialized Software Engineering Suite 
-        <br>
-        <span style="font-size: 0.7rem; opacity: 0.5;">Crafted for high-performance digital solutions & game mechanics.</span>
-    </div>
-</footer>
+        <div class="copyright" style="font-size: 0.85rem; color: #aaa;">
+            &copy; 2026 <strong>STUDIOERS</strong>
+            <br>
+            <span style="font-size: 0.7rem; opacity: 0.5;">Crafted for high-performance digital solutions.</span>
+        </div>
+    </footer>
 
 </body>
 </html>
