@@ -28,5 +28,11 @@
     "path": "articles/ai-automation-n8n.html",
     "date": "2026-04-24",
     "category": "AI Tech"
-  }
+  },
+  {
+  "title": "The Rise of Agentic AI: Deep Dive into n8n Autonomy",
+  "path": "articles/agentic-ai-n8n-2026.html",
+  "date": "2026-04-25",
+  "category": "AI & Automation"
+}
 ]
