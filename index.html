@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STUDIOERS | Engineering & Freedom</title>
-    <!-- Tailwind CSS (CDN) - Kod karmaşasını bitiren sihirli değnek -->
+    <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -19,13 +19,12 @@
         }
     </script>
     <style>
-        /* Sadece özel efektler için minik bir CSS */
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
     </style>
 </head>
 <body class="bg-black text-gray-200 font-sans antialiased">
 
-    <!-- HEADER: Burası sabit kalacak -->
+    <!-- HEADER -->
     <nav class="sticky top-0 z-50 glass border-b border-white/5 py-4 px-6">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
@@ -47,11 +46,11 @@
                 Nomadic <span class="text-brand">Engineering</span>
             </h1>
             <p class="text-gray-400 max-w-2xl leading-relaxed">
-                Nisan 2024'ten beri yollarda, Iveco M23 karavanda Joker ile birlikte Android dünyasını ve dijital gelir modellerini yeniden şekillendiriyoruz[cite: 1].
+                On the road since April 2024. Living in an Iveco M23 caravan with Joker, we are redefining the Android ecosystem and digital revenue models[cite: 1].
             </p>
         </section>
 
-        <!-- CARDS GRID: Yeni bir uygulama eklerken sadece buraya ekleme yapacaksın -->
+        <!-- CARDS GRID -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
             <!-- App Card 1 -->
             <a href="https://play.google.com/store/apps/details?id=com.studioers.notdefteri" class="glass p-6 rounded-3xl hover:border-brand/50 transition group">
@@ -68,7 +67,7 @@
             
             <!-- Joker & Life Card -->
             <div class="glass p-6 rounded-3xl border-brand/20 flex flex-col justify-between">
-                <p class="italic text-gray-300">"Karavan hayatı ve 30 yıllık gitar tecrübesi, kod yazarken en büyük ilham kaynağımız."[cite: 1]</p>
+                <p class="italic text-gray-300">"Caravan life and 30 years of guitar mastery are our greatest inspirations while coding[cite: 1]."</p>
                 <div class="flex items-center gap-3 mt-6">
                     <img src="images/joker.jpg" class="w-10 h-10 rounded-full border-2 border-brand" alt="Joker">
                     <span class="text-xs font-bold text-brand uppercase">Co-Pilot: Joker</span>
@@ -76,26 +75,25 @@
             </div>
         </div>
 
-        <!-- BLOG SECTION: Makaleler buraya gelecek -->
+        <!-- BLOG SECTION -->
         <section id="blog">
-            <h2 class="text-brand font-bold text-xs uppercase tracking-[0.3em] mb-8">Engineering Blog</h2>
+            <h2 class="text-brand font-bold text-xs uppercase tracking-[0.3em] mb-8 text-center md:text-left">Engineering Blog</h2>
             <div id="article-list" class="space-y-4">
-                <!-- Burası JSON ile dolacak -->
+                <!-- Populated by JSON -->
                 <p class="text-gray-600 animate-pulse text-sm font-mono">Fetching latest dev logs...</p>
             </div>
         </section>
     </main>
+
     <script>
     async function loadArticles() {
         try {
-            // Senin hazırladığın JSON verisi buraya geliyor
             const response = await fetch('articles-list.json');
             const articles = await response.json();
             
             const listContainer = document.getElementById('article-list');
-            listContainer.innerHTML = ''; // Temizle
+            listContainer.innerHTML = ''; 
 
-            // Tarihe göre sırala (En yeni en üstte)
             articles.sort((a, b) => new Date(b.date) - new Date(a.date));
 
             articles.forEach(article => {
@@ -113,12 +111,12 @@
                 listContainer.innerHTML += item;
             });
         } catch (error) {
-            console.error('Makaleler yüklenemedi:', error);
-            document.getElementById('article-list').innerHTML = '<p class="text-red-500 text-xs">Blog feed offline.</p>';
+            console.error('Failed to load articles:', error);
+            document.getElementById('article-list').innerHTML = '<p class="text-red-500 text-xs text-center">Blog feed offline.</p>';
         }
     }
     window.onload = loadArticles;
-</script>
+    </script>
 
     <footer class="py-10 border-t border-white/5 text-center">
         <p class="text-[10px] text-gray-600 font-mono tracking-widest uppercase">&copy; 2026 Studioers Ecosystem</p>
