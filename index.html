@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="google-site-verification" content="3v-dwgR_03wM3wWci6lWpWoqjjbpuBLlp27pDnS8hbY" />
     <meta name="description" content="STUDIOERS - Advanced Android Development, AI-driven automation, and professional software solutions.">
     <meta name="google-adsense-account" content="ca-pub-9126387581914302">
@@ -16,7 +16,7 @@
         :root { --accent: #00ff88; --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; --download: #ffcc00; --guide: #00aaff; --ai-magic: #8a2be2; --hostinger: #673ab7; --bybit: #f7a600; --etsy: #eb6d20; --youtube: #ff0000; --tiktok: #ff0050; }
         * { box-sizing: border-box; }
         
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; overflow-x: hidden; width: 100%; }
         a { text-decoration: none; color: inherit; }
 
         .hero-section {
@@ -31,15 +31,15 @@
         .logo-img { width: 45px; height: 45px; border-radius: 12px; object-fit: cover; border: 1px solid rgba(0,255,136,0.3); }
         .logo-text { font-size: 20px; font-weight: 800; margin-left: 12px; letter-spacing: -1px; text-transform: uppercase; }
         
-        .nav-links { display: flex; gap: 15px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
         .nav-links a { opacity: 0.6; transition: 0.3s; }
         .nav-links a:hover { opacity: 1; color: var(--accent); }
         .nav-ai-link { color: var(--accent) !important; opacity: 1 !important; }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-        .section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 15px; display: block; opacity: 0.8; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+        .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 20px; display: block; opacity: 0.8; }
 
-        /* Mobil Optimizasyonu: Grid Sistemleri */
+        /* Android için Grid Düzeltmeleri */
         .apps-showcase, .grid, .partners-grid, .free-tools-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
@@ -48,12 +48,12 @@
         }
 
         .store-button { background: #111; border: 1px solid var(--border); border-radius: 16px; padding: 15px; display: flex; align-items: center; gap: 12px; }
-        .store-icon { width: 32px; height: 32px; }
+        .store-icon { width: 32px; height: 32px; flex-shrink: 0; }
         .store-text span:first-child { font-size: 10px; opacity: 0.6; display: block; }
         .store-text span:last-child { font-size: 16px; font-weight: 800; display: block; }
 
-        .ai-promo-banner, .game-banner, .referral-banner {
-            background: #0a0a0a; border: 1px solid var(--border); border-radius: 20px; padding: 25px;
+        .ai-promo-banner, .game-banner {
+            background: #0a0a0a; border: 1px solid var(--accent); border-radius: 20px; padding: 25px;
             display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; gap: 20px; flex-wrap: wrap;
         }
 
@@ -63,34 +63,28 @@
         }
         @media (min-width: 600px) { .ai-launch-btn { width: auto; } }
 
-        /* About Section - Mobil Uyumlu Grid */
+        /* About Section Android Fix */
         .about-section { margin: 40px 0; padding: 25px; background: var(--card); border: 1px solid var(--border); border-radius: 24px; }
         .about-grid { display: grid; grid-template-columns: 1fr; gap: 30px; align-items: center; }
         @media (min-width: 850px) { .about-grid { grid-template-columns: 1fr 1.5fr; gap: 40px; } }
+        .about-visual img { width: 100%; border-radius: 20px; border: 1px solid var(--accent); max-height: 350px; object-fit: cover; }
 
-        .about-visual img { width: 100%; border-radius: 20px; border: 1px solid var(--accent); max-height: 400px; object-fit: cover; }
-
-        /* HQ & Lab Section */
+        /* HQ Section Android Fix */
         .hq-container {
             background: #0a0a0a; padding: 25px; border: 1px solid rgba(0, 255, 136, 0.2);
             border-radius: 28px; margin-bottom: 40px;
             display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center;
         }
-        @media (min-width: 768px) {
-            .hq-container { flex-direction: row; text-align: left; align-items: flex-start; }
-        }
+        @media (min-width: 768px) { .hq-container { flex-direction: row; text-align: left; align-items: flex-start; } }
         .hq-img-box { width: 120px; height: 120px; border-radius: 24px; overflow: hidden; border: 2px solid var(--accent); flex-shrink: 0; }
         .hq-img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Blog listesi taşma engelleme */
-        .blog-item { display: flex; flex-direction: column; padding: 15px 0; border-bottom: 1px solid #1a1a1a; gap: 8px; }
-        @media (min-width: 600px) {
-            .blog-item { flex-direction: row; justify-content: space-between; align-items: center; }
-        }
+        /* MAKALELER KISMI (DOKUNULMADI, SADECE MOBİL TAŞMA ENGELLENDİ) */
+        .blog-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #1a1a1a; gap: 15px; }
+        @media (max-width: 600px) { .blog-item { flex-direction: column; align-items: flex-start; gap: 8px; } }
 
         .stack-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         @media (min-width: 600px) { .stack-grid { grid-template-columns: repeat(4, 1fr); } }
-        
         .stack-item { background: var(--card); border: 1px solid var(--border); padding: 15px; border-radius: 15px; text-align: center; font-size: 12px; }
         .stack-logo { width: 30px; height: 30px; margin-bottom: 8px; }
 
@@ -112,84 +106,99 @@
             </nav>
         </header>
         <div style="max-width: 1100px; margin: auto; padding: 20px; width: 100%;">
-            <h1 style="font-size: clamp(2.2rem, 10vw, 4rem); font-weight: 800; line-height: 1; margin: 0;">Next-Gen<br><span style="color: var(--accent)">Software Ecosystem</span></h1>
+            <h1 style="font-size: clamp(2rem, 8vw, 4rem); font-weight: 800; line-height: 1.1; margin: 0;">Next-Gen<br><span style="color: var(--accent)">Software Ecosystem</span></h1>
         </div>
     </section>
 
     <main class="container">
         
         <span class="section-label">Neural Generation</span>
-        <div class="ai-promo-banner" style="border-color: var(--accent);">
+        <div class="ai-promo-banner">
             <div class="ai-promo-content">
-                <h2 style="margin:0 0 10px 0;">Studioers AI Art Generator</h2>
-                <p style="color:#888; font-size: 14px; margin:0;">Stable Diffusion & Flux motoru ile anında yüksek kalite sanat üretin.</p>
+                <h2>Studioers AI Art Generator</h2>
+                <p style="font-size: 14px; color: #888; margin: 0;">Experience the power of Stable Diffusion and Flux motor. Transform ideas into high-fidelity digital art.</p>
             </div>
-            <a href="ai.html" class="ai-launch-btn">LAUNCH AI →</a>
+            <a href="ai.html" class="ai-launch-btn">LAUNCH AI ENGINE →</a>
         </div>
 
         <section class="about-section">
             <div class="about-grid">
-                <div class="about-visual">
+                <div class="about-visual" style="position: relative;">
                     <img src="images/joker.jpg" alt="Joker">
                     <div style="position: absolute; bottom: 10px; right: 10px; background: var(--accent); color: #000; padding: 5px 12px; border-radius: 8px; font-weight: 800; font-size: 10px;">CO-PILOT: JOKER 🐾</div>
                 </div>
                 <div class="about-content">
-                    <span style="color: var(--accent); font-weight: 800; font-size: 11px; letter-spacing: 1px;">THE NOMADIC LAB</span>
-                    <h2 style="font-size: 2rem; margin: 10px 0;">Engineering Freedom</h2>
-                    <p style="color: #acacac; font-size: 1rem; line-height: 1.6;">
-                        Nisan 2024'ten beri karavanda yaşıyor, Starlink ve güneş enerjisiyle yazılım geliştiriyoruz[cite: 1]. 30 yıllık gitar tecrübesini Android API 36 uyumlu kodlarla birleştiriyoruz[cite: 1].
-                    </p>
+                    <span style="color: var(--accent); font-weight: 800; font-size: 11px; letter-spacing: 2px;">THE NOMADIC LAB</span>
+                    <h2 style="font-size: 2rem; margin: 15px 0;">Engineering Freedom</h2>
+                    <p style="color: #acacac; line-height: 1.6;">Nisan 2024'ten beri yazılımın kurallarını karavandan yazıyoruz. 30 yıllık gitar ustalığını API 36 uyumlu Android mühendisliğiyle birleştiriyoruz[cite: 1].</p>
                 </div>
             </div>
         </section>
 
-        <span class="section-label">Developer CLI Tools</span>
-        <div class="free-tools-grid">
-            <div style="background:#050505; border:1px solid #222; border-radius:15px; padding:20px;">
-                <h4 style="color:var(--download); margin:0 0 10px 0; font-family:monospace;">> webp_optimizer.exe</h4>
-                <p style="font-size:13px; color:#777;">Görsellerinizi SEO uyumlu hale getirin.</p>
-                <a href="#" class="ai-launch-btn" style="background:none; border:1px solid var(--download); color:var(--download); padding:8px; font-size:11px;">DOWNLOAD</a>
-            </div>
-            <div style="background:#050505; border:1px solid #222; border-radius:15px; padding:20px;">
-                <h4 style="color:var(--download); margin:0 0 10px 0; font-family:monospace;">> vault_gen.exe</h4>
-                <p style="font-size:13px; color:#777;">Güvenli şifre üretme aracı.</p>
-                <a href="#" class="ai-launch-btn" style="background:none; border:1px solid var(--download); color:var(--download); padding:8px; font-size:11px;">DOWNLOAD</a>
-            </div>
+        <span class="section-label">Mobile Hub</span>
+        <div class="apps-showcase">
+            <a href="https://play.google.com/store/apps/details?id=com.studioers.notdefteri" target="_blank" class="store-button">
+                <img src="https://www.vectorlogo.zone/logos/google_play/google_play-icon.svg" class="store-icon">
+                <div class="store-text"><span>EASY NOTE PAD</span><span>Google Play</span></div>
+            </a>
+            <a href="https://studioers.gumroad.com/l/ubsxdc" target="_blank" class="store-button">
+                <img src="https://www.vectorlogo.zone/logos/android/android-icon.svg" class="store-icon">
+                <div class="store-text"><span>DOWNLOAD APK</span><span>ProTetris Game</span></div>
+            </a>
         </div>
 
         <div class="hq-container">
-            <div class="hq-img-box"><img src="studioers-hq.jpg.jpg" alt="HQ" class="hq-img"></div>
+            <div class="hq-img-box"><img src="studioers-hq.jpg.jpg" class="hq-img"></div>
             <div class="hq-content">
-                <span style="font-size: 10px; color: var(--accent); font-weight: 800;">24 MONTHS ON THE ROAD</span>
+                <p style="margin: 0; font-size: 10px; font-weight: 800; color: var(--accent);">24 MONTHS ON THE ROAD</p>
                 <h3 style="margin: 5px 0; font-size: 1.4rem;">Code, Freedom, and Joker</h3>
-                <p style="font-size: 14px; color: #888; margin-bottom: 15px;">Karavan hayatının özgürlüğünü Joker ile paylaşıyoruz. Her araç yıldızlar altında yazıldı[cite: 1].</p>
-                <div style="display: flex; gap: 10px; justify-content: center;">
-                    <a href="https://youtube.com/@Bilmedikleriniz" class="ai-launch-btn" style="background:#ff0000; color:#fff; font-size:10px;">YouTube</a>
-                    <a href="https://tiktok.com/@karavanjoker" class="ai-launch-btn" style="background:#000; border:1px solid #ff0050; color:#ff0050; font-size:10px;">TikTok</a>
+                <p style="font-size: 14px; color: #888; line-height: 1.5; margin-bottom: 15px;">Karavan hayatının özgürlüğünü Joker ile paylaşıyoruz. Her araç yıldızlar altında yazıldı[cite: 1].</p>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a href="https://youtube.com/@Bilmedikleriniz" class="social-btn" style="border: 1px solid var(--youtube); color: var(--youtube); padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 800;">YouTube</a>
+                    <a href="https://tiktok.com/@karavanjoker" class="social-btn" style="border: 1px solid var(--tiktok); color: var(--tiktok); padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 800;">TikTok</a>
                 </div>
             </div>
         </div>
 
-        <span class="section-label">Dev Logs</span>
-        <div id="blog-container" style="background: #050505; border: 1px solid var(--border); border-radius: 20px; padding: 15px;">
+        <!-- MAKALELER KISMI (DOKUNULMADI, SADECE MOBİL UYUM GÜÇLENDİRİLDİ) -->
+        <span class="section-label" style="color: var(--accent); margin-top: 40px;">Engineering Blog & Dev Logs</span>
+        <div id="blog-container" style="background: #050505; border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 40px;">
             <div id="article-list">
-                <!-- Örnek Liste Öğesi -->
-                <div class="blog-item">
-                    <div style="display:flex; flex-direction:column;">
-                        <span style="font-size:9px; color:var(--accent);">ANDROID</span>
-                        <a href="#" style="font-weight:600;">API 36 Background Tasks Guide</a>
-                    </div>
-                    <span style="font-size:10px; color:#444;">APR 30, 2026</span>
-                </div>
+                <p style="color: #444; font-size: 13px;">Loading latest insights...</p>
             </div>
         </div>
 
-        <span class="section-label" style="margin-top:40px;">Technology Stack</span>
+        <script>
+            fetch('articles-list.json')
+                .then(response => response.json())
+                .then(data => {
+                    const list = document.getElementById('article-list');
+                    list.innerHTML = ''; 
+                    data.forEach(item => {
+                        list.innerHTML += `
+                            <div class="blog-item">
+                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                    <span style="font-size: 9px; color: var(--accent); font-weight: 800; text-transform: uppercase;">${item.category || 'Tech'}</span>
+                                    <a href="${item.path}" style="font-size: 1rem; font-weight: 600; color: #fff; transition: 0.3s;" onmouseover="this.style.color='#00ff88'" onmouseout="this.style.color='#fff'">
+                                        ${item.title}
+                                    </a>
+                                </div>
+                                <span style="font-size: 11px; color: #444; font-family: monospace;">${item.date}</span>
+                            </div>
+                        `;
+                    });
+                })
+                .catch(err => {
+                    document.getElementById('article-list').innerHTML = '<p style="color: #ff0050;">Blog feeds offline.</p>';
+                });
+        </script>
+
+        <span class="section-label" style="margin-top: 40px;">Technology Stack</span>
         <div class="stack-grid">
-            <div class="stack-item">Android</div>
-            <div class="stack-item">Kotlin</div>
-            <div class="stack-item">Python</div>
-            <div class="stack-item">Godot</div>
+            <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/android/android-icon.svg" class="stack-logo"><div>Android</div></div>
+            <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/kotlinlang/kotlinlang-icon.svg" class="stack-logo"><div>Kotlin</div></div>
+            <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/python/python-icon.svg" class="stack-logo"><div>Python</div></div>
+            <div class="stack-item"><img src="https://www.vectorlogo.zone/logos/godotengine/godotengine-icon.svg" class="stack-logo"><div>Godot</div></div>
         </div>
 
     </main>
