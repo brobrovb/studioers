@@ -85,6 +85,40 @@
             </div>
         </section>
     </main>
+    <script>
+    async function loadArticles() {
+        try {
+            // Senin hazırladığın JSON verisi buraya geliyor
+            const response = await fetch('articles-list.json');
+            const articles = await response.json();
+            
+            const listContainer = document.getElementById('article-list');
+            listContainer.innerHTML = ''; // Temizle
+
+            // Tarihe göre sırala (En yeni en üstte)
+            articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            articles.forEach(article => {
+                const item = `
+                    <div class="group border-b border-white/5 py-4 flex flex-col md:flex-row md:justify-between md:items-center gap-2">
+                        <div class="flex flex-col">
+                            <span class="text-[9px] font-black text-brand uppercase tracking-tighter">${article.category}</span>
+                            <a href="${article.path}" class="text-white font-medium group-hover:text-brand transition-colors decoration-brand/30">
+                                ${article.title}
+                            </a>
+                        </div>
+                        <span class="text-[10px] font-mono text-gray-600">${article.date}</span>
+                    </div>
+                `;
+                listContainer.innerHTML += item;
+            });
+        } catch (error) {
+            console.error('Makaleler yüklenemedi:', error);
+            document.getElementById('article-list').innerHTML = '<p class="text-red-500 text-xs">Blog feed offline.</p>';
+        }
+    }
+    window.onload = loadArticles;
+</script>
 
     <footer class="py-10 border-t border-white/5 text-center">
         <p class="text-[10px] text-gray-600 font-mono tracking-widest uppercase">&copy; 2026 Studioers Ecosystem</p>
