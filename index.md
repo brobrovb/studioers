@@ -25,7 +25,7 @@ title: Studioers
 ---
 
 ### 🎸 30 Yıllık Bir Tutku
-Müzik hayatımın değişmez bir parçası. 30 yıldır gitar çalıyorum; sağ el gitarı sol elle çalan o meşhur Hendrix stiliyle! 
+Müzik hayatımın değişmez bir parçası. 30 yıldır gitar çalıyorum; sağ el gitarı sol elle çalan, tellerin yerini değiştirmeden o meşhur Hendrix stiliyle!
 
 ---
 
