@@ -7,7 +7,7 @@ baseurl: ""
 
 # Menüde görünecek sayfaları manuel yönetmek istersen burayı kullanabilirsin
 header_pages:
-  - index.md
+  - studioblast.md
   - ai-art.md
 
 # En stabil ve hatasız tema
