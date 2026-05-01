@@ -1,0 +1,34 @@
+# Site Bilgileri
+title: Studioers
+email: coinkriptobilgi@gmail.com
+description: >- 
+  Digital Revenue Blueprint & No-Code Engineering.
+baseurl: "" # Burası boş kalmalı
+url: "https://studioers.xyz"
+
+# Karakter Seti
+encoding: "utf-8"
+
+# Tema Ayarları (GitHub Pages'in doğrudan desteklediği en stabil tema)
+theme: minima
+
+# Blog Yazıları Ayarı
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+# Eklentiler (GitHub Pages tarafından desteklenir)
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Klasörleri Hariç Tut (CMS kalıntıları varsa hata vermemesi için)
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - admin/
+  - node_modules/
+  - vendor/
