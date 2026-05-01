@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Karavanda Teknik Yaşam: Özgürlüğün Görünmeyen Altyapısı"
-date: 2026-05-01 08:00:00 +0000
+date: 2026-05-01
 categories: [karavan-hayati, teknik-rehber, dijital-gocebe]
 ---
 
