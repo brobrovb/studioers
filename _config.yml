@@ -5,10 +5,19 @@ description: >-
 url: "https://studioers.xyz"
 baseurl: ""
 
+# Menüde görünecek sayfaları manuel yönetmek istersen burayı kullanabilirsin
+header_pages:
+  - index.md
+  - ai-art.md
+
 # En stabil ve hatasız tema
 theme: minima
 
 encoding: "utf-8"
+
+# Markdown ayarları
+markdown: kramdown
+highlighter: rouge
 
 defaults:
   - scope:
@@ -16,6 +25,11 @@ defaults:
       type: "posts"
     values:
       layout: "post"
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
 
 plugins:
   - jekyll-feed
@@ -27,6 +41,8 @@ exclude:
   - admin/
   - node_modules/
   - vendor/
-  # Sytle SCSS'i okuması için ekle
+
+# Stil SCSS'i okuması için ayarlar
 sass:
+  sass_dir: _sass
   style: compressed
