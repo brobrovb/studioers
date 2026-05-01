@@ -4,7 +4,7 @@ title: Studioers
 ---
 
 <div style="display: block; overflow: hidden; margin-bottom: 20px;">
-  <img src="/assets/images/joker.jpg" style="width: 150px; height: 150px; float: left; margin-right: 20px; border-radius: 15px; border: 3px solid #bbdefb; object-fit: cover;">
+  <img src="/images/joker.jpg" style="width: 150px; height: 150px; float: left; margin-right: 20px; border-radius: 15px; border: 3px solid #bbdefb; object-fit: cover;">
   
   <h2 style="margin-top: 0; color: #1565c0;">Studioers'a Hoş Geldin! 🚐💻</h2>
   <p>Selam! Ben bir yazılım geliştirici ve dijital içerik üreticisiyim. İki yıldır 1999 model <strong>Iveco M23</strong> karavanımda, sadık dostum <strong>Joker</strong> ile birlikte yaşıyor ve üretiyorum.</p>
