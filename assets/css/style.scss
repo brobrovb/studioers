@@ -29,6 +29,34 @@ body {
   box-sizing: border-box; // Padding'in genişliği bozmasını engeller
 }
 
+// --- ESTETİK LİNK VE POST DOKUNUŞLARI ---
+
+a {
+  color: #1565c0; // Ana sayfadaki başlık mavinle uyumlu
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid transparent;
+
+  &:hover {
+    color: #00ff88; // n8n ve dijital otomasyonun yeşili
+    border-bottom: 1px solid #00ff88;
+  }
+}
+
+// Yazı listesindeki başlıklar için özel stil
+.post-link {
+  display: inline-block;
+  font-size: 1.3rem !important;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #1565c0 !important;
+
+  &:hover {
+    color: #1976d2 !important;
+    transform: translateX(5px); // Hafif bir sağa kayma efekti
+  }
+}
+
 // Android ve diğer mobil cihazlar için özel dokunuş
 @media screen and (max-width: 600px) {
   .wrapper {
@@ -38,10 +66,13 @@ body {
     border-radius: 8px;
   }
 
-  // Hero alanındaki flex yapısının mobilde alt alta gelmesini garantiliyoruz
   .hero-section {
     flex-direction: column !important;
     align-items: center !important;
     text-align: center;
+  }
+  
+  .post-link {
+    font-size: 1.1rem !important; // Mobilde başlıklar çok devasa durmasın
   }
 }
