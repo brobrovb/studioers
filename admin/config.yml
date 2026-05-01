@@ -1,17 +1,21 @@
 backend:
   name: github
-  repo: brobrovb/studioers # Kullanıcı adın ve repo ismin
-  branch: main # Ana dalın main olduğu varsayıldı
-  base_url: https://studioers.xyz # Domain bağlantın için kritik
+  repo: brobrovb/studioers
+  branch: main
+  # Statik GitHub Pages üzerinde login olabilmen için 
+  # açık kaynaklı bir auth-gateway kullanıyoruz.
+  base_url: https://pizzatime.herokuapp.com 
+  auth_endpoint: /auth
+  site_id: Ov23li1uWfHPLEoMsjMo # Senin Client ID buraya
 
 # Görsel yönetimi
-media_folder: "assets/images" # Temalarla çakışmaması için assets altına almak daha güvenlidir
+media_folder: "assets/images"
 public_folder: "/assets/images"
 
 collections:
   - name: "blog"
     label: "Blog Yazıları"
-    folder: "_posts" # Jekyll'ın tanıdığı standart klasör
+    folder: "_posts"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     editor:
