@@ -8,7 +8,10 @@ title: Studioers
 Selam! Ben bir yazılım geliştirici ve dijital içerik üreticisiyim. İki yıldır 1999 model **Iveco M23** karavanımda, sadık dostum **Joker** (kocaman bir Kangal!) ile birlikte yaşıyor, geziyor ve üretiyorum.
 
 Bu platform; kısıtlı imkanlarla nasıl özgür bir çalışma modeli kurulabileceğini, no-code araçlarıyla (n8n, vb.) nasıl otomasyonlar geliştirilebileceğini ve dijital varlıklarla nasıl gelir elde edilebileceğini gösteren bir yol haritasıdır.
-
+<div style="text-align: center;">
+  <img src="/assets/images/joker.jpg" alt="Joker" style="border-radius: 15px; max-width: 80%; box-shadow: 0px 4px 15px rgba(0,0,0,0.1);">
+  <p><i>Joker - Studioers Karavan Ekibinin Daimi Üyesi 🐾</i></p>
+</div>
 ---
 
 ### 🛠️ Nelerle Uğraşıyorum?
