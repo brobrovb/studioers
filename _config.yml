@@ -10,7 +10,7 @@ url: "https://studioers.xyz"
 encoding: "utf-8"
 
 # Tema Ayarları (GitHub Pages'in doğrudan desteklediği en stabil tema)
-theme: jekyll-theme-cayman
+theme: minima
 
 # Blog Yazıları Ayarı
 defaults:
