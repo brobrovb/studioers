@@ -7,7 +7,7 @@ title: Studioers
   <img src="/images/joker.jpg" style="width: 150px; height: 150px; float: left; margin-right: 20px; border-radius: 15px; border: 3px solid #bbdefb; object-fit: cover;">
   
   <h2 style="margin-top: 0; color: #1565c0;">Studioers'a Hoş Geldin! 🚐💻</h2>
-  <p>Selam! Ben bir yazılım geliştirici ve dijital içerik üreticisiyim. İki yıldır 1999 model <strong>Iveco M23</strong> karavanımda, sadık dostum <strong>Joker</strong> ile birlikte yaşıyor ve üretiyorum.</p>
+  <p>Selam! Ben bir yazılım geliştirici ve dijital içerik üreticisiyim. İki yıldır 1999 model <strong>Iveco M23</strong> karavanımda, eşim ve sadık dostum <strong>Joker</strong> ile birlikte yaşıyor ve üretiyorum.</p>
   <p>Bu platform; no-code araçlarıyla (n8n, vb.) nasıl otomasyonlar geliştirilebileceğini ve dijital varlıklarla nasıl gelir elde edilebileceğini gösteren bir yol haritasıdır.</p>
 </div>
 
@@ -20,7 +20,7 @@ title: Studioers
 *   **Android Geliştirme:** Jetpack Compose ve modern API'ler ile mobil uygulama dünyasındayım.
 *   **No-Code & Otomasyon:** n8n ve diğer araçlarla "çalışırken uyumayı" sağlayan sistemler kuruyorum.
 *   **Dijital Varlıklar:** Etsy, Gumroad ve Shopier üzerinden dijital ürünlerimizi yönetiyorum.
-*   **Karavan Yaşamı:** 12 metrekarede yazılım geliştirmek ve Joker ile maceralarımız.
+*   **Karavan Yaşamı:** 15 metrekarede yazılım geliştirmek ve Joker ile maceralarımız.
 
 ---
 
