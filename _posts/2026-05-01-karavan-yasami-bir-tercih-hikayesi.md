@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Karavan Yaşamı: Bir Zorunluluk Değil, Özgürlük Tercihi"
-date: 2026-05-02 10:00:00 +0300
+date: 2026-05-01 11:00:00 +0300
 categories: [karavan-hayati, dijital-gocebe]
 ---
 
