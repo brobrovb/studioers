@@ -1,17 +1,20 @@
 ---
 ---
-@import "minima";
+@import "minima"; // Temanın orijinalini önce bir çekiyoruz
 
+// Studioers Soft Blue Theme
 body {
-  background-color: #e3f2fd !important; // Tatlı bir açık mavi
+  background-color: #e3f2fd !important; // İstediğin tatlı mavi
 }
 
 .site-header {
-  background-color: #bbdefb !important; // Bir tık daha koyu mavi başlık alanı
+  background-color: #bbdefb !important; 
+  border-top: 5px solid #64b5f6;
 }
 
 .wrapper {
-  background-color: #ffffff; // Yazı alanın beyaz kalsın ki rahat okunsun
+  background-color: #ffffff;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 12px;
+  margin-top: 20px;
 }
