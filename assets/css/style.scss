@@ -1,26 +1,17 @@
 ---
 ---
-@import "{{ site.theme }}";
+@import "minima";
 
-// Studioers Özel Mavi Dokunuşları
 body {
-  background-color: #f0f7ff; // Çok açık, ferah bir bebek mavisi
-  color: #2c3e50; // Koyu lacivert yazı (siyah kadar sert değil)
+  background-color: #e3f2fd !important; // Tatlı bir açık mavi
 }
 
 .site-header {
-  border-top: 5px solid #3498db; // Üst tarafa canlı bir mavi çizgi
-  background-color: #ffffff;
+  background-color: #bbdefb !important; // Bir tık daha koyu mavi başlık alanı
 }
 
-.site-title {
-  color: #2980b9 !important; // Başlık rengi
-}
-
-a {
-  color: #2980b9; // Linkler de mavi olsun
-}
-
-.post-link {
-  color: #3498db !important;
+.wrapper {
+  background-color: #ffffff; // Yazı alanın beyaz kalsın ki rahat okunsun
+  padding: 20px;
+  border-radius: 10px;
 }
