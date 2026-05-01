@@ -10,6 +10,8 @@ header_pages:
   - studioblast.md
   - ai-art.md
 
+  future: true
+
 # En stabil ve hatasız tema
 theme: minima
 
