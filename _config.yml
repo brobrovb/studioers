@@ -27,3 +27,6 @@ exclude:
   - admin/
   - node_modules/
   - vendor/
+  # Sytle SCSS'i okuması için ekle
+sass:
+  style: compressed
