@@ -1,0 +1,15 @@
+backend:
+  name: github
+  repo: brobrovb/studioers
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "posts"
+    label: "Yazılar"
+    folder: "_posts"
+    create: true
+    fields:
+      - { label: "Başlık", name: "title", widget: "string" }
+      - { label: "İçerik", name: "body", widget: "markdown" }
