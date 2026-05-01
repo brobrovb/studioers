@@ -1,10 +1,12 @@
 ---
 ---
-@import "minima"; // Temanın orijinalini önce bir çekiyoruz
+@import "minima";
 
-// Studioers Soft Blue Theme
+// Studioers Soft Blue Theme & Mobile Fix
 body {
-  background-color: #e3f2fd !important; // İstediğin tatlı mavi
+  background-color: #e3f2fd !important;
+  margin: 0;
+  padding: 0;
 }
 
 .site-header {
@@ -12,9 +14,34 @@ body {
   border-top: 5px solid #64b5f6;
 }
 
+// Ana kapsayıcıyı mobil uyumlu hale getiriyoruz
 .wrapper {
   background-color: #ffffff;
   padding: 20px;
   border-radius: 12px;
   margin-top: 20px;
+  
+  // Masaüstü ve Mobil Genişlik Ayarı
+  max-width: calc(100% - 40px); // Kenarlardan 20'şer px pay bırakır
+  width: 800px; // Masaüstünde çok yayılmasın
+  margin-right: auto;
+  margin-left: auto;
+  box-sizing: border-box; // Padding'in genişliği bozmasını engeller
+}
+
+// Android ve diğer mobil cihazlar için özel dokunuş
+@media screen and (max-width: 600px) {
+  .wrapper {
+    max-width: calc(100% - 20px); // Mobilde boşluğu azaltıyoruz
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 8px;
+  }
+
+  // Hero alanındaki flex yapısının mobilde alt alta gelmesini garantiliyoruz
+  .hero-section {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center;
+  }
 }
