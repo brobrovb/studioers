@@ -1,26 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>Studioers</title>
-</head>
-<body>
-  <h1>Studioers Blog</h1>
-  <p><a href="/admin">Admin Panel</a></p>
-
-  <div id="content"></div>
-
-  <script>
-    fetch('https://api.github.com/repos/brobrovb/studioers/contents/_posts')
-      .then(res => res.json())
-      .then(data => {
-        const el = document.getElementById('content');
-        data.forEach(post => {
-          let p = document.createElement("p");
-          p.innerHTML = `<a href="${post.download_url}" target="_blank">${post.name}</a>`;
-          el.appendChild(p);
-        });
-      });
-  </script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Admin</title>
+  </head>
+  <body>
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  </body>
 </html>
