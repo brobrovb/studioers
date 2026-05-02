@@ -18,7 +18,7 @@ Bu tercihi anlamlı kılan en büyük unsurlardan biri, bu serüveni sevdiklerim
 
 *   **Eşim ve Karavan Atölyesi:** Karavanımızın bir köşesinde el emeğiyle hayat bulan "Karavan Atölyesi", bu mobil yaşamın sadece bir gezi değil, aynı zamanda yaratıcı bir üretim alanı olduğunu kanıtlıyor.
 *   **Joker (Kangal):** Sadık dostumuz Joker, karavanımızın hem neşesi hem de en güvenilir koruyucusu. Doğanın içinde özgürce hareket etmek, onun gibi asil bir Kangal için de en büyük mutluluk kaynağı.
-*   **Iveco M23:** Bizim için sadece bir araç değil, 12 metrekarelik sıcak bir yuva olan Iveco'muz, her türlü hava koşulunda bize güvenli bir liman sunmaya devam ediyor.
+*   **Iveco M23:** Bizim için sadece bir araç değil, 16 metrekarelik sıcak bir yuva olan Iveco'muz, her türlü hava koşulunda bize güvenli bir liman sunmaya devam ediyor.
 
 ### Neden Bu Yaşamı Seçtik?
 
