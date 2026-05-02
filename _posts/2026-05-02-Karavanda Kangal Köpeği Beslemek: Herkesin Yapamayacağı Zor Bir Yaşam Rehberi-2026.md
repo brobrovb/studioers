@@ -16,9 +16,13 @@ Ama gerçek şu:
 Biz, 14 aylık Kangal köpeğimiz Joker ile iki yılı aşkın süredir karavanda yaşıyoruz. Bu süreçte öğrendiğimiz en net şey şu oldu:
 
 👉 **Kangal bakmak sabır, disiplin ve ciddi bir yaşam alanı yönetimi gerektirir.**
-<video controls>
-  <source src="/images/kangal-joker.mp4" type="video/mp4">
-</video>
+<!-- Video Alanı Düzenlemesi -->
+<div style="width: 100%; max-width: 500px; margin: 20px auto; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 2px solid #bbdefb;">
+  <video controls style="width: 100%; display: block; height: auto;">
+    <source src="/images/kangal-joker.mp4" type="video/mp4">
+    Tarayıcınız video etiketini desteklemiyor.
+  </video>
+</div>
 
 Bu yazı, Kangal sahiplenmeyi düşünen ama işin gerçek yüzünü bilmeyen herkes için.
 
