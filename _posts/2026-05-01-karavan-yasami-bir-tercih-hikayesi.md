@@ -2,6 +2,7 @@
 layout: post
 title: "Karavan Yaşamı: Bir Zorunluluk Değil, Özgürlük Tercihi"
 date: 2026-05-01 11:00:00 +0300
+image: joker.jpg
 categories: [karavan-hayati, dijital-gocebe]
 ---
 
