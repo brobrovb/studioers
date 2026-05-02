@@ -26,7 +26,7 @@ title: Studioers
 
 ### 🎁 Ücretsiz Araçlar
 *   **VaultGen:** 1 ile 16 karakter arası güvenli şifreler üreten hızlı masaüstü aracım.[🔐 VaultGen'i İndir (v1.0)](/assets/downloads/vault_gen.zip)
-*   **Studioers SEO Tool:** İçeriklerini Google dostu hale getiren yardımcı analiz aracım.
+*   **Studioers SEO Tool:** İçeriklerini Google dostu hale getiren yardımcı analiz aracım. [🔐 Seo Aracını İndir (v1.0)](https://drive.google.com/file/d/1B6hPYBcb8I71EPARbGAjiaHz9tV5wXdi/view?usp=sharing)
 
  --- 
 
