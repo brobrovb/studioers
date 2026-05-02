@@ -1,10 +1,14 @@
 ---
 ---
+// 1. Samimi Fontu İçe Aktar (Quicksand yumuşak hatlı ve dost canlısıdır)
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
 @import "minima";
 
 // Studioers Soft Blue Theme & Mobile Fix
 body {
   background-color: #e3f2fd !important;
+  font-family: 'Quicksand', sans-serif !important; // Tüm siteye samimiyet geldi
   margin: 0;
   padding: 0;
 }
@@ -12,67 +16,80 @@ body {
 .site-header {
   background-color: #bbdefb !important; 
   border-top: 5px solid #64b5f6;
+  border-bottom: 2px solid rgba(0,0,0,0.05); // Hafif bir ayrım
+}
+
+// Üst Menü Linkleri İçin Samimi Dokunuş
+.site-nav {
+  .page-link {
+    font-weight: 600;
+    color: #1565c0 !important;
+    letter-spacing: 0.5px;
+    padding: 10px 15px;
+    border-radius: 20px; // Linklerin etrafı yumuşasın
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.5); // Üzerine gelince hafif parlama
+      color: #00ff88 !important;
+      transform: scale(1.05); // Hafif bir büyüme efekti
+    }
+  }
 }
 
 // Ana kapsayıcıyı mobil uyumlu hale getiriyoruz
 .wrapper {
   background-color: #ffffff;
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 18px; // Daha yumuşak köşeler (samimi hava)
   margin-top: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05); // Hafif bir gölge ile derinlik
   
-  // Masaüstü ve Mobil Genişlik Ayarı
-  max-width: calc(100% - 40px); // Kenarlardan 20'şer px pay bırakır
-  width: 800px; // Masaüstünde çok yayılmasın
+  max-width: calc(100% - 40px);
+  width: 800px; 
   margin-right: auto;
   margin-left: auto;
-  box-sizing: border-box; // Padding'in genişliği bozmasını engeller
+  box-sizing: border-box;
 }
 
 // --- ESTETİK LİNK VE POST DOKUNUŞLARI ---
 
 a {
-  color: #1565c0; // Ana sayfadaki başlık mavinle uyumlu
+  color: #1565c0;
   text-decoration: none;
   transition: all 0.3s ease;
   border-bottom: 1px solid transparent;
 
   &:hover {
-    color: #00ff88; // n8n ve dijital otomasyonun yeşili
+    color: #00ff88;
     border-bottom: 1px solid #00ff88;
   }
 }
 
-// Yazı listesindeki başlıklar için özel stil
 .post-link {
   display: inline-block;
-  font-size: 1.3rem !important;
-  font-weight: 600;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.4rem !important; // Biraz daha belirgin
+  font-weight: 700; // Başlıklar güçlü dursun
   margin-bottom: 5px;
   color: #1565c0 !important;
 
   &:hover {
     color: #1976d2 !important;
-    transform: translateX(5px); // Hafif bir sağa kayma efekti
+    transform: translateX(8px); // Sağa kayma efektini biraz artırdık
   }
 }
 
 // Android ve diğer mobil cihazlar için özel dokunuş
 @media screen and (max-width: 600px) {
   .wrapper {
-    max-width: calc(100% - 20px); // Mobilde boşluğu azaltıyoruz
+    max-width: calc(100% - 20px);
     padding: 15px;
     margin-top: 10px;
-    border-radius: 8px;
+    border-radius: 12px;
   }
 
-  .hero-section {
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center;
-  }
-  
-  .post-link {
-    font-size: 1.1rem !important; // Mobilde başlıklar çok devasa durmasın
+  .site-title {
+    font-size: 1.2rem !important;
   }
 }
