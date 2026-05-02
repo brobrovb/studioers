@@ -11,14 +11,7 @@ layout: default
   {% endif %}
 
   {{ content }}
-  <div id="cusdis_thread"
-  data-host="https://cusdis.com"
-  data-app-id="34cdca1d-0366-46e0-87e6-63cc7633281f"
-  data-page-id="{{ page.url }}"
-  data-page-url="{{ site.url }}{{ page.url }}"
-  data-page-title="{{ page.title }}"
-></div>
-<script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+  
   <div class="share-buttons" style="margin-top: 50px; padding: 20px; border-top: 1px solid #eee;">
   <h4 style="margin-bottom: 15px;">Bu rehberi arkadaşlarınla paylaş:</h4>
   
@@ -41,5 +34,13 @@ layout: default
   <span style="font-size: 14px; color: #666; display: block; margin-top: 10px;">
     Instagram ve TikTok'ta paylaşmak için linki kopyalayıp hikayene ekleyebilirsin !
   </span>
+    <div id="cusdis_thread"
+  data-host="https://cusdis.com"
+  data-app-id="34cdca1d-0366-46e0-87e6-63cc7633281f"
+  data-page-id="{{ page.url }}"
+  data-page-url="{{ site.url }}{{ page.url }}"
+  data-page-title="{{ page.title }}"
+></div>
+<script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
 </div>
 </article>
