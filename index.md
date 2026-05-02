@@ -23,6 +23,11 @@ title: Studioers
 *   **Karavan Yaşamı:** 15 metrekarede yazılım geliştirmek ve Joker ile maceralarımız.
 
 ---
+<img src="/images/studioers-ai.png" style="width: 150px; height: 150px; float: left; margin-right: 20px; border-radius: 15px; border: 3px solid #bbdefb; object-fit: cover;">
+  
+  <h2 style="margin-top: 0; color: #1565c0;">Yapay zekayla ücretsiz resim oluştur..[🔐 Studioers AI](https://studioers.xyz/ai-art/) </h2>
+
+---
 
 ### 🎁 Ücretsiz Araçlar
 *   **VaultGen:** 1 ile 16 karakter arası güvenli şifreler üreten hızlı masaüstü aracım.[🔐 VaultGen'i İndir (v1.0)](/assets/downloads/vault_gen.zip)
