@@ -34,13 +34,19 @@ layout: default
   <span style="font-size: 14px; color: #666; display: block; margin-top: 10px;">
     Instagram ve TikTok'ta paylaşmak için linki kopyalayıp hikayene ekleyebilirsin !
   </span>
-    <div id="cusdis_thread"
-  data-host="https://cusdis.com"
-  data-app-id="34cdca1d-0366-46e0-87e6-63cc7633281f"
-  data-page-id="{{ page.url }}"
-  data-page-url="{{ site.url }}{{ page.url }}"
-  data-page-title="{{ page.title }}"
-></div>
-<script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+    <section style="margin-top: 50px; padding: 20px; background: #ffffff; border-radius: 15px; border: 1px solid #bbdefb;">
+  <h3 style="color: #1565c0; margin-bottom: 20px;">Yorumlar 💬</h3>
+  
+  <div id="cusdis_thread"
+    data-host="https://cusdis.com"
+    data-app-id="34cdca1d-0366-46e0-87e6-63cc7633281f"
+    data-page-id="{{ page.url }}"
+    data-page-url="{{ site.url }}{{ page.url }}"
+    data-page-title="{{ page.title }}"
+    style="width: 100%; min-height: 200px; overflow: hidden;" 
+  ></div>
+
+  <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+</section>
 </div>
 </article>
