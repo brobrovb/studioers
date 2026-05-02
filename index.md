@@ -31,7 +31,7 @@ title: Studioers
   <h2 style="margin-top: 25px;">
     <a href="https://studioers.xyz/ai-art/" style="text-decoration: none; color: #1565c0;">Yapay Zekayla Ücretsiz Resim Oluştur 🎨</a>
   </h2>
-  <p>Yaratıcılığını konuştur: [🔐 Studioers AI'a Git](https://studioers.xyz/ai-art/)</p>
+  <p>Yaratıcılığını konuştur</p>
 </div>
 
 ---
