@@ -23,16 +23,23 @@ title: Studioers
 *   **Karavan Yaşamı:** 15 metrekarede yazılım geliştirmek ve Joker ile maceralarımız.
 
 ---
-<img src="/images/studioers-ai.png" style="width: 150px; height: 150px; float: left; margin-right: 20px; border-radius: 15px; border: 3px solid #bbdefb; object-fit: cover;">
-  
-  <h2 style="margin-top: 0; color: #1565c0;">Yapay zekayla ücretsiz resim oluştur..[🔐 Studioers AI](https://studioers.xyz/ai-art/) </h2>
+
+<div style="display: block; overflow: hidden; margin-bottom: 20px;">
+  <a href="https://studioers.xyz/ai-art/">
+    <img src="/images/studioers-ai.png" style="width: 150px; height: 150px; float: left; margin-right: 20px; border-radius: 15px; border: 3px solid #bbdefb; object-fit: cover;">
+  </a>
+  <h2 style="margin-top: 25px;">
+    <a href="https://studioers.xyz/ai-art/" style="text-decoration: none; color: #1565c0;">Yapay Zekayla Ücretsiz Resim Oluştur 🎨</a>
+  </h2>
+  <p>Yaratıcılığını konuştur: [🔐 Studioers AI'a Git](https://studioers.xyz/ai-art/)</p>
+</div>
 
 ---
 
 ### 🎁 Ücretsiz Araçlar
-*   **VaultGen:** 1 ile 16 karakter arası güvenli şifreler üreten hızlı masaüstü aracım.[🔐 VaultGen'i İndir (v1.0)](/assets/downloads/vault_gen.zip)
+*   **VaultGen:** 1 ile 16 karakter arası güvenli şifreler üreten hızlı masaüstü aracım. [🔐 VaultGen'i İndir (v1.0)](/assets/downloads/vault_gen.zip)
 *   **Studioers SEO Tool:** İçeriklerini Google dostu hale getiren yardımcı analiz aracım. [🔐 Seo Aracını İndir (v1.0)](https://drive.google.com/file/d/1B6hPYBcb8I71EPARbGAjiaHz9tV5wXdi/view?usp=sharing)
 
- --- 
+--- 
 
 ### 📝 Son Yazılar
