@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Fırın Yok! Karavanda Tavada Pratik Pizza Tarifi"
-date: 2026-05-02 12:00:00 +0300
+date: 2026-05-02 04:01:00 +0300
 image: karavan-pizza.png
 categories: [karavan-lezzetleri, tarifler, mobil-yasam]
 ---
