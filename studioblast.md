@@ -4,12 +4,13 @@ title: StudioBlast
 permalink: /studioblast/
 ---
 
-<div id="game-outer-container" style="background: #010409; display: flex; justify-content: center; align-items: center; height: 85vh; min-height: 500px; border-radius: 15px; overflow: hidden; position: relative; margin: 10px auto; max-width: 500px;">
+<div id="game-outer-container" style="background: #010409; display: flex; justify-content: center; align-items: center; height: 90vh; min-height: 500px; border-radius: 15px; overflow: hidden; position: relative; margin: 10px auto; max-width: 600px; border: 2px solid #00ff88;">
     <div id="game-container" style="position: relative; width: 100%; height: 100%; background: #000; overflow: hidden;">
         
         <!-- UI Katmanı -->
-        <div id="ui" style="position: absolute; top: 0; left: 0; right: 0; padding: 10px 15px; display: flex; justify-content: space-between; align-items: flex-start; color: #00ff88; font-size: 12px; font-weight: bold; pointer-events: none; z-index: 10; background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent); text-shadow: 0 0 10px rgba(0,255,136,0.5);">
+        <div id="ui" style="position: absolute; top: 0; left: 0; right: 0; padding: 10px 15px; display: flex; justify-content: space-between; align-items: flex-start; color: #00ff88; font-size: 13px; font-weight: bold; pointer-events: none; z-index: 10; background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent); text-shadow: 0 0 10px rgba(0,255,136,0.5);">
             <div>SEVİYE: <span id="level">1</span><br>SKOR: <span id="score">0</span></div>
+            <div id="ammo-status" style="text-align:center; color:#ff3366;">NORMAL MOD</div>
             <div style="text-align:right; margin-right:45px;">TEHLİKE<br><span id="misses">0</span> / 3</div>
         </div>
 
@@ -21,15 +22,15 @@ permalink: /studioblast/
 
         <canvas id="game" style="background: radial-gradient(circle, #0f172a 0%, #020617 100%); touch-action: none; display: block;"></canvas>
 
-        <!-- Modallar -->
         <div id="startScreen" class="game-modal" style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.96); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 2000; text-align: center; padding: 20px;">
             <h1 style="color:#00ff88; font-size: clamp(24px, 8vw, 38px); margin:0;">STUDIOBLAST</h1>
-            <p style="color:#fff; opacity: 0.7;">by Studioers</p>
+            <p style="color:#fff; opacity: 0.7;">Studioers Tarafından Geliştirildi</p>
             <button id="startBtn" style="padding: 15px 35px; font-size: 16px; background: #00ff88; color: #000; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; margin-top: 20px;">GÖREVE BAŞLA</button>
         </div>
 
         <div id="gameover" class="game-modal" style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.96); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 2000; text-align: center;">
             <h1 style="color:#ff3366; font-size: 32px;">OYUN BİTTİ</h1>
+            <p style="color:#fff;">Sektör Sınırı Aşıldı</p>
             <button id="restartBtn" style="padding: 15px 35px; background: #ff3366; color: #fff; border: none; border-radius: 12px; font-weight: bold; margin-top: 20px;">TEKRAR DENE</button>
         </div>
 
@@ -41,7 +42,6 @@ permalink: /studioblast/
 </div>
 
 <script>
-// Ses ve temel motor aynı kalıyor, resize fonksiyonunu akıllandırdık
 const AudioEngine = {
     ctx: null, isMuted: false,
     init() { if(!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); },
@@ -60,6 +60,11 @@ const AudioEngine = {
             osc.frequency.setValueAtTime(400, now);
             gain.gain.setValueAtTime(0.1, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
             osc.connect(gain); osc.start(); osc.stop(now + 0.1);
+        } else if (type === 'boom') {
+            const osc = this.ctx.createOscillator(); osc.type = 'square';
+            osc.frequency.setValueAtTime(100, now); osc.frequency.exponentialRampToValueAtTime(40, now + 0.3);
+            gain.gain.setValueAtTime(0.3, now); gain.gain.linearRampToValueAtTime(0, now + 0.3);
+            osc.connect(gain); osc.start(); osc.stop(now + 0.3);
         }
     }
 };
@@ -71,12 +76,11 @@ const COLS = 10, ROWS = 22;
 const COLORS = ['#FF1E56', '#00F5FF', '#F9D923', '#A125FB', '#32FF6A'];
 
 let width, height, ballRadius, animationId;
-let grid = [], score = 0, level = 1, missCount = 0;
+let grid = [], score = 0, level = 1, missCount = 0, shootCount = 0;
 let currentBubble = null, nextBubble = null, angle = -Math.PI / 2;
-let isProcessing = true, particles = [], effects = []; 
+let isProcessing = true, effects = []; 
 
 function resize() {
-    // Dinamik boyutlandırma
     width = container.offsetWidth;
     height = container.offsetHeight;
     canvas.width = width;
@@ -87,8 +91,9 @@ function resize() {
 function setupLevel() {
     resize();
     grid = [];
+    shootCount = 0;
     document.querySelectorAll('.game-modal').forEach(m => m.style.display = 'none');
-    let fillRows = Math.min(4 + level, 9);
+    let fillRows = Math.min(5 + level, 12); // Zorluk artırıldı
     for (let r = 0; r < ROWS; r++) {
         grid[r] = [];
         for (let c = 0; c < COLS; c++) {
@@ -96,20 +101,31 @@ function setupLevel() {
             else grid[r][c] = null;
         }
     }
-    nextBubble = { color: COLORS[Math.floor(Math.random() * COLORS.length)] };
+    nextBubble = { color: COLORS[Math.floor(Math.random() * COLORS.length)], isBomb: false };
     spawnNext();
     isProcessing = false;
     updateUI();
 }
 
 function spawnNext() {
+    shootCount++;
+    let isBomb = (shootCount % 6 === 0); // Her 6 atışta bir bomba
+    
     let activeColors = new Set();
     for(let r=0; r<ROWS; r++) for(let c=0; c<COLS; c++) if(grid[r][c] && grid[r][c].active && grid[r][c].gravity === 0) activeColors.add(grid[r][c].color);
     let avail = activeColors.size > 0 ? Array.from(activeColors) : COLORS;
-    let targetColor = avail.includes(nextBubble.color) ? nextBubble.color : avail[Math.floor(Math.random()*avail.length)];
     
-    currentBubble = { x: width / 2, y: height - 60, color: targetColor, vx: 0, vy: 0, fired: false, active: true };
-    nextBubble = { color: avail[Math.floor(Math.random()*avail.length)] };
+    currentBubble = { 
+        x: width / 2, 
+        y: height - 60, 
+        color: isBomb ? '#000000' : nextBubble.color, 
+        isBomb: isBomb,
+        vx: 0, vy: 0, fired: false, active: true 
+    };
+    
+    nextBubble = { color: avail[Math.floor(Math.random()*avail.length)], isBomb: ((shootCount + 1) % 6 === 0) };
+    document.getElementById('ammo-status').textContent = isBomb ? "!!! BOMBA MODU !!!" : "NORMAL MOD";
+    document.getElementById('ammo-status').style.color = isBomb ? "#ff3366" : "#00ff88";
 }
 
 function getPos(r, c) {
@@ -117,21 +133,34 @@ function getPos(r, c) {
     return { x: c * (ballRadius * 2) + ballRadius + offset, y: r * (ballRadius * 1.72) + ballRadius + 60 };
 }
 
-function drawBubble(x, y, color, scale = 1, isFired = false) {
+function burstEffect(x, y, color) {
+    effects.push({ x, y, color, size: ballRadius, life: 1 });
+}
+
+function drawBubble(x, y, color, scale = 1, isFired = false, isBomb = false) {
     if (scale <= 0) return;
     ctx.save(); ctx.translate(x, y); ctx.scale(scale, scale);
-    ctx.shadowBlur = isFired ? 15 : 8; ctx.shadowColor = color;
-    let grad = ctx.createRadialGradient(-ballRadius/3, -ballRadius/3, ballRadius/10, 0, 0, ballRadius);
-    grad.addColorStop(0, "#fff"); grad.addColorStop(0.2, color); grad.addColorStop(1, "#000");
-    ctx.beginPath(); ctx.arc(0, 0, ballRadius - 2, 0, Math.PI * 2); ctx.fillStyle = grad; ctx.fill();
+    
+    if(isBomb) {
+        ctx.shadowBlur = 20; ctx.shadowColor = "#ff0000";
+        let grad = ctx.createRadialGradient(0, 0, 0, 0, 0, ballRadius);
+        grad.addColorStop(0, "#440000"); grad.addColorStop(0.5, "#000000"); grad.addColorStop(1, "#ff0000");
+        ctx.beginPath(); ctx.arc(0, 0, ballRadius - 2, 0, Math.PI * 2); ctx.fillStyle = grad; ctx.fill();
+        // Bomba ikonu (fitil)
+        ctx.fillStyle = "white"; ctx.fillRect(-2, -ballRadius, 4, 6);
+    } else {
+        ctx.shadowBlur = isFired ? 15 : 8; ctx.shadowColor = color;
+        let grad = ctx.createRadialGradient(-ballRadius/3, -ballRadius/3, ballRadius/10, 0, 0, ballRadius);
+        grad.addColorStop(0, "#fff"); grad.addColorStop(0.2, color); grad.addColorStop(1, "#000");
+        ctx.beginPath(); ctx.arc(0, 0, ballRadius - 2, 0, Math.PI * 2); ctx.fillStyle = grad; ctx.fill();
+    }
     ctx.restore();
 }
 
 function loop() {
     ctx.clearRect(0, 0, width, height);
     
-    // Tehlike çizgisi
-    ctx.setLineDash([5, 5]); ctx.strokeStyle = "rgba(255, 30, 86, 0.3)";
+    ctx.setLineDash([5, 5]); ctx.strokeStyle = "rgba(255, 30, 86, 0.4)";
     ctx.beginPath(); ctx.moveTo(0, height * 0.8); ctx.lineTo(width, height * 0.8); ctx.stroke();
     ctx.setLineDash([]);
 
@@ -144,7 +173,7 @@ function loop() {
                     if (b.gravity === 0) activeInGrid++;
                     let p = getPos(r, c);
                     if (b.gravity > 0) { b.y_drift += b.gravity; b.gravity += 0.5; if (p.y + b.y_drift > height + 50) b.active = false; }
-                    drawBubble(p.x, p.y + b.y_drift, b.color, b.scale);
+                    drawBubble(p.x, p.y + b.y_drift, b.color, b.scale, false, false);
                 }
             }
         }
@@ -159,10 +188,20 @@ function loop() {
             currentBubble.x += currentBubble.vx; currentBubble.y += currentBubble.vy;
             if (currentBubble.x < ballRadius || currentBubble.x > width - ballRadius) currentBubble.vx *= -1;
             checkCollision();
-            drawBubble(currentBubble.x, currentBubble.y, currentBubble.color, 1, true);
+            drawBubble(currentBubble.x, currentBubble.y, currentBubble.color, 1, true, currentBubble.isBomb);
         } else if (!isProcessing) {
-            drawBubble(currentBubble.x, currentBubble.y, currentBubble.color);
+            drawBubble(currentBubble.x, currentBubble.y, currentBubble.color, 1, false, currentBubble.isBomb);
         }
+    }
+
+    // Patlama efektlerini çiz
+    for (let i = effects.length - 1; i >= 0; i--) {
+        let e = effects[i];
+        ctx.save(); ctx.globalAlpha = e.life;
+        ctx.beginPath(); ctx.strokeStyle = e.color; ctx.lineWidth = 3;
+        ctx.arc(e.x, e.y, ballRadius * (2 - e.life), 0, Math.PI * 2); ctx.stroke();
+        ctx.restore();
+        e.life -= 0.05; if (e.life <= 0) effects.splice(i, 1);
     }
 
     animationId = requestAnimationFrame(loop);
@@ -196,26 +235,44 @@ function snap() {
             if (d < bestDist) { bestDist = d; tr = r; tc = c; }
         }
     }
-    grid[tr][tc] = { color: currentBubble.color, active: true, scale: 1, y_drift: 0, gravity: 0 };
-    currentBubble.active = false;
 
-    if (checkMatches(tr, tc)) {
-        AudioEngine.play('pop');
-        missCount = 0;
-        handleFloating();
+    if (currentBubble.isBomb) {
+        AudioEngine.play('boom');
+        explode(tr, tc);
     } else {
-        missCount++;
-        if (missCount >= 3) {
-            grid.unshift(new Array(COLS).fill(null).map(() => ({ color: COLORS[Math.floor(Math.random()*COLORS.length)], active: true, scale: 1, y_drift: 0, gravity: 0 })));
-            grid.pop(); missCount = 0;
-            handleFloating();
+        grid[tr][tc] = { color: currentBubble.color, active: true, scale: 1, y_drift: 0, gravity: 0 };
+        if (checkMatches(tr, tc)) {
+            AudioEngine.play('pop');
+            missCount = 0;
+        } else {
+            missCount++;
+            if (missCount >= 3) {
+                grid.unshift(new Array(COLS).fill(null).map(() => ({ color: COLORS[Math.floor(Math.random()*COLORS.length)], active: true, scale: 1, y_drift: 0, gravity: 0 })));
+                grid.pop(); missCount = 0;
+            }
         }
     }
+    
+    currentBubble.active = false;
+    handleFloating();
 
     let lost = false;
     for(let r=0; r<ROWS; r++) for(let c=0; c<COLS; c++) if(grid[r][c] && grid[r][c].active && grid[r][c].gravity === 0 && getPos(r,c).y > height * 0.8) lost = true;
     if (lost) { document.getElementById('gameover').style.display = 'flex'; isProcessing = true; }
     else { updateUI(); spawnNext(); isProcessing = false; }
+}
+
+function explode(r, c) {
+    burstEffect(getPos(r, c).x, getPos(r, c).y, "#ff3366");
+    let neighbors = r % 2 === 0 ? [[0,-1],[0,1],[-1,0],[-1,-1],[1,0],[1,-1],[0,0]] : [[0,-1],[0,1],[-1,0],[-1,1],[1,0],[1,1],[0,0]];
+    for(let [dr, dc] of neighbors) {
+        let nr = r+dr, nc = c+dc;
+        if(nr>=0 && nr<ROWS && nc>=0 && nc<COLS && grid[nr][nc] && grid[nr][nc].active) {
+            burstEffect(getPos(nr, nc).x, getPos(nr, nc).y, grid[nr][nr] ? grid[nr][nc].color : "#fff");
+            grid[nr][nc].active = false;
+            score += 20;
+        }
+    }
 }
 
 function checkMatches(r, c) {
@@ -231,8 +288,11 @@ function checkMatches(r, c) {
         }
     }
     if (matches.length >= 3) {
-        matches.forEach(([mr, mc]) => { grid[mr][mc].active = false; });
-        score += matches.length * 10; return true;
+        matches.forEach(([mr, mc]) => { 
+            burstEffect(getPos(mr, mc).x, getPos(mr, mc).y, color);
+            grid[mr][mc].active = false; 
+        });
+        score += matches.length * 15; return true;
     }
     return false;
 }
@@ -269,8 +329,8 @@ const handleInput = (e) => {
 
 const handleFire = () => {
     if (isProcessing || !currentBubble || currentBubble.fired) return;
-    AudioEngine.play('shoot');
-    currentBubble.vx = Math.cos(angle) * 14; currentBubble.vy = Math.sin(angle) * 14;
+    AudioEngine.play(currentBubble.isBomb ? 'boom' : 'shoot');
+    currentBubble.vx = Math.cos(angle) * 15; currentBubble.vy = Math.sin(angle) * 15;
     currentBubble.fired = true;
 };
 
@@ -286,3 +346,16 @@ canvas.addEventListener("mousedown", handleFire);
 window.addEventListener('resize', resize);
 window.onload = () => { resize(); requestAnimationFrame(loop); };
 </script>
+
+### Oyun Hakkında
+**StudioBlast**, Studioers tarafından geliştirilen, karavan hayatının minimalist enerjisini dijital dünyaya taşıyan estetik bir balon patlatma oyunudur.
+
+**Yenilikler:**
+*   **Bomba Topu:** Her 6 atışta bir gelen özel yıkıcı top!
+*   **Artan Zorluk:** Seviye ilerledikçe daha fazla satırla mücadele et.
+*   **Gelişmiş Görsel:** Geri dönen patlama efektleri ve daha geniş oyun alanı.
+
+**Nasıl Oynanır?**
+*   **Nişan Al:** Fareyi hareket ettir veya ekrana dokun.
+*   **Ateş Et:** Tıkla veya dokunmayı bırak.
+*   **Patlat:** Aynı renkten 3 veya daha fazla balonu birleştir. Bomba gelirse stratejik kullan!
