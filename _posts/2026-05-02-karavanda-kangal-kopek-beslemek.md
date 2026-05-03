@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Karavanda Kangal Köpeği Büyütmek: Herkesin Yapamayacağı Bir Sorumluluğun Gerçek Yüzü"
+title: "Karavanda Kangal Köpeği Beslemek (2026) – Zor mu? Gerçek Deneyim ve Rehber"
 date: 2026-05-02 11:00:00 +0300
 categories: [karavan-hayati, hayvan-bakimi, kangal]
 tags: [kangal köpeği, karavanda köpek bakımı, büyük ırk köpek, dijital göçebe yaşam, köpek eğitimi]
