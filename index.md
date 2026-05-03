@@ -53,30 +53,4 @@ title: Studioers
   </div>
 </div>
 ### 📝 Son Yazılar
-### 📝 Son Yazılar
 
-<ul class="post-list" style="padding: 0; list-style: none;">
-  {% for post in site.posts limit:5 %}
-    <li style="margin-bottom: 35px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
-      <!-- Yazı Tarihi -->
-      <span style="color: #999; font-size: 0.85rem;">{{ post.date | date: "%d %B %Y" }}</span>
-      
-      <!-- Yazı Başlığı -->
-      <h3 style="margin: 5px 0 10px 0;">
-        <a href="{{ post.url | relative_url }}" style="text-decoration: none; color: #1565c0; font-size: 1.4rem;">
-          {{ post.title }}
-        </a>
-      </h3>
-
-      <!-- SEO Dostu Özet (İlk Paragraf) -->
-      <p style="color: #444; line-height: 1.6; margin: 0; font-size: 0.95rem;">
-        {{ post.excerpt | strip_html | truncatewords: 25 }}
-      </p>
-
-      <!-- Devamını Oku Linki -->
-      <a href="{{ post.url | relative_url }}" style="color: #1565c0; font-size: 0.9rem; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 10px;">
-        Devamını Oku →
-      </a>
-    </li>
-  {% endfor %}
-</ul>
