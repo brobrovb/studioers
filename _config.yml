@@ -10,6 +10,7 @@ header_pages:
   - studioblast.md
   - ai-art.md
   - yazilar.md
+  -ico-converter.md
 
   # En stabil ve hatasız tema
 theme: minima
