@@ -85,7 +85,17 @@ Kangal için bu:
 👉 sürekli tetikte olma hali
 
 ---
+## Sık Sorulan Sorular
 
+### Karavanda kangal beslenir mi?
+Evet, ancak ciddi zaman, enerji ve sabır gerektirir.
+
+### Kangal dar alanda yaşar mı?
+Doğası gereği zorlanır, bu yüzden düzenli egzersiz şarttır.
+
+### Karavanda köpek bakmak zor mu?
+Küçük ırklar için daha kolay, büyük ırklar için daha zordur.
+---
 # ⚡ Enerji Yönetimi: Bitmeyen Bir Güç
 
 Kangal köpeği:
