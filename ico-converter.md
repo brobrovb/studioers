@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Online PNG to ICO Dönüştürücü - Studioers"
+title: "Online PNG - ICO Dönüştürücü"
 description: "Resimlerinizi saniyeler içinde favicon (.ico) formatına dönüştürün. Tamamen ücretsiz ve online."
 ---
 
