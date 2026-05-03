@@ -41,5 +41,15 @@ title: Studioers
 *   **Studioers SEO Tool:** İçeriklerini Google dostu hale getiren yardımcı analiz aracım. [🔐 Seo Aracını İndir (v1.0)](https://drive.google.com/file/d/1B6hPYBcb8I71EPARbGAjiaHz9tV5wXdi/view?usp=sharing)
 
 --- 
+<hr>
 
+<div class="about-card-samimi" style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; background: #ffffff; padding: 20px; border-radius: 18px; border: 1px solid #bbdefb; margin-top: 30px;">
+  <img src="/images/joker.jpg" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid #64b5f6; object-fit: cover;">
+  <div style="flex: 1; min-width: 250px;">
+    <h3 style="margin: 0 0 10px 0; color: #1565c0;">Daha Fazlası İçin... 🎸</h3>
+    <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">
+      Karavanda yaşamın getirdiği o özgürlükle, çeşitli müzik ve Android projelerimi geliştiriyorum. Eşimle ve kangal köpeğimizle 30 metreküplük <strong>Iveco M23</strong>'ün içinde rahatça üretiyor, sınırsız internetimle dijital dünyayı karavana sığdırıyorum.
+    </p>
+  </div>
+</div>
 ### 📝 Son Yazılar
