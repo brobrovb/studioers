@@ -52,5 +52,3 @@ title: Studioers
     </p>
   </div>
 </div>
-### 📝 Son Yazılar
-
