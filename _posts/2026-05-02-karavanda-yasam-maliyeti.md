@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Karavanda Yaşam Maliyeti 2026: Elektrik, Yakıt, İnternet ve Gerçek Giderler"
-date: 2026-05-02
+date: 2026-05-03
 categories: [karavan-hayati, dijital-gocebe, rehber]
 ---
 
