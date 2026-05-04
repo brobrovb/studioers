@@ -22,7 +22,6 @@ Bu süreçte odaklandığım temel alanlar şunlardır:
 
 Karavanda bir Kangal (Joker) ile yaşamak ve aynı zamanda yazılım projelerini yönetmek, disiplinli bir planlama gerektiriyor. Enerji yönetiminden internet erişimine kadar her detay, aslında bir mühendislik problemi. Studioers'ta sadece teknik konuları değil, bu yaşam tarzının getirdiği çözüm arayışlarını da paylaşacağım.
 
-</div>
 ### Gelecek Planları
 
 Önümüzdeki süreçte, n8n ile kurduğum otomasyon şablonlarını, Android dünyasındaki güncel gelişmeleri ve dijital pazaryerlerindeki tecrübelerimi detaylı rehberler halinde burada bulabileceksiniz.
