@@ -21,13 +21,7 @@ Bu süreçte odaklandığım temel alanlar şunlardır:
 ### Mobil Yaşam ve Üretkenlik
 
 Karavanda bir Kangal (Joker) ile yaşamak ve aynı zamanda yazılım projelerini yönetmek, disiplinli bir planlama gerektiriyor. Enerji yönetiminden internet erişimine kadar her detay, aslında bir mühendislik problemi. Studioers'ta sadece teknik konuları değil, bu yaşam tarzının getirdiği çözüm arayışlarını da paylaşacağım.
-<div class="post-inline-content">
-  <img src="/images/joker.jpg" class="post-inline-img" alt="Joker">
-  <div class="post-inline-text">
-    Kanka buraya istediğin açıklamayı yazabilirsin. 
-    Görsel solda sabit kalır, yazı sağ tarafı doldurur. 
-    Mobilde ise otomatik olarak resim üste, yazı alta gelecek şekilde düzelir.
-  </div>
+
 </div>
 ### Gelecek Planları
 
