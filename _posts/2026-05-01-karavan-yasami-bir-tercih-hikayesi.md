@@ -22,7 +22,7 @@ Bu tercihi anlamlı kılan en büyük unsurlardan biri, bu serüveni sevdiklerim
 
 ### Neden Bu Yaşamı Seçtik?
 
-Karavan hayatını bir "zorunluluk" değil, bir "özgürlük tercihi" yapan temel motivasyonumuz, zamanımızı ve mekanımızı kendimizin yönetebilmesiydi. İnternetin olduğu her yeri ofisimiz yaparken, gün batımını en ön sıradan izleme lüksüne sahip olabilmek, bu tercihin en büyük ödülü.
+{% include post-img.html src="/images/karavan-kapadokya.jpeg" alt="Joker" text="Karavan hayatını bir "zorunluluk" değil, bir "özgürlük tercihi" yapan temel motivasyonumuz, zamanımızı ve mekanımızı kendimizin yönetebilmesiydi. İnternetin olduğu her yeri ofisimiz yaparken, gün batımını en ön sıradan izleme lüksüne sahip olabilmek, bu tercihin en büyük ödülü." %}
 
 Doğanın içinde, minimalist bir felsefeyle üretmeye ve yaşamaya devam ediyoruz. Studioers üzerinde hem bu hayatın zorluklarını hem de kattığı eşsiz güzellikleri paylaşmaya devam edeceğim.
 
