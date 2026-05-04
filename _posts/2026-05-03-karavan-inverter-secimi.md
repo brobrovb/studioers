@@ -6,7 +6,7 @@ categories: [karavan-hayati, teknik-rehber, enerji-sistemleri]
 ---
 
 Karavan yaşamına geçen herkesin karşısına çıkan ilk teknik sorulardan biri şudur:  
-**Hangi inverteri almalıyım?**
+**Hangi inverteri almalıyım ?**
 
 İnverter, karavandaki elektrik sisteminin en kritik parçalarından biridir. Çünkü aküden gelen 12V enerjiyi, evde kullandığımız 220V elektriğe çevirir. Yani laptopundan şarj aletine kadar birçok cihazın çalışmasını sağlar.
 
