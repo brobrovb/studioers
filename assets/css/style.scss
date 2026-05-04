@@ -93,3 +93,54 @@ a {
     font-size: 1.2rem !important;
   }
 }
+// --- MAKALE İÇİ GÖRSEL VE METİN DÜZENİ ---
+
+.post-inline-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 25px; // Görsel ve yazı arasındaki boşluk
+  margin: 30px 0;
+  flex-wrap: wrap; // Mobilde alt alta düşmesi için
+  background-color: #f8f9fa; // Çok hafif bir arka plan ayrımı
+  padding: 15px;
+  border-radius: 15px; // Senin wrapper ile uyumlu
+  border: 1px solid rgba(0,0,0,0.05);
+
+  .post-inline-img {
+    flex: 0 0 220px; // Görsel genişliğini sabitledik (Ana sayfa tadında)
+    max-width: 220px;
+    height: auto;
+    border-radius: 12px; // Samimi yuvarlak köşeler
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08); // Hafif derinlik
+    object-fit: cover;
+    border: 3px solid #ffffff; // Fotoğraf çerçeve gibi dursun
+  }
+
+  .post-inline-text {
+    flex: 1;
+    min-width: 280px; // Yazı çok daralırsa mobilde alta kayar
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #333;
+    
+    p {
+      margin: 0; // Gereksiz boşlukları temizler
+    }
+  }
+}
+
+// Mobil Cihazlar İçin Ayar
+@media screen and (max-width: 600px) {
+  .post-inline-content {
+    flex-direction: column; // Mobilde direkt alt alta gelsin
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+
+    .post-inline-img {
+      flex: 0 0 auto;
+      width: 100%; // Mobilde resmi tam genişlik yapabiliriz veya sabit bırakabiliriz
+      max-width: 300px;
+    }
+  }
+}
