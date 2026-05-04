@@ -9,10 +9,6 @@ description: "Karavanda enerji dönüşümünün temeli olan inverter seçimi ü
 
 Karavan ekosisteminde enerji yönetimi, sadece bir cihaz satın alma süreci değil; bir mühendislik optimizasyonudur. 12V DC akü voltajını 220V AC şebeke gerilimine dönüştüren inverterler, bu sistemin en kritik bileşenidir. Yanlış konfigüre edilmiş bir inverter; hem enerji verimsizliğine yol açar hem de hassas dijital ekipmanlarınızın ömrünü kısaltır.
 
-{% include post-img.html 
-   src="/images/karavan-kapadokya.jpeg" 
-   alt="Karavan Teknik Enerji Sistemi" 
-   text="İnverter seçimi, karavanın toplam enerji bütçesi ve akü bankası kapasitesiyle doğrudan ilişkilidir. Özellikle Iveco M23 gibi mobil yaşam alanlarında, alan ve verimlilik optimizasyonu en öncelikli konudur." %}
 
 ## 1. Dalga Formu Analizi: Neden Saf Sinüs (Pure Sine Wave)?
 
