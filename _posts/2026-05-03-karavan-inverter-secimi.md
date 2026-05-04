@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Karavan İnverter Seçimi Rehberi 2026: Kaç Watt, Saf Sinüs mü, Hangi Model?"
+title: "Karavan İnverter Seçimi Rehberi 2026"
 date: 2026-05-03
-categories: [karavan-hayati, teknik-rehber, enerji-sistemleri]
+categories: karavan-hayati
 ---
 
 Karavan yaşamına geçen herkesin karşısına çıkan ilk teknik sorulardan biri şudur:  
