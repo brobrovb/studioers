@@ -16,6 +16,14 @@ Bu süreçte odaklandığım temel alanlar şunlardır:
 *   **No-Code Mühendisliği**: Kod yazmadan, karmaşık API entegrasyonları ve iş akışları oluşturmak.
 *   **Dijital Varlık Yönetimi**: Etsy, Gumroad ve Shopier gibi platformlar üzerinden pasif gelir modelleri kurgulamak.
 *   **Android Geliştirme**: Modern teknolojilerle (Jetpack Compose) mobil çözümler üretmek.
+*   <div class="post-inline-content">
+  <img src="/images/joker.jpg" class="post-inline-img" alt="Joker">
+  <div class="post-inline-text">
+    Kanka buraya istediğin açıklamayı yazabilirsin. 
+    Görsel solda sabit kalır, yazı sağ tarafı doldurur. 
+    Mobilde ise otomatik olarak resim üste, yazı alta gelecek şekilde düzelir.
+  </div>
+</div>
 
 ### Mobil Yaşam ve Üretkenlik
 
