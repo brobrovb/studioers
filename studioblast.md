@@ -28,7 +28,7 @@ permalink: /studioblast/
                 <h1 style="color:#00ff88; font-size: 42px; margin:0; letter-spacing: 2px; text-shadow: 0 0 20px rgba(0,255,136,0.4);">STUDIOBLAST</h1>
                 <p style="color:#fff; opacity: 0.6; margin-top: 5px;">A Product of Studioers</p>
                 <div style="color:#fff; font-size: 12px; margin: 20px 0; line-height: 1.6; opacity: 0.8;">Her 6 atışta bir BOMBA gelir.<br>Topların çizgiyi geçmesine izin verme!</div>
-                <button id="startBtn" style="padding: 18px 40px; font-size: 18px; background: #00ff88; color: #000; border: none; border-radius: 50px; cursor: pointer; font-weight: 900; transition: transform 0.2s;">BAŞLAT</button>
+                <button id="startBtn" style="padding: 18px 40px; font-size: 18px; background: #00ff88; color: #000; border: none; border-radius: 50px; cursor: pointer; font-weight: 900;">BAŞLAT</button>
             </div>
 
             <div id="gameover" class="game-modal" style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.96); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 2000; text-align: center;">
@@ -96,8 +96,12 @@ function setupLevel() {
     resize();
     grid = [];
     shootCount = 0;
+    missCount = 0;
     document.querySelectorAll('.game-modal').forEach(m => m.style.display = 'none');
-    let fillRows = Math.min(6 + level, 12); 
+    
+    // DÜZELTME: Seviye ne olursa olsun her zaman 6 satırla başla (Adil zorluk)
+    let fillRows = 6; 
+    
     for (let r = 0; r < ROWS; r++) {
         grid[r] = [];
         for (let c = 0; c < COLS; c++) {
@@ -143,7 +147,6 @@ function burstEffect(x, y, color) {
 function drawBubble(x, y, color, scale = 1, isFired = false, isBomb = false) {
     if (scale <= 0) return;
     ctx.save(); ctx.translate(x, y); ctx.scale(scale, scale);
-    
     if(isBomb) {
         ctx.shadowBlur = 25; ctx.shadowColor = "#ffcc00";
         let grad = ctx.createRadialGradient(0, 0, 0, 0, 0, ballRadius);
@@ -161,8 +164,6 @@ function drawBubble(x, y, color, scale = 1, isFired = false, isBomb = false) {
 
 function loop() {
     ctx.clearRect(0, 0, width, height);
-    
-    // Tehlike Hattı
     ctx.setLineDash([8, 8]); ctx.strokeStyle = "rgba(255, 30, 86, 0.4)";
     ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(0, height * 0.82); ctx.lineTo(width, height * 0.82); ctx.stroke();
@@ -194,7 +195,6 @@ function loop() {
             checkCollision();
             drawBubble(currentBubble.x, currentBubble.y, currentBubble.color, 1, true, currentBubble.isBomb);
         } else if (!isProcessing) {
-            // Nişan çizgisi
             ctx.beginPath(); ctx.strokeStyle = "rgba(0, 255, 136, 0.2)"; ctx.setLineDash([5, 5]);
             ctx.moveTo(currentBubble.x, currentBubble.y);
             ctx.lineTo(currentBubble.x + Math.cos(angle) * 100, currentBubble.y + Math.sin(angle) * 100);
@@ -203,7 +203,6 @@ function loop() {
         }
     }
 
-    // Efektler
     for (let i = effects.length - 1; i >= 0; i--) {
         let e = effects[i];
         ctx.save(); ctx.globalAlpha = e.life;
@@ -212,7 +211,6 @@ function loop() {
         ctx.restore();
         e.life -= 0.08; if (e.life <= 0) effects.splice(i, 1);
     }
-
     animationId = requestAnimationFrame(loop);
 }
 
@@ -261,13 +259,10 @@ function snap() {
             }
         }
     }
-    
     currentBubble.active = false;
     handleFloating();
-
     let lost = false;
     for(let r=0; r<ROWS; r++) for(let c=0; c<COLS; c++) if(grid[r][c] && grid[r][c].active && grid[r][c].gravity === 0 && getPos(r,c).y > height * 0.82) lost = true;
-    
     if (lost) { document.getElementById('gameover').style.display = 'flex'; }
     else { updateUI(); spawnNext(); isProcessing = false; }
 }
@@ -353,7 +348,6 @@ canvas.addEventListener("touchstart", (e) => { e.preventDefault(); handleInput(e
 canvas.addEventListener("touchend", (e) => { e.preventDefault(); handleFire(); }, {passive: false});
 canvas.addEventListener("mousemove", handleInput);
 canvas.addEventListener("mousedown", handleFire);
-
 window.addEventListener('resize', resize);
 window.onload = () => { resize(); requestAnimationFrame(loop); };
 </script>
