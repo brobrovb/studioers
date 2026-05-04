@@ -16,7 +16,12 @@ Bu süreçte odaklandığım temel alanlar şunlardır:
 *   **No-Code Mühendisliği**: Kod yazmadan, karmaşık API entegrasyonları ve iş akışları oluşturmak.
 *   **Dijital Varlık Yönetimi**: Etsy, Gumroad ve Shopier gibi platformlar üzerinden pasif gelir modelleri kurgulamak.
 *   **Android Geliştirme**: Modern teknolojilerle (Jetpack Compose) mobil çözümler üretmek.
-*   <div class="post-inline-content">
+  
+
+### Mobil Yaşam ve Üretkenlik
+
+Karavanda bir Kangal (Joker) ile yaşamak ve aynı zamanda yazılım projelerini yönetmek, disiplinli bir planlama gerektiriyor. Enerji yönetiminden internet erişimine kadar her detay, aslında bir mühendislik problemi. Studioers'ta sadece teknik konuları değil, bu yaşam tarzının getirdiği çözüm arayışlarını da paylaşacağım.
+<div class="post-inline-content">
   <img src="/images/joker.jpg" class="post-inline-img" alt="Joker">
   <div class="post-inline-text">
     Kanka buraya istediğin açıklamayı yazabilirsin. 
@@ -24,11 +29,6 @@ Bu süreçte odaklandığım temel alanlar şunlardır:
     Mobilde ise otomatik olarak resim üste, yazı alta gelecek şekilde düzelir.
   </div>
 </div>
-
-### Mobil Yaşam ve Üretkenlik
-
-Karavanda bir Kangal (Joker) ile yaşamak ve aynı zamanda yazılım projelerini yönetmek, disiplinli bir planlama gerektiriyor. Enerji yönetiminden internet erişimine kadar her detay, aslında bir mühendislik problemi. Studioers'ta sadece teknik konuları değil, bu yaşam tarzının getirdiği çözüm arayışlarını da paylaşacağım.
-
 ### Gelecek Planları
 
 Önümüzdeki süreçte, n8n ile kurduğum otomasyon şablonlarını, Android dünyasındaki güncel gelişmeleri ve dijital pazaryerlerindeki tecrübelerimi detaylı rehberler halinde burada bulabileceksiniz.
