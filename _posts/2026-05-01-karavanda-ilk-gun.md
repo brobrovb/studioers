@@ -10,7 +10,7 @@ Studioers platformunun ilk yazısıyla merhaba. Bu platform, kısıtlı fiziksel
 ### Dijital Gelir Modelleri ve Otomasyon
 
 Modern dünyada "dijital servet" (Digital Wealth) oluşturmanın anahtarı, zamanı kaldıraç olarak kullanabilmektir. Karavan hayatının getirdiği enerji ve alan kısıtlılığı, beni süreçleri optimize etmeye ve otomatize etmeye yöneltti. Özellikle **n8n** gibi no-code araçlarını kullanarak, manuel iş yükünü minimuma indiren iş akışları geliştiriyorum.
-
+{% include post-img.html src="/images/joker.jpg" alt="Joker" text="Kanka buraya Joker hakkında istediğin açıklamayı yazabilirsin." %}
 Bu süreçte odaklandığım temel alanlar şunlardır:
 
 *   **No-Code Mühendisliği**: Kod yazmadan, karmaşık API entegrasyonları ve iş akışları oluşturmak.
