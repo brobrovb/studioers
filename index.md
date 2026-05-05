@@ -40,10 +40,20 @@ title: Studioers
 *   **VaultGen:** 1 ile 16 karakter arası güvenli şifreler üreten hızlı masaüstü aracım. [🔐 VaultGen'i İndir (v1.0)](/assets/downloads/vault_gen.zip)
 *   **Studioers SEO Tool:** İçeriklerini Google dostu hale getiren yardımcı analiz aracım. [🔐 Seo Aracını İndir (v1.0)](https://drive.google.com/file/d/1B6hPYBcb8I71EPARbGAjiaHz9tV5wXdi/view?usp=sharing)
 *   **Online Favicon Converter:** Resimlerinizi saniyeler içinde .ico formatına çevirin. [🔐 Tıklayın](https://studioers.xyz/ico-converter)
-*   <div class="post-inline-content">
-  <img src="/images/studio-blast.png" class="post-inline-img" alt="Joker">
-  <div class="post-inline-text">
-    Studioers'in ürettiği balon patlatma oyununu deneyin.**StudioBlast:** Balon patlatma oyunu [🔐 Tıklayın](https://studioers.xyz/studioblast/)
+*   <!-- StudioBlast Tanıtım Alanı -->
+<div class="post-inline-content" style="display: flex; align-items: center; background: #f0f7ff; border-radius: 18px; padding: 15px; margin: 20px 0; border: 1px solid #d0e7ff;">
+  <img src="/images/watermarked_img_3276106234341497684.png" 
+       class="post-inline-img" 
+       alt="Studio Blast Oyun Logosu" 
+       style="width: 120px; height: auto; border-radius: 12px; margin-right: 15px;">
+  
+  <div class="post-inline-text" style="flex: 1;">
+    <h3 style="margin-top: 0; color: #1565c0;">Studio Blast Yayında!</h3>
+    <p style="margin-bottom: 10px;">Studioers tarafından geliştirilen, yüksek enerjili balon patlatma deneyimini hemen keşfedin.</p>
+    <a href="https://studioers.xyz/studioblast/" 
+       style="display: inline-block; background: #1976d2; color: white; padding: 8px 16px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 0.9em;">
+       🎮 Hemen Oyna
+    </a>
   </div>
 </div>
 
