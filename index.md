@@ -40,9 +40,9 @@ title: Studioers
 *   **VaultGen:** 1 ile 16 karakter arası güvenli şifreler üreten hızlı masaüstü aracım. [🔐 VaultGen'i İndir (v1.0)](/assets/downloads/vault_gen.zip)
 *   **Studioers SEO Tool:** İçeriklerini Google dostu hale getiren yardımcı analiz aracım. [🔐 Seo Aracını İndir (v1.0)](https://drive.google.com/file/d/1B6hPYBcb8I71EPARbGAjiaHz9tV5wXdi/view?usp=sharing)
 *   **Online Favicon Converter:** Resimlerinizi saniyeler içinde .ico formatına çevirin. [🔐 Tıklayın](https://studioers.xyz/ico-converter)
-*   <!-- StudioBlast Tanıtım Alanı -->
+   --- <!-- StudioBlast Tanıtım Alanı -->
 <div class="post-inline-content" style="display: flex; align-items: center; background: #f0f7ff; border-radius: 18px; padding: 15px; margin: 20px 0; border: 1px solid #d0e7ff;">
-  <img src="/images/watermarked_img_3276106234341497684.png" 
+  <img src="/images/studio-blast.png" 
        class="post-inline-img" 
        alt="Studio Blast Oyun Logosu" 
        style="width: 120px; height: auto; border-radius: 12px; margin-right: 15px;">
