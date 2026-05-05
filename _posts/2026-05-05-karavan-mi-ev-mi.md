@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Karavan mı Ev mi 2026: Hangisi Daha Mantıklı? Gerçek Bir Karşılaştırma"
-date: 2026-05-09
+date: 2026-05-05
 categories: [karavan-hayati, dijital-gocebe, karsilastirma]
 ---
 
