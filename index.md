@@ -2,7 +2,7 @@
 layout: home
 title: Studioers
 ---
-
+<meta name="google-adsense-account" content="ca-pub-9126387581914302">
 <div style="display: block; overflow: hidden; margin-bottom: 20px;">
   <img src="/images/joker.jpg" style="width: 150px; height: 150px; float: left; margin-right: 20px; border-radius: 15px; border: 3px solid #bbdefb; object-fit: cover;">
   
