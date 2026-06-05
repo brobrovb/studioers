@@ -42,6 +42,7 @@ exclude:
   - admin/
   - node_modules/
   - vendor/
+  - backup/
 
 # Stil SCSS'i okuması için ayarlar
 sass:
