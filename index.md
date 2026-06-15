@@ -3,69 +3,94 @@ layout: home
 title: Studioers
 ---
 <meta name="google-adsense-account" content="ca-pub-9126387581914302">
-<div style="display: block; overflow: hidden; margin-bottom: 20px;">
-  <img src="/images/joker.jpg" style="width: 150px; height: 150px; float: left; margin-right: 20px; border-radius: 15px; border: 3px solid #bbdefb; object-fit: cover;">
-  
-  <h2 style="margin-top: 0; color: #1565c0;">Studioers'a Hoş Geldin! 🚐💻</h2>
-  <p>Selam! Ben bir yazılım geliştirici ve dijital içerik üreticisiyim. İki yıldır 1999 model <strong>Iveco M23</strong> karavanımızda, eşim ve sadık dostum <strong>Joker</strong> ile birlikte yaşıyor ve üretiyorum.</p>
-  <p>Bu platform; no-code araçlarıyla (n8n, vb.) nasıl otomasyonlar geliştirilebileceğini ve dijital varlıklarla nasıl gelir elde edilebileceğini gösteren bir yol haritasıdır.</p>
-</div>
 
-<div style="clear: both;"></div>
-
----
-
-### 🛠️ Nelerle Uğraşıyorum?
-
-*   **Android Geliştirme:** Jetpack Compose ve modern API'ler ile mobil uygulama dünyasındayım.
-*   **No-Code & Otomasyon:** n8n ve diğer araçlarla "çalışırken uyumayı" sağlayan sistemler kuruyorum.
-*   **Dijital Varlıklar:** Etsy, Gumroad ve Shopier üzerinden dijital ürünlerimizi yönetiyorum.
-*   **Karavan Yaşamı:** 15 metrekarede yazılım geliştirmek ve Joker ile maceralarımız.
-
----
-
-<div style="display: block; overflow: hidden; margin-bottom: 20px;">
-  <a href="https://studioers.xyz/ai-art/">
-    <img src="/images/studioers-ai.png" style="width: 150px; height: 150px; float: left; margin-right: 20px; border-radius: 15px; border: 3px solid #bbdefb; object-fit: cover;">
-  </a>
-  <h2 style="margin-top: 25px;">
-    <a href="https://studioers.xyz/ai-art/" style="text-decoration: none; color: #1565c0;">Yapay Zekayla Ücretsiz Resim Oluştur 🎨</a>
-  </h2>
-  <p>Yaratıcılığını konuştur</p>
-</div>
-
----
-
-### 🎁 Ücretsiz Araçlar
-*   **VaultGen:** 1 ile 16 karakter arası güvenli şifreler üreten hızlı masaüstü aracım. [🔐 VaultGen'i İndir (v1.0)](/assets/downloads/vault_gen.zip)
-*   **Studioers SEO Tool:** İçeriklerini Google dostu hale getiren yardımcı analiz aracım. [🔐 Seo Aracını İndir (v1.0)](https://drive.google.com/file/d/1B6hPYBcb8I71EPARbGAjiaHz9tV5wXdi/view?usp=sharing)
-*   **Online Favicon Converter:** Resimlerinizi saniyeler içinde .ico formatına çevirin. [🔐 Tıklayın](https://studioers.xyz/ico-converter)
-   --- <!-- StudioBlast Tanıtım Alanı -->
-<div class="post-inline-content" style="display: flex; align-items: center; background: #f0f7ff; border-radius: 18px; padding: 15px; margin: 20px 0; border: 1px solid #d0e7ff;">
-  <img src="/images/studio-blast.png" 
-       class="post-inline-img" 
-       alt="Studio Blast Oyun Logosu" 
-       style="width: 120px; height: auto; border-radius: 12px; margin-right: 15px;">
-  
-  <div class="post-inline-text" style="flex: 1;">
-    <h3 style="margin-top: 0; color: #1565c0;">Studio Blast Yayında!</h3>
-    <p style="margin-bottom: 10px;">Studioers tarafından geliştirilen, yüksek enerjili balon patlatma deneyimini hemen keşfedin.</p>
-    <a href="https://studioers.xyz/studioblast/" 
-       style="display: inline-block; background: #1976d2; color: white; padding: 8px 16px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 0.9em;">
-       🎮 Hemen Oyna
-    </a>
-  </div>
-</div>
-
---- 
-<hr>
-
-<div class="about-card-samimi" style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; background: #ffffff; padding: 20px; border-radius: 18px; border: 1px solid #bbdefb; margin-top: 30px;">
-  <img src="/images/joker.jpg" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid #64b5f6; object-fit: cover;">
-  <div style="flex: 1; min-width: 250px;">
-    <h3 style="margin: 0 0 10px 0; color: #1565c0;">Hakkımda... 🎸</h3>
-    <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">
-      Karavanda yaşamın getirdiği o özgürlükle, çeşitli müzik ve Android projelerimi geliştiriyorum. Eşimle ve kangal köpeğimizle 30 metreküplük <strong>Iveco M23</strong>'ün içinde rahatça üretiyor, sınırsız internetimle dijital dünyayı karavana sığdırıyorum.
+<!-- GİRİŞ ALANI (KAHRAMAN BÖLÜMÜ) -->
+<div style="display: flex; align-items: center; gap: 25px; margin-bottom: 40px; background: #fafcff; padding: 25px; border-radius: 20px; border: 1px solid #e3f2fd; flex-wrap: wrap;">
+  <img src="/images/joker.jpg" style="width: 140px; height: 140px; border-radius: 50%; border: 4px solid #bbdefb; object-fit: cover;">
+  <div style="flex: 1; min-width: 280px;">
+    <h1 style="margin: 0 0 10px 0; color: #1565c0; font-family: 'Quicksand', sans-serif; font-size: 1.85em;">Studioers'a Hoş Geldin! 🚐💻</h1>
+    <p style="margin: 0; line-height: 1.6; font-size: 1.05em; color: #333;">
+      Selam! Ben bir yazılım geliştirici ve dijital içerik üreticisiyim. İki yıldır 1999 model <strong>Iveco M23</strong> karavanımızda, eşim ve sadık dostum <strong>Joker</strong> ile birlikte yaşıyor, 30 yıllık gitar tutkumla ve kodlarımla bu dijital stüdyoda üretiyorum.
     </p>
   </div>
+</div>
+
+---
+
+<!-- PROJELER VE ARAÇLAR GRİD SİSTEMİ (MODERN KARTLAR) -->
+<h2 style="color: #1565c0; text-align: center; margin-bottom: 25px; font-family: 'Quicksand', sans-serif;">🚀 Stüdyo Projeleri & Araçlar</h2>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px;">
+
+  <!-- KART 1: STUDIO BLAST OYUNU -->
+  <div style="background: #f0f7ff; border: 1px solid #d0e7ff; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 10px rgba(25, 118, 210, 0.03);">
+    <div>
+      <div style="text-align: center; margin-bottom: 15px;">
+        <img src="/images/studio-blast.png" alt="Studio Blast" style="width: 90px; height: auto; border-radius: 12px;">
+      </div>
+      <h3 style="margin: 0 0 10px 0; color: #1565c0; text-align: center;">Studio Blast</h3>
+      <p style="margin: 0; font-size: 0.95em; color: #555; line-height: 1.5; text-align: center;">Studioers tarafından geliştirilen, yüksek enerjili ve rengârenk balon patlatma oyunu deneyimi!</p>
+    </div>
+    <div style="text-align: center; margin-top: 15px;">
+      <a href="https://studioers.xyz/studioblast/" style="display: inline-block; background: #1976d2; color: white; padding: 8px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9em;">🎮 Hemen Oyna</a>
+    </div>
+  </div>
+
+  <!-- KART 2: YAPAY ZEKÂ RESİM -->
+  <div style="background: #ffffff; border: 1px solid #e3f2fd; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
+    <div>
+      <div style="text-align: center; margin-bottom: 15px;">
+        <img src="/images/studioers-ai.png" alt="AI Art" style="width: 90px; height: 90px; border-radius: 12px; object-fit: cover;">
+      </div>
+      <h3 style="margin: 0 0 10px 0; color: #1565c0; text-align: center;">AI Art Studio</h3>
+      <p style="margin: 0; font-size: 0.95em; color: #555; line-height: 1.5; text-align: center;">Hayal gücünü kelimelere dök. Yapay zekâ altyapımızla tamamen ücretsiz resimler üret.</p>
+    </div>
+    <div style="text-align: center; margin-top: 15px;">
+      <a href="https://studioers.xyz/ai-art/" style="display: inline-block; background: #1565c0; color: white; padding: 8px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9em;">🎨 Resim Oluştur</a>
+    </div>
+  </div>
+
+  <!-- KART 3: SEO ARACI -->
+  <div style="background: #ffffff; border: 1px solid #e3f2fd; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
+    <div>
+      <div style="text-align: center; font-size: 2.5em; margin-bottom: 10px;">📈</div>
+      <h3 style="margin: 0 0 10px 0; color: #1565c0; text-align: center;">Studioers SEO Tool</h3>
+      <p style="margin: 0; font-size: 0.95em; color: #555; line-height: 1.5; text-align: center;">Dijital içeriklerini ve web siteni Google botlarının en seveceği şekilde analiz et ve optimize et.</p>
+    </div>
+    <div style="text-align: center; margin-top: 15px;">
+      <a href="https://drive.google.com/file/d/1B6hPYBcb8I71EPARbGAjiaHz9tV5wXdi/view?usp=sharing" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: #fff; color: #1565c0; padding: 7px 18px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9em; border: 1px solid #1565c0;">🔐 Aracı İndir</a>
+    </div>
+  </div>
+
+  <!-- KART 4: VAULTGEN -->
+  <div style="background: #ffffff; border: 1px solid #e3f2fd; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
+    <div>
+      <div style="text-align: center; font-size: 2.5em; margin-bottom: 10px;">🔑</div>
+      <h3 style="margin: 0 0 10px 0; color: #1565c0; text-align: center;">VaultGen Şifreleyici</h3>
+      <p style="margin: 0; font-size: 0.95em; color: #555; line-height: 1.5; text-align: center;">Projelerin ve hesapların için 1 ila 16 karakter arasında, kırılması imkansız güvenli şifreler üret.</p>
+    </div>
+    <div style="text-align: center; margin-top: 15px;">
+      <a href="/assets/downloads/vault_gen.zip" style="display: inline-block; background: #fff; color: #1565c0; padding: 7px 18px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9em; border: 1px solid #1565c0;">💾 VaultGen İndir</a>
+    </div>
+  </div>
+
+  <!-- KART 5: FAVICON CONVERTER -->
+  <div style="background: #ffffff; border: 1px solid #e3f2fd; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
+    <div>
+      <div style="text-align: center; font-size: 2.5em; margin-bottom: 10px;">🖼️</div>
+      <h3 style="margin: 0 0 10px 0; color: #1565c0; text-align: center;">Favicon Converter</h3>
+      <p style="margin: 0; font-size: 0.95em; color: #555; line-height: 1.5; text-align: center;">Web projelerin için görsellerini saniyeler içinde standart .ico formatına dönüştür.</p>
+    </div>
+    <div style="text-align: center; margin-top: 15px;">
+      <a href="https://studioers.xyz/ico-converter" style="display: inline-block; background: #fff; color: #1565c0; padding: 7px 18px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9em; border: 1px solid #1565c0;">⚙️ Dönüştürücüye Git</a>
+    </div>
+  </div>
+
+</div>
+
+---
+
+<!-- KISA ÖZET ALANI -->
+<div style="text-align: center; color: #777; font-size: 0.9em; margin-top: 20px; font-family: 'Quicksand', sans-serif;">
+  <p>Android Geliştirme • No-Code Otomasyonlar • Dijital Varlık Yönetimi • Karavan Teknik Rehberleri</p>
 </div>
