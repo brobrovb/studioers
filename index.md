@@ -3,6 +3,7 @@ layout: home
 title: Studioers
 ---
 <meta name="google-adsense-account" content="ca-pub-9126387581914302">
+<meta name="bitmedia-site-verification" content="e6b41d462bc611f601626c2b6cfb0f5a" />
 
 <!-- GİRİŞ ALANI (KAHRAMAN BÖLÜMÜ) -->
 <div style="display: flex; align-items: center; gap: 25px; margin-bottom: 40px; background: #fafcff; padding: 25px; border-radius: 20px; border: 1px solid #e3f2fd; flex-wrap: wrap;">
