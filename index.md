@@ -3,21 +3,19 @@ layout: default
 title: Free Crypto Arcade
 ---
 
-<!-- RollerCoin Birebir Kart Tasarımı CSS Ayarları -->
 <style>
   html, body, .site-header, .site-footer, .page-content, .wrapper {
-    background-color: #1a1b23 !important; /* RollerCoin'in o tatlı lacivert-gri koyu arka planı */
+    background-color: #1a1b23 !important; /* RollerCoin Lacivert-Gri Arka Plan */
     color: #e2e8f0 !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
 
   .wrapper {
-    max-width: 1100px !important;
+    max-width: 1200px !important;
     box-shadow: none !important;
     border: none !important;
   }
 
-  /* Üst Menü Düzenlemeleri */
   .site-title, .site-title:visited, .site-nav .page-link {
     color: #00f0ff !important;
     font-weight: bold;
@@ -28,7 +26,7 @@ title: Free Crypto Arcade
     padding: 10px 0;
   }
 
-  /* Üst Panel Panosu (Dashboard) */
+  /* Üst Panel Üretim ve Cüzdan Puanları */
   .stats-container { 
     display: flex; 
     gap: 15px; 
@@ -70,15 +68,15 @@ title: Free Crypto Arcade
     color: #ff007a; 
   }
 
-  /* OYUN KARTLARI ALANI (GRID) */
+  /* OYUN KARTLARI MATRİSİ (GRID) */
   .game-grid { 
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 20px; 
     margin-top: 20px;
   }
 
-  /* Screenshot_43.png'deki Birebir Kart Yapısı */
+  /* RollerCoin Birebir Kart Yapısı */
   .rc-game-card {
     background: #242632;
     border: 1px solid #2f3245;
@@ -88,76 +86,83 @@ title: Free Crypto Arcade
     gap: 15px;
     align-items: center;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease;
   }
 
-  /* Sol taraftaki Oyun Görsel Kutusu */
+  .rc-game-card:hover {
+    transform: translateY(-2px);
+    border-color: #3e425b;
+  }
+
+  /* Sol taraftaki Oyun Logosu (Harika Büyük Emojilerle) */
   .rc-game-image {
-    width: 90px;
-    height: 90px;
+    width: 85px;
+    height: 85px;
     background: #13141c;
-    border-radius: 6px;
+    border-radius: 8px;
     border: 1px solid #2f3245;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 36px;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    font-size: 38px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
   }
 
-  /* Sağ taraftaki Detay Alanı */
+  /* Sağ detaylar */
   .rc-game-details {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
   }
 
   .rc-game-name {
     margin: 0;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     color: #ffffff;
+    letter-spacing: 0.5px;
   }
 
-  /* Zorluk Derecesi (Difficulty Bar) */
   .rc-difficulty-label {
     font-size: 11px;
     color: #00f0ff;
     margin: 0;
+    text-transform: uppercase;
   }
   
   .rc-difficulty-bar {
     display: flex;
     gap: 3px;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
   }
 
   .rc-dot {
-    width: 12px;
+    width: 10px;
     height: 4px;
     background: #3a3f58;
     border-radius: 1px;
   }
 
   .rc-dot.active {
-    background: #ff007a; /* Ekrandaki pembe zorluk çizgisi */
-    box-shadow: 0 0 5px #ff007a;
+    background: #ff007a;
+    box-shadow: 0 0 4px #ff007a;
   }
 
-  /* Screenshot_43.png'deki O ŞIK 3D START BUTONU */
+  /* 3D START BUTONLARI */
   .rc-start-btn {
     background: #00e5ff;
     color: #000000;
     border: none;
-    padding: 8px 0;
+    padding: 7px 0;
     border-radius: 6px;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 12px;
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 4px 0 #00a8bc; /* Alt taraftaki koyu gölge 3D hissi veriyor */
+    letter-spacing: 0.5px;
+    box-shadow: 0 3px 0 #00a8bc;
     transition: all 0.1s ease;
     display: block;
     width: 100%;
@@ -165,10 +170,10 @@ title: Free Crypto Arcade
 
   .rc-start-btn:active {
     transform: translateY(3px);
-    box-shadow: 0 1px 0 #00a8bc; /* Basılınca çökme efekti */
+    box-shadow: 0 1px 0 #00a8bc;
   }
 
-  /* Saatlik Musluk Alanı */
+  /* Enerji Yenileme Havuzu */
   .faucet-section { 
     margin: 40px 0; 
     padding: 25px; 
@@ -206,9 +211,8 @@ title: Free Crypto Arcade
 
 <div class="arcade-body">
 
-<h1 style="text-align:center; font-size: 26px; color: #ffffff; letter-spacing: 1px; margin-bottom: 25px;">🎮 STUDIOERS VIRTUAL STATION</h1>
+<h1 style="text-align:center; font-size: 24px; color: #ffffff; letter-spacing: 1px; margin-bottom: 25px;">🎮 STUDIOERS ARCADE STATION</h1>
 
-<!-- GÖSTERGELER (DASHBOARD) -->
 <div class="stats-container">
   <div class="stat-card">
     <h5>Your Mining Power</h5>
@@ -224,16 +228,14 @@ title: Free Crypto Arcade
   </div>
 </div>
 
-<h3 style="border-bottom: 1px solid #2f3245; padding-bottom: 10px; color: #94a3b8;">🕹️ Arcade Simulations</h3>
+<h3 style="border-bottom: 1px solid #2f3245; padding-bottom: 10px; color: #94a3b8; font-size: 16px; text-transform: uppercase;">🕹️ Select Simulation Simulation</h3>
 
-<!-- ROLLERCOIN BİREBİR KART IZGARASI -->
 <div class="game-grid">
 
-  <!-- KART 1: CRYPTO MATCHER (Geliştirdiğimiz Oyun) -->
   <div class="rc-game-card">
-    <div class="rc-game-image">⚡</div>
+    <div class="rc-game-image" style="text-shadow: 0 0 10px #00f0ff;">⚡</div>
     <div class="rc-game-details">
-      <h4 class="rc-game-name">Crypto-match</h4>
+      <h4 class="rc-game-name">Coin-match</h4>
       <p class="rc-difficulty-label">difficulty: 3</p>
       <div class="rc-difficulty-bar">
         <div class="rc-dot active"></div>
@@ -248,9 +250,8 @@ title: Free Crypto Arcade
     </div>
   </div>
 
-  <!-- KART 2: PROTETRIS WEB (Sıradaki Oyun) -->
   <div class="rc-game-card">
-    <div class="rc-game-image">🧩</div>
+    <div class="rc-game-image" style="text-shadow: 0 0 10px #ff007a;">🧩</div>
     <div class="rc-game-details">
       <h4 class="rc-game-name">Protetris</h4>
       <p class="rc-difficulty-label">difficulty: 5</p>
@@ -263,13 +264,120 @@ title: Free Crypto Arcade
         <div class="rc-dot"></div>
         <div class="rc-dot"></div>
       </div>
-      <a href="#" class="rc-start-btn" style="background:#ff007a; box-shadow: 0 4px 0 #b00052; color:white;">🏁 START</a>
+      <a href="#" class="rc-start-btn" style="background:#ff007a; box-shadow: 0 3px 0 #b00052; color:white;">🏁 START</a>
+    </div>
+  </div>
+
+  <div class="rc-game-card">
+    <div class="rc-game-image">🚀</div>
+    <div class="rc-game-details">
+      <h4 class="rc-game-name">Token Blaster</h4>
+      <p class="rc-difficulty-label">difficulty: 4</p>
+      <div class="rc-difficulty-bar">
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+      </div>
+      <a href="#" class="rc-start-btn">🏁 START</a>
+    </div>
+  </div>
+
+  <div class="rc-game-card">
+    <div class="rc-game-image">🐹</div>
+    <div class="rc-game-details">
+      <h4 class="rc-game-name">Hamster Surfer</h4>
+      <p class="rc-difficulty-label">difficulty: 2</p>
+      <div class="rc-difficulty-bar">
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+      </div>
+      <a href="#" class="rc-start-btn">🏁 START</a>
+    </div>
+  </div>
+
+  <div class="rc-game-card">
+    <div class="rc-game-image">🎣</div>
+    <div class="rc-game-details">
+      <h4 class="rc-game-name">Coin Fisher</h4>
+      <p class="rc-difficulty-label">difficulty: 6</p>
+      <div class="rc-difficulty-bar">
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot"></div>
+      </div>
+      <a href="#" class="rc-start-btn">🏁 START</a>
+    </div>
+  </div>
+
+  <div class="rc-game-card">
+    <div class="rc-game-image">🐦</div>
+    <div class="rc-game-details">
+      <h4 class="rc-game-name">Flappy Rocket</h4>
+      <p class="rc-difficulty-label">difficulty: 7</p>
+      <div class="rc-difficulty-bar">
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+      </div>
+      <a href="#" class="rc-start-btn">🏁 START</a>
+    </div>
+  </div>
+
+  <div class="rc-game-card">
+    <div class="rc-game-image">🧱</div>
+    <div class="rc-game-details">
+      <h4 class="rc-game-name">Block Blocker</h4>
+      <p class="rc-difficulty-label">difficulty: 1</p>
+      <div class="rc-difficulty-bar">
+        <div class="rc-dot active"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+      </div>
+      <a href="#" class="rc-start-btn">🏁 START</a>
+    </div>
+  </div>
+
+  <div class="rc-game-card">
+    <div class="rc-game-image">🔢</div>
+    <div class="rc-game-details">
+      <h4 class="rc-game-name">Crypto 2048</h4>
+      <p class="rc-difficulty-label">difficulty: 4</p>
+      <div class="rc-difficulty-bar">
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+      </div>
+      <a href="#" class="rc-start-btn">🏁 START</a>
     </div>
   </div>
 
 </div>
 
-<!-- SAATLİK MUSLUK ALANI -->
 <div class="faucet-section">
   <h3 style="margin-top:0; color:#ff007a;">🎁 Hourly Energy Refill</h3>
   <p style="color:#94a3b8; font-size:14px; margin-bottom:15px;">Claim an instant +5.00 points bonus directly to your wallet allocation.</p>
