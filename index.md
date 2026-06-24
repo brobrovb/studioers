@@ -69,7 +69,7 @@ title: Free Crypto Arcade
 
   <div class="auth-bar">
     <div id="authUser" class="user-info">
-      <span style="color: #94a3b8; font-size: 14px;">Yükleniyor...</span>
+      <span style="color: #94a3b8; font-size: 14px;">Kontrol ediliyor...</span>
     </div>
     <button id="authBtn" class="auth-btn">Google ile Giriş Yap</button>
   </div>
@@ -144,7 +144,7 @@ title: Free Crypto Arcade
       <div class="rc-game-details">
         <h4 class="rc-game-name">Flappy Rocket</h4>
         <p class="rc-difficulty-label">difficulty: 7</p>
-        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div></div>
+        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot"></div></div>
         <a href="#" class="rc-start-btn">🏁 START</a>
       </div>
     </div>
@@ -177,8 +177,9 @@ title: Free Crypto Arcade
 </div>
 
 <script type="module">
+  // Modüler Firebase v10 paketlerini import ediyoruz
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getAuth, signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, doc, onSnapshot, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -191,10 +192,14 @@ title: Free Crypto Arcade
     measurementId: "G-0HYW1H5FV2"
   };
 
+  // Firebase Başlatılıyor
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
   const provider = new GoogleAuthProvider();
+
+  // Tarayıcının popup'ı engellemesini önlemek için custom ayar
+  provider.setCustomParameters({ prompt: 'select_account' });
 
   let currentUser = null;
 
@@ -203,25 +208,15 @@ title: Free Crypto Arcade
   const userPowerText = document.getElementById('userPower');
   const userBalanceText = document.getElementById('userBalance');
 
-  authBtn.addEventListener('click', () => {
-    if (!currentUser) {
-      signInWithRedirect(auth, provider);
-    } else {
-      signOut(auth).catch(err => console.error(err));
-    }
-  });
-
-  getRedirectResult(auth)
-    .then((result) => { if (result?.user) { console.log("Giriş yapıldı:", result.user); } })
-    .catch((error) => { console.error("Redirect hatası:", error); });
-
+  // Kullanıcı Durum Dinleyicisi
   onAuthStateChanged(auth, (user) => {
     if (user) {
       currentUser = user;
       authBtn.innerText = "Çıkış Yap";
       authBtn.classList.add('logout-btn');
-      authUserDiv.innerHTML = `<img src="${user.photoURL}" class="user-avatar"> <span>${user.displayName}</span>`;
+      authUserDiv.innerHTML = `<img src="${user.photoURL}" class="user-avatar" alt="avatar"> <span>${user.displayName}</span>`;
       
+      // Buluttan veriyi gerçek zamanlı çekme
       const userRef = doc(db, "users", user.uid);
       onSnapshot(userRef, (snapshot) => {
         if (snapshot.exists()) {
@@ -229,8 +224,11 @@ title: Free Crypto Arcade
           userPowerText.innerText = parseFloat(data.power || 0).toFixed(3) + " Th/s";
           userBalanceText.innerText = parseFloat(data.balance || 0).toFixed(2) + " Points";
         } else {
-          setDoc(userRef, { power: 0, balance: 0 }).catch(err => console.error(err));
+          // Doküman yoksa oluştur
+          setDoc(userRef, { power: 0, balance: 0 }).catch(err => console.error("Kayıt Hatası:", err));
         }
+      }, (error) => {
+        console.error("Firestore Dinleme Hatası:", error);
       });
     } else {
       currentUser = null;
@@ -242,6 +240,27 @@ title: Free Crypto Arcade
     }
   });
 
+  // Butona tıklandığında popup penceresini tetikliyoruz
+  authBtn.addEventListener('click', () => {
+    if (!currentUser) {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          console.log("Başarıyla giriş yapıldı:", result.user);
+        })
+        .catch((error) => {
+          console.error("Giriş Hatası:", error);
+          if (error.code === 'auth/popup-blocked') {
+            alert("Kanka tarayıcın açılır pencereyi engelledi! Lütfen adres çubuğunun sağındaki pop-up engelleyiciden bu siteye izin ver.");
+          } else {
+            alert("Giriş başarısız oldu. Hata: " + error.message);
+          }
+        });
+    } else {
+      signOut(auth).catch(err => console.error("Çıkış Hatası:", err));
+    }
+  });
+
+  // Faucet Buton İşlemi
   document.getElementById('faucetBtn').addEventListener('click', function() {
     if (!currentUser) {
       alert("Lütfen önce Google ile giriş yap kanka!");
@@ -255,6 +274,6 @@ title: Free Crypto Arcade
     }).then(() => {
       document.getElementById('faucetMsg').innerText = "⚡ Core Refilled! +5.00 Points saved.";
       this.disabled = true;
-    }).catch(err => console.error(err));
+    }).catch(err => console.error("Transaction Hatası:", err));
   });
 </script>
