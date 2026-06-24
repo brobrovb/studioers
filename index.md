@@ -3,11 +3,6 @@ layout: default
 title: Free Crypto Arcade
 ---
 
-<!-- Firebase SDK Kütüphaneleri -->
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-
 <style>
   html, body, .site-header, .site-footer, .page-content, .wrapper {
     background-color: #1a1b23 !important;
@@ -72,17 +67,15 @@ title: Free Crypto Arcade
 
 <div class="arcade-body">
 
-  <!-- AUTHENTICATION PANEL -->
   <div class="auth-bar">
     <div id="authUser" class="user-info">
-      <span style="color: #94a3b8; font-size: 14px;">Giriş yapılmadı. Skorlar kaydedilmez!</span>
+      <span style="color: #94a3b8; font-size: 14px;">Yükleniyor...</span>
     </div>
     <button id="authBtn" class="auth-btn">Google ile Giriş Yap</button>
   </div>
 
   <h1 style="text-align:center; font-size: 24px; color: #ffffff; margin-bottom: 25px;">🎮 STUDIOERS ARCADE STATION</h1>
 
-  <!-- DASHBOARD -->
   <div class="stats-container">
     <div class="stat-card">
       <h5>Your Mining Power</h5>
@@ -100,9 +93,7 @@ title: Free Crypto Arcade
 
   <h3 style="border-bottom: 1px solid #2f3245; padding-bottom: 10px; color: #94a3b8; font-size: 16px; text-transform: uppercase;">🕹️ Arcade Lobby</h3>
 
-  <!-- 8 OYUN MATRİSİ -->
   <div class="game-grid">
-    <!-- Coin-match -->
     <div class="rc-game-card">
       <div class="rc-game-image" style="text-shadow: 0 0 10px #00f0ff;">⚡</div>
       <div class="rc-game-details">
@@ -112,7 +103,6 @@ title: Free Crypto Arcade
         <a href="/crypto-matcher" class="rc-start-btn">🏁 START</a>
       </div>
     </div>
-    <!-- Protetris -->
     <div class="rc-game-card">
       <div class="rc-game-image" style="text-shadow: 0 0 10px #ff007a;">🧩</div>
       <div class="rc-game-details">
@@ -122,7 +112,6 @@ title: Free Crypto Arcade
         <a href="#" class="rc-start-btn" style="background:#ff007a; box-shadow: 0 3px 0 #b00052; color:white;">🏁 START</a>
       </div>
     </div>
-    <!-- Token Blaster -->
     <div class="rc-game-card">
       <div class="rc-game-image">🚀</div>
       <div class="rc-game-details">
@@ -132,7 +121,6 @@ title: Free Crypto Arcade
         <a href="#" class="rc-start-btn">🏁 START</a>
       </div>
     </div>
-    <!-- Hamster Surfer -->
     <div class="rc-game-card">
       <div class="rc-game-image">🐹</div>
       <div class="rc-game-details">
@@ -142,7 +130,6 @@ title: Free Crypto Arcade
         <a href="#" class="rc-start-btn">🏁 START</a>
       </div>
     </div>
-    <!-- Coin Fisher -->
     <div class="rc-game-card">
       <div class="rc-game-image">🎣</div>
       <div class="rc-game-details">
@@ -152,7 +139,6 @@ title: Free Crypto Arcade
         <a href="#" class="rc-start-btn">🏁 START</a>
       </div>
     </div>
-    <!-- Flappy Rocket -->
     <div class="rc-game-card">
       <div class="rc-game-image">🐦</div>
       <div class="rc-game-details">
@@ -162,7 +148,6 @@ title: Free Crypto Arcade
         <a href="#" class="rc-start-btn">🏁 START</a>
       </div>
     </div>
-    <!-- Block Blocker -->
     <div class="rc-game-card">
       <div class="rc-game-image">🧱</div>
       <div class="rc-game-details">
@@ -172,7 +157,6 @@ title: Free Crypto Arcade
         <a href="#" class="rc-start-btn">🏁 START</a>
       </div>
     </div>
-    <!-- Crypto 2048 -->
     <div class="rc-game-card">
       <div class="rc-game-image">🔢</div>
       <div class="rc-game-details">
@@ -184,7 +168,6 @@ title: Free Crypto Arcade
     </div>
   </div>
 
-  <!-- FAUCET SECTION -->
   <div class="faucet-section">
     <h3 style="margin-top:0; color:#ff007a;">🎁 Hourly Energy Refill</h3>
     <p style="color:#94a3b8; font-size:14px; margin-bottom:15px;">Claim an instant +5.00 points bonus directly to your wallet allocation.</p>
@@ -193,8 +176,11 @@ title: Free Crypto Arcade
   </div>
 </div>
 
-<script>
-  // Senin Gönderdiğin Firebase Config Bilgileri
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getFirestore, doc, onSnapshot, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
   const firebaseConfig = {
     apiKey: "AIzaSyDi7xosmyNGJELn4KOpe8QEg5tNewkIsEc",
     authDomain: "studioers-arcade.firebaseapp.com",
@@ -205,13 +191,13 @@ title: Free Crypto Arcade
     measurementId: "G-0HYW1H5FV2"
   };
 
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.firestore();
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const provider = new GoogleAuthProvider();
 
   let currentUser = null;
 
-  // Giriş/Çıkış Yönetimi ve UI Güncelleme
   const authBtn = document.getElementById('authBtn');
   const authUserDiv = document.getElementById('authUser');
   const userPowerText = document.getElementById('userPower');
@@ -219,29 +205,31 @@ title: Free Crypto Arcade
 
   authBtn.addEventListener('click', () => {
     if (!currentUser) {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider).catch(err => console.error(err));
+      signInWithRedirect(auth, provider);
     } else {
-      auth.signOut();
+      signOut(auth).catch(err => console.error(err));
     }
   });
 
-  auth.onAuthStateChanged(user => {
+  getRedirectResult(auth)
+    .then((result) => { if (result?.user) { console.log("Giriş yapıldı:", result.user); } })
+    .catch((error) => { console.error("Redirect hatası:", error); });
+
+  onAuthStateChanged(auth, (user) => {
     if (user) {
       currentUser = user;
       authBtn.innerText = "Çıkış Yap";
       authBtn.classList.add('logout-btn');
       authUserDiv.innerHTML = `<img src="${user.photoURL}" class="user-avatar"> <span>${user.displayName}</span>`;
       
-      // Buluttan verileri gerçek zamanlı dinleme (Realtime sync)
-      db.collection("users").doc(user.uid).onSnapshot(doc => {
-        if (doc.exists) {
-          const data = doc.data();
+      const userRef = doc(db, "users", user.uid);
+      onSnapshot(userRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.data();
           userPowerText.innerText = parseFloat(data.power || 0).toFixed(3) + " Th/s";
           userBalanceText.innerText = parseFloat(data.balance || 0).toFixed(2) + " Points";
         } else {
-          // Yeni üye ise Firestore kaydı oluştur
-          db.collection("users").doc(user.uid).set({ power: 0, balance: 0 });
+          setDoc(userRef, { power: 0, balance: 0 }).catch(err => console.error(err));
         }
       });
     } else {
@@ -254,18 +242,16 @@ title: Free Crypto Arcade
     }
   });
 
-  // Faucet Buton İşlemi
   document.getElementById('faucetBtn').addEventListener('click', function() {
     if (!currentUser) {
       alert("Lütfen önce Google ile giriş yap kanka!");
       return;
     }
-    const userRef = db.collection("users").doc(currentUser.uid);
-    db.runTransaction(transaction => {
-      return transaction.get(userRef).then(doc => {
-        let currentBalance = doc.exists ? (doc.data().balance || 0) : 0;
-        transaction.update(userRef, { balance: currentBalance + 5.00 });
-      });
+    const userRef = doc(db, "users", currentUser.uid);
+    runTransaction(db, async (transaction) => {
+      const userDoc = await transaction.get(userRef);
+      let currentBalance = userDoc.exists() ? (userDoc.data().balance || 0) : 0;
+      transaction.update(userRef, { balance: currentBalance + 5.00 });
     }).then(() => {
       document.getElementById('faucetMsg').innerText = "⚡ Core Refilled! +5.00 Points saved.";
       this.disabled = true;
