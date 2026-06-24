@@ -219,7 +219,7 @@ title: Free Crypto Arcade
     <h3 class="game-title" style="color:#00e5ff;">⚡ Crypto_Matcher</h3>
     <p style="font-size:13px; color:#aaa; line-height: 1.6; min-height: 50px;">Match classic crypto coins under a ticking clock. Fast-paced action for quick power boosts.</p>
     <p style="font-size:12px; margin-bottom: 0; color: #00e5ff;">> Reward: Up to +30 Th/s Power</p>
-    <a href="#" class="game-btn" style="border-color:#00e5ff; color:#00e5ff;">INITIALIZE</a>
+    <a href="/crypto-matcher" class="game-btn" style="border-color:#00e5ff; color:#00e5ff;">INITIALIZE</a>
   </div>
 </div>
 
