@@ -3,191 +3,212 @@ layout: default
 title: Free Crypto Arcade
 ---
 
-<!-- Minima Temasının Dış Çerçevesini ve Arka Planını Tamamen Siyah Yapan Ayar -->
+<!-- RollerCoin Birebir Kart Tasarımı CSS Ayarları -->
 <style>
-  /* Sayfanın en dış katmanından en iç katmanına kadar her yeri koyu yapıyoruz */
   html, body, .site-header, .site-footer, .page-content, .wrapper {
-    background-color: #0a0a0a !important;
-    background: #0a0a0a !important;
-    color: #e0e0e0 !important;
+    background-color: #1a1b23 !important; /* RollerCoin'in o tatlı lacivert-gri koyu arka planı */
+    color: #e2e8f0 !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
 
-  /* Screenshot_42.png'deki o sırıtan beyaz-mavi kenarlıkları ve gölgeleri uçuruyoruz */
   .wrapper {
-    max-width: 1000px !important;
+    max-width: 1100px !important;
     box-shadow: none !important;
     border: none !important;
   }
 
-  /* Üst menüdeki başlık ve linklerin renklerini neon yeşili yapıyoruz */
+  /* Üst Menü Düzenlemeleri */
   .site-title, .site-title:visited, .site-nav .page-link {
-    color: #00ff88 !important;
-    font-family: 'Courier New', Courier, monospace;
+    color: #00f0ff !important;
+    font-weight: bold;
+    text-transform: uppercase;
   }
 
-  /* Alt taraftaki Minima çizgisini gizliyoruz */
-  .site-header {
-    border-bottom: 1px solid #1a1a1a !important;
-  }
-  .site-footer {
-    border-top: 1px solid #1a1a1a !important;
-  }
-
-  /* İçerik Alanı Tasarımı */
   .arcade-body { 
-    color: #ffffff; 
-    font-family: 'Courier New', Courier, monospace;
     padding: 10px 0;
   }
 
-  .arcade-title {
-    color: #00ff88;
-    text-shadow: 0 0 10px rgba(0,255,136,0.5);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-top: 20px;
-  }
-
+  /* Üst Panel Panosu (Dashboard) */
   .stats-container { 
     display: flex; 
     gap: 15px; 
     justify-content: space-between; 
-    margin-bottom: 30px; 
+    margin-bottom: 35px; 
     flex-wrap: wrap; 
   }
 
   .stat-card { 
-    background: #121212; 
-    border: 1px solid #222; 
-    border-top: 3px solid #00ff88; 
-    padding: 20px; 
+    background: #242632; 
+    border: 1px solid #2f3245; 
+    border-left: 5px solid #00f0ff; 
+    padding: 15px 20px; 
     border-radius: 6px; 
     flex: 1; 
     min-width: 220px; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
   }
 
   .stat-card h5 { 
     margin: 0; 
-    color: #888; 
+    color: #94a3b8; 
     text-transform: uppercase; 
     font-size: 11px; 
     letter-spacing: 1px; 
   }
 
   .stat-card p { 
-    margin: 8px 0 0 0; 
+    margin: 6px 0 0 0; 
     font-size: 24px; 
     font-weight: bold; 
-    color: #00ff88; 
+    color: #00f0ff; 
   }
 
   .stat-card.balance-card { 
-    border-top-color: #00e5ff; 
+    border-left-color: #ff007a; 
   }
   .stat-card.balance-card p { 
-    color: #00e5ff; 
+    color: #ff007a; 
   }
 
+  /* OYUN KARTLARI ALANI (GRID) */
   .game-grid { 
-    display: flex; 
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 20px; 
-    flex-wrap: wrap; 
-    margin-top: 20px; 
+    margin-top: 20px;
   }
 
-  .game-card { 
-    border: 1px solid #222; 
-    padding: 20px; 
-    border-radius: 8px; 
-    width: 48%; 
-    min-width: 280px;
-    background: #121212; 
-    box-sizing: border-box;
-    transition: all 0.3s ease; 
+  /* Screenshot_43.png'deki Birebir Kart Yapısı */
+  .rc-game-card {
+    background: #242632;
+    border: 1px solid #2f3245;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   }
 
-  .game-card:hover { 
-    transform: translateY(-3px); 
-    border-color: #00ff88; 
-    box-shadow: 0 0 15px rgba(0,255,136,0.2);
+  /* Sol taraftaki Oyun Görsel Kutusu */
+  .rc-game-image {
+    width: 90px;
+    height: 90px;
+    background: #13141c;
+    border-radius: 6px;
+    border: 1px solid #2f3245;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
   }
 
-  .game-title {
-    margin-top:0; 
-    color:#00ff88; 
+  /* Sağ taraftaki Detay Alanı */
+  .rc-game-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .rc-game-name {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  /* Zorluk Derecesi (Difficulty Bar) */
+  .rc-difficulty-label {
+    font-size: 11px;
+    color: #00f0ff;
+    margin: 0;
+  }
+  
+  .rc-difficulty-bar {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 5px;
+  }
+
+  .rc-dot {
+    width: 12px;
+    height: 4px;
+    background: #3a3f58;
+    border-radius: 1px;
+  }
+
+  .rc-dot.active {
+    background: #ff007a; /* Ekrandaki pembe zorluk çizgisi */
+    box-shadow: 0 0 5px #ff007a;
+  }
+
+  /* Screenshot_43.png'deki O ŞIK 3D START BUTONU */
+  .rc-start-btn {
+    background: #00e5ff;
+    color: #000000;
+    border: none;
+    padding: 8px 0;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+    text-align: center;
+    text-decoration: none;
     text-transform: uppercase;
-    font-size: 18px;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 0 #00a8bc; /* Alt taraftaki koyu gölge 3D hissi veriyor */
+    transition: all 0.1s ease;
+    display: block;
+    width: 100%;
   }
 
-  .game-btn { 
-    background: transparent;
-    color: #00ff88; 
-    border: 2px solid #00ff88;
-    padding: 10px 15px; 
-    border-radius: 4px; 
-    text-decoration: none; 
-    display: inline-block; 
-    font-weight: bold; 
-    margin-top: 15px; 
-    text-align: center; 
-    width: 100%; 
-    box-sizing: border-box; 
-    transition: all 0.2s;
-    text-transform: uppercase;
+  .rc-start-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #00a8bc; /* Basılınca çökme efekti */
   }
 
-  .game-btn:hover {
-    background: #00ff88;
-    color: #000;
-  }
-
+  /* Saatlik Musluk Alanı */
   .faucet-section { 
     margin: 40px 0; 
-    padding: 30px; 
-    background: #121212; 
-    border: 2px dashed #00e5ff; 
-    border-radius: 6px; 
+    padding: 25px; 
+    background: #242632; 
+    border: 2px dashed #ff007a; 
+    border-radius: 8px; 
     text-align: center; 
   }
 
   .faucet-btn { 
-    background: transparent; 
-    color: #00e5ff; 
-    border: 2px solid #00e5ff;
+    background: #ff007a; 
+    color: #ffffff; 
+    border: none; 
     padding: 12px 40px; 
-    font-size: 16px; 
-    border-radius: 4px; 
+    font-size: 15px; 
+    border-radius: 6px; 
     cursor: pointer; 
     font-weight: bold; 
     text-transform: uppercase; 
-    transition: all 0.2s;
+    box-shadow: 0 4px 0 #b00052;
   }
 
-  .faucet-btn:hover {
-    background: #00e5ff;
-    color: #000;
+  .faucet-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #b00052;
   }
 
   .faucet-btn:disabled {
-    border-color: #444 !important;
-    color: #888 !important;
+    background: #4e5268 !important;
+    box-shadow: none !important;
     cursor: not-allowed;
+    color: #aaa;
   }
 </style>
 
 <div class="arcade-body">
 
-<h1 class="arcade-title">SYSTEM STATUS: STUDIOERS ARCADE</h1>
+<h1 style="text-align:center; font-size: 26px; color: #ffffff; letter-spacing: 1px; margin-bottom: 25px;">🎮 STUDIOERS VIRTUAL STATION</h1>
 
-<p style="color: #aaa; font-size: 14px; margin-bottom: 30px;">
-  [ONLINE] Play web games. Build Virtual Power. Earn Crypto.
-</p>
-
----
-
-<!-- CANLI GÖSTERGELER -->
+<!-- GÖSTERGELER (DASHBOARD) -->
 <div class="stats-container">
   <div class="stat-card">
     <h5>Your Mining Power</h5>
@@ -198,39 +219,62 @@ title: Free Crypto Arcade
     <p>1,420.85 Ph/s</p>
   </div>
   <div class="stat-card balance-card">
-    <h5>Your Balance</h5>
+    <h5>Your Wallet</h5>
     <p id="userBalance">0.00 Points</p>
   </div>
 </div>
 
----
+<h3 style="border-bottom: 1px solid #2f3245; padding-bottom: 10px; color: #94a3b8;">🕹️ Arcade Simulations</h3>
 
-### 🕹️ Select Simulation
-
+<!-- ROLLERCOIN BİREBİR KART IZGARASI -->
 <div class="game-grid">
-  <div class="game-card">
-    <h3 class="game-title">🧩 Protetris_v1.0</h3>
-    <p style="font-size:13px; color:#aaa; line-height: 1.6; min-height: 50px;">Legendary block puzzle. Stack bricks perfectly, clear lines, and boost your virtual mining power!</p>
-    <p style="font-size:12px; margin-bottom: 0; color: #00ff88;">> Reward: Up to +50 Th/s Power</p>
-    <a href="#" class="game-btn">INITIALIZE</a>
+
+  <!-- KART 1: CRYPTO MATCHER (Geliştirdiğimiz Oyun) -->
+  <div class="rc-game-card">
+    <div class="rc-game-image">⚡</div>
+    <div class="rc-game-details">
+      <h4 class="rc-game-name">Crypto-match</h4>
+      <p class="rc-difficulty-label">difficulty: 3</p>
+      <div class="rc-difficulty-bar">
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+      </div>
+      <a href="/crypto-matcher" class="rc-start-btn">🏁 START</a>
+    </div>
   </div>
 
-  <div class="game-card">
-    <h3 class="game-title" style="color:#00e5ff;">⚡ Crypto_Matcher</h3>
-    <p style="font-size:13px; color:#aaa; line-height: 1.6; min-height: 50px;">Match classic crypto coins under a ticking clock. Fast-paced action for quick power boosts.</p>
-    <p style="font-size:12px; margin-bottom: 0; color: #00e5ff;">> Reward: Up to +30 Th/s Power</p>
-    <a href="/crypto-matcher" class="game-btn" style="border-color:#00e5ff; color:#00e5ff;">INITIALIZE</a>
+  <!-- KART 2: PROTETRIS WEB (Sıradaki Oyun) -->
+  <div class="rc-game-card">
+    <div class="rc-game-image">🧩</div>
+    <div class="rc-game-details">
+      <h4 class="rc-game-name">Protetris</h4>
+      <p class="rc-difficulty-label">difficulty: 5</p>
+      <div class="rc-difficulty-bar">
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot active"></div>
+        <div class="rc-dot"></div>
+        <div class="rc-dot"></div>
+      </div>
+      <a href="#" class="rc-start-btn" style="background:#ff007a; box-shadow: 0 4px 0 #b00052; color:white;">🏁 START</a>
+    </div>
   </div>
+
 </div>
 
----
-
-<!-- MUSLUK ALANI -->
+<!-- SAATLİK MUSLUK ALANI -->
 <div class="faucet-section">
-  <h3 style="margin-top:0; color:#00e5ff;">🎁 Hourly Data Faucet</h3>
-  <p style="color:#aaa; font-size:14px; margin-bottom:20px;">Claim free bonus balance points every 60 minutes instantly.</p>
-  <button id="faucetBtn" class="faucet-btn">CLAIM_POINTS</button>
-  <p id="faucetMsg" style="margin-top: 15px; font-weight: bold; color: #00ff88; min-height: 20px;"></p>
+  <h3 style="margin-top:0; color:#ff007a;">🎁 Hourly Energy Refill</h3>
+  <p style="color:#94a3b8; font-size:14px; margin-bottom:15px;">Claim an instant +5.00 points bonus directly to your wallet allocation.</p>
+  <button id="faucetBtn" class="faucet-btn">CLAIM BONUS</button>
+  <p id="faucetMsg" style="margin-top: 12px; font-weight: bold; color: #00ff88; min-height: 20px;"></p>
 </div>
 
 </div>
@@ -247,8 +291,7 @@ title: Free Crypto Arcade
     localStorage.setItem('balance', balance);
     
     document.getElementById('userBalance').innerText = balance.toFixed(2) + " Points";
-    document.getElementById('faucetMsg').innerText = "> Success! +5.00 Points added to your balance.";
-    
+    document.getElementById('faucetMsg').innerText = "⚡ Core Refilled! +5.00 Points saved.";
     this.disabled = true;
   });
 </script>
