@@ -37,7 +37,7 @@ title: Crypto Matcher Game
     color: #00ff88;
   }
 
-  /* Oyun Kartları Izgarası (Grid) */
+  /* Oyun Kartları Izgarası */
   .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -48,7 +48,7 @@ title: Crypto Matcher Game
 
   /* Her Bir Kartın Yapısı */
   .card {
-    height: 80px;
+    height: 85px;
     background-color: #1a1a1a;
     border: 2px solid #333;
     border-radius: 6px;
@@ -56,9 +56,10 @@ title: Crypto Matcher Game
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 36px; /* Karakterler iyice büyütüldü */
     font-weight: bold;
-    color: transparent;
+    font-family: Arial, sans-serif; /* Gerçek ve net karakterler için standart font */
+    color: transparent; /* Kapalıyken karakter gizli */
     user-select: none;
     transition: all 0.2s ease;
   }
@@ -68,17 +69,22 @@ title: Crypto Matcher Game
     box-shadow: 0 0 8px rgba(0,229,255,0.3);
   }
 
-  /* Kart Açıldığında veya Eşleştiğinde */
-  .card.flipped, .card.matched {
+  /* Kart Tıklanıp Açıldığında */
+  .card.flipped {
     background-color: #222;
-    border-color: #00ff88;
-    color: #00ff88 !important;
-    text-shadow: 0 0 5px #00ff88;
+    border-color: #00e5ff;
+    color: #00e5ff !important; /* Açılınca net mavi karakter görünür */
+    text-shadow: 0 0 5px rgba(0,229,255,0.5);
   }
 
+  /* Kartlar Eşleştiğinde (Karakter silinir, boş kutu kalır) */
   .card.matched {
     background-color: #051a0e;
+    border-color: #00ff88;
+    color: transparent !important; /* İçindeki görüntüyü yok ettik, boş kaldı! */
+    text-shadow: none !important;
     cursor: default;
+    box-shadow: inset 0 0 10px rgba(0,255,136,0.2);
   }
 
   .action-btn {
@@ -111,7 +117,7 @@ title: Crypto Matcher Game
 </style>
 
 <div class="game-container">
-  <h2 class="game-title">⚡ Crypto_Matcher_v1.0</h2>
+  <h2 class="game-title">⚡ Crypto_Matcher_v1.1</h2>
   <p style="color: #aaa; font-size: 13px;">Find all matching crypto assets before the network core overheats!</p>
 
   <div class="game-stats">
@@ -119,12 +125,10 @@ title: Crypto Matcher Game
     <div>SCORE: <span id="score">0</span></div>
   </div>
 
-  <!-- Kartların Dağıtılacağı Alan -->
   <div class="grid" id="gameGrid"></div>
 
   <button class="action-btn" id="startBtn" onclick="startGame()">Initialize Simulation</button>
 
-  <!-- Kazanma Ekranı -->
   <div id="winMessage">
     <h3 style="color: #00ff88; margin-top:0;">🚀 SIMULATION SUCCESSFUL!</h3>
     <p style="font-size: 14px;" id="rewardText"></p>
@@ -132,10 +136,9 @@ title: Crypto Matcher Game
   </div>
 </div>
 
-<!-- OYUN MOTORU (JAVASCRIPT) -->
 <script>
-  // Kripto Para Simgeleri (Daha sonra gerçek ikon resimleriyle de değiştirebiliriz)
-  const cryptoIcons = ['₿', 'Ξ', 'Ð', '₳', '₿', 'Ξ', 'Ð', '₳', '₮', '📳', '₮', '📳'];
+  // Gerçek ve net büyük karakterler (BTC, ETH, DOGE vb. simgeleri)
+  const cryptoIcons = ['BTC', 'ETH', 'LTC', 'SOL', 'TRX', 'BNB', 'BTC', 'ETH', 'LTC', 'SOL', 'TRX', 'BNB'];
   let cardsChosen = [];
   let cardsChosenId = [];
   let cardsWon = [];
@@ -147,12 +150,10 @@ title: Crypto Matcher Game
   const startBtn = document.getElementById('startBtn');
   const winMessage = document.getElementById('winMessage');
 
-  // Kartları Karıştırma Algoritması
   function shuffle(array) {
     return array.sort(() => 0.5 - Math.random());
   }
 
-  // Oyun Tahtasını Oluşturma
   function createBoard() {
     grid.innerHTML = '';
     const shuffledIcons = shuffle([...cryptoIcons]);
@@ -167,7 +168,6 @@ title: Crypto Matcher Game
     }
   }
 
-  // Oyunu Başlatma
   function startGame() {
     if (gameActive) return;
     gameActive = true;
@@ -180,7 +180,6 @@ title: Crypto Matcher Game
     
     createBoard();
     
-    // Geri Sayım Sayacı
     timer = setInterval(function() {
       timeLeft--;
       document.getElementById('timer').innerText = timeLeft;
@@ -192,35 +191,34 @@ title: Crypto Matcher Game
     }, 1000);
   }
 
-  // Kart Seçme/Açma Fonksiyonu
   function flipCard() {
     if (!gameActive) return;
     let cardId = this.getAttribute('data-id');
     
-    // Zaten açılmış veya eşleşmiş karta tekrar tıklanmasın
-    if (cardsChosenId.includes(cardId) || this.classList.contains('matched')) return;
+    if (cardsChosenId.includes(cardId) || this.classList.contains('matched') || this.classList.contains('flipped')) return;
 
     cardsChosen.push(grid.children[cardId].innerText);
     cardsChosenId.push(cardId);
     this.classList.add('flipped');
 
     if (cardsChosen.length === 2) {
-      setTimeout(checkForMatch, 500);
+      setTimeout(checkForMatch, 600); // Oyuncunun karakteri rahat görmesi için süreyi azıcık uzattık
     }
   }
 
-  // Eşleşme Kontrolü
   function checkForMatch() {
     const cards = grid.children;
     const optionOneId = cardsChosenId[0];
     const optionTwoId = cardsChosenId[1];
 
     if (cardsChosen[0] === cardsChosen[1]) {
+      // Eşleşenleri "matched" sınıfına alıyoruz (CSS'te buranın rengini transparent yaptık, yazı silinecek)
+      cards[optionOneId].classList.remove('flipped');
+      cards[optionTwoId].classList.remove('flipped');
       cards[optionOneId].classList.add('matched');
       cards[optionTwoId].classList.add('matched');
       cardsWon.push(cardsChosen);
       
-      // Skoru Güncelle (+10 Puan)
       document.getElementById('score').innerText = cardsWon.length * 10;
     } else {
       cards[optionOneId].classList.remove('flipped');
@@ -230,14 +228,12 @@ title: Crypto Matcher Game
     cardsChosen = [];
     cardsChosenId = [];
 
-    // Tüm Kartlar Eşleşti mi?
     if (cardsWon.length === cryptoIcons.length / 2) {
       clearInterval(timer);
       gameOver(true);
     }
   }
 
-  // Oyun Bitme Senaryosu
   function gameOver(isWin) {
     gameActive = false;
     startBtn.style.display = 'inline-block';
@@ -246,12 +242,11 @@ title: Crypto Matcher Game
     if (isWin) {
       winMessage.style.display = 'block';
       
-      // RollerCoin Mantığı: Sanal Gücü Güncelleme (+30 Th/s)
       let currentPower = localStorage.getItem('power') || 0;
       let newPower = parseFloat(currentPower) + 30.000;
       localStorage.setItem('power', newPower);
       
-      document.getElementById('rewardText').innerText = "+30.000 Th/s Sanal Kazım Gücü cüzdanına başarıyla aktarıldı kanka! Gücün katlanıyor.";
+      document.getElementById('rewardText').innerText = "SUCCESS! +30.000 Th/s virtual mining power has been injected into your terminal.";
     } else {
       alert('💥 Connection Timeout! Core Overheated. Try Again!');
     }
