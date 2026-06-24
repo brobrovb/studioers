@@ -3,30 +3,30 @@ layout: default
 title: Crypto Matcher Game
 ---
 
-<!-- Oyuna Özel Koyu Tema ve Siber CSS Alanı -->
+<!-- Oyuna Özel Gelişmiş RollerCoin Teması -->
 <style>
   html, body, .site-header, .site-footer, .page-content, .wrapper {
-    background-color: #0a0a0a !important;
-    color: #e0e0e0 !important;
-    font-family: 'Courier New', Courier, monospace;
+    background-color: #1a1b23 !important;
+    color: #e2e8f0 !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
 
   .game-container {
     text-align: center;
-    max-width: 600px;
+    max-width: 650px;
     margin: 20px auto;
     padding: 20px;
-    background: #121212;
-    border: 1px solid #00e5ff;
+    background: #242632;
+    border: 1px solid #2f3245;
     border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0,229,255,0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   }
 
   .game-title {
-    color: #00e5ff;
-    text-shadow: 0 0 10px rgba(0,229,255,0.5);
+    color: #00f0ff;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
   }
 
   .game-stats {
@@ -34,91 +34,121 @@ title: Crypto Matcher Game
     justify-content: space-around;
     margin-bottom: 20px;
     font-size: 16px;
-    color: #00ff88;
+    color: #ff007a;
+    font-weight: bold;
   }
 
-  /* Oyun Kartları Izgarası */
+  /* Oyun Matrisi (4x4 Düzen - Screenshot_44.png Esintisi) */
   .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
-    perspective: 1000px;
+    gap: 12px;
+    margin-bottom: 25px;
+    background: #13141c;
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid #2f3245;
   }
 
-  /* Her Bir Kartın Yapısı */
+  /* KARTIN ANA HALİ: Birebir Madenci Fanı Tasarımı (CSS Pixel Art) */
   .card {
-    height: 85px;
-    background-color: #1a1a1a;
-    border: 2px solid #333;
+    height: 100px;
+    background: #2e3142;
+    border: 3px solid #1a1b23;
     border-radius: 6px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 36px; /* Karakterler iyice büyütüldü */
-    font-weight: bold;
-    font-family: Arial, sans-serif; /* Gerçek ve net karakterler için standart font */
-    color: transparent; /* Kapalıyken karakter gizli */
+    position: relative;
     user-select: none;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
   }
 
-  .card:hover {
-    border-color: #00e5ff;
-    box-shadow: 0 0 8px rgba(0,229,255,0.3);
+  /* Kartın İçindeki Dönen Turkuaz Fan Katmanı */
+  .card::before {
+    content: "";
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    background: radial-gradient(circle, #00f0ff 20%, transparent 21%),
+                repeating-conic-gradient(from 0deg, #00f0ff 0deg 30deg, #13141c 30deg 60deg);
+    border-radius: 50%;
+    border: 2px solid #00f0ff;
+    box-shadow: 0 0 8px rgba(0,240,255,0.4);
+    transition: opacity 0.2s ease;
+    opacity: 1; /* Varsayılan olarak fanlar görünüyor */
   }
 
-  /* Kart Tıklanıp Açıldığında */
+  /* KART TIKLANIP AÇILDIĞINDA (FLIPPED) */
   .card.flipped {
-    background-color: #222;
-    border-color: #00e5ff;
-    color: #00e5ff !important; /* Açılınca net mavi karakter görünür */
-    text-shadow: 0 0 5px rgba(0,229,255,0.5);
+    background: #13141c;
+    border-color: #00f0ff;
+  }
+  /* Kart açılınca fan görseli arkaya gizleniyor */
+  .card.flipped::before {
+    opacity: 0;
+  }
+  /* Kart açılınca içindeki Gerçek Kripto Karakteri Devasa ve Net Çıkıyor */
+  .card.flipped::after {
+    content: attr(data-crypto);
+    font-size: 28px;
+    font-weight: 900;
+    color: #00f0ff;
+    font-family: Arial, Helvetica, sans-serif;
+    text-shadow: 0 0 10px rgba(0,240,255,0.6);
   }
 
-  /* Kartlar Eşleştiğinde (Karakter silinir, boş kutu kalır) */
+  /* KARTLAR EŞLEŞTİĞİNDE (MATCHED) -> Görüntü Tamamen Yok Oluyor, Boş Kasa Kalıyor */
   .card.matched {
-    background-color: #051a0e;
-    border-color: #00ff88;
-    color: transparent !important; /* İçindeki görüntüyü yok ettik, boş kaldı! */
-    text-shadow: none !important;
+    background: #0f1015 !important;
+    border: 2px dashed #2f3245 !important;
     cursor: default;
-    box-shadow: inset 0 0 10px rgba(0,255,136,0.2);
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+  }
+  /* Eşleşen kartın fanı tamamen siliniyor */
+  .card.matched::before {
+    display: none !important;
+    opacity: 0 !important;
+  }
+  /* Eşleşen kartın içindeki yazı da tamamen uçuyor, boş kalıyor */
+  .card.matched::after {
+    display: none !important;
+    content: "" !important;
   }
 
   .action-btn {
-    background: transparent;
-    color: #00e5ff;
-    border: 2px solid #00e5ff;
-    padding: 10px 25px;
+    background: #00e5ff;
+    color: #000000;
+    border: none;
+    padding: 10px 30px;
     font-size: 14px;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
     text-transform: uppercase;
-    transition: all 0.2s;
+    box-shadow: 0 4px 0 #00a8bc;
+    transition: all 0.1s;
   }
 
-  .action-btn:hover {
-    background: #00e5ff;
-    color: #000;
-    box-shadow: 0 0 10px #00e5ff;
+  .action-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #00a8bc;
   }
 
   #winMessage {
     display: none;
     margin-top: 20px;
     padding: 15px;
-    border: 1px solid #00ff88;
-    background: #051a0e;
-    border-radius: 4px;
+    border: 1px solid #ff007a;
+    background: #1a1b23;
+    border-radius: 6px;
   }
 </style>
 
 <div class="game-container">
-  <h2 class="game-title">⚡ Crypto_Matcher_v1.1</h2>
-  <p style="color: #aaa; font-size: 13px;">Find all matching crypto assets before the network core overheats!</p>
+  <h2 class="game-title">⚡ COIN-MATCH SIMULATOR</h2>
+  <p style="color: #94a3b8; font-size: 13px; margin-bottom: 20px;">Clear the miner racks before time runs out!</p>
 
   <div class="game-stats">
     <div>TIME: <span id="timer">45</span>s</div>
@@ -127,18 +157,18 @@ title: Crypto Matcher Game
 
   <div class="grid" id="gameGrid"></div>
 
-  <button class="action-btn" id="startBtn" onclick="startGame()">Initialize Simulation</button>
+  <button class="action-btn" id="startBtn" onclick="startGame()">Start Operation</button>
 
   <div id="winMessage">
-    <h3 style="color: #00ff88; margin-top:0;">🚀 SIMULATION SUCCESSFUL!</h3>
+    <h3 style="color: #ff007a; margin-top:0;">🚀 RACK CLEARED SUCCESSFULLY!</h3>
     <p style="font-size: 14px;" id="rewardText"></p>
-    <a href="/" class="action-btn" style="text-decoration:none; display:inline-block; border-color:#00ff88; color:#00ff88;">Return to Dashboard</a>
+    <a href="/" class="action-btn" style="text-decoration:none; display:inline-block; background:#ff007a; box-shadow:0 4px 0 #b00052; color:white;">Return to Station</a>
   </div>
 </div>
 
 <script>
-  // Gerçek ve net büyük karakterler (BTC, ETH, DOGE vb. simgeleri)
-  const cryptoIcons = ['BTC', 'ETH', 'LTC', 'SOL', 'TRX', 'BNB', 'BTC', 'ETH', 'LTC', 'SOL', 'TRX', 'BNB'];
+  // 4x4 matris için 16 kartlık havuz (8 çift gerçek kripto adı)
+  const cryptoIcons = ['BTC', 'ETH', 'LTC', 'SOL', 'TRX', 'BNB', 'DOGE', 'XRP', 'BTC', 'ETH', 'LTC', 'SOL', 'TRX', 'BNB', 'DOGE', 'XRP'];
   let cardsChosen = [];
   let cardsChosenId = [];
   let cardsWon = [];
@@ -162,7 +192,8 @@ title: Crypto Matcher Game
       const card = document.createElement('div');
       card.setAttribute('class', 'card');
       card.setAttribute('data-id', i);
-      card.innerText = shuffledIcons[i];
+      // CSS content okuması için veriyi data attribute içine saklıyoruz
+      card.setAttribute('data-crypto', shuffledIcons[i]);
       card.addEventListener('click', flipCard);
       grid.appendChild(card);
     }
@@ -197,12 +228,12 @@ title: Crypto Matcher Game
     
     if (cardsChosenId.includes(cardId) || this.classList.contains('matched') || this.classList.contains('flipped')) return;
 
-    cardsChosen.push(grid.children[cardId].innerText);
+    cardsChosen.push(this.getAttribute('data-crypto'));
     cardsChosenId.push(cardId);
     this.classList.add('flipped');
 
     if (cardsChosen.length === 2) {
-      setTimeout(checkForMatch, 600); // Oyuncunun karakteri rahat görmesi için süreyi azıcık uzattık
+      setTimeout(checkForMatch, 600);
     }
   }
 
@@ -212,7 +243,7 @@ title: Crypto Matcher Game
     const optionTwoId = cardsChosenId[1];
 
     if (cardsChosen[0] === cardsChosen[1]) {
-      // Eşleşenleri "matched" sınıfına alıyoruz (CSS'te buranın rengini transparent yaptık, yazı silinecek)
+      // Eşleşenleri temizle ve boş kutuya çevir
       cards[optionOneId].classList.remove('flipped');
       cards[optionTwoId].classList.remove('flipped');
       cards[optionOneId].classList.add('matched');
@@ -237,7 +268,7 @@ title: Crypto Matcher Game
   function gameOver(isWin) {
     gameActive = false;
     startBtn.style.display = 'inline-block';
-    startBtn.innerText = 'Run Simulation Again';
+    startBtn.innerText = 'Restart Miners';
 
     if (isWin) {
       winMessage.style.display = 'block';
@@ -246,9 +277,9 @@ title: Crypto Matcher Game
       let newPower = parseFloat(currentPower) + 30.000;
       localStorage.setItem('power', newPower);
       
-      document.getElementById('rewardText').innerText = "SUCCESS! +30.000 Th/s virtual mining power has been injected into your terminal.";
+      document.getElementById('rewardText').innerText = "SUCCESS! +30.000 Th/s virtual power added to your mining operation.";
     } else {
-      alert('💥 Connection Timeout! Core Overheated. Try Again!');
+      alert('💥 Connection Timeout! Miners overheated. Try Again!');
     }
   }
 </script>
