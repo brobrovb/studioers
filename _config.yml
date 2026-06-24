@@ -1,17 +1,16 @@
-title: Studioers
+title: Studioers Arcade
 email: coinkriptobilgi@gmail.com
-description: >- 
-  Digital Revenue Blueprint & No-Code Engineering.
+description: >-
+  Play free web games, build your virtual mining power, and earn real cryptocurrency instantly! Fast payouts via FaucetPay.
 url: "https://studioers.xyz"
 baseurl: ""
 
-# Menüde görünecek sayfaları manuel yönetmek istersen burayı kullanabilirsin
+# İngilizceye çevirdiğimiz için eski Türkçe sayfaları (yazilar.md gibi) menüden kaldırdık
 header_pages:
   - studioblast.md
   - ai-art.md
-  - yazilar.md
-  
-  # En stabil ve hatasız tema
+
+# En stabil ve hatasız tema
 theme: minima
 
 encoding: "utf-8"
@@ -32,10 +31,12 @@ defaults:
     values:
       layout: "page"
 
+# Google indekslemesini uçuracak eklentiler (SEO ve Sitemap aktif)
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-sitemap
+
 exclude:
   - Gemfile
   - Gemfile.lock
