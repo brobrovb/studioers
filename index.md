@@ -3,403 +3,272 @@ layout: default
 title: Free Crypto Arcade
 ---
 
+<!-- Firebase SDK Kütüphaneleri -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
 <style>
   html, body, .site-header, .site-footer, .page-content, .wrapper {
-    background-color: #1a1b23 !important; /* RollerCoin Lacivert-Gri Arka Plan */
+    background-color: #1a1b23 !important;
     color: #e2e8f0 !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
+  .wrapper { max-width: 1200px !important; box-shadow: none !important; border: none !important; }
+  .site-title, .site-title:visited, .site-nav .page-link { color: #00f0ff !important; font-weight: bold; text-transform: uppercase; }
+  .arcade-body { padding: 10px 0; }
 
-  .wrapper {
-    max-width: 1200px !important;
-    box-shadow: none !important;
-    border: none !important;
-  }
-
-  .site-title, .site-title:visited, .site-nav .page-link {
-    color: #00f0ff !important;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-
-  .arcade-body { 
-    padding: 10px 0;
-  }
-
-  /* Üst Panel Üretim ve Cüzdan Puanları */
-  .stats-container { 
-    display: flex; 
-    gap: 15px; 
-    justify-content: space-between; 
-    margin-bottom: 35px; 
-    flex-wrap: wrap; 
-  }
-
-  .stat-card { 
-    background: #242632; 
-    border: 1px solid #2f3245; 
-    border-left: 5px solid #00f0ff; 
-    padding: 15px 20px; 
-    border-radius: 6px; 
-    flex: 1; 
-    min-width: 220px; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  }
-
-  .stat-card h5 { 
-    margin: 0; 
-    color: #94a3b8; 
-    text-transform: uppercase; 
-    font-size: 11px; 
-    letter-spacing: 1px; 
-  }
-
-  .stat-card p { 
-    margin: 6px 0 0 0; 
-    font-size: 24px; 
-    font-weight: bold; 
-    color: #00f0ff; 
-  }
-
-  .stat-card.balance-card { 
-    border-left-color: #ff007a; 
-  }
-  .stat-card.balance-card p { 
-    color: #ff007a; 
-  }
-
-  /* OYUN KARTLARI MATRİSİ (GRID) */
-  .game-grid { 
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px; 
-    margin-top: 20px;
-  }
-
-  /* RollerCoin Birebir Kart Yapısı */
-  .rc-game-card {
+  /* Giriş Paneli Üst Alanı */
+  .auth-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background: #242632;
-    border: 1px solid #2f3245;
-    border-radius: 8px;
-    padding: 15px;
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    transition: transform 0.2s ease;
-  }
-
-  .rc-game-card:hover {
-    transform: translateY(-2px);
-    border-color: #3e425b;
-  }
-
-  /* Sol taraftaki Oyun Logosu (Harika Büyük Emojilerle) */
-  .rc-game-image {
-    width: 85px;
-    height: 85px;
-    background: #13141c;
-    border-radius: 8px;
-    border: 1px solid #2f3245;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 38px;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
-  }
-
-  /* Sağ detaylar */
-  .rc-game-details {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .rc-game-name {
-    margin: 0;
-    font-size: 15px;
-    font-weight: bold;
-    color: #ffffff;
-    letter-spacing: 0.5px;
-  }
-
-  .rc-difficulty-label {
-    font-size: 11px;
-    color: #00f0ff;
-    margin: 0;
-    text-transform: uppercase;
-  }
-  
-  .rc-difficulty-bar {
-    display: flex;
-    gap: 3px;
-    margin-bottom: 6px;
-  }
-
-  .rc-dot {
-    width: 10px;
-    height: 4px;
-    background: #3a3f58;
-    border-radius: 1px;
-  }
-
-  .rc-dot.active {
-    background: #ff007a;
-    box-shadow: 0 0 4px #ff007a;
-  }
-
-  /* 3D START BUTONLARI */
-  .rc-start-btn {
-    background: #00e5ff;
-    color: #000000;
-    border: none;
-    padding: 7px 0;
+    padding: 10px 20px;
     border-radius: 6px;
-    font-weight: bold;
-    font-size: 12px;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 3px 0 #00a8bc;
-    transition: all 0.1s ease;
-    display: block;
-    width: 100%;
+    border: 1px solid #2f3245;
+    margin-bottom: 20px;
   }
+  .user-info { display: flex; align-items: center; gap: 10px; font-weight: bold; }
+  .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #00f0ff; }
+  
+  .auth-btn {
+    background: #00e5ff; color: #000; border: none; padding: 6px 15px;
+    font-weight: bold; border-radius: 4px; cursor: pointer; text-transform: uppercase;
+    box-shadow: 0 3px 0 #00a8bc; font-size: 12px;
+  }
+  .auth-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #00a8bc; }
+  .logout-btn { background: #ff007a; color: #fff; box-shadow: 0 3px 0 #b00052; }
+  .logout-btn:active { box-shadow: 0 1px 0 #b00052; }
 
-  .rc-start-btn:active {
-    transform: translateY(3px);
-    box-shadow: 0 1px 0 #00a8bc;
-  }
+  /* Göstergeler */
+  .stats-container { display: flex; gap: 15px; justify-content: space-between; margin-bottom: 35px; flex-wrap: wrap; }
+  .stat-card { background: #242632; border: 1px solid #2f3245; border-left: 5px solid #00f0ff; padding: 15px 20px; border-radius: 6px; flex: 1; min-width: 220px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+  .stat-card h5 { margin: 0; color: #94a3b8; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+  .stat-card p { margin: 6px 0 0 0; font-size: 24px; font-weight: bold; color: #00f0ff; }
+  .stat-card.balance-card { border-left-color: #ff007a; }
+  .stat-card.balance-card p { color: #ff007a; }
 
-  /* Enerji Yenileme Havuzu */
-  .faucet-section { 
-    margin: 40px 0; 
-    padding: 25px; 
-    background: #242632; 
-    border: 2px dashed #ff007a; 
-    border-radius: 8px; 
-    text-align: center; 
-  }
+  /* 8'li Oyun Izgarası */
+  .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-top: 20px; }
+  .rc-game-card { background: #242632; border: 1px solid #2f3245; border-radius: 8px; padding: 15px; display: flex; gap: 15px; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+  .rc-game-image { width: 85px; height: 85px; background: #13141c; border-radius: 8px; border: 1px solid #2f3245; display: flex; align-items: center; justify-content: center; font-size: 38px; box-shadow: inset 0 0 10px rgba(0,0,0,0.6); }
+  .rc-game-details { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+  .rc-game-name { margin: 0; font-size: 15px; font-weight: bold; color: #ffffff; }
+  .rc-difficulty-label { font-size: 11px; color: #00f0ff; margin: 0; text-transform: uppercase; }
+  .rc-difficulty-bar { display: flex; gap: 3px; margin-bottom: 6px; }
+  .rc-dot { width: 10px; height: 4px; background: #3a3f58; border-radius: 1px; }
+  .rc-dot.active { background: #ff007a; box-shadow: 0 0 4px #ff007a; }
+  
+  .rc-start-btn { background: #00e5ff; color: #000; border: none; padding: 7px 0; border-radius: 6px; font-weight: bold; font-size: 12px; text-align: center; text-decoration: none; text-transform: uppercase; box-shadow: 0 3px 0 #00a8bc; display: block; width: 100%; }
+  .rc-start-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #00a8bc; }
 
-  .faucet-btn { 
-    background: #ff007a; 
-    color: #ffffff; 
-    border: none; 
-    padding: 12px 40px; 
-    font-size: 15px; 
-    border-radius: 6px; 
-    cursor: pointer; 
-    font-weight: bold; 
-    text-transform: uppercase; 
-    box-shadow: 0 4px 0 #b00052;
-  }
-
-  .faucet-btn:active {
-    transform: translateY(3px);
-    box-shadow: 0 1px 0 #b00052;
-  }
-
-  .faucet-btn:disabled {
-    background: #4e5268 !important;
-    box-shadow: none !important;
-    cursor: not-allowed;
-    color: #aaa;
-  }
+  /* Musluk */
+  .faucet-section { margin: 40px 0; padding: 25px; background: #242632; border: 2px dashed #ff007a; border-radius: 8px; text-align: center; }
+  .faucet-btn { background: #ff007a; color: #fff; border: none; padding: 12px 40px; font-size: 15px; border-radius: 6px; cursor: pointer; font-weight: bold; text-transform: uppercase; box-shadow: 0 4px 0 #b00052; }
+  .faucet-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #b00052; }
+  .faucet-btn:disabled { background: #4e5268 !important; box-shadow: none !important; cursor: not-allowed; color: #aaa; }
 </style>
 
 <div class="arcade-body">
 
-<h1 style="text-align:center; font-size: 24px; color: #ffffff; letter-spacing: 1px; margin-bottom: 25px;">🎮 STUDIOERS ARCADE STATION</h1>
-
-<div class="stats-container">
-  <div class="stat-card">
-    <h5>Your Mining Power</h5>
-    <p id="userPower">0.000 Th/s</p>
+  <!-- AUTHENTICATION PANEL -->
+  <div class="auth-bar">
+    <div id="authUser" class="user-info">
+      <span style="color: #94a3b8; font-size: 14px;">Giriş yapılmadı. Skorlar kaydedilmez!</span>
+    </div>
+    <button id="authBtn" class="auth-btn">Google ile Giriş Yap</button>
   </div>
-  <div class="stat-card">
-    <h5>Network Power</h5>
-    <p>1,420.85 Ph/s</p>
-  </div>
-  <div class="stat-card balance-card">
-    <h5>Your Wallet</h5>
-    <p id="userBalance">0.00 Points</p>
-  </div>
-</div>
 
-<h3 style="border-bottom: 1px solid #2f3245; padding-bottom: 10px; color: #94a3b8; font-size: 16px; text-transform: uppercase;">🕹️ Select Simulation Simulation</h3>
+  <h1 style="text-align:center; font-size: 24px; color: #ffffff; margin-bottom: 25px;">🎮 STUDIOERS ARCADE STATION</h1>
 
-<div class="game-grid">
-
-  <div class="rc-game-card">
-    <div class="rc-game-image" style="text-shadow: 0 0 10px #00f0ff;">⚡</div>
-    <div class="rc-game-details">
-      <h4 class="rc-game-name">Coin-match</h4>
-      <p class="rc-difficulty-label">difficulty: 3</p>
-      <div class="rc-difficulty-bar">
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
-      </div>
-      <a href="/crypto-matcher" class="rc-start-btn">🏁 START</a>
+  <!-- DASHBOARD -->
+  <div class="stats-container">
+    <div class="stat-card">
+      <h5>Your Mining Power</h5>
+      <p id="userPower">0.000 Th/s</p>
+    </div>
+    <div class="stat-card">
+      <h5>Network Power</h5>
+      <p>1,420.85 Ph/s</p>
+    </div>
+    <div class="stat-card balance-card">
+      <h5>Your Wallet</h5>
+      <p id="userBalance">0.00 Points</p>
     </div>
   </div>
 
-  <div class="rc-game-card">
-    <div class="rc-game-image" style="text-shadow: 0 0 10px #ff007a;">🧩</div>
-    <div class="rc-game-details">
-      <h4 class="rc-game-name">Protetris</h4>
-      <p class="rc-difficulty-label">difficulty: 5</p>
-      <div class="rc-difficulty-bar">
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
+  <h3 style="border-bottom: 1px solid #2f3245; padding-bottom: 10px; color: #94a3b8; font-size: 16px; text-transform: uppercase;">🕹️ Arcade Lobby</h3>
+
+  <!-- 8 OYUN MATRİSİ -->
+  <div class="game-grid">
+    <!-- Coin-match -->
+    <div class="rc-game-card">
+      <div class="rc-game-image" style="text-shadow: 0 0 10px #00f0ff;">⚡</div>
+      <div class="rc-game-details">
+        <h4 class="rc-game-name">Coin-match</h4>
+        <p class="rc-difficulty-label">difficulty: 3</p>
+        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div></div>
+        <a href="/crypto-matcher" class="rc-start-btn">🏁 START</a>
       </div>
-      <a href="#" class="rc-start-btn" style="background:#ff007a; box-shadow: 0 3px 0 #b00052; color:white;">🏁 START</a>
+    </div>
+    <!-- Protetris -->
+    <div class="rc-game-card">
+      <div class="rc-game-image" style="text-shadow: 0 0 10px #ff007a;">🧩</div>
+      <div class="rc-game-details">
+        <h4 class="rc-game-name">Protetris</h4>
+        <p class="rc-difficulty-label">difficulty: 5</p>
+        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot"></div><div class="rc-dot"></div></div>
+        <a href="#" class="rc-start-btn" style="background:#ff007a; box-shadow: 0 3px 0 #b00052; color:white;">🏁 START</a>
+      </div>
+    </div>
+    <!-- Token Blaster -->
+    <div class="rc-game-card">
+      <div class="rc-game-image">🚀</div>
+      <div class="rc-game-details">
+        <h4 class="rc-game-name">Token Blaster</h4>
+        <p class="rc-difficulty-label">difficulty: 4</p>
+        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div></div>
+        <a href="#" class="rc-start-btn">🏁 START</a>
+      </div>
+    </div>
+    <!-- Hamster Surfer -->
+    <div class="rc-game-card">
+      <div class="rc-game-image">🐹</div>
+      <div class="rc-game-details">
+        <h4 class="rc-game-name">Hamster Surfer</h4>
+        <p class="rc-difficulty-label">difficulty: 2</p>
+        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div></div>
+        <a href="#" class="rc-start-btn">🏁 START</a>
+      </div>
+    </div>
+    <!-- Coin Fisher -->
+    <div class="rc-game-card">
+      <div class="rc-game-image">🎣</div>
+      <div class="rc-game-details">
+        <h4 class="rc-game-name">Coin Fisher</h4>
+        <p class="rc-difficulty-label">difficulty: 6</p>
+        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot"></div></div>
+        <a href="#" class="rc-start-btn">🏁 START</a>
+      </div>
+    </div>
+    <!-- Flappy Rocket -->
+    <div class="rc-game-card">
+      <div class="rc-game-image">🐦</div>
+      <div class="rc-game-details">
+        <h4 class="rc-game-name">Flappy Rocket</h4>
+        <p class="rc-difficulty-label">difficulty: 7</p>
+        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div></div>
+        <a href="#" class="rc-start-btn">🏁 START</a>
+      </div>
+    </div>
+    <!-- Block Blocker -->
+    <div class="rc-game-card">
+      <div class="rc-game-image">🧱</div>
+      <div class="rc-game-details">
+        <h4 class="rc-game-name">Block Blocker</h4>
+        <p class="rc-difficulty-label">difficulty: 1</p>
+        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div></div>
+        <a href="#" class="rc-start-btn">🏁 START</a>
+      </div>
+    </div>
+    <!-- Crypto 2048 -->
+    <div class="rc-game-card">
+      <div class="rc-game-image">🔢</div>
+      <div class="rc-game-details">
+        <h4 class="rc-game-name">Crypto 2048</h4>
+        <p class="rc-difficulty-label">difficulty: 4</p>
+        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div></div>
+        <a href="#" class="rc-start-btn">🏁 START</a>
+      </div>
     </div>
   </div>
 
-  <div class="rc-game-card">
-    <div class="rc-game-image">🚀</div>
-    <div class="rc-game-details">
-      <h4 class="rc-game-name">Token Blaster</h4>
-      <p class="rc-difficulty-label">difficulty: 4</p>
-      <div class="rc-difficulty-bar">
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
-      </div>
-      <a href="#" class="rc-start-btn">🏁 START</a>
-    </div>
+  <!-- FAUCET SECTION -->
+  <div class="faucet-section">
+    <h3 style="margin-top:0; color:#ff007a;">🎁 Hourly Energy Refill</h3>
+    <p style="color:#94a3b8; font-size:14px; margin-bottom:15px;">Claim an instant +5.00 points bonus directly to your wallet allocation.</p>
+    <button id="faucetBtn" class="faucet-btn">CLAIM BONUS</button>
+    <p id="faucetMsg" style="margin-top: 12px; font-weight: bold; color: #00ff88; min-height: 20px;"></p>
   </div>
-
-  <div class="rc-game-card">
-    <div class="rc-game-image">🐹</div>
-    <div class="rc-game-details">
-      <h4 class="rc-game-name">Hamster Surfer</h4>
-      <p class="rc-difficulty-label">difficulty: 2</p>
-      <div class="rc-difficulty-bar">
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
-      </div>
-      <a href="#" class="rc-start-btn">🏁 START</a>
-    </div>
-  </div>
-
-  <div class="rc-game-card">
-    <div class="rc-game-image">🎣</div>
-    <div class="rc-game-details">
-      <h4 class="rc-game-name">Coin Fisher</h4>
-      <p class="rc-difficulty-label">difficulty: 6</p>
-      <div class="rc-difficulty-bar">
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot"></div>
-      </div>
-      <a href="#" class="rc-start-btn">🏁 START</a>
-    </div>
-  </div>
-
-  <div class="rc-game-card">
-    <div class="rc-game-image">🐦</div>
-    <div class="rc-game-details">
-      <h4 class="rc-game-name">Flappy Rocket</h4>
-      <p class="rc-difficulty-label">difficulty: 7</p>
-      <div class="rc-difficulty-bar">
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-      </div>
-      <a href="#" class="rc-start-btn">🏁 START</a>
-    </div>
-  </div>
-
-  <div class="rc-game-card">
-    <div class="rc-game-image">🧱</div>
-    <div class="rc-game-details">
-      <h4 class="rc-game-name">Block Blocker</h4>
-      <p class="rc-difficulty-label">difficulty: 1</p>
-      <div class="rc-difficulty-bar">
-        <div class="rc-dot active"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
-      </div>
-      <a href="#" class="rc-start-btn">🏁 START</a>
-    </div>
-  </div>
-
-  <div class="rc-game-card">
-    <div class="rc-game-image">🔢</div>
-    <div class="rc-game-details">
-      <h4 class="rc-game-name">Crypto 2048</h4>
-      <p class="rc-difficulty-label">difficulty: 4</p>
-      <div class="rc-difficulty-bar">
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot active"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
-        <div class="rc-dot"></div>
-      </div>
-      <a href="#" class="rc-start-btn">🏁 START</a>
-    </div>
-  </div>
-
-</div>
-
-<div class="faucet-section">
-  <h3 style="margin-top:0; color:#ff007a;">🎁 Hourly Energy Refill</h3>
-  <p style="color:#94a3b8; font-size:14px; margin-bottom:15px;">Claim an instant +5.00 points bonus directly to your wallet allocation.</p>
-  <button id="faucetBtn" class="faucet-btn">CLAIM BONUS</button>
-  <p id="faucetMsg" style="margin-top: 12px; font-weight: bold; color: #00ff88; min-height: 20px;"></p>
-</div>
-
 </div>
 
 <script>
-  let power = localStorage.getItem('power') || "0.000";
-  let balance = localStorage.getItem('balance') || "0.00";
-  
-  document.getElementById('userPower').innerText = parseFloat(power).toFixed(3) + " Th/s";
-  document.getElementById('userBalance').innerText = parseFloat(balance).toFixed(2) + " Points";
+  // Senin Gönderdiğin Firebase Config Bilgileri
+  const firebaseConfig = {
+    apiKey: "AIzaSyDi7xosmyNGJELn4KOpe8QEg5tNewkIsEc",
+    authDomain: "studioers-arcade.firebaseapp.com",
+    projectId: "studioers-arcade",
+    storageBucket: "studioers-arcade.firebasestorage.app",
+    messagingSenderId: "1096473829075",
+    appId: "1:1096473829075:web:a0f0e3023ab7ac02847e26",
+    measurementId: "G-0HYW1H5FV2"
+  };
 
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  let currentUser = null;
+
+  // Giriş/Çıkış Yönetimi ve UI Güncelleme
+  const authBtn = document.getElementById('authBtn');
+  const authUserDiv = document.getElementById('authUser');
+  const userPowerText = document.getElementById('userPower');
+  const userBalanceText = document.getElementById('userBalance');
+
+  authBtn.addEventListener('click', () => {
+    if (!currentUser) {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider).catch(err => console.error(err));
+    } else {
+      auth.signOut();
+    }
+  });
+
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      currentUser = user;
+      authBtn.innerText = "Çıkış Yap";
+      authBtn.classList.add('logout-btn');
+      authUserDiv.innerHTML = `<img src="${user.photoURL}" class="user-avatar"> <span>${user.displayName}</span>`;
+      
+      // Buluttan verileri gerçek zamanlı dinleme (Realtime sync)
+      db.collection("users").doc(user.uid).onSnapshot(doc => {
+        if (doc.exists) {
+          const data = doc.data();
+          userPowerText.innerText = parseFloat(data.power || 0).toFixed(3) + " Th/s";
+          userBalanceText.innerText = parseFloat(data.balance || 0).toFixed(2) + " Points";
+        } else {
+          // Yeni üye ise Firestore kaydı oluştur
+          db.collection("users").doc(user.uid).set({ power: 0, balance: 0 });
+        }
+      });
+    } else {
+      currentUser = null;
+      authBtn.innerText = "Google ile Giriş Yap";
+      authBtn.classList.remove('logout-btn');
+      authUserDiv.innerHTML = `<span style="color: #94a3b8; font-size: 14px;">Giriş yapılmadı. Skorlar kaydedilmez!</span>`;
+      userPowerText.innerText = "0.000 Th/s";
+      userBalanceText.innerText = "0.00 Points";
+    }
+  });
+
+  // Faucet Buton İşlemi
   document.getElementById('faucetBtn').addEventListener('click', function() {
-    balance = parseFloat(balance) + 5.00;
-    localStorage.setItem('balance', balance);
-    
-    document.getElementById('userBalance').innerText = balance.toFixed(2) + " Points";
-    document.getElementById('faucetMsg').innerText = "⚡ Core Refilled! +5.00 Points saved.";
-    this.disabled = true;
+    if (!currentUser) {
+      alert("Lütfen önce Google ile giriş yap kanka!");
+      return;
+    }
+    const userRef = db.collection("users").doc(currentUser.uid);
+    db.runTransaction(transaction => {
+      return transaction.get(userRef).then(doc => {
+        let currentBalance = doc.exists ? (doc.data().balance || 0) : 0;
+        transaction.update(userRef, { balance: currentBalance + 5.00 });
+      });
+    }).then(() => {
+      document.getElementById('faucetMsg').innerText = "⚡ Core Refilled! +5.00 Points saved.";
+      this.disabled = true;
+    }).catch(err => console.error(err));
   });
 </script>
