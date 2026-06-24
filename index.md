@@ -1,97 +1,189 @@
 ---
-layout: home
-title: Studioers
+layout: default
+title: Free Crypto Arcade
 ---
-<meta name="google-adsense-account" content="ca-pub-9126387581914302">
-<meta name="bitmedia-site-verification" content="e6b41d462bc611f601626c2b6cfb0f5a" />
 
-<!-- GİRİŞ ALANI (KAHRAMAN BÖLÜMÜ) -->
-<div style="display: flex; align-items: center; gap: 25px; margin-bottom: 40px; background: #fafcff; padding: 25px; border-radius: 20px; border: 1px solid #e3f2fd; flex-wrap: wrap;">
-  <img src="/images/joker.jpg" style="width: 140px; height: 140px; border-radius: 50%; border: 4px solid #bbdefb; object-fit: cover;">
-  <div style="flex: 1; min-width: 280px;">
-    <h1 style="margin: 0 0 10px 0; color: #1565c0; font-family: 'Quicksand', sans-serif; font-size: 1.85em;">Studioers'a Hoş Geldin! 🚐💻</h1>
-    <p style="margin: 0; line-height: 1.6; font-size: 1.05em; color: #333;">
-      Selam! Ben bir yazılım geliştirici ve dijital içerik üreticisiyim. İki yıldır 1999 model <strong>Iveco M23</strong> karavanımızda, eşim ve sadık dostum <strong>Joker</strong> ile birlikte yaşıyor, 30 yıllık gitar tutkumla ve kodlarımla bu dijital stüdyoda üretiyorum.
-    </p>
+<!-- Siber Atari Salonu Stili için Özel CSS -->
+<style>
+  .arcade-body { 
+    background-color: #121212; 
+    color: #ffffff; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  .stats-container { 
+    display: flex; 
+    gap: 15px; 
+    justify-content: space-between; 
+    margin-bottom: 30px; 
+    flex-wrap: wrap; 
+  }
+  .stat-card { 
+    background: #1e1e1e; 
+    border: 1px solid #333; 
+    border-left: 4px solid #00ff88; 
+    padding: 15px; 
+    border-radius: 6px; 
+    flex: 1; 
+    min-width: 200px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3); 
+  }
+  .stat-card h5 { 
+    margin: 0; 
+    color: #888; 
+    text-transform: uppercase; 
+    font-size: 11px; 
+    letter-spacing: 1px; 
+  }
+  .stat-card p { 
+    margin: 5px 0 0 0; 
+    font-size: 22px; 
+    font-weight: bold; 
+    color: #00ff88; 
+  }
+  .stat-card.balance-card { 
+    border-left-color: #00e5ff; 
+  }
+  .stat-card.balance-card p { 
+    color: #00e5ff; 
+  }
+  .game-grid { 
+    display: flex; 
+    gap: 20px; 
+    flex-wrap: wrap; 
+    margin-top: 20px; 
+  }
+  .game-card { 
+    border: 1px solid #333; 
+    padding: 20px; 
+    border-radius: 8px; 
+    width: 290px; 
+    background: #1a1a1a; 
+    box-sizing: border-box;
+    transition: transform 0.2s, border-color 0.2s; 
+  }
+  .game-card:hover { 
+    transform: translateY(-5px); 
+    border-color: #00ff88; 
+  }
+  .game-btn { 
+    background: #00ff88; 
+    color: #121212; 
+    padding: 10px 15px; 
+    border-radius: 4px; 
+    text-decoration: none; 
+    display: inline-block; 
+    font-weight: bold; 
+    margin-top: 15px; 
+    text-align: center; 
+    width: 100%; 
+    box-sizing: border-box; 
+  }
+  .faucet-section { 
+    margin: 40px 0; 
+    padding: 25px; 
+    background: #1a1a1a; 
+    border: 1px dashed #00e5ff; 
+    border-radius: 8px; 
+    text-align: center; 
+  }
+  .faucet-btn { 
+    background: #00e5ff; 
+    color: #121212; 
+    border: none; 
+    padding: 12px 30px; 
+    font-size: 16px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+  }
+  .faucet-btn:disabled {
+    background: #444 !important;
+    color: #888 !important;
+    cursor: not-allowed;
+  }
+</style>
+
+<div class="arcade-body">
+
+# 🎮 Studioers Play2Earn Arcade
+
+Welcome to the ultimate crypto station! Play our lightweight web games to build your **Virtual Mining Power**, or claim free points every hour. Turn your gaming time into real crypto rewards!
+
+---
+
+<!-- CANLI OYUNCU GÖSTERGELERI (ROLLERCOIN ESINTISI) -->
+<div class="stats-container">
+  <div class="stat-card">
+    <h5>Your Mining Power</h5>
+    <p id="userPower">0.000 Th/s</p>
+  </div>
+  <div class="stat-card">
+    <h5>Network Power</h5>
+    <p>1,420.85 Ph/s</p>
+  </div>
+  <div class="stat-card balance-card">
+    <h5>Your Balance</h5>
+    <p id="userBalance">0.00 Points</p>
   </div>
 </div>
 
 ---
 
-<!-- PROJELER VE ARAÇLAR GRİD SİSTEMİ (MODERN KARTLAR) -->
-<h2 style="color: #1565c0; text-align: center; margin-bottom: 25px; font-family: 'Quicksand', sans-serif;">🚀 Stüdyo Projeleri & Araçlar</h2>
+### 🕹️ Available Arcade Games
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px;">
-
-  <!-- KART 1: STUDIO BLAST OYUNU -->
-  <div style="background: #f0f7ff; border: 1px solid #d0e7ff; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 10px rgba(25, 118, 210, 0.03);">
-    <div>
-      <div style="text-align: center; margin-bottom: 15px;">
-        <img src="/images/studio-blast.png" alt="Studio Blast" style="width: 90px; height: auto; border-radius: 12px;">
-      </div>
-      <h3 style="margin: 0 0 10px 0; color: #1565c0; text-align: center;">Studio Blast</h3>
-      <p style="margin: 0; font-size: 0.95em; color: #555; line-height: 1.5; text-align: center;">Studioers tarafından geliştirilen, yüksek enerjili ve rengârenk balon patlatma oyunu deneyimi!</p>
-    </div>
-    <div style="text-align: center; margin-top: 15px;">
-      <a href="https://studioers.xyz/studioblast/" style="display: inline-block; background: #1976d2; color: white; padding: 8px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9em;">🎮 Hemen Oyna</a>
-    </div>
+<div class="game-grid">
+  <!-- OYUN 1: PROTETRIS -->
+  <div class="game-card">
+    <h3 style="margin-top:0; color:#00ff88;">🧩 Protetris Web</h3>
+    <p style="font-size:14px; color:#aaa; line-height: 1.5;">The legendary block puzzle game. Clear lines, stack bricks perfectly, and boost your virtual mining power!</p>
+    <p style="font-size:13px; margin-bottom: 0;"><strong>Reward:</strong> Up to +50 Th/s Power</p>
+    <a href="#" class="game-btn">PLAY & EARN</a>
   </div>
 
-  <!-- KART 2: YAPAY ZEKÂ RESİM -->
-  <div style="background: #ffffff; border: 1px solid #e3f2fd; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
-    <div>
-      <div style="text-align: center; margin-bottom: 15px;">
-        <img src="/images/studioers-ai.png" alt="AI Art" style="width: 90px; height: 90px; border-radius: 12px; object-fit: cover;">
-      </div>
-      <h3 style="margin: 0 0 10px 0; color: #1565c0; text-align: center;">AI Art Studio</h3>
-      <p style="margin: 0; font-size: 0.95em; color: #555; line-height: 1.5; text-align: center;">Hayal gücünü kelimelere dök. Yapay zekâ altyapımızla tamamen ücretsiz resimler üret.</p>
-    </div>
-    <div style="text-align: center; margin-top: 15px;">
-      <a href="https://studioers.xyz/ai-art/" style="display: inline-block; background: #1565c0; color: white; padding: 8px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9em;">🎨 Resim Oluştur</a>
-    </div>
+  <!-- OYUN 2: CRYPTO MATCHER -->
+  <div class="game-card">
+    <h3 style="margin-top:0; color:#00ff88;">⚡ Crypto Matcher</h3>
+    <p style="font-size:14px; color:#aaa; line-height: 1.5;">Match classic crypto coins under a ticking clock. Fast-paced casual action for quick power boosts.</p>
+    <p style="font-size:13px; margin-bottom: 0;"><strong>Reward:</strong> Up to +30 Th/s Power</p>
+    <a href="#" class="game-btn" style="background:#00e5ff;">PLAY & EARN</a>
   </div>
-
-  <!-- KART 3: SEO ARACI -->
-  <div style="background: #ffffff; border: 1px solid #e3f2fd; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
-    <div>
-      <div style="text-align: center; font-size: 2.5em; margin-bottom: 10px;">📈</div>
-      <h3 style="margin: 0 0 10px 0; color: #1565c0; text-align: center;">Studioers SEO Tool</h3>
-      <p style="margin: 0; font-size: 0.95em; color: #555; line-height: 1.5; text-align: center;">Dijital içeriklerini ve web siteni Google botlarının en seveceği şekilde analiz et ve optimize et.</p>
-    </div>
-    <div style="text-align: center; margin-top: 15px;">
-      <a href="https://drive.google.com/file/d/1B6hPYBcb8I71EPARbGAjiaHz9tV5wXdi/view?usp=sharing" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: #fff; color: #1565c0; padding: 7px 18px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9em; border: 1px solid #1565c0;">🔐 Aracı İndir</a>
-    </div>
-  </div>
-
-  <!-- KART 4: VAULTGEN -->
-  <div style="background: #ffffff; border: 1px solid #e3f2fd; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
-    <div>
-      <div style="text-align: center; font-size: 2.5em; margin-bottom: 10px;">🔑</div>
-      <h3 style="margin: 0 0 10px 0; color: #1565c0; text-align: center;">VaultGen Şifreleyici</h3>
-      <p style="margin: 0; font-size: 0.95em; color: #555; line-height: 1.5; text-align: center;">Projelerin ve hesapların için 1 ila 16 karakter arasında, kırılması imkansız güvenli şifreler üret.</p>
-    </div>
-    <div style="text-align: center; margin-top: 15px;">
-      <a href="/assets/downloads/vault_gen.zip" style="display: inline-block; background: #fff; color: #1565c0; padding: 7px 18px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9em; border: 1px solid #1565c0;">💾 VaultGen İndir</a>
-    </div>
-  </div>
-
-  <!-- KART 5: FAVICON CONVERTER -->
-  <div style="background: #ffffff; border: 1px solid #e3f2fd; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
-    <div>
-      <div style="text-align: center; font-size: 2.5em; margin-bottom: 10px;">🖼️</div>
-      <h3 style="margin: 0 0 10px 0; color: #1565c0; text-align: center;">Favicon Converter</h3>
-      <p style="margin: 0; font-size: 0.95em; color: #555; line-height: 1.5; text-align: center;">Web projelerin için görsellerini saniyeler içinde standart .ico formatına dönüştür.</p>
-    </div>
-    <div style="text-align: center; margin-top: 15px;">
-      <a href="https://studioers.xyz/ico-converter" style="display: inline-block; background: #fff; color: #1565c0; padding: 7px 18px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9em; border: 1px solid #1565c0;">⚙️ Dönüştürücüye Git</a>
-    </div>
-  </div>
-
 </div>
 
 ---
 
-<!-- KISA ÖZET ALANI -->
-<div style="text-align: center; color: #777; font-size: 0.9em; margin-top: 20px; font-family: 'Quicksand', sans-serif;">
-  <p>Android Geliştirme • No-Code Otomasyonlar • Dijital Varlık Yönetimi • Karavan Teknik Rehberleri</p>
+<!-- SAATLIK BEDAVA MUSLUK (FAUCET) ALANI -->
+<div class="faucet-section">
+  <h3 style="margin-top:0; color:#00e5ff;">🎁 Hourly Crypto Faucet</h3>
+  <p style="color:#aaa; font-size:14px; margin-bottom:15px;">Don't want to play right now? Get an instant free balance boost every 60 minutes!</p>
+  <button id="faucetBtn" class="faucet-btn">Claim Free Points</button>
+  <p id="faucetMsg" style="margin-top: 12px; font-weight: bold; color: #00ff88; min-height: 20px;"></p>
 </div>
+
+</div>
+
+<!-- TARAYICI HAFIZASINDA GEÇICI DURUM YÖNETIMI -->
+<script>
+  // Tarayıcı hafızasından (localStorage) mevcut verileri çekiyoruz
+  let power = localStorage.getItem('power') || "0.000";
+  let balance = localStorage.getItem('balance') || "0.00";
+  
+  // Arayüzdeki göstergeleri güncelliyoruz
+  document.getElementById('userPower').innerText = parseFloat(power).toFixed(3) + " Th/s";
+  document.getElementById('userBalance').innerText = parseFloat(balance).toFixed(2) + " Points";
+
+  // Musluk butonuna tıklama aksiyonu
+  document.getElementById('faucetBtn').addEventListener('click', function() {
+    balance = parseFloat(balance) + 5.00;
+    localStorage.setItem('balance', balance);
+    
+    document.getElementById('userBalance').innerText = balance.toFixed(2) + " Points";
+    document.getElementById('faucetMsg').innerText = "🎉 Success! +5.00 Points added to your balance.";
+    
+    // Butonu geçici olarak devre dışı bırakıyoruz (Sayfa yenilenene kadar)
+    this.disabled = true;
+  });
+</script>
