@@ -178,16 +178,13 @@ title: Protetris - Crypto Arcade
   function drawSquare(x, y, color, symbol = "") {
     if (x < 0 || x >= COL || y < 0 || y >= ROW) return;
     
-    // Arka plan rengini bas
     context.fillStyle = color;
     context.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
     
-    // Neon ızgara çizgileri
     context.strokeStyle = "#1a1b23";
     context.lineWidth = 1;
     context.strokeRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 
-    // Kripto simgelerini ortalayarak bas
     if (color !== VACANT && symbol) {
       context.fillStyle = "#ffffff";
       context.font = "11px Arial";
@@ -203,7 +200,6 @@ title: Protetris - Crypto Arcade
 
     for (let r = 0; r < ROW; r++) {
       for (let c = 0; c < COL; c++) {
-        // Tahtaya sabitlenmiş blokların kendi rengi ve simgeleri basılır
         let cell = board[r][c];
         if (cell === VACANT) {
           drawSquare(c, r, VACANT);
@@ -213,7 +209,6 @@ title: Protetris - Crypto Arcade
       }
     }
     
-    // Aktif düşen bloğu çiz
     if (isPlaying && p && !isCountingDown) {
       p.draw();
     }
@@ -229,7 +224,6 @@ title: Protetris - Crypto Arcade
     [[[1,1],[1,1]]] // O
   ];
   
-  // Neon renkler ve onlara özel Kripto simge eşleşmeleri
   const COLORS = ["#00f0ff", "#ff007a", "#00ff88", "#ffb700", "#9d00ff", "#ff003c", "#3300ff"];
   const SYMBOLS = ["🪙", "💎", "⚡", "🚀", "📈", "🔗", "🧱"];
 
@@ -240,8 +234,7 @@ title: Protetris - Crypto Arcade
     this.tetrominoN = 0;
     this.activeTetromino = this.tetromino[this.tetrominoN];
     this.x = 4;
-    // Doğuş esnasında çarpışma bug'ını engellemek için y pozisyonu dengelendi
-    this.y = -1; 
+    this.y = 0; // Doğuş noktası tavana değmeyecek şekilde sıfırlandı
   }
 
   Piece.prototype.draw = function() {
@@ -301,7 +294,7 @@ title: Protetris - Crypto Arcade
         let newX = this.x + c + x;
         let newY = this.y + r + y;
         if (newX < 0 || newX >= COL || newY >= ROW) return true;
-        if (newY < 0) continue; // Tavan kontrolü esnetildi
+        if (newY < 0) continue; 
         if (board[newY][newX] !== VACANT) return true;
       }
     }
@@ -310,19 +303,29 @@ title: Protetris - Crypto Arcade
 
   Piece.prototype.lock = function() {
     if (!isPlaying || !this.activeTetromino) return;
+    
+    let hitCeiling = false;
     for (let r = 0; r < this.activeTetromino.length; r++) {
       for (let c = 0; c < this.activeTetromino[r].length; c++) {
         if (!this.activeTetromino[r][c]) continue;
-        // Eğer kilitlenme anında blok tamamen ekranın üst sınırındaysa oyun biter
-        if (this.y + r < 0) {
-          endGame(false);
-          return;
+        
+        let finalY = this.y + r;
+        // Eğer kilitlenen blok en üst satıra sıkışmışsa oyun biter
+        if (finalY <= 0) {
+          hitCeiling = true;
         }
-        board[this.y + r][this.x + c] = { color: this.color, symbol: this.symbol };
+        if (finalY >= 0 && finalY < ROW) {
+          board[finalY][this.x + c] = { color: this.color, symbol: this.symbol };
+        }
       }
     }
     
-    // Satır patlatma kontrolü
+    if (hitCeiling) {
+      endGame(false);
+      return;
+    }
+    
+    // Satır Temizleme Kontrolü
     for (let r = 0; r < ROW; r++) {
       let isRowFull = true;
       for (let c = 0; c < COL; c++) {
@@ -338,11 +341,6 @@ title: Protetris - Crypto Arcade
       }
     }
     drawLayout();
-
-    // Yeni doğan bloğun hemen kilitlenmesini engellemek için anlık check esnetildi
-    if (p && p.y >= 0 && p.collision(0, 0, p.activeTetromino)) {
-      endGame(false);
-    }
   };
 
   function randomPiece() {
