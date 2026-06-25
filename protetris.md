@@ -103,8 +103,8 @@ title: Protetris - Crypto Arcade
 </style>
 
 <div class="arcade-container">
-  <h1 style="text-align:center; font-size: 20px; color: #ffffff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">🧩 PROTETRIS COIN STATION</h1>
-  <p style="text-align:center; font-size: 11px; color: #94a3b8; margin: 0 0 15px 0; text-transform: uppercase;">1 Minute Blitz: Clear rows to mine points allocation.</p>
+  <h1 style="text-align:center; font-size: 20px; color: #ffffff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">🧩 PROTETRIS CRYPTO BLITZ</h1>
+  <p style="text-align:center; font-size: 11px; color: #94a3b8; margin: 0 0 15px 0; text-transform: uppercase;">Mine Crypto Blocks: Clear rows before 1-minute expires.</p>
 
   <div class="game-header">
     <div>TIME: <span id="gameTimer" class="timer-val">01:00</span></div>
@@ -113,7 +113,7 @@ title: Protetris - Crypto Arcade
 
   <div class="canvas-wrapper">
     <canvas id="tetris" width="240" height="480"></canvas>
-    <button id="startOverlayBtn" class="canvas-overlay-btn">START MATRIX</button>
+    <button id="startOverlayBtn" class="canvas-overlay-btn">START MINING</button>
   </div>
 
   <div class="d-pad">
@@ -175,21 +175,25 @@ title: Protetris - Crypto Arcade
     }
   }
 
-  function drawSquare(x, y, color) {
+  function drawSquare(x, y, color, symbol = "") {
     if (x < 0 || x >= COL || y < 0 || y >= ROW) return;
+    
+    // Arka plan rengini bas
     context.fillStyle = color;
     context.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
     
+    // Neon ızgara çizgileri
     context.strokeStyle = "#1a1b23";
     context.lineWidth = 1;
     context.strokeRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 
-    if (color !== VACANT) {
+    // Kripto simgelerini ortalayarak bas
+    if (color !== VACANT && symbol) {
       context.fillStyle = "#ffffff";
       context.font = "11px Arial";
       context.textAlign = "center";
       context.textBaseline = "middle";
-      context.fillText("🪙", (x * BLOCK_SIZE) + (BLOCK_SIZE / 2), (y * BLOCK_SIZE) + (BLOCK_SIZE / 2));
+      context.fillText(symbol, (x * BLOCK_SIZE) + (BLOCK_SIZE / 2), (y * BLOCK_SIZE) + (BLOCK_SIZE / 2));
     }
   }
 
@@ -199,16 +203,22 @@ title: Protetris - Crypto Arcade
 
     for (let r = 0; r < ROW; r++) {
       for (let c = 0; c < COL; c++) {
-        drawSquare(c, r, board[r][c]);
+        // Tahtaya sabitlenmiş blokların kendi rengi ve simgeleri basılır
+        let cell = board[r][c];
+        if (cell === VACANT) {
+          drawSquare(c, r, VACANT);
+        } else {
+          drawSquare(c, r, cell.color, cell.symbol);
+        }
       }
     }
     
+    // Aktif düşen bloğu çiz
     if (isPlaying && p && !isCountingDown) {
       p.draw();
     }
   }
 
-  // Yeniden düzenlenen sadeleştirilmiş matris yapıları
   const PIECES = [
     [[[0,1,0,0],[0,1,0,0],[0,1,0,0],[0,1,0,0]], [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]]], // I
     [[[0,1,0],[1,1,1],[0,0,0]], [[0,1,0],[0,1,1],[0,1,0]], [[0,0,0],[1,1,1],[0,1,0]], [[0,1,0],[1,1,0],[0,1,0]]], // T
@@ -219,15 +229,19 @@ title: Protetris - Crypto Arcade
     [[[1,1],[1,1]]] // O
   ];
   
-  const COLORS = ["#00f0ff", "#ff007a", "#00ff88", "#ffb700", "#9d00ff", "#ff003c", "#0026ff"];
+  // Neon renkler ve onlara özel Kripto simge eşleşmeleri
+  const COLORS = ["#00f0ff", "#ff007a", "#00ff88", "#ffb700", "#9d00ff", "#ff003c", "#3300ff"];
+  const SYMBOLS = ["🪙", "💎", "⚡", "🚀", "📈", "🔗", "🧱"];
 
-  function Piece(tetromino, color) {
+  function Piece(tetromino, color, symbol) {
     this.tetromino = tetromino;
     this.color = color;
+    this.symbol = symbol;
     this.tetrominoN = 0;
     this.activeTetromino = this.tetromino[this.tetrominoN];
     this.x = 4;
-    this.y = 0;
+    // Doğuş esnasında çarpışma bug'ını engellemek için y pozisyonu dengelendi
+    this.y = -1; 
   }
 
   Piece.prototype.draw = function() {
@@ -235,7 +249,7 @@ title: Protetris - Crypto Arcade
     for (let r = 0; r < this.activeTetromino.length; r++) {
       for (let c = 0; c < this.activeTetromino[r].length; c++) {
         if (this.activeTetromino[r][c]) {
-          drawSquare(this.x + c, this.y + r, this.color);
+          drawSquare(this.x + c, this.y + r, this.color, this.symbol);
         }
       }
     }
@@ -287,7 +301,7 @@ title: Protetris - Crypto Arcade
         let newX = this.x + c + x;
         let newY = this.y + r + y;
         if (newX < 0 || newX >= COL || newY >= ROW) return true;
-        if (newY < 0) continue;
+        if (newY < 0) continue; // Tavan kontrolü esnetildi
         if (board[newY][newX] !== VACANT) return true;
       }
     }
@@ -299,14 +313,16 @@ title: Protetris - Crypto Arcade
     for (let r = 0; r < this.activeTetromino.length; r++) {
       for (let c = 0; c < this.activeTetromino[r].length; c++) {
         if (!this.activeTetromino[r][c]) continue;
+        // Eğer kilitlenme anında blok tamamen ekranın üst sınırındaysa oyun biter
         if (this.y + r < 0) {
           endGame(false);
           return;
         }
-        board[this.y + r][this.x + c] = this.color;
+        board[this.y + r][this.x + c] = { color: this.color, symbol: this.symbol };
       }
     }
     
+    // Satır patlatma kontrolü
     for (let r = 0; r < ROW; r++) {
       let isRowFull = true;
       for (let c = 0; c < COL; c++) {
@@ -323,14 +339,15 @@ title: Protetris - Crypto Arcade
     }
     drawLayout();
 
-    if (p && p.collision(0, 0, p.activeTetromino)) {
+    // Yeni doğan bloğun hemen kilitlenmesini engellemek için anlık check esnetildi
+    if (p && p.y >= 0 && p.collision(0, 0, p.activeTetromino)) {
       endGame(false);
     }
   };
 
   function randomPiece() {
     let r = Math.floor(Math.random() * PIECES.length);
-    return new Piece(PIECES[r], COLORS[r]);
+    return new Piece(PIECES[r], COLORS[r], SYMBOLS[r]);
   }
 
   let p = null;
@@ -373,12 +390,17 @@ title: Protetris - Crypto Arcade
       context.fillRect(0, 0, canvas.width, canvas.height);
       for (let r = 0; r < ROW; r++) {
         for (let c = 0; c < COL; c++) {
-          drawSquare(c, r, board[r][c]);
+          let cell = board[r][c];
+          if (cell !== VACANT) {
+            drawSquare(c, r, cell.color, cell.symbol);
+          } else {
+            drawSquare(c, r, VACANT);
+          }
         }
       }
       
       context.fillStyle = "#ff007a";
-      context.font = "bold 32px sans-serif";
+      context.font = "bold 34px sans-serif";
       context.textAlign = "center";
       context.textBaseline = "middle";
       
