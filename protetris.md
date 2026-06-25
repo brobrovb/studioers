@@ -142,7 +142,6 @@ title: Protetris - Crypto Arcade
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, doc, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  // Configuration Sync matching Main Engine
   const firebaseConfig = {
     apiKey: "AIzaSyDi7xosmyNGJELn4KOpe8QEg5tNewkIsEc",
     authDomain: "studioers-arcade.firebaseapp.com",
@@ -160,24 +159,21 @@ title: Protetris - Crypto Arcade
   let currentUser = null;
   onAuthStateChanged(auth, (user) => { currentUser = user; });
 
-  // Tetris Engine Parameters
   const canvas = document.getElementById('tetris');
   const context = canvas.getContext('2d');
-  context.scale(20, 20); // Scale logic coordinates to physical pixels
+  context.scale(20, 20);
 
   const ROW = 24;
   const COL = 12;
   const VACANT = "#13141c"; 
 
-  // Game Lifecycle Variables
   let score = 0;
-  let gameDuration = 180; // 3 Minutes Matrix Lifecycle
+  let gameDuration = 180;
   let timerInterval = null;
   let gameInterval = null;
   let isPlaying = false;
-
-  // Board Architecture Initialization
   let board = [];
+
   function initBoard() {
     for (let r = 0; r < ROW; r++) {
       board[r] = [];
@@ -187,7 +183,6 @@ title: Protetris - Crypto Arcade
     }
   }
 
-  // Draw Block Unit
   function drawSquare(x, y, color) {
     context.fillStyle = color;
     context.fillRect(x, y, 1, 1);
@@ -196,15 +191,19 @@ title: Protetris - Crypto Arcade
     context.strokeRect(x, y, 1, 1);
   }
 
-  function drawBoard() {
+  // Ekranı temizleyip her şeyi sıfırdan çizen ana render fonksiyonu
+  function drawLayout() {
+    context.clearRect(0, 0, COL, ROW); // Canvas'ı temizler, akışı pürüzsüzleştirir
     for (let r = 0; r < ROW; r++) {
       for (let c = 0; c < COL; c++) {
         drawSquare(c, r, board[r][c]);
       }
     }
+    if (isPlaying && p) {
+      p.draw();
+    }
   }
 
-  // Tetromino Matrix Shapes & Theme Palettes
   const PIECES = [
     [[1,1,1,1], [0,0,0,0], [0,0,0,0], [0,0,0,0]], // I
     [[1,1,1], [0,1,0], [0,0,0]],                 // T
@@ -222,27 +221,23 @@ title: Protetris - Crypto Arcade
     this.activeTetromino = this.tetromino[0];
     this.tetrominoN = 0;
     this.x = 4;
-    this.y = -2;
+    this.y = 0; // Taşma problemini çözmek için başlangıç noktası düzeltildi
   }
 
-  Piece.prototype.fill = function(color) {
+  Piece.prototype.draw = function() {
     for (let r = 0; r < this.activeTetromino.length; r++) {
       for (let c = 0; c < this.activeTetromino[r].length; c++) {
         if (this.activeTetromino[r][c]) {
-          drawSquare(this.x + c, this.y + r, color);
+          drawSquare(this.x + c, this.y + r, this.color);
         }
       }
     }
   };
 
-  Piece.prototype.draw = function() { this.fill(this.color); };
-  Piece.prototype.unlet = function() { this.fill(VACANT); };
-
   Piece.prototype.moveDown = function() {
     if (!this.collision(0, 1, this.activeTetromino)) {
-      this.unlet();
       this.y++;
-      this.draw();
+      drawLayout();
     } else {
       this.lock();
       p = randomPiece();
@@ -251,27 +246,24 @@ title: Protetris - Crypto Arcade
 
   Piece.prototype.moveRight = function() {
     if (!this.collision(1, 0, this.activeTetromino)) {
-      this.unlet();
       this.x++;
-      this.draw();
+      drawLayout();
     }
   };
 
   Piece.prototype.moveLeft = function() {
     if (!this.collision(-1, 0, this.activeTetromino)) {
-      this.unlet();
       this.x--;
-      this.draw();
+      drawLayout();
     }
   };
 
   Piece.prototype.rotate = function() {
     let nextPattern = this.tetromino[(this.tetrominoN + 1) % this.tetromino.length];
     if (!this.collision(0, 0, nextPattern)) {
-      this.unlet();
       this.tetrominoN = (this.tetrominoN + 1) % this.tetromino.length;
       this.activeTetromino = nextPattern;
-      this.draw();
+      drawLayout();
     }
   };
 
@@ -294,13 +286,14 @@ title: Protetris - Crypto Arcade
       for (let c = 0; c < this.activeTetromino[r].length; c++) {
         if (!this.activeTetromino[r][c]) continue;
         if (this.y + r < 0) {
-          endGame(false); // Matrix Overlap implies Game Over state
+          endGame(false);
           return;
         }
         board[this.y + r][this.x + c] = this.color;
       }
     }
-    // Row elimination logic & score tracking
+    
+    // Satır patlatma algoritması
     for (let r = 0; r < ROW; r++) {
       let isRowFull = true;
       for (let c = 0; c < COL; c++) {
@@ -311,11 +304,16 @@ title: Protetris - Crypto Arcade
           board[y] = [...board[y-1]];
         }
         board[0] = Array(COL).fill(VACANT);
-        score += 100; // Credited per line clear completion
+        score += 100;
         document.getElementById('gameScore').innerText = score;
       }
     }
-    drawBoard();
+    drawLayout();
+
+    // Yeni gelen taş anında çarparsa oyunu bitir
+    if (p.collision(0, 0, p.activeTetromino)) {
+      endGame(false);
+    }
   };
 
   function randomPiece() {
@@ -323,9 +321,8 @@ title: Protetris - Crypto Arcade
     return new Piece(PIECES[r], COLORS[r]);
   }
 
-  let p = randomPiece();
+  let p = null;
 
-  // Unified Game Over Processing & Rewards Allocation Engine
   function endGame(timeExpired = false) {
     isPlaying = false;
     clearInterval(gameInterval);
@@ -333,7 +330,6 @@ title: Protetris - Crypto Arcade
     document.getElementById('startBtn').disabled = false;
     document.getElementById('startBtn').innerText = "RUN MATRIX AGAIN";
 
-    // Reward conversion blueprint (100 Matrix Score = 0.10 Arcade Points Allocation)
     const dynamicReward = parseFloat((score * 0.001).toFixed(2));
 
     if (timeExpired) {
@@ -356,7 +352,6 @@ title: Protetris - Crypto Arcade
     }
   }
 
-  // Execution Lifecycle Loop Starter
   function startGame() {
     if (isPlaying) return;
     initBoard();
@@ -368,14 +363,13 @@ title: Protetris - Crypto Arcade
     document.getElementById('startBtn').innerText = "MATRIX ENGAGED";
 
     p = randomPiece();
-    drawBoard();
+    drawLayout();
 
-    // Standard Game Loop Execution Frequency
+    // Aşağı akış hız döngüsü (450ms standardı)
     gameInterval = setInterval(() => {
-      p.moveDown();
+      if (isPlaying) p.moveDown();
     }, 450);
 
-    // Dynamic Telemetry Clock
     timerInterval = setInterval(() => {
       gameDuration--;
       let mins = Math.floor(gameDuration / 60);
@@ -388,7 +382,6 @@ title: Protetris - Crypto Arcade
     }, 1000);
   }
 
-  // Native Control Listeners Mapping
   document.getElementById('startBtn').addEventListener('click', startGame);
 
   document.addEventListener('keydown', (e) => {
@@ -399,14 +392,12 @@ title: Protetris - Crypto Arcade
     else if (e.key === "ArrowDown" || e.key.toLowerCase() === "s") p.moveDown();
   });
 
-  // Mobile Cross-Platform Component Event Listeners
   document.getElementById('btnLeft').addEventListener('click', () => { if (isPlaying) p.moveLeft(); });
   document.getElementById('btnRight').addEventListener('click', () => { if (isPlaying) p.moveRight(); });
   document.getElementById('btnRotate').addEventListener('click', () => { if (isPlaying) p.rotate(); });
   document.getElementById('btnDown').addEventListener('click', () => { if (isPlaying) p.moveDown(); });
   document.getElementById('btnUp').addEventListener('click', () => {
     if (isPlaying) {
-      // Hard Drop Mechanic loop
       while (!p.collision(0, 1, p.activeTetromino)) {
         p.y++;
       }
