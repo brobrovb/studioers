@@ -27,21 +27,20 @@ title: Protetris - Crypto Arcade
 
   .game-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
-    max-width: 240px;
+    max-width: 192px;
     background: #242632;
     border: 1px solid #2f3245;
     padding: 8px 12px;
     border-radius: 6px;
     margin-bottom: 15px;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 14px;
     text-transform: uppercase;
     box-sizing: border-box;
   }
   .stat-val { color: #00f0ff; }
-  .timer-val { color: #ff007a; }
 
   .canvas-wrapper {
     position: relative;
@@ -49,8 +48,8 @@ title: Protetris - Crypto Arcade
     border: 3px solid #2f3245;
     border-radius: 8px;
     box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
-    width: 240px;
-    height: 480px;
+    width: 192px;
+    height: 240px;
   }
   
   canvas {
@@ -66,15 +65,16 @@ title: Protetris - Crypto Arcade
     background: #00e5ff;
     color: #000;
     border: none;
-    padding: 15px 25px;
+    padding: 12px 20px;
     font-weight: bold;
     border-radius: 6px;
     cursor: pointer;
     text-transform: uppercase;
     box-shadow: 0 4px 0 #00a8bc;
-    font-size: 14px;
+    font-size: 12px;
     letter-spacing: 1px;
     z-index: 10;
+    white-space: nowrap;
   }
   .canvas-overlay-btn:active { transform: translate(-50%, -48%); box-shadow: 0 2px 0 #00a8bc; }
   
@@ -83,7 +83,7 @@ title: Protetris - Crypto Arcade
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     width: 100%;
-    max-width: 240px;
+    max-width: 192px;
     margin-top: 15px;
   }
   .pad-btn {
@@ -103,16 +103,15 @@ title: Protetris - Crypto Arcade
 </style>
 
 <div class="arcade-container">
-  <h1 style="text-align:center; font-size: 20px; color: #ffffff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">🧩 PROTETRIS CRYPTO BLITZ</h1>
-  <p style="text-align:center; font-size: 11px; color: #94a3b8; margin: 0 0 15px 0; text-transform: uppercase;">Mine Crypto Blocks: Clear rows before 1-minute expires.</p>
+  <h1 style="text-align:center; font-size: 18px; color: #ffffff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">🧩 PROTETRIS CRYPTO</h1>
+  <p style="text-align:center; font-size: 11px; color: #94a3b8; margin: 0 0 15px 0; text-transform: uppercase;">8x10 Grid Endless Mining Mode</p>
 
   <div class="game-header">
-    <div>TIME: <span id="gameTimer" class="timer-val">01:00</span></div>
     <div>SCORE: <span id="gameScore" class="stat-val">0</span></div>
   </div>
 
   <div class="canvas-wrapper">
-    <canvas id="tetris" width="240" height="480"></canvas>
+    <canvas id="tetris" width="192" height="240"></canvas>
     <button id="startOverlayBtn" class="canvas-overlay-btn">START MINING</button>
   </div>
 
@@ -152,14 +151,13 @@ title: Protetris - Crypto Arcade
   const context = canvas.getContext('2d');
   const startOverlayBtn = document.getElementById('startOverlayBtn');
 
-  const BLOCK_SIZE = 20;
-  const ROW = 24;
-  const COL = 12;
+  // YENİ 8x10 GRID YAPISI VE DENGELİ BLOK BOYUTU
+  const BLOCK_SIZE = 24;
+  const ROW = 10;
+  const COL = 8;
   const VACANT = "#13141c"; 
 
   let score = 0;
-  let gameDuration = 60; 
-  let timerInterval = null;
   let gameInterval = null;
   let isPlaying = false;
   let isCountingDown = false;
@@ -187,7 +185,7 @@ title: Protetris - Crypto Arcade
 
     if (color !== VACANT && symbol) {
       context.fillStyle = "#ffffff";
-      context.font = "11px Arial";
+      context.font = "13px Arial";
       context.textAlign = "center";
       context.textBaseline = "middle";
       context.fillText(symbol, (x * BLOCK_SIZE) + (BLOCK_SIZE / 2), (y * BLOCK_SIZE) + (BLOCK_SIZE / 2));
@@ -214,6 +212,7 @@ title: Protetris - Crypto Arcade
     }
   }
 
+  // 8x10 için optimize edilmiş kompakt rotasyon matrisleri
   const PIECES = [
     [[[0,1,0,0],[0,1,0,0],[0,1,0,0],[0,1,0,0]], [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]]], // I
     [[[0,1,0],[1,1,1],[0,0,0]], [[0,1,0],[0,1,1],[0,1,0]], [[0,0,0],[1,1,1],[0,1,0]], [[0,1,0],[1,1,0],[0,1,0]]], // T
@@ -233,8 +232,8 @@ title: Protetris - Crypto Arcade
     this.symbol = symbol;
     this.tetrominoN = 0;
     this.activeTetromino = this.tetromino[this.tetrominoN];
-    this.x = 4;
-    this.y = 0; // Doğuş noktası tavana değmeyecek şekilde sıfırlandı
+    this.x = 3; // 8 kolon olduğu için ortalama noktası 3 yapıldı
+    this.y = 0;
   }
 
   Piece.prototype.draw = function() {
@@ -310,7 +309,6 @@ title: Protetris - Crypto Arcade
         if (!this.activeTetromino[r][c]) continue;
         
         let finalY = this.y + r;
-        // Eğer kilitlenen blok en üst satıra sıkışmışsa oyun biter
         if (finalY <= 0) {
           hitCeiling = true;
         }
@@ -321,11 +319,11 @@ title: Protetris - Crypto Arcade
     }
     
     if (hitCeiling) {
-      endGame(false);
+      endGame();
       return;
     }
     
-    // Satır Temizleme Kontrolü
+    // Satır Patlatma Mantığı
     for (let r = 0; r < ROW; r++) {
       let isRowFull = true;
       for (let c = 0; c < COL; c++) {
@@ -350,21 +348,17 @@ title: Protetris - Crypto Arcade
 
   let p = null;
 
-  function endGame(timeExpired = false) {
+  function endGame() {
     isPlaying = false;
     clearInterval(gameInterval);
-    clearInterval(timerInterval);
     startOverlayBtn.style.display = "block";
     startOverlayBtn.innerText = "RUN AGAIN";
 
     const dynamicReward = parseFloat((score * 0.001).toFixed(2));
 
-    if (timeExpired) {
-      alert(`⏱️ TIME EXPIRED! Match score: ${score}. Processing calculation...`);
-    } else {
-      alert(`💥 MATRIX COLLAPSE! Game over. Match score: ${score}. Processing calculation...`);
-    }
+    alert(`💥 MATRIX COLLAPSE! Match score: ${score}. Sycing rewards with db...`);
 
+    // SKORU VE BAKİYEYİ VERİTABANINA GÜVENLİ TRANSACTION İLE YAZMA
     if (dynamicReward > 0 && currentUser) {
       const userRef = doc(db, "users", currentUser.uid);
       runTransaction(db, async (transaction) => {
@@ -372,10 +366,10 @@ title: Protetris - Crypto Arcade
         let currentBalance = userDoc.exists() ? (userDoc.data().balance || 0) : 0;
         transaction.update(userRef, { balance: currentBalance + dynamicReward });
       }).then(() => {
-        alert(`🎁 SUCCESS! +${dynamicReward} Points safely added to your wallet allocation account.`);
+        alert(`🎁 SUCCESS! +${dynamicReward} Points allocation synced to your user balance.`);
       }).catch(err => console.error("Database sync runtime failure:", err));
     } else if (!currentUser) {
-      alert("⚠️ NOTICE: You are not authenticated. Session score discarded!");
+      alert("⚠️ NOTICE: You are not authenticated. Score cannot be recorded.");
     }
   }
 
@@ -398,7 +392,7 @@ title: Protetris - Crypto Arcade
       }
       
       context.fillStyle = "#ff007a";
-      context.font = "bold 34px sans-serif";
+      context.font = "bold 26px sans-serif";
       context.textAlign = "center";
       context.textBaseline = "middle";
       
@@ -424,9 +418,7 @@ title: Protetris - Crypto Arcade
     startOverlayBtn.style.display = "none";
     initBoard();
     score = 0;
-    gameDuration = 60;
     document.getElementById('gameScore').innerText = score;
-    document.getElementById('gameTimer').innerText = "01:00";
 
     runStartCountdown(() => {
       isPlaying = true;
@@ -435,18 +427,7 @@ title: Protetris - Crypto Arcade
 
       gameInterval = setInterval(() => {
         if (isPlaying && !isCountingDown) p.moveDown();
-      }, 450);
-
-      timerInterval = setInterval(() => {
-        gameDuration--;
-        let mins = Math.floor(gameDuration / 60);
-        let secs = gameDuration % 60;
-        document.getElementById('gameTimer').innerText = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
-
-        if (gameDuration <= 0) {
-          endGame(true);
-        }
-      }, 1000);
+      }, 500); // 8x10 alanda daha dengeli bir akış hızı
     });
   }
 
