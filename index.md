@@ -4,21 +4,39 @@ title: Free Crypto Arcade
 ---
 
 <style>
-  /* Global CSS Styling & Responsive Design */
-  html, body, .site-header, .site-footer, .page-content, .wrapper {
+  /* Global CSS Styling & absolute mobile constraint */
+  html, body {
     background-color: #1a1b23 !important;
     color: #e2e8f0 !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     box-sizing: border-box;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    overflow-x: hidden !important; /* Force hide horizontal scrollbar at root */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  *, *:before, *:after {
+    box-sizing: inherit;
   }
   
-  /* Prevent horizontal overflow on mobile screens */
+  /* Force all possible Jekyll theme wrapper classes to stay within viewport bounds */
+  .site-header, .site-footer, .page-content, .wrapper, .arcade-body {
+    background-color: #1a1b23 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  /* Core content wrapper max-width boundaries for desktop view */
   .wrapper { 
     max-width: 1200px !important; 
     box-shadow: none !important; 
     border: none !important; 
     padding: 0 12px !important;
-    overflow-x: hidden;
   }
   
   .site-title, .site-title:visited, .site-nav .page-link { 
@@ -29,8 +47,6 @@ title: Free Crypto Arcade
   
   .arcade-body { 
     padding: 10px 0; 
-    width: 100%;
-    overflow-x: hidden;
   }
 
   /* Authentication Bar - Flexible Layout */
@@ -44,6 +60,7 @@ title: Free Crypto Arcade
     border: 1px solid #2f3245;
     margin-bottom: 20px;
     gap: 10px;
+    width: 100%;
   }
   .user-info { 
     display: flex; 
@@ -75,6 +92,7 @@ title: Free Crypto Arcade
     justify-content: space-between; 
     margin-bottom: 25px; 
     flex-wrap: wrap; 
+    width: 100%;
   }
   .stat-card { 
     background: #242632; 
@@ -110,6 +128,7 @@ title: Free Crypto Arcade
     gap: 12px; 
     align-items: center; 
     box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
+    width: 100%;
   }
   .rc-game-image { 
     width: 70px; 
@@ -139,19 +158,21 @@ title: Free Crypto Arcade
   .rc-start-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #00a8bc; }
 
   /* Faucet Reward Area */
-  .faucet-section { margin: 30px 0; padding: 20px 15px; background: #242632; border: 2px dashed #ff007a; border-radius: 8px; text-align: center; }
+  .faucet-section { margin: 30px 0; padding: 20px 15px; background: #242632; border: 2px dashed #ff007a; border-radius: 8px; text-align: center; width: 100%; }
   .faucet-btn { background: #ff007a; color: #fff; border: none; padding: 10px 35px; font-size: 14px; border-radius: 6px; cursor: pointer; font-weight: bold; text-transform: uppercase; box-shadow: 0 4px 0 #b00052; max-width: 100%; }
   .faucet-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #b00052; }
   .faucet-btn:disabled { background: #4e5268 !important; box-shadow: none !important; cursor: not-allowed; color: #aaa; }
 
-  /* Media Queries for Mobile Display Standardization */
+  /* Media Queries for Absolute Mobile Screen Control */
   @media (max-width: 580px) {
     h1 { font-size: 18px !important; margin-bottom: 15px !important; }
-    .stat-card { min-width: 45%; padding: 10px; }
-    .stat-card.balance-card { min-width: 100%; }
-    .stat-card p { font-size: 15px; }
-    .rc-game-card { padding: 10px; gap: 10px; }
-    .rc-game-image { width: 60px; height: 60px; font-size: 24px; }
+    .stats-container { gap: 8px !important; }
+    .stat-card { min-width: 47% !important; padding: 10px !important; }
+    .stat-card.balance-card { min-width: 100% !important; }
+    .stat-card p { font-size: 15px !important; }
+    .game-grid { grid-template-columns: 1fr !important; gap: 12px !important; } /* Force single column on narrow mobile */
+    .rc-game-card { padding: 10px !important; gap: 10px !important; }
+    .rc-game-image { width: 60px !important; height: 60px !important; font-size: 24px !important; }
   }
 </style>
 
@@ -295,10 +316,8 @@ title: Free Crypto Arcade
   const userPowerText = document.getElementById('userPower');
   const userBalanceText = document.getElementById('userBalance');
 
-  // Device Detection for Cross-Platform Authentication Routing
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
 
-  // Handle Redirect Result for Mobile Browsers
   if (isMobile) {
     getRedirectResult(auth)
       .then((result) => {
@@ -311,7 +330,6 @@ title: Free Crypto Arcade
       });
   }
 
-  // Active Authentication State Observer
   onAuthStateChanged(auth, (user) => {
     if (user) {
       currentUser = user;
@@ -341,7 +359,6 @@ title: Free Crypto Arcade
     }
   });
 
-  // Hybrid Authentication Controller (Redirect for Mobile / Popup for Desktop)
   authBtn.addEventListener('click', () => {
     if (!currentUser) {
       if (isMobile) {
@@ -361,7 +378,6 @@ title: Free Crypto Arcade
     }
   });
 
-  // Faucet Transaction Handler
   document.getElementById('faucetBtn').addEventListener('click', function() {
     if (!currentUser) {
       alert("Please authenticate using Google before claiming rewards!");
