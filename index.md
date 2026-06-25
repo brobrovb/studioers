@@ -4,7 +4,7 @@ title: Free Crypto Arcade
 ---
 
 <style>
-  /* Global CSS Styling & absolute mobile constraint */
+  /* Global CSS Styling & Absolute Mobile Constraint */
   html, body {
     background-color: #1a1b23 !important;
     color: #e2e8f0 !important;
@@ -13,7 +13,7 @@ title: Free Crypto Arcade
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
-    overflow-x: hidden !important; /* Force hide horizontal scrollbar at root */
+    overflow-x: hidden !important; /* Prevents layout breakdown on mobile viewports */
     -webkit-text-size-adjust: 100%;
   }
 
@@ -21,7 +21,7 @@ title: Free Crypto Arcade
     box-sizing: inherit;
   }
   
-  /* Force all possible Jekyll theme wrapper classes to stay within viewport bounds */
+  /* Force Jekyll theme structure to respect layout boundaries and eliminate hidden padding overflow */
   .site-header, .site-footer, .page-content, .wrapper, .arcade-body {
     background-color: #1a1b23 !important;
     max-width: 100% !important;
@@ -31,7 +31,7 @@ title: Free Crypto Arcade
     margin-right: auto !important;
   }
   
-  /* Core content wrapper max-width boundaries for desktop view */
+  /* Desktop constraints for readability */
   .wrapper { 
     max-width: 1200px !important; 
     box-shadow: none !important; 
@@ -49,7 +49,7 @@ title: Free Crypto Arcade
     padding: 10px 0; 
   }
 
-  /* Authentication Bar - Flexible Layout */
+  /* Authentication Control Bar */
   .auth-bar {
     display: flex;
     justify-content: space-between;
@@ -85,7 +85,7 @@ title: Free Crypto Arcade
   .logout-btn { background: #ff007a; color: #fff; box-shadow: 0 3px 0 #b00052; }
   .logout-btn:active { box-shadow: 0 1px 0 #b00052; }
 
-  /* Dashboard Stats - Adaptive Grid Matrix */
+  /* Dashboard Telemetry Metrics */
   .stats-container { 
     display: flex; 
     gap: 12px; 
@@ -109,7 +109,7 @@ title: Free Crypto Arcade
   .stat-card.balance-card { border-left-color: #ff007a; }
   .stat-card.balance-card p { color: #ff007a; }
 
-  /* Responsive Game Grid Architecture */
+  /* Optimized Responsive Game Grid */
   .game-grid { 
     display: grid; 
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
@@ -118,7 +118,7 @@ title: Free Crypto Arcade
     width: 100%;
   }
   
-  /* Arcade Game Card Styling */
+  /* Individual Game Interface Component */
   .rc-game-card { 
     background: #242632; 
     border: 1px solid #2f3245; 
@@ -157,20 +157,20 @@ title: Free Crypto Arcade
   }
   .rc-start-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #00a8bc; }
 
-  /* Faucet Reward Area */
+  /* Faucet Interaction Space */
   .faucet-section { margin: 30px 0; padding: 20px 15px; background: #242632; border: 2px dashed #ff007a; border-radius: 8px; text-align: center; width: 100%; }
   .faucet-btn { background: #ff007a; color: #fff; border: none; padding: 10px 35px; font-size: 14px; border-radius: 6px; cursor: pointer; font-weight: bold; text-transform: uppercase; box-shadow: 0 4px 0 #b00052; max-width: 100%; }
   .faucet-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #b00052; }
   .faucet-btn:disabled { background: #4e5268 !important; box-shadow: none !important; cursor: not-allowed; color: #aaa; }
 
-  /* Media Queries for Absolute Mobile Screen Control */
+  /* Targeted Media Queries Adjusting Flex Rules For Specific Mobile Widths */
   @media (max-width: 580px) {
     h1 { font-size: 18px !important; margin-bottom: 15px !important; }
     .stats-container { gap: 8px !important; }
     .stat-card { min-width: 47% !important; padding: 10px !important; }
     .stat-card.balance-card { min-width: 100% !important; }
     .stat-card p { font-size: 15px !important; }
-    .game-grid { grid-template-columns: 1fr !important; gap: 12px !important; } /* Force single column on narrow mobile */
+    .game-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
     .rc-game-card { padding: 10px !important; gap: 10px !important; }
     .rc-game-image { width: 60px !important; height: 60px !important; font-size: 24px !important; }
   }
@@ -310,14 +310,18 @@ title: Free Crypto Arcade
   provider.setCustomParameters({ prompt: 'select_account' });
 
   let currentUser = null;
+  let countdownInterval = null;
 
   const authBtn = document.getElementById('authBtn');
   const authUserDiv = document.getElementById('authUser');
   const userPowerText = document.getElementById('userPower');
   const userBalanceText = document.getElementById('userBalance');
+  const faucetBtn = document.getElementById('faucetBtn');
+  const faucetMsg = document.getElementById('faucetMsg');
 
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
 
+  // Sync state post-redirect execution loop on mobile ecosystems
   if (isMobile) {
     getRedirectResult(auth)
       .then((result) => {
@@ -330,6 +334,51 @@ title: Free Crypto Arcade
       });
   }
 
+  // Faucet Countdown Engine Execution Loop
+  function startFaucetCountdown(durationInSeconds) {
+    if (countdownInterval) clearInterval(countdownInterval);
+    
+    faucetBtn.disabled = true;
+    
+    let timer = durationInSeconds;
+    countdownInterval = setInterval(() => {
+      const minutes = Math.floor(timer / 60);
+      const seconds = timer % 60;
+      
+      const displayMinutes = minutes < 10 ? "0" + minutes : minutes;
+      const displaySeconds = seconds < 10 ? "0" + seconds : seconds;
+      
+      faucetBtn.innerText = `NEXT CLAIM IN ${displayMinutes}:${displaySeconds}`;
+      
+      if (--timer < 0) {
+        clearInterval(countdownInterval);
+        faucetBtn.disabled = false;
+        faucetBtn.innerText = "CLAIM BONUS";
+        faucetMsg.innerText = "";
+        localStorage.removeItem('faucetNextClaim');
+      }
+    }, 1000);
+  }
+
+  // Persistent Timer Verification Routine via LocalStorage
+  function checkExistingTimer() {
+    const nextClaimTime = localStorage.getItem('faucetNextClaim');
+    if (nextClaimTime) {
+      const currentTime = Date.now();
+      const timeLeft = Math.floor((parseInt(nextClaimTime) - currentTime) / 1000);
+      
+      if (timeLeft > 0) {
+        startFaucetCountdown(timeLeft);
+      } else {
+        localStorage.removeItem('faucetNextClaim');
+      }
+    }
+  }
+
+  // Establish state check on load lifecycle
+  checkExistingTimer();
+
+  // Active Authentication State Observer
   onAuthStateChanged(auth, (user) => {
     if (user) {
       currentUser = user;
@@ -359,6 +408,7 @@ title: Free Crypto Arcade
     }
   });
 
+  // Adaptive Pop-up Blocker Bypass Router
   authBtn.addEventListener('click', () => {
     if (!currentUser) {
       if (isMobile) {
@@ -378,19 +428,35 @@ title: Free Crypto Arcade
     }
   });
 
-  document.getElementById('faucetBtn').addEventListener('click', function() {
+  // Faucet Transaction Core Mechanics
+  faucetBtn.addEventListener('click', function() {
     if (!currentUser) {
       alert("Please authenticate using Google before claiming rewards!");
       return;
     }
+    
     const userRef = doc(db, "users", currentUser.uid);
+    
+    faucetBtn.disabled = true;
+    faucetBtn.innerText = "PROCESSING...";
+
     runTransaction(db, async (transaction) => {
       const userDoc = await transaction.get(userRef);
       let currentBalance = userDoc.exists() ? (userDoc.data().balance || 0) : 0;
       transaction.update(userRef, { balance: currentBalance + 5.00 });
     }).then(() => {
-      document.getElementById('faucetMsg').innerText = "⚡ Core Refilled! +5.00 Points saved.";
-      this.disabled = true;
-    }).catch(err => console.error("Transaction processing error:", err));
+      faucetMsg.innerText = "⚡ Core Refilled! +5.00 Points saved.";
+      
+      const oneHourInSeconds = 3600;
+      const nextClaimTimestamp = Date.now() + (oneHourInSeconds * 1000);
+      localStorage.setItem('faucetNextClaim', nextClaimTimestamp);
+      
+      startFaucetCountdown(oneHourInSeconds);
+    }).catch(err => {
+      console.error("Transaction processing error:", err);
+      faucetBtn.disabled = false;
+      faucetBtn.innerText = "CLAIM BONUS";
+      faucetMsg.innerText = "Error processing transaction. Try again.";
+    });
   });
 </script>
