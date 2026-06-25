@@ -4,7 +4,6 @@ title: Protetris - Crypto Arcade
 ---
 
 <style>
-  /* Global CSS & Main Layout Constraints */
   html, body {
     background-color: #1a1b23 !important;
     color: #e2e8f0 !important;
@@ -26,7 +25,6 @@ title: Protetris - Crypto Arcade
     background-color: #1a1b23 !important;
   }
 
-  /* Game Telemetry Header */
   .game-header {
     display: flex;
     justify-content: space-between;
@@ -45,13 +43,15 @@ title: Protetris - Crypto Arcade
   .stat-val { color: #00f0ff; }
   .timer-val { color: #ff007a; }
 
-  /* Tetris Display Core */
+  /* Canvas wrapper relative positioning for overlay buttons */
   .canvas-wrapper {
     position: relative;
     background: #13141c;
     border: 3px solid #2f3245;
     border-radius: 8px;
     box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+    width: 240px;
+    height: 480px;
   }
   
   canvas {
@@ -59,29 +59,27 @@ title: Protetris - Crypto Arcade
     background: #13141c !important;
   }
 
-  /* Control Interfaces */
-  .control-panel {
-    margin-top: 15px;
-    width: 100%;
-    max-width: 240px;
-  }
-  .game-btn {
-    width: 100%;
+  /* HTML Start Button Overlay directly inside the Canvas area */
+  .canvas-overlay-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background: #00e5ff;
     color: #000;
     border: none;
-    padding: 12px;
+    padding: 15px 25px;
     font-weight: bold;
     border-radius: 6px;
     cursor: pointer;
     text-transform: uppercase;
     box-shadow: 0 4px 0 #00a8bc;
-    font-size: 13px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    z-index: 10;
   }
-  .game-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #00a8bc; }
-  .game-btn:disabled { background: #4e5268 !important; box-shadow: none !important; color: #aaa; cursor: not-allowed; }
+  .canvas-overlay-btn:active { transform: translate(-50%, -48%); box-shadow: 0 2px 0 #00a8bc; }
   
-  /* Mobile Input D-Pad Matrix */
   .d-pad {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -117,10 +115,7 @@ title: Protetris - Crypto Arcade
 
   <div class="canvas-wrapper">
     <canvas id="tetris" width="240" height="480"></canvas>
-  </div>
-
-  <div class="control-panel">
-    <button id="startBtn" class="game-btn">START MATRIX</button>
+    <button id="startOverlayBtn" class="canvas-overlay-btn">START MATRIX</button>
   </div>
 
   <div class="d-pad">
@@ -157,18 +152,19 @@ title: Protetris - Crypto Arcade
 
   const canvas = document.getElementById('tetris');
   const context = canvas.getContext('2d');
+  const startOverlayBtn = document.getElementById('startOverlayBtn');
 
-  // Core Math Constants - 12 columns x 24 rows, block size 20px
   const BLOCK_SIZE = 20;
   const ROW = 24;
   const COL = 12;
   const VACANT = "#13141c"; 
 
   let score = 0;
-  let gameDuration = 60; // 1 Minute limit
+  let gameDuration = 60; 
   let timerInterval = null;
   let gameInterval = null;
   let isPlaying = false;
+  let isCountingDown = false;
   let board = [];
 
   function initBoard() {
@@ -180,7 +176,6 @@ title: Protetris - Crypto Arcade
     }
   }
 
-  // Ultra lightweight layout drawing system
   function drawSquare(x, y, color) {
     context.fillStyle = color;
     context.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
@@ -189,7 +184,6 @@ title: Protetris - Crypto Arcade
     context.lineWidth = 1;
     context.strokeRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 
-    // Render Coin overlay if block is occupied
     if (color !== VACANT) {
       context.fillStyle = "#ffffff";
       context.font = "12px sans-serif";
@@ -208,7 +202,7 @@ title: Protetris - Crypto Arcade
         drawSquare(c, r, board[r][c]);
       }
     }
-    if (isPlaying && p) {
+    if (isPlaying && p && !isCountingDown) {
       p.draw();
     }
   }
@@ -244,6 +238,7 @@ title: Protetris - Crypto Arcade
   };
 
   Piece.prototype.moveDown = function() {
+    if (isCountingDown) return;
     if (!this.collision(0, 1, this.activeTetromino)) {
       this.y++;
       drawLayout();
@@ -254,6 +249,7 @@ title: Protetris - Crypto Arcade
   };
 
   Piece.prototype.moveRight = function() {
+    if (isCountingDown) return;
     if (!this.collision(1, 0, this.activeTetromino)) {
       this.x++;
       drawLayout();
@@ -261,6 +257,7 @@ title: Protetris - Crypto Arcade
   };
 
   Piece.prototype.moveLeft = function() {
+    if (isCountingDown) return;
     if (!this.collision(-1, 0, this.activeTetromino)) {
       this.x--;
       drawLayout();
@@ -268,6 +265,7 @@ title: Protetris - Crypto Arcade
   };
 
   Piece.prototype.rotate = function() {
+    if (isCountingDown) return;
     let nextPattern = this.tetromino[(this.tetrominoN + 1) % this.tetromino.length];
     if (!this.collision(0, 0, nextPattern)) {
       this.tetrominoN = (this.tetrominoN + 1) % this.tetromino.length;
@@ -334,8 +332,8 @@ title: Protetris - Crypto Arcade
     isPlaying = false;
     clearInterval(gameInterval);
     clearInterval(timerInterval);
-    document.getElementById('startBtn').disabled = false;
-    document.getElementById('startBtn').innerText = "RUN MATRIX AGAIN";
+    startOverlayBtn.style.display = "block";
+    startOverlayBtn.innerText = "RUN AGAIN";
 
     const dynamicReward = parseFloat((score * 0.001).toFixed(2));
 
@@ -359,51 +357,83 @@ title: Protetris - Crypto Arcade
     }
   }
 
-  function startGame() {
-    if (isPlaying) return;
-    initBoard();
-    score = 0;
-    gameDuration = 60; // Reset to exactly 1 minute
-    isPlaying = true;
-    document.getElementById('gameScore').innerText = score;
-    document.getElementById('startBtn').disabled = true;
-    document.getElementById('startBtn').innerText = "MATRIX ENGAGED";
-
-    p = randomPiece();
-    drawLayout();
-
-    gameInterval = setInterval(() => {
-      if (isPlaying) p.moveDown();
-    }, 450);
-
-    timerInterval = setInterval(() => {
-      gameDuration--;
-      let mins = Math.floor(gameDuration / 60);
-      let secs = gameDuration % 60;
-      document.getElementById('gameTimer').innerText = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
-
-      if (gameDuration <= 0) {
-        endGame(true);
+  // Visual 3-2-1 Countdown Loop inside Canvas
+  function runStartCountdown(callback) {
+    isCountingDown = true;
+    let count = 3;
+    
+    let countInterval = setInterval(() => {
+      drawLayout(); // Clear and draw board first
+      
+      // Draw big retro overlay text
+      context.fillStyle = "#ff007a";
+      context.font = "bold 30px 'Segoe UI'";
+      context.textAlign = "center";
+      context.textBaseline = "middle";
+      
+      if (count > 0) {
+        context.fillText(count, (COL * BLOCK_SIZE) / 2, (ROW * BLOCK_SIZE) / 2);
+      } else if (count === 0) {
+        context.fillStyle = "#00ff88";
+        context.fillText("START!", (COL * BLOCK_SIZE) / 2, (ROW * BLOCK_SIZE) / 2);
       }
-    }, 1000);
+
+      count--;
+
+      if (count < -1) {
+        clearInterval(countInterval);
+        isCountingDown = false;
+        callback();
+      }
+    }, 800);
   }
 
-  document.getElementById('startBtn').addEventListener('click', startGame);
+  function startGameEngine() {
+    startOverlayBtn.style.display = "none";
+    initBoard();
+    score = 0;
+    gameDuration = 60;
+    isPlaying = true;
+    document.getElementById('gameScore').innerText = score;
+    document.getElementById('gameTimer').innerText = "01:00";
+
+    runStartCountdown(() => {
+      p = randomPiece();
+      drawLayout();
+
+      gameInterval = setInterval(() => {
+        if (isPlaying) p.moveDown();
+      }, 450);
+
+      timerInterval = setInterval(() => {
+        gameDuration--;
+        let mins = Math.floor(gameDuration / 60);
+        let secs = gameDuration % 60;
+        document.getElementById('gameTimer').innerText = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+
+        if (gameDuration <= 0) {
+          endGame(true);
+        }
+      }, 1000);
+    });
+  }
+
+  startOverlayBtn.addEventListener('click', startGameEngine);
 
   document.addEventListener('keydown', (e) => {
-    if (!isPlaying) return;
+    if (!isPlaying || isCountingDown) return;
     if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a") p.moveLeft();
     else if (e.key === "ArrowUp" || e.key.toLowerCase() === "w") p.rotate();
     else if (e.key === "ArrowRight" || e.key.toLowerCase() === "d") p.moveRight();
     else if (e.key === "ArrowDown" || e.key.toLowerCase() === "s") p.moveDown();
   });
 
-  document.getElementById('btnLeft').addEventListener('click', () => { if (isPlaying) p.moveLeft(); });
-  document.getElementById('btnRight').addEventListener('click', () => { if (isPlaying) p.moveRight(); });
-  document.getElementById('btnRotate').addEventListener('click', () => { if (isPlaying) p.rotate(); });
-  document.getElementById('btnDown').addEventListener('click', () => { if (isPlaying) p.moveDown(); });
+  document.getElementById('btnLeft').addEventListener('click', () => { if (isPlaying && !isCountingDown) p.moveLeft(); });
+  document.getElementById('btnRight').addEventListener('click', () => { if (isPlaying && !isCountingDown) p.moveRight(); });
+  document.getElementById('btnRotate').addEventListener('click', () => { if (isPlaying && !isCountingDown) p.rotate(); });
+  document.getElementById('btnDown').addEventListener('click', () => { if (isPlaying && !isCountingDown) p.moveDown(); });
   document.getElementById('btnUp').addEventListener('click', () => {
-    if (isPlaying) {
+    if (isPlaying && !isCountingDown) {
       while (!p.collision(0, 1, p.activeTetromino)) {
         p.y++;
       }
@@ -412,7 +442,6 @@ title: Protetris - Crypto Arcade
     }
   });
 
-  // İlk açılışta boş alanı çizerek siyah arka planı sabitle
   initBoard();
   drawLayout();
 </script>
