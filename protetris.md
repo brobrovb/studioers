@@ -16,7 +16,7 @@ title: Protetris - Crypto Arcade
     overflow-x: hidden !important;
   }
 
-  /* Normal Modda Kapsayıcı */
+  /* Normal Mode Container */
   .arcade-container {
     max-width: 800px;
     margin: 0 auto;
@@ -25,7 +25,7 @@ title: Protetris - Crypto Arcade
     flex-direction: column;
     align-items: center;
     background-color: #1a1b23 !important;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
   }
 
   .game-ui-top {
@@ -125,7 +125,7 @@ title: Protetris - Crypto Arcade
   }
   .pad-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #13141c; }
 
-  /* --- TAM EKRAN AKTİFKEN DEVREYE GİRECEK CSS --- */
+  /* --- FULLSCREEN STYLES --- */
   .arcade-container.fullscreen-active {
     max-width: 100% !important;
     width: 100vw !important;
@@ -140,7 +140,7 @@ title: Protetris - Crypto Arcade
   }
 
   .fullscreen-active h1, .fullscreen-active p {
-    display: none !important; /* Alan kazanmak için başlıkları gizle */
+    display: none !important;
   }
 
   .fullscreen-active .game-ui-top {
@@ -186,7 +186,7 @@ title: Protetris - Crypto Arcade
 
 <div class="arcade-container" id="arcadeContainer">
   <h1 style="text-align:center; font-size: 18px; color: #ffffff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">🧩 PROTETRIS CRYPTO</h1>
-  <p style="text-align:center; font-size: 11px; color: #94a3b8; margin: 0 0 10px 0; text-transform: uppercase;">Standard 10x20 Endless Mining Mode</p>
+  <p style="text-align:center; font-size: 11px; color: #94a3b8; margin: 0 0 10px 0; text-transform: uppercase;">Standard 10x20 Crypto Mining Mode</p>
 
   <div class="game-ui-top">
     <div class="game-header">
@@ -213,7 +213,7 @@ title: Protetris - Crypto Arcade
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getFirestore, doc, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore, doc, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"; // Firestore importunu sabitledik
 
   const firebaseConfig = {
     apiKey: "AIzaSyDi7xosmyNGJELn4KOpe8QEg5tNewkIsEc",
@@ -227,7 +227,7 @@ title: Protetris - Crypto Arcade
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-  const db = getFirestore(app);
+  // Firestore entegrasyonu projenin geri kalanına göre dinamik bağlanabilir
 
   let currentUser = null;
   onAuthStateChanged(auth, (user) => { currentUser = user; });
@@ -238,7 +238,6 @@ title: Protetris - Crypto Arcade
   const container = document.getElementById('arcadeContainer');
   const fsToggleBtn = document.getElementById('fsToggleBtn');
 
-  // CORE SETTINGS
   const ROW = 20;
   const COL = 10;
   const VACANT = "#13141c"; 
@@ -251,7 +250,7 @@ title: Protetris - Crypto Arcade
   let board = [];
   let isFullscreenMode = false;
 
-  // DINAMIK EKRAN ÖLÇEKLENDİRME MOTORU
+  // DYNAMIC RESIZE ENGINE
   function resizeGame() {
     if (isFullscreenMode) {
       const maxBlockW = Math.floor(window.innerWidth / COL);
@@ -269,7 +268,7 @@ title: Protetris - Crypto Arcade
 
   window.addEventListener('resize', resizeGame);
 
-  // MANUEL TAM EKRAN GEÇİŞ BUTONU
+  // FULLSCREEN ENGINE WITH FALLBACKS
   fsToggleBtn.addEventListener('click', () => {
     toggleFullscreen(!isFullscreenMode);
   });
@@ -284,9 +283,12 @@ title: Protetris - Crypto Arcade
     } else {
       container.classList.remove('fullscreen-active');
       fsToggleBtn.innerText = "📺 FULL";
-      if (document.exitFullscreen && document.fullscreenElement) document.exitFullscreen().catch(() => {});
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      }
     }
-    setTimeout(resizeGame, 100);
+    setTimeout(resizeGame, 150); // Sync layouts
   }
 
   function initBoard() {
@@ -299,22 +301,37 @@ title: Protetris - Crypto Arcade
     }
   }
 
-  function drawSquare(x, y, color, symbol = "") {
+  // CRYPTO LOGO ENGINE (HIGH QUALITY VECTOR DRAWING)
+  function drawSquare(x, y, color, cryptoInfo = null) {
     if (x < 0 || x >= COL || y < 0 || y >= ROW) return;
     
+    // Base block background
     context.fillStyle = color;
     context.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
     
+    // Block grid border
     context.strokeStyle = "#1a1b23";
     context.lineWidth = 1;
     context.strokeRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 
-    if (color !== VACANT && symbol) {
-      context.fillStyle = "#ffffff";
-      context.font = `bold ${Math.floor(BLOCK_SIZE * 0.55)}px Arial`;
+    // Render internal vector badge if piece is active or locked
+    if (color !== VACANT && cryptoInfo) {
+      const centerX = (x * BLOCK_SIZE) + (BLOCK_SIZE / 2);
+      const centerY = (y * BLOCK_SIZE) + (BLOCK_SIZE / 2);
+      const radius = BLOCK_SIZE * 0.38;
+
+      // Draw standard inner token circle boundary
+      context.beginPath();
+      context.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+      context.fillStyle = cryptoInfo.bg || "rgba(255,255,255,0.15)";
+      context.fill();
+
+      // Draw stylized text token ticker indicator
+      context.fillStyle = cryptoInfo.textColor || "#ffffff";
+      context.font = `bold ${Math.floor(BLOCK_SIZE * 0.42)}px 'Arial Black', sans-serif`;
       context.textAlign = "center";
       context.textBaseline = "middle";
-      context.fillText(symbol, (x * BLOCK_SIZE) + (BLOCK_SIZE / 2), (y * BLOCK_SIZE) + (BLOCK_SIZE / 2));
+      context.fillText(cryptoInfo.ticker, centerX, centerY);
     }
   }
 
@@ -328,7 +345,7 @@ title: Protetris - Crypto Arcade
         if (cell === VACANT) {
           drawSquare(c, r, VACANT);
         } else {
-          drawSquare(c, r, cell.color, cell.symbol);
+          drawSquare(c, r, cell.color, cell.crypto);
         }
       }
     }
@@ -348,13 +365,21 @@ title: Protetris - Crypto Arcade
     [[[1,1],[1,1]]] 
   ];
   
-  const COLORS = ["#00f0ff", "#ff007a", "#00ff88", "#ffb700", "#9d00ff", "#ff003c", "#3300ff"];
-  const SYMBOLS = ["🪙", "💎", "⚡", "🚀", "📈", "🔗", "🧱"];
+  // Custom asset registry for crypto identities
+  const CRYPTO_ASSETS = [
+    { color: "#f2a900", crypto: { ticker: "₿", bg: "#ffffff", textColor: "#f2a900" } },  // BTC
+    { color: "#3c3c3d", crypto: { ticker: "Ξ", bg: "#627eea", textColor: "#ffffff" } },  // ETH
+    { color: "#006097", crypto: { ticker: "✕", bg: "#ffffff", textColor: "#006097" } },  // XRP
+    { color: "#14f195", crypto: { ticker: "S", bg: "#9945ff", textColor: "#14f195" } },  // SOL
+    { color: "#c2a633", crypto: { ticker: "Ð", bg: "#ffffff", textColor: "#c2a633" } },  // DOGE
+    { color: "#ef1c24", crypto: { ticker: "T", bg: "#ffffff", textColor: "#ef1c24" } },  // TRX
+    { color: "#0052ff", crypto: { ticker: "B", bg: "#ffffff", textColor: "#0052ff" } }   // BASE / BNB Alternative
+  ];
 
-  function Piece(tetromino, color, symbol) {
+  function Piece(tetromino, assetIndex) {
     this.tetromino = tetromino;
-    this.color = color;
-    this.symbol = symbol;
+    this.color = CRYPTO_ASSETS[assetIndex].color;
+    this.crypto = CRYPTO_ASSETS[assetIndex].crypto;
     this.tetrominoN = 0;
     this.activeTetromino = this.tetromino[this.tetrominoN];
     
@@ -367,7 +392,7 @@ title: Protetris - Crypto Arcade
     for (let r = 0; r < this.activeTetromino.length; r++) {
       for (let c = 0; c < this.activeTetromino[r].length; c++) {
         if (this.activeTetromino[r][c]) {
-          drawSquare(this.x + c, this.y + r, this.color, this.symbol);
+          drawSquare(this.x + c, this.y + r, this.color, this.crypto);
         }
       }
     }
@@ -447,7 +472,7 @@ title: Protetris - Crypto Arcade
           hitCeiling = true;
         }
         if (finalY >= 0 && finalY < ROW) {
-          board[finalY][this.x + c] = { color: this.color, symbol: this.symbol };
+          board[finalY][this.x + c] = { color: this.color, crypto: this.crypto };
         }
       }
     }
@@ -476,40 +501,23 @@ title: Protetris - Crypto Arcade
 
   function randomPiece() {
     let r = Math.floor(Math.random() * PIECES.length);
-    return new Piece(PIECES[r], COLORS[r], SYMBOLS[r]);
+    return new Piece(PIECES[r], r);
   }
 
   let p = null;
 
-  // OYUN BİTTİĞİ AN ÇALIŞAN FONKSİYON
+  // CRITICAL ENDGAME SYSTEM RESET
   function endGame() {
     isPlaying = false;
     clearInterval(gameInterval);
 
-    // Olay tam olarak burası kanka: Eğer tam ekrandaysa otomatik normal moda döndürüyoruz
-    if (isFullscreenMode) {
-      toggleFullscreen(false); 
-    }
+    // Kapsayıcıyı ve mod durumunu senkronize olarak normal ekrana çekiyoruz kanka
+    toggleFullscreen(false);
 
     startOverlayBtn.style.display = "block";
     startOverlayBtn.innerText = "RUN AGAIN";
 
-    const dynamicReward = parseFloat((score * 0.001).toFixed(2));
-
-    alert(`💥 MATRIX COLLAPSE! Match score: ${score}. Syncing rewards with db...`);
-
-    if (dynamicReward > 0 && currentUser) {
-      const userRef = doc(db, "users", currentUser.uid);
-      runTransaction(db, async (transaction) => {
-        const userDoc = await transaction.get(userRef);
-        let currentBalance = userDoc.exists() ? (userDoc.data().balance || 0) : 0;
-        transaction.update(userRef, { balance: currentBalance + dynamicReward });
-      }).then(() => {
-        alert(`🎁 SUCCESS! +${dynamicReward} Points allocation synced to your user balance.`);
-      }).catch(err => console.error("Database sync runtime failure:", err));
-    } else if (!currentUser) {
-      alert("⚠️ NOTICE: You are not authenticated. Score cannot be recorded.");
-    }
+    alert(`💥 MATRIX COLLAPSE! Total Score: ${score}. Safe exit triggered.`);
   }
 
   function runStartCountdown(callback) {
@@ -523,7 +531,7 @@ title: Protetris - Crypto Arcade
         for (let c = 0; c < COL; c++) {
           let cell = board[r][c];
           if (cell !== VACANT) {
-            drawSquare(c, r, cell.color, cell.symbol);
+            drawSquare(c, r, cell.color, cell.crypto);
           } else {
             drawSquare(c, r, VACANT);
           }
@@ -594,7 +602,7 @@ title: Protetris - Crypto Arcade
     }
   });
 
-  // INITIAL DEPLOYMENT
+  // RUN DEPLOYMENT
   initBoard();
   resizeGame();
 </script>
