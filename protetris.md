@@ -12,35 +12,57 @@ title: Protetris - Crypto Arcade
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
+    height: 100% !important;
     overflow-x: hidden !important;
   }
 
+  /* Normal Modda Kapsayıcı */
   .arcade-container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 15px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #1a1b23 !important;
+    transition: all 0.3s ease;
+  }
+
+  .game-ui-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 280px;
+    margin-bottom: 10px;
+    gap: 8px;
   }
 
   .game-header {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    max-width: 220px;
     background: #242632;
     border: 1px solid #2f3245;
-    padding: 8px 12px;
+    padding: 8px 15px;
     border-radius: 6px;
-    margin-bottom: 15px;
     font-weight: bold;
     font-size: 14px;
     text-transform: uppercase;
-    box-sizing: border-box;
+    flex-grow: 1;
+    text-align: center;
   }
   .stat-val { color: #00f0ff; }
+
+  .fullscreen-toggle-btn {
+    background: #242632;
+    border: 1px solid #2f3245;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+  .fullscreen-toggle-btn:hover { background: #2f3245; }
 
   .canvas-wrapper {
     position: relative;
@@ -48,8 +70,9 @@ title: Protetris - Crypto Arcade
     border: 3px solid #2f3245;
     border-radius: 8px;
     box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
-    width: 220px;
-    height: 440px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   canvas {
@@ -83,8 +106,8 @@ title: Protetris - Crypto Arcade
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     width: 100%;
-    max-width: 220px;
-    margin-top: 15px;
+    max-width: 280px;
+    margin-top: 10px;
   }
   .pad-btn {
     background: #242632;
@@ -94,24 +117,86 @@ title: Protetris - Crypto Arcade
     text-align: center;
     border-radius: 6px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
     user-select: none;
     box-shadow: 0 3px 0 #13141c;
+    touch-action: manipulation;
   }
   .pad-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #13141c; }
+
+  /* --- TAM EKRAN AKTİFKEN DEVREYE GİRECEK CSS --- */
+  .arcade-container.fullscreen-active {
+    max-width: 100% !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 99999 !important;
+    padding: 0 !important;
+    justify-content: center;
+    background-color: #13141c !important;
+  }
+
+  .fullscreen-active h1, .fullscreen-active p {
+    display: none !important; /* Alan kazanmak için başlıkları gizle */
+  }
+
+  .fullscreen-active .game-ui-top {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: 90%;
+    max-width: 340px;
+    background: rgba(36, 38, 50, 0.85);
+    backdrop-filter: blur(5px);
+    border-radius: 8px;
+  }
+
+  .fullscreen-active .canvas-wrapper {
+    border: none;
+    border-radius: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    box-shadow: none;
+  }
+
+  .fullscreen-active .d-pad {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: 90%;
+    max-width: 320px;
+    background: rgba(26, 27, 35, 0.6);
+    padding: 8px;
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+  }
+  
+  .fullscreen-active .pad-btn {
+    background: rgba(36, 38, 50, 0.9);
+    border-color: #3a3f58;
+  }
 </style>
 
-<div class="arcade-container">
+<div class="arcade-container" id="arcadeContainer">
   <h1 style="text-align:center; font-size: 18px; color: #ffffff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">🧩 PROTETRIS CRYPTO</h1>
-  <p style="text-align:center; font-size: 11px; color: #94a3b8; margin: 0 0 15px 0; text-transform: uppercase;">Standard 10x20 Endless Mining Mode</p>
+  <p style="text-align:center; font-size: 11px; color: #94a3b8; margin: 0 0 10px 0; text-transform: uppercase;">Standard 10x20 Endless Mining Mode</p>
 
-  <div class="game-header">
-    <div>SCORE: <span id="gameScore" class="stat-val">0</span></div>
+  <div class="game-ui-top">
+    <div class="game-header">
+      <div>SCORE: <span id="gameScore" class="stat-val">0</span></div>
+    </div>
+    <button class="fullscreen-toggle-btn" id="fsToggleBtn">📺 FULL</button>
   </div>
 
-  <div class="canvas-wrapper">
-    <canvas id="tetris" width="220" height="440"></canvas>
+  <div class="canvas-wrapper" id="canvasWrapper">
+    <canvas id="tetris"></canvas>
     <button id="startOverlayBtn" class="canvas-overlay-btn">START MINING</button>
   </div>
 
@@ -150,18 +235,59 @@ title: Protetris - Crypto Arcade
   const canvas = document.getElementById('tetris');
   const context = canvas.getContext('2d');
   const startOverlayBtn = document.getElementById('startOverlayBtn');
+  const container = document.getElementById('arcadeContainer');
+  const fsToggleBtn = document.getElementById('fsToggleBtn');
 
-  // NORMAL STANDART TETRİS AYARLARI (10x20)
-  const BLOCK_SIZE = 22;
+  // CORE SETTINGS
   const ROW = 20;
   const COL = 10;
   const VACANT = "#13141c"; 
 
+  let BLOCK_SIZE = 22; 
   let score = 0;
   let gameInterval = null;
   let isPlaying = false;
   let isCountingDown = false;
   let board = [];
+  let isFullscreenMode = false;
+
+  // DINAMIK EKRAN ÖLÇEKLENDİRME MOTORU
+  function resizeGame() {
+    if (isFullscreenMode) {
+      const maxBlockW = Math.floor(window.innerWidth / COL);
+      const maxBlockH = Math.floor(window.innerHeight / ROW);
+      BLOCK_SIZE = Math.min(maxBlockW, maxBlockH);
+    } else {
+      BLOCK_SIZE = window.innerWidth < 480 ? 25 : 28;
+    }
+
+    canvas.width = COL * BLOCK_SIZE;
+    canvas.height = ROW * BLOCK_SIZE;
+    
+    drawLayout();
+  }
+
+  window.addEventListener('resize', resizeGame);
+
+  // MANUEL TAM EKRAN GEÇİŞ BUTONU
+  fsToggleBtn.addEventListener('click', () => {
+    toggleFullscreen(!isFullscreenMode);
+  });
+
+  function toggleFullscreen(enable) {
+    isFullscreenMode = enable;
+    if (isFullscreenMode) {
+      container.classList.add('fullscreen-active');
+      fsToggleBtn.innerText = "❌ EXIT";
+      if (container.requestFullscreen) container.requestFullscreen().catch(() => {});
+      else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+    } else {
+      container.classList.remove('fullscreen-active');
+      fsToggleBtn.innerText = "📺 FULL";
+      if (document.exitFullscreen && document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    }
+    setTimeout(resizeGame, 100);
+  }
 
   function initBoard() {
     board = [];
@@ -185,7 +311,7 @@ title: Protetris - Crypto Arcade
 
     if (color !== VACANT && symbol) {
       context.fillStyle = "#ffffff";
-      context.font = "12px Arial";
+      context.font = `bold ${Math.floor(BLOCK_SIZE * 0.55)}px Arial`;
       context.textAlign = "center";
       context.textBaseline = "middle";
       context.fillText(symbol, (x * BLOCK_SIZE) + (BLOCK_SIZE / 2), (y * BLOCK_SIZE) + (BLOCK_SIZE / 2));
@@ -212,15 +338,14 @@ title: Protetris - Crypto Arcade
     }
   }
 
-  // Standart akıcı rotasyon matrisleri
   const PIECES = [
-    [[[1,1,1,1]], [[1],[1],[1],[1]]], // I
-    [[[0,1,0],[1,1,1]], [[1,0],[1,1],[1,0]], [[1,1,1],[0,1,0]], [[0,1],[1,1],[0,1]]], // T
-    [[[1,0,0],[1,1,1]], [[1,1],[1,0],[1,0]], [[1,1,1],[0,0,1]], [[0,1],[0,1],[1,1]]], // L
-    [[[0,0,1],[1,1,1]], [[1,0],[1,0],[1,1]], [[1,1,1],[1,0,0]], [[1,1],[0,1],[0,1]]], // J
-    [[[0,1,1],[1,1,0]], [[1,0],[1,1],[0,1]]], // S
-    [[[1,1,0],[0,1,1]], [[0,1],[1,1],[1,0]]], // Z
-    [[[1,1],[1,1]]] // O
+    [[[1,1,1,1]], [[1],[1],[1],[1]]], 
+    [[[0,1,0],[1,1,1]], [[1,0],[1,1],[1,0]], [[1,1,1],[0,1,0]], [[0,1],[1,1],[0,1]]], 
+    [[[1,0,0],[1,1,1]], [[1,1],[1,0],[1,0]], [[1,1,1],[0,0,1]], [[0,1],[0,1],[1,1]]], 
+    [[[0,0,1],[1,1,1]], [[1,0],[1,0],[1,1]], [[1,1,1],[1,0,0]], [[1,1],[0,1],[0,1]]], 
+    [[[0,1,1],[1,1,0]], [[1,0],[1,1],[0,1]]], 
+    [[[1,1,0],[0,1,1]], [[0,1],[1,1],[1,0]]], 
+    [[[1,1],[1,1]]] 
   ];
   
   const COLORS = ["#00f0ff", "#ff007a", "#00ff88", "#ffb700", "#9d00ff", "#ff003c", "#3300ff"];
@@ -356,9 +481,16 @@ title: Protetris - Crypto Arcade
 
   let p = null;
 
+  // OYUN BİTTİĞİ AN ÇALIŞAN FONKSİYON
   function endGame() {
     isPlaying = false;
     clearInterval(gameInterval);
+
+    // Olay tam olarak burası kanka: Eğer tam ekrandaysa otomatik normal moda döndürüyoruz
+    if (isFullscreenMode) {
+      toggleFullscreen(false); 
+    }
+
     startOverlayBtn.style.display = "block";
     startOverlayBtn.innerText = "RUN AGAIN";
 
@@ -399,7 +531,7 @@ title: Protetris - Crypto Arcade
       }
       
       context.fillStyle = "#ff007a";
-      context.font = "bold 24px sans-serif";
+      context.font = `bold ${Math.floor(BLOCK_SIZE * 1.2)}px sans-serif`;
       context.textAlign = "center";
       context.textBaseline = "middle";
       
@@ -462,6 +594,7 @@ title: Protetris - Crypto Arcade
     }
   });
 
+  // INITIAL DEPLOYMENT
   initBoard();
-  drawLayout();
+  resizeGame();
 </script>
