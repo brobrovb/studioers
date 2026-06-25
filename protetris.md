@@ -43,7 +43,6 @@ title: Protetris - Crypto Arcade
   .stat-val { color: #00f0ff; }
   .timer-val { color: #ff007a; }
 
-  /* Canvas wrapper relative positioning for overlay buttons */
   .canvas-wrapper {
     position: relative;
     background: #13141c;
@@ -59,7 +58,6 @@ title: Protetris - Crypto Arcade
     background: #13141c !important;
   }
 
-  /* HTML Start Button Overlay directly inside the Canvas area */
   .canvas-overlay-btn {
     position: absolute;
     top: 50%;
@@ -168,6 +166,7 @@ title: Protetris - Crypto Arcade
   let board = [];
 
   function initBoard() {
+    board = [];
     for (let r = 0; r < ROW; r++) {
       board[r] = [];
       for (let c = 0; c < COL; c++) {
@@ -177,6 +176,7 @@ title: Protetris - Crypto Arcade
   }
 
   function drawSquare(x, y, color) {
+    if (x < 0 || x >= COL || y < 0 || y >= ROW) return;
     context.fillStyle = color;
     context.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
     
@@ -186,7 +186,7 @@ title: Protetris - Crypto Arcade
 
     if (color !== VACANT) {
       context.fillStyle = "#ffffff";
-      context.font = "12px sans-serif";
+      context.font = "11px Arial";
       context.textAlign = "center";
       context.textBaseline = "middle";
       context.fillText("🪙", (x * BLOCK_SIZE) + (BLOCK_SIZE / 2), (y * BLOCK_SIZE) + (BLOCK_SIZE / 2));
@@ -202,32 +202,36 @@ title: Protetris - Crypto Arcade
         drawSquare(c, r, board[r][c]);
       }
     }
+    
     if (isPlaying && p && !isCountingDown) {
       p.draw();
     }
   }
 
+  // Yeniden düzenlenen sadeleştirilmiş matris yapıları
   const PIECES = [
-    [[1,1,1,1], [0,0,0,0], [0,0,0,0], [0,0,0,0]], // I
-    [[1,1,1], [0,1,0], [0,0,0]],                 // T
-    [[1,1,1], [1,0,0], [0,0,0]],                 // L
-    [[1,1,1], [0,0,1], [0,0,0]],                 // J
-    [[0,1,1], [1,1,0], [0,0,0]],                 // S
-    [[1,1,0], [0,1,1], [0,0,0]],                 // Z
-    [[1,1], [1,1]]                               // O
+    [[[0,1,0,0],[0,1,0,0],[0,1,0,0],[0,1,0,0]], [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]]], // I
+    [[[0,1,0],[1,1,1],[0,0,0]], [[0,1,0],[0,1,1],[0,1,0]], [[0,0,0],[1,1,1],[0,1,0]], [[0,1,0],[1,1,0],[0,1,0]]], // T
+    [[[1,0,0],[1,1,1],[0,0,0]], [[0,1,1],[0,1,0],[0,1,0]], [[0,0,0],[1,1,1],[0,0,1]], [[0,1,0],[0,1,0],[1,1,0]]], // L
+    [[[0,0,1],[1,1,1],[0,0,0]], [[0,1,0],[0,1,0],[0,1,1]], [[0,0,0],[1,1,1],[1,0,0]], [[1,1,0],[0,1,0],[0,1,0]]], // J
+    [[[0,1,1],[1,1,0],[0,0,0]], [[0,1,0],[0,1,1],[0,0,1]]], // S
+    [[[1,1,0],[0,1,1],[0,0,0]], [[0,0,1],[0,1,1],[0,1,0]]], // Z
+    [[[1,1],[1,1]]] // O
   ];
+  
   const COLORS = ["#00f0ff", "#ff007a", "#00ff88", "#ffb700", "#9d00ff", "#ff003c", "#0026ff"];
 
   function Piece(tetromino, color) {
     this.tetromino = tetromino;
     this.color = color;
-    this.activeTetromino = this.tetromino[0];
     this.tetrominoN = 0;
+    this.activeTetromino = this.tetromino[this.tetrominoN];
     this.x = 4;
     this.y = 0;
   }
 
   Piece.prototype.draw = function() {
+    if (!this.activeTetromino) return;
     for (let r = 0; r < this.activeTetromino.length; r++) {
       for (let c = 0; c < this.activeTetromino[r].length; c++) {
         if (this.activeTetromino[r][c]) {
@@ -238,7 +242,7 @@ title: Protetris - Crypto Arcade
   };
 
   Piece.prototype.moveDown = function() {
-    if (isCountingDown) return;
+    if (isCountingDown || !isPlaying) return;
     if (!this.collision(0, 1, this.activeTetromino)) {
       this.y++;
       drawLayout();
@@ -249,7 +253,7 @@ title: Protetris - Crypto Arcade
   };
 
   Piece.prototype.moveRight = function() {
-    if (isCountingDown) return;
+    if (isCountingDown || !isPlaying) return;
     if (!this.collision(1, 0, this.activeTetromino)) {
       this.x++;
       drawLayout();
@@ -257,7 +261,7 @@ title: Protetris - Crypto Arcade
   };
 
   Piece.prototype.moveLeft = function() {
-    if (isCountingDown) return;
+    if (isCountingDown || !isPlaying) return;
     if (!this.collision(-1, 0, this.activeTetromino)) {
       this.x--;
       drawLayout();
@@ -265,16 +269,18 @@ title: Protetris - Crypto Arcade
   };
 
   Piece.prototype.rotate = function() {
-    if (isCountingDown) return;
-    let nextPattern = this.tetromino[(this.tetrominoN + 1) % this.tetromino.length];
+    if (isCountingDown || !isPlaying) return;
+    let nextN = (this.tetrominoN + 1) % this.tetromino.length;
+    let nextPattern = this.tetromino[nextN];
     if (!this.collision(0, 0, nextPattern)) {
-      this.tetrominoN = (this.tetrominoN + 1) % this.tetromino.length;
+      this.tetrominoN = nextN;
       this.activeTetromino = nextPattern;
       drawLayout();
     }
   };
 
   Piece.prototype.collision = function(x, y, piece) {
+    if (!piece) return true;
     for (let r = 0; r < piece.length; r++) {
       for (let c = 0; c < piece[r].length; c++) {
         if (!piece[r][c]) continue;
@@ -289,6 +295,7 @@ title: Protetris - Crypto Arcade
   };
 
   Piece.prototype.lock = function() {
+    if (!isPlaying || !this.activeTetromino) return;
     for (let r = 0; r < this.activeTetromino.length; r++) {
       for (let c = 0; c < this.activeTetromino[r].length; c++) {
         if (!this.activeTetromino[r][c]) continue;
@@ -316,7 +323,7 @@ title: Protetris - Crypto Arcade
     }
     drawLayout();
 
-    if (p.collision(0, 0, p.activeTetromino)) {
+    if (p && p.collision(0, 0, p.activeTetromino)) {
       endGame(false);
     }
   };
@@ -357,25 +364,29 @@ title: Protetris - Crypto Arcade
     }
   }
 
-  // Visual 3-2-1 Countdown Loop inside Canvas
   function runStartCountdown(callback) {
     isCountingDown = true;
     let count = 3;
     
     let countInterval = setInterval(() => {
-      drawLayout(); // Clear and draw board first
+      context.fillStyle = "#13141c";
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      for (let r = 0; r < ROW; r++) {
+        for (let c = 0; c < COL; c++) {
+          drawSquare(c, r, board[r][c]);
+        }
+      }
       
-      // Draw big retro overlay text
       context.fillStyle = "#ff007a";
-      context.font = "bold 30px 'Segoe UI'";
+      context.font = "bold 32px sans-serif";
       context.textAlign = "center";
       context.textBaseline = "middle";
       
       if (count > 0) {
-        context.fillText(count, (COL * BLOCK_SIZE) / 2, (ROW * BLOCK_SIZE) / 2);
+        context.fillText(count, canvas.width / 2, canvas.height / 2);
       } else if (count === 0) {
         context.fillStyle = "#00ff88";
-        context.fillText("START!", (COL * BLOCK_SIZE) / 2, (ROW * BLOCK_SIZE) / 2);
+        context.fillText("START!", canvas.width / 2, canvas.height / 2);
       }
 
       count--;
@@ -389,20 +400,21 @@ title: Protetris - Crypto Arcade
   }
 
   function startGameEngine() {
+    if (isPlaying || isCountingDown) return;
     startOverlayBtn.style.display = "none";
     initBoard();
     score = 0;
     gameDuration = 60;
-    isPlaying = true;
     document.getElementById('gameScore').innerText = score;
     document.getElementById('gameTimer').innerText = "01:00";
 
     runStartCountdown(() => {
+      isPlaying = true;
       p = randomPiece();
       drawLayout();
 
       gameInterval = setInterval(() => {
-        if (isPlaying) p.moveDown();
+        if (isPlaying && !isCountingDown) p.moveDown();
       }, 450);
 
       timerInterval = setInterval(() => {
@@ -421,19 +433,19 @@ title: Protetris - Crypto Arcade
   startOverlayBtn.addEventListener('click', startGameEngine);
 
   document.addEventListener('keydown', (e) => {
-    if (!isPlaying || isCountingDown) return;
+    if (!isPlaying || isCountingDown || !p) return;
     if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a") p.moveLeft();
     else if (e.key === "ArrowUp" || e.key.toLowerCase() === "w") p.rotate();
     else if (e.key === "ArrowRight" || e.key.toLowerCase() === "d") p.moveRight();
     else if (e.key === "ArrowDown" || e.key.toLowerCase() === "s") p.moveDown();
   });
 
-  document.getElementById('btnLeft').addEventListener('click', () => { if (isPlaying && !isCountingDown) p.moveLeft(); });
-  document.getElementById('btnRight').addEventListener('click', () => { if (isPlaying && !isCountingDown) p.moveRight(); });
-  document.getElementById('btnRotate').addEventListener('click', () => { if (isPlaying && !isCountingDown) p.rotate(); });
-  document.getElementById('btnDown').addEventListener('click', () => { if (isPlaying && !isCountingDown) p.moveDown(); });
+  document.getElementById('btnLeft').addEventListener('click', () => { if (isPlaying && !isCountingDown && p) p.moveLeft(); });
+  document.getElementById('btnRight').addEventListener('click', () => { if (isPlaying && !isCountingDown && p) p.moveRight(); });
+  document.getElementById('btnRotate').addEventListener('click', () => { if (isPlaying && !isCountingDown && p) p.rotate(); });
+  document.getElementById('btnDown').addEventListener('click', () => { if (isPlaying && !isCountingDown && p) p.moveDown(); });
   document.getElementById('btnUp').addEventListener('click', () => {
-    if (isPlaying && !isCountingDown) {
+    if (isPlaying && !isCountingDown && p) {
       while (!p.collision(0, 1, p.activeTetromino)) {
         p.y++;
       }
