@@ -29,7 +29,7 @@ title: Protetris - Crypto Arcade
     display: flex;
     justify-content: center;
     width: 100%;
-    max-width: 176px;
+    max-width: 220px;
     background: #242632;
     border: 1px solid #2f3245;
     padding: 8px 12px;
@@ -48,8 +48,8 @@ title: Protetris - Crypto Arcade
     border: 3px solid #2f3245;
     border-radius: 8px;
     box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
-    width: 176px;
-    height: 220px;
+    width: 220px;
+    height: 440px;
   }
   
   canvas {
@@ -65,13 +65,13 @@ title: Protetris - Crypto Arcade
     background: #00e5ff;
     color: #000;
     border: none;
-    padding: 10px 18px;
+    padding: 12px 22px;
     font-weight: bold;
     border-radius: 6px;
     cursor: pointer;
     text-transform: uppercase;
     box-shadow: 0 4px 0 #00a8bc;
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: 1px;
     z-index: 10;
     white-space: nowrap;
@@ -83,7 +83,7 @@ title: Protetris - Crypto Arcade
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     width: 100%;
-    max-width: 176px;
+    max-width: 220px;
     margin-top: 15px;
   }
   .pad-btn {
@@ -104,14 +104,14 @@ title: Protetris - Crypto Arcade
 
 <div class="arcade-container">
   <h1 style="text-align:center; font-size: 18px; color: #ffffff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">🧩 PROTETRIS CRYPTO</h1>
-  <p style="text-align:center; font-size: 11px; color: #94a3b8; margin: 0 0 15px 0; text-transform: uppercase;">8x10 Grid Endless Mining Mode</p>
+  <p style="text-align:center; font-size: 11px; color: #94a3b8; margin: 0 0 15px 0; text-transform: uppercase;">Standard 10x20 Endless Mining Mode</p>
 
   <div class="game-header">
     <div>SCORE: <span id="gameScore" class="stat-val">0</span></div>
   </div>
 
   <div class="canvas-wrapper">
-    <canvas id="tetris" width="176" height="220"></canvas>
+    <canvas id="tetris" width="220" height="440"></canvas>
     <button id="startOverlayBtn" class="canvas-overlay-btn">START MINING</button>
   </div>
 
@@ -151,10 +151,10 @@ title: Protetris - Crypto Arcade
   const context = canvas.getContext('2d');
   const startOverlayBtn = document.getElementById('startOverlayBtn');
 
-  // Taşların uçları küçültüldü ve 8x10 ızgaraya tam oturtuldu
+  // NORMAL STANDART TETRİS AYARLARI (10x20)
   const BLOCK_SIZE = 22;
-  const ROW = 10;
-  const COL = 8;
+  const ROW = 20;
+  const COL = 10;
   const VACANT = "#13141c"; 
 
   let score = 0;
@@ -212,7 +212,7 @@ title: Protetris - Crypto Arcade
     }
   }
 
-  // Gereksiz boşlukları kırpılmış, uçları sıkılaştırılmış kompakt parçalar
+  // Standart akıcı rotasyon matrisleri
   const PIECES = [
     [[[1,1,1,1]], [[1],[1],[1],[1]]], // I
     [[[0,1,0],[1,1,1]], [[1,0],[1,1],[1,0]], [[1,1,1],[0,1,0]], [[0,1],[1,1],[0,1]]], // T
@@ -233,7 +233,6 @@ title: Protetris - Crypto Arcade
     this.tetrominoN = 0;
     this.activeTetromino = this.tetromino[this.tetrominoN];
     
-    // Blokların merkezde temiz doğması için otomatik X hizalaması
     this.x = Math.floor((COL - this.activeTetromino[0].length) / 2);
     this.y = 0;
   }
@@ -281,7 +280,6 @@ title: Protetris - Crypto Arcade
     let nextN = (this.tetrominoN + 1) % this.tetromino.length;
     let nextPattern = this.tetromino[nextN];
     
-    // Rotasyonda duvar dışına taşmayı önlemek için hafif kaydırma ayarı
     let kick = 0;
     if (this.x + nextPattern[0].length > COL) {
       kick = COL - (this.x + nextPattern[0].length);
@@ -436,7 +434,7 @@ title: Protetris - Crypto Arcade
 
       gameInterval = setInterval(() => {
         if (isPlaying && !isCountingDown) p.moveDown();
-      }, 500); 
+      }, 450); 
     });
   }
 
