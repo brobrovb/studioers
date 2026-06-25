@@ -29,7 +29,7 @@ title: Protetris - Crypto Arcade
     display: flex;
     justify-content: center;
     width: 100%;
-    max-width: 192px;
+    max-width: 176px;
     background: #242632;
     border: 1px solid #2f3245;
     padding: 8px 12px;
@@ -48,8 +48,8 @@ title: Protetris - Crypto Arcade
     border: 3px solid #2f3245;
     border-radius: 8px;
     box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
-    width: 192px;
-    height: 240px;
+    width: 176px;
+    height: 220px;
   }
   
   canvas {
@@ -65,13 +65,13 @@ title: Protetris - Crypto Arcade
     background: #00e5ff;
     color: #000;
     border: none;
-    padding: 12px 20px;
+    padding: 10px 18px;
     font-weight: bold;
     border-radius: 6px;
     cursor: pointer;
     text-transform: uppercase;
     box-shadow: 0 4px 0 #00a8bc;
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 1px;
     z-index: 10;
     white-space: nowrap;
@@ -83,7 +83,7 @@ title: Protetris - Crypto Arcade
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     width: 100%;
-    max-width: 192px;
+    max-width: 176px;
     margin-top: 15px;
   }
   .pad-btn {
@@ -111,7 +111,7 @@ title: Protetris - Crypto Arcade
   </div>
 
   <div class="canvas-wrapper">
-    <canvas id="tetris" width="192" height="240"></canvas>
+    <canvas id="tetris" width="176" height="220"></canvas>
     <button id="startOverlayBtn" class="canvas-overlay-btn">START MINING</button>
   </div>
 
@@ -151,8 +151,8 @@ title: Protetris - Crypto Arcade
   const context = canvas.getContext('2d');
   const startOverlayBtn = document.getElementById('startOverlayBtn');
 
-  // YENİ 8x10 GRID YAPISI VE DENGELİ BLOK BOYUTU
-  const BLOCK_SIZE = 24;
+  // Taşların uçları küçültüldü ve 8x10 ızgaraya tam oturtuldu
+  const BLOCK_SIZE = 22;
   const ROW = 10;
   const COL = 8;
   const VACANT = "#13141c"; 
@@ -185,7 +185,7 @@ title: Protetris - Crypto Arcade
 
     if (color !== VACANT && symbol) {
       context.fillStyle = "#ffffff";
-      context.font = "13px Arial";
+      context.font = "12px Arial";
       context.textAlign = "center";
       context.textBaseline = "middle";
       context.fillText(symbol, (x * BLOCK_SIZE) + (BLOCK_SIZE / 2), (y * BLOCK_SIZE) + (BLOCK_SIZE / 2));
@@ -212,14 +212,14 @@ title: Protetris - Crypto Arcade
     }
   }
 
-  // 8x10 için optimize edilmiş kompakt rotasyon matrisleri
+  // Gereksiz boşlukları kırpılmış, uçları sıkılaştırılmış kompakt parçalar
   const PIECES = [
-    [[[0,1,0,0],[0,1,0,0],[0,1,0,0],[0,1,0,0]], [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]]], // I
-    [[[0,1,0],[1,1,1],[0,0,0]], [[0,1,0],[0,1,1],[0,1,0]], [[0,0,0],[1,1,1],[0,1,0]], [[0,1,0],[1,1,0],[0,1,0]]], // T
-    [[[1,0,0],[1,1,1],[0,0,0]], [[0,1,1],[0,1,0],[0,1,0]], [[0,0,0],[1,1,1],[0,0,1]], [[0,1,0],[0,1,0],[1,1,0]]], // L
-    [[[0,0,1],[1,1,1],[0,0,0]], [[0,1,0],[0,1,0],[0,1,1]], [[0,0,0],[1,1,1],[1,0,0]], [[1,1,0],[0,1,0],[0,1,0]]], // J
-    [[[0,1,1],[1,1,0],[0,0,0]], [[0,1,0],[0,1,1],[0,0,1]]], // S
-    [[[1,1,0],[0,1,1],[0,0,0]], [[0,0,1],[0,1,1],[0,1,0]]], // Z
+    [[[1,1,1,1]], [[1],[1],[1],[1]]], // I
+    [[[0,1,0],[1,1,1]], [[1,0],[1,1],[1,0]], [[1,1,1],[0,1,0]], [[0,1],[1,1],[0,1]]], // T
+    [[[1,0,0],[1,1,1]], [[1,1],[1,0],[1,0]], [[1,1,1],[0,0,1]], [[0,1],[0,1],[1,1]]], // L
+    [[[0,0,1],[1,1,1]], [[1,0],[1,0],[1,1]], [[1,1,1],[1,0,0]], [[1,1],[0,1],[0,1]]], // J
+    [[[0,1,1],[1,1,0]], [[1,0],[1,1],[0,1]]], // S
+    [[[1,1,0],[0,1,1]], [[0,1],[1,1],[1,0]]], // Z
     [[[1,1],[1,1]]] // O
   ];
   
@@ -232,7 +232,9 @@ title: Protetris - Crypto Arcade
     this.symbol = symbol;
     this.tetrominoN = 0;
     this.activeTetromino = this.tetromino[this.tetrominoN];
-    this.x = 3; // 8 kolon olduğu için ortalama noktası 3 yapıldı
+    
+    // Blokların merkezde temiz doğması için otomatik X hizalaması
+    this.x = Math.floor((COL - this.activeTetromino[0].length) / 2);
     this.y = 0;
   }
 
@@ -278,7 +280,16 @@ title: Protetris - Crypto Arcade
     if (isCountingDown || !isPlaying) return;
     let nextN = (this.tetrominoN + 1) % this.tetromino.length;
     let nextPattern = this.tetromino[nextN];
-    if (!this.collision(0, 0, nextPattern)) {
+    
+    // Rotasyonda duvar dışına taşmayı önlemek için hafif kaydırma ayarı
+    let kick = 0;
+    if (this.x + nextPattern[0].length > COL) {
+      kick = COL - (this.x + nextPattern[0].length);
+    }
+    if (this.x < 0) kick = -this.x;
+
+    if (!this.collision(kick, 0, nextPattern)) {
+      this.x += kick;
       this.tetrominoN = nextN;
       this.activeTetromino = nextPattern;
       drawLayout();
@@ -323,7 +334,6 @@ title: Protetris - Crypto Arcade
       return;
     }
     
-    // Satır Patlatma Mantığı
     for (let r = 0; r < ROW; r++) {
       let isRowFull = true;
       for (let c = 0; c < COL; c++) {
@@ -356,9 +366,8 @@ title: Protetris - Crypto Arcade
 
     const dynamicReward = parseFloat((score * 0.001).toFixed(2));
 
-    alert(`💥 MATRIX COLLAPSE! Match score: ${score}. Sycing rewards with db...`);
+    alert(`💥 MATRIX COLLAPSE! Match score: ${score}. Syncing rewards with db...`);
 
-    // SKORU VE BAKİYEYİ VERİTABANINA GÜVENLİ TRANSACTION İLE YAZMA
     if (dynamicReward > 0 && currentUser) {
       const userRef = doc(db, "users", currentUser.uid);
       runTransaction(db, async (transaction) => {
@@ -392,7 +401,7 @@ title: Protetris - Crypto Arcade
       }
       
       context.fillStyle = "#ff007a";
-      context.font = "bold 26px sans-serif";
+      context.font = "bold 24px sans-serif";
       context.textAlign = "center";
       context.textBaseline = "middle";
       
@@ -427,7 +436,7 @@ title: Protetris - Crypto Arcade
 
       gameInterval = setInterval(() => {
         if (isPlaying && !isCountingDown) p.moveDown();
-      }, 500); // 8x10 alanda daha dengeli bir akış hızı
+      }, 500); 
     });
   }
 
