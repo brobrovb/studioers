@@ -200,10 +200,10 @@ title: Free Crypto Arcade
 
 <div class="arcade-body">
 
-  <!-- Üst Reklam Alanı (Banner 728x90 veya Akıllı Banner) -->
+  <!-- Üst Reklam Alanı -->
   <div class="ad-container">
     <span class="ad-label">Sponsored Mining Network</span>
-    <!-- Adsterra veya Coinzilla Reklam Kodunu Buraya Yapıştıracaksın Kanka -->
+    <!-- Adsterra/Coinzilla Kodu Buraya -->
   </div>
 
   <div class="auth-bar">
@@ -317,10 +317,10 @@ title: Free Crypto Arcade
     <p id="faucetMsg" style="margin-top: 12px; font-weight: bold; color: #00ff88; min-height: 20px;"></p>
   </div>
 
-  <!-- Alt Reklam Alanı (İkinci Bir Banner) -->
+  <!-- Alt Reklam Alanı -->
   <div class="ad-container" style="margin-top: 25px;">
     <span class="ad-label">Hardware Allocation Sponsor</span>
-    <!-- İkinci Reklam Kodunu Buraya Yapıştıracaksın Kanka -->
+    <!-- Adsterra/Coinzilla Kodu Buraya -->
   </div>
 
 </div>
@@ -359,7 +359,6 @@ title: Free Crypto Arcade
 
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
 
-  // Sync state post-redirect execution loop on mobile ecosystems
   if (isMobile) {
     getRedirectResult(auth)
       .then((result) => {
@@ -372,7 +371,6 @@ title: Free Crypto Arcade
       });
   }
 
-  // Faucet Countdown Engine Execution Loop
   function startFaucetCountdown(durationInSeconds) {
     if (countdownInterval) clearInterval(countdownInterval);
     
@@ -398,7 +396,6 @@ title: Free Crypto Arcade
     }, 1000);
   }
 
-  // Persistent Timer Verification Routine via LocalStorage
   function checkExistingTimer() {
     const nextClaimTime = localStorage.getItem('faucetNextClaim');
     if (nextClaimTime) {
@@ -413,10 +410,8 @@ title: Free Crypto Arcade
     }
   }
 
-  // Establish state check on load lifecycle
   checkExistingTimer();
 
-  // Active Authentication State Observer
   onAuthStateChanged(auth, (user) => {
     if (user) {
       currentUser = user;
@@ -446,7 +441,6 @@ title: Free Crypto Arcade
     }
   });
 
-  // Adaptive Pop-up Blocker Bypass Router
   authBtn.addEventListener('click', () => {
     if (!currentUser) {
       if (isMobile) {
@@ -460,12 +454,12 @@ title: Free Crypto Arcade
               alert("Popup blocked by browser! Please enable popups or access via mobile device.");
             }
           });
+      }
     } else {
       signOut(auth).catch(err => console.error("Sign out error:", err));
     }
   });
 
-  // Faucet Transaction Core Mechanics
   faucetBtn.addEventListener('click', function() {
     if (!currentUser) {
       alert("Please authenticate using Google before claiming rewards!");
