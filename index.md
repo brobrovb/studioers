@@ -163,6 +163,28 @@ title: Free Crypto Arcade
   .faucet-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #b00052; }
   .faucet-btn:disabled { background: #4e5268 !important; box-shadow: none !important; cursor: not-allowed; color: #aaa; }
 
+  /* Adsterra/Coinzilla Banner Placements */
+  .ad-container {
+    margin: 20px auto;
+    text-align: center;
+    width: 100%;
+    min-height: 90px;
+    background: #1e202b;
+    border: 1px solid #2f3245;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .ad-label {
+    font-size: 9px;
+    color: #4f5675;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
   /* Targeted Media Queries Adjusting Flex Rules For Specific Mobile Widths */
   @media (max-width: 580px) {
     h1 { font-size: 18px !important; margin-bottom: 15px !important; }
@@ -177,6 +199,12 @@ title: Free Crypto Arcade
 </style>
 
 <div class="arcade-body">
+
+  <!-- Üst Reklam Alanı (Banner 728x90 veya Akıllı Banner) -->
+  <div class="ad-container">
+    <span class="ad-label">Sponsored Mining Network</span>
+    <!-- Adsterra veya Coinzilla Reklam Kodunu Buraya Yapıştıracaksın Kanka -->
+  </div>
 
   <div class="auth-bar">
     <div id="authUser" class="user-info">
@@ -214,15 +242,18 @@ title: Free Crypto Arcade
         <a href="/crypto-matcher" class="rc-start-btn">🏁 START</a>
       </div>
     </div>
+    
+    <!-- Protetris Kartı - Link Bağlandı! -->
     <div class="rc-game-card">
       <div class="rc-game-image" style="text-shadow: 0 0 10px #ff007a;">🧩</div>
       <div class="rc-game-details">
         <h4 class="rc-game-name">Protetris</h4>
         <p class="rc-difficulty-label">difficulty: 5</p>
         <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot"></div><div class="rc-dot"></div></div>
-        <a href="#" class="rc-start-btn" style="background:#ff007a; box-shadow: 0 3px 0 #b00052; color:white;">🏁 START</a>
+        <a href="/protetris" class="rc-start-btn" style="background:#ff007a; box-shadow: 0 3px 0 #b00052; color:white;">🏁 START</a>
       </div>
     </div>
+    
     <div class="rc-game-card">
       <div class="rc-game-image">🚀</div>
       <div class="rc-game-details">
@@ -285,6 +316,13 @@ title: Free Crypto Arcade
     <button id="faucetBtn" class="faucet-btn">CLAIM BONUS</button>
     <p id="faucetMsg" style="margin-top: 12px; font-weight: bold; color: #00ff88; min-height: 20px;"></p>
   </div>
+
+  <!-- Alt Reklam Alanı (İkinci Bir Banner) -->
+  <div class="ad-container" style="margin-top: 25px;">
+    <span class="ad-label">Hardware Allocation Sponsor</span>
+    <!-- İkinci Reklam Kodunu Buraya Yapıştıracaksın Kanka -->
+  </div>
+
 </div>
 
 <script type="module">
@@ -422,7 +460,6 @@ title: Free Crypto Arcade
               alert("Popup blocked by browser! Please enable popups or access via mobile device.");
             }
           });
-      }
     } else {
       signOut(auth).catch(err => console.error("Sign out error:", err));
     }
