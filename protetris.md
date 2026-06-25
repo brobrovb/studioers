@@ -16,11 +16,21 @@ title: Protetris - Crypto Arcade
     overflow-x: hidden !important;
   }
 
-  /* Normal Mode Container */
-  .arcade-container {
-    max-width: 800px;
+  /* Ana Düzen Layout */
+  .arcade-layout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 10px;
+    padding: 15px;
+  }
+
+  .arcade-container {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,6 +38,54 @@ title: Protetris - Crypto Arcade
     transition: all 0.2s ease;
   }
 
+  /* Liderlik Tablosu CSS */
+  .leaderboard-panel {
+    width: 300px;
+    background: #242632;
+    border: 2px solid #2f3245;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.05);
+    height: fit-content;
+  }
+
+  .leaderboard-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #00f0ff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    text-align: center;
+    border-bottom: 1px solid #2f3245;
+    padding-bottom: 8px;
+  }
+
+  .leaderboard-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    background: #13141c;
+    font-size: 13px;
+  }
+
+  .leaderboard-item:nth-child(1) { border-left: 3px solid #f2a900; background: rgba(242, 169, 0, 0.1); }
+  .leaderboard-item:nth-child(2) { border-left: 3px solid #627eea; background: rgba(98, 126, 234, 0.1); }
+  .leaderboard-item:nth-child(3) { border-left: 3px solid #006097; background: rgba(0, 96, 151, 0.1); }
+
+  .miner-name { color: #e2e8f0; font-weight: 500; }
+  .miner-score { color: #00ff88; font-weight: bold; }
+
+  /* Oyun Arayüz Elemanları */
   .game-ui-top {
     display: flex;
     justify-content: space-between;
@@ -125,7 +183,7 @@ title: Protetris - Crypto Arcade
   }
   .pad-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #13141c; }
 
-  /* --- FULLSCREEN STYLES --- */
+  /* --- FULLSCREEN AKTİFKEN HİÇBİR ŞEYİN BOZULMAMASI İÇİN --- */
   .arcade-container.fullscreen-active {
     max-width: 100% !important;
     width: 100vw !important;
@@ -139,81 +197,62 @@ title: Protetris - Crypto Arcade
     background-color: #13141c !important;
   }
 
-  .fullscreen-active h1, .fullscreen-active p {
-    display: none !important;
-  }
-
+  .fullscreen-active h1, .fullscreen-active p { display: none !important; }
   .fullscreen-active .game-ui-top {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
-    width: 90%;
-    max-width: 340px;
-    background: rgba(36, 38, 50, 0.85);
-    backdrop-filter: blur(5px);
-    border-radius: 8px;
+    position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    z-index: 100; width: 90%; max-width: 340px;
+    background: rgba(36, 38, 50, 0.85); backdrop-filter: blur(5px); border-radius: 8px;
   }
-
-  .fullscreen-active .canvas-wrapper {
-    border: none;
-    border-radius: 0;
-    width: 100vw !important;
-    height: 100vh !important;
-    box-shadow: none;
-  }
-
+  .fullscreen-active .canvas-wrapper { border: none; border-radius: 0; width: 100vw !important; height: 100vh !important; box-shadow: none; }
   .fullscreen-active .d-pad {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
-    width: 90%;
-    max-width: 320px;
-    background: rgba(26, 27, 35, 0.6);
-    padding: 8px;
-    border-radius: 12px;
-    backdrop-filter: blur(4px);
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    z-index: 100; width: 90%; max-width: 320px;
+    background: rgba(26, 27, 35, 0.6); padding: 8px; border-radius: 12px; backdrop-filter: blur(4px);
   }
-  
-  .fullscreen-active .pad-btn {
-    background: rgba(36, 38, 50, 0.9);
-    border-color: #3a3f58;
-  }
+  .fullscreen-active .pad-btn { background: rgba(36, 38, 50, 0.9); border-color: #3a3f58; }
 </style>
 
-<div class="arcade-container" id="arcadeContainer">
-  <h1 style="text-align:center; font-size: 18px; color: #ffffff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">🧩 PROTETRIS CRYPTO</h1>
-  <p style="text-align:center; font-size: 11px; color: #94a3b8; margin: 0 0 10px 0; text-transform: uppercase;">Standard 10x20 Crypto Mining Mode</p>
+<div class="arcade-layout">
+  
+  <div class="arcade-container" id="arcadeContainer">
+    <h1 style="text-align:center; font-size: 18px; color: #ffffff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">🧩 PROTETRIS CRYPTO</h1>
+    <p style="text-align:center; font-size: 11px; color: #94a3b8; margin: 0 0 10px 0; text-transform: uppercase;">Standard 10x20 Crypto Mining Mode</p>
 
-  <div class="game-ui-top">
-    <div class="game-header">
-      <div>SCORE: <span id="gameScore" class="stat-val">0</span></div>
+    <div class="game-ui-top">
+      <div class="game-header">
+        <div>SCORE: <span id="gameScore" class="stat-val">0</span></div>
+      </div>
+      <button class="fullscreen-toggle-btn" id="fsToggleBtn">📺 FULL</button>
     </div>
-    <button class="fullscreen-toggle-btn" id="fsToggleBtn">📺 FULL</button>
+
+    <div class="canvas-wrapper" id="canvasWrapper">
+      <canvas id="tetris"></canvas>
+      <button id="startOverlayBtn" class="canvas-overlay-btn">START MINING</button>
+    </div>
+
+    <div class="d-pad">
+      <div class="pad-btn" id="btnRotate">🔄</div>
+      <div class="pad-btn" id="btnUp">🔼</div>
+      <div></div>
+      <div class="pad-btn" id="btnLeft">◀️</div>
+      <div class="pad-btn" id="btnDown">🔽</div>
+      <div class="pad-btn" id="btnRight">▶️</div>
+    </div>
   </div>
 
-  <div class="canvas-wrapper" id="canvasWrapper">
-    <canvas id="tetris"></canvas>
-    <button id="startOverlayBtn" class="canvas-overlay-btn">START MINING</button>
+  <div class="leaderboard-panel" id="leaderboardPanel">
+    <div class="leaderboard-title">🏆 TOP MINERS</div>
+    <ul class="leaderboard-list" id="leaderboardList">
+      <li class="leaderboard-item"><span class="miner-name">Loading nodes...</span></li>
+    </ul>
   </div>
 
-  <div class="d-pad">
-    <div class="pad-btn" id="btnRotate">🔄</div>
-    <div class="pad-btn" id="btnUp">🔼</div>
-    <div></div>
-    <div class="pad-btn" id="btnLeft">◀️</div>
-    <div class="pad-btn" id="btnDown">🔽</div>
-    <div class="pad-btn" id="btnRight">▶️</div>
-  </div>
 </div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getFirestore, doc, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"; // Firestore importunu sabitledik
+  import { getFirestore, doc, setDoc, getDoc, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDi7xosmyNGJELn4KOpe8QEg5tNewkIsEc",
@@ -227,16 +266,20 @@ title: Protetris - Crypto Arcade
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-  // Firestore entegrasyonu projenin geri kalanına göre dinamik bağlanabilir
+  const db = getFirestore(app);
 
   let currentUser = null;
-  onAuthStateChanged(auth, (user) => { currentUser = user; });
+  onAuthStateChanged(auth, (user) => { 
+    currentUser = user;
+    loadLeaderboard(); // Kullanıcı değiştiğinde veya yüklendiğinde listeyi çek
+  });
 
   const canvas = document.getElementById('tetris');
   const context = canvas.getContext('2d');
   const startOverlayBtn = document.getElementById('startOverlayBtn');
   const container = document.getElementById('arcadeContainer');
   const fsToggleBtn = document.getElementById('fsToggleBtn');
+  const leaderboardList = document.getElementById('leaderboardList');
 
   const ROW = 20;
   const COL = 10;
@@ -249,6 +292,40 @@ title: Protetris - Crypto Arcade
   let isCountingDown = false;
   let board = [];
   let isFullscreenMode = false;
+
+  // LİDERLİK TABLOSUNU FİREBASE'DEN ÇEKEN MOTOR
+  async function loadLeaderboard() {
+    try {
+      const q = query(collection(db, "users"), orderBy("highScore", "desc"), limit(10));
+      const querySnapshot = await getDocs(q);
+      
+      leaderboardList.innerHTML = ""; // Temizle
+      
+      if(querySnapshot.empty) {
+        leaderboardList.innerHTML = `<li class="leaderboard-item"><span class="miner-name">No miners recorded yet</span></li>`;
+        return;
+      }
+
+      let index = 1;
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const name = data.displayName || data.email ? data.email.split('@')[0] : `Miner #${doc.id.substring(0,4)}`;
+        const highScore = data.highScore || 0;
+
+        const li = document.createElement('li');
+        li.className = "leaderboard-item";
+        li.innerHTML = `
+          <span class="miner-name">${index}. ${name}</span>
+          <span class="miner-score">${highScore} PTS</span>
+        `;
+        leaderboardList.appendChild(li);
+        index++;
+      });
+    } catch (error) {
+      console.error("Leaderboard loading error: ", error);
+      leaderboardList.innerHTML = `<li class="leaderboard-item"><span class="miner-name" style="color:#ef1c24;">Sync Error</span></li>`;
+    }
+  }
 
   // DYNAMIC RESIZE ENGINE
   function resizeGame() {
@@ -288,7 +365,7 @@ title: Protetris - Crypto Arcade
         else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
       }
     }
-    setTimeout(resizeGame, 150); // Sync layouts
+    setTimeout(resizeGame, 150);
   }
 
   function initBoard() {
@@ -301,32 +378,27 @@ title: Protetris - Crypto Arcade
     }
   }
 
-  // CRYPTO LOGO ENGINE (HIGH QUALITY VECTOR DRAWING)
+  // CRYPTO LOGO ENGINE
   function drawSquare(x, y, color, cryptoInfo = null) {
     if (x < 0 || x >= COL || y < 0 || y >= ROW) return;
     
-    // Base block background
     context.fillStyle = color;
     context.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
     
-    // Block grid border
     context.strokeStyle = "#1a1b23";
     context.lineWidth = 1;
     context.strokeRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 
-    // Render internal vector badge if piece is active or locked
     if (color !== VACANT && cryptoInfo) {
       const centerX = (x * BLOCK_SIZE) + (BLOCK_SIZE / 2);
       const centerY = (y * BLOCK_SIZE) + (BLOCK_SIZE / 2);
       const radius = BLOCK_SIZE * 0.38;
 
-      // Draw standard inner token circle boundary
       context.beginPath();
       context.arc(centerX, centerY, radius, 0, 2 * Math.PI);
       context.fillStyle = cryptoInfo.bg || "rgba(255,255,255,0.15)";
       context.fill();
 
-      // Draw stylized text token ticker indicator
       context.fillStyle = cryptoInfo.textColor || "#ffffff";
       context.font = `bold ${Math.floor(BLOCK_SIZE * 0.42)}px 'Arial Black', sans-serif`;
       context.textAlign = "center";
@@ -365,7 +437,6 @@ title: Protetris - Crypto Arcade
     [[[1,1],[1,1]]] 
   ];
   
-  // Custom asset registry for crypto identities
   const CRYPTO_ASSETS = [
     { color: "#f2a900", crypto: { ticker: "₿", bg: "#ffffff", textColor: "#f2a900" } },  // BTC
     { color: "#3c3c3d", crypto: { ticker: "Ξ", bg: "#627eea", textColor: "#ffffff" } },  // ETH
@@ -373,7 +444,7 @@ title: Protetris - Crypto Arcade
     { color: "#14f195", crypto: { ticker: "S", bg: "#9945ff", textColor: "#14f195" } },  // SOL
     { color: "#c2a633", crypto: { ticker: "Ð", bg: "#ffffff", textColor: "#c2a633" } },  // DOGE
     { color: "#ef1c24", crypto: { ticker: "T", bg: "#ffffff", textColor: "#ef1c24" } },  // TRX
-    { color: "#0052ff", crypto: { ticker: "B", bg: "#ffffff", textColor: "#0052ff" } }   // BASE / BNB Alternative
+    { color: "#0052ff", crypto: { ticker: "B", bg: "#ffffff", textColor: "#0052ff" } }   
   ];
 
   function Piece(tetromino, assetIndex) {
@@ -382,7 +453,6 @@ title: Protetris - Crypto Arcade
     this.crypto = CRYPTO_ASSETS[assetIndex].crypto;
     this.tetrominoN = 0;
     this.activeTetromino = this.tetromino[this.tetrominoN];
-    
     this.x = Math.floor((COL - this.activeTetromino[0].length) / 2);
     this.y = 0;
   }
@@ -409,39 +479,17 @@ title: Protetris - Crypto Arcade
     }
   };
 
-  Piece.prototype.moveRight = function() {
-    if (isCountingDown || !isPlaying) return;
-    if (!this.collision(1, 0, this.activeTetromino)) {
-      this.x++;
-      drawLayout();
-    }
-  };
-
-  Piece.prototype.moveLeft = function() {
-    if (isCountingDown || !isPlaying) return;
-    if (!this.collision(-1, 0, this.activeTetromino)) {
-      this.x--;
-      drawLayout();
-    }
-  };
-
+  // Diğer hareket fonksiyonları stabil kaldı kanka
+  Piece.prototype.moveRight = function() { if (isCountingDown || !isPlaying) return; if (!this.collision(1, 0, this.activeTetromino)) { this.x++; drawLayout(); } };
+  Piece.prototype.moveLeft = function() { if (isCountingDown || !isPlaying) return; if (!this.collision(-1, 0, this.activeTetromino)) { this.x--; drawLayout(); } };
   Piece.prototype.rotate = function() {
     if (isCountingDown || !isPlaying) return;
     let nextN = (this.tetrominoN + 1) % this.tetromino.length;
     let nextPattern = this.tetromino[nextN];
-    
     let kick = 0;
-    if (this.x + nextPattern[0].length > COL) {
-      kick = COL - (this.x + nextPattern[0].length);
-    }
+    if (this.x + nextPattern[0].length > COL) kick = COL - (this.x + nextPattern[0].length);
     if (this.x < 0) kick = -this.x;
-
-    if (!this.collision(kick, 0, nextPattern)) {
-      this.x += kick;
-      this.tetrominoN = nextN;
-      this.activeTetromino = nextPattern;
-      drawLayout();
-    }
+    if (!this.collision(kick, 0, nextPattern)) { this.x += kick; this.tetrominoN = nextN; this.activeTetromino = nextPattern; drawLayout(); }
   };
 
   Piece.prototype.collision = function(x, y, piece) {
@@ -461,36 +509,21 @@ title: Protetris - Crypto Arcade
 
   Piece.prototype.lock = function() {
     if (!isPlaying || !this.activeTetromino) return;
-    
     let hitCeiling = false;
     for (let r = 0; r < this.activeTetromino.length; r++) {
       for (let c = 0; c < this.activeTetromino[r].length; c++) {
         if (!this.activeTetromino[r][c]) continue;
-        
         let finalY = this.y + r;
-        if (finalY <= 0) {
-          hitCeiling = true;
-        }
-        if (finalY >= 0 && finalY < ROW) {
-          board[finalY][this.x + c] = { color: this.color, crypto: this.crypto };
-        }
+        if (finalY <= 0) hitCeiling = true;
+        if (finalY >= 0 && finalY < ROW) board[finalY][this.x + c] = { color: this.color, crypto: this.crypto };
       }
     }
-    
-    if (hitCeiling) {
-      endGame();
-      return;
-    }
-    
+    if (hitCeiling) { endGame(); return; }
     for (let r = 0; r < ROW; r++) {
       let isRowFull = true;
-      for (let c = 0; c < COL; c++) {
-        if (board[r][c] === VACANT) { isRowFull = false; break; }
-      }
+      for (let c = 0; c < COL; c++) { if (board[r][c] === VACANT) { isRowFull = false; break; } }
       if (isRowFull) {
-        for (let y = r; y > 1; y--) {
-          board[y] = [...board[y-1]];
-        }
+        for (let y = r; y > 1; y--) board[y] = [...board[y-1]];
         board[0] = Array(COL).fill(VACANT);
         score += 100;
         document.getElementById('gameScore').innerText = score;
@@ -499,64 +532,74 @@ title: Protetris - Crypto Arcade
     drawLayout();
   };
 
-  function randomPiece() {
-    let r = Math.floor(Math.random() * PIECES.length);
-    return new Piece(PIECES[r], r);
-  }
+  function randomPiece() { let r = Math.floor(Math.random() * PIECES.length); return new Piece(PIECES[r], r); }
 
   let p = null;
 
-  // CRITICAL ENDGAME SYSTEM RESET
-  function endGame() {
+  // REKABETÇİ ENDGAME METODU
+  async function endGame() {
     isPlaying = false;
     clearInterval(gameInterval);
-
-    // Kapsayıcıyı ve mod durumunu senkronize olarak normal ekrana çekiyoruz kanka
     toggleFullscreen(false);
 
     startOverlayBtn.style.display = "block";
     startOverlayBtn.innerText = "RUN AGAIN";
 
-    alert(`💥 MATRIX COLLAPSE! Total Score: ${score}. Safe exit triggered.`);
+    alert(`💥 MATRIX COLLAPSE! Game Score: ${score}`);
+
+    // EN YÜKSEK SKORU FİREBASE'E GÖNDERME VE SENKRONİZASYON
+    if (currentUser) {
+      const userRef = doc(db, "users", currentUser.uid);
+      try {
+        const userDoc = await getDoc(userRef);
+        let currentHighScore = 0;
+        let currentBalance = 0;
+
+        if (userDoc.exists()) {
+          currentHighScore = userDoc.data().highScore || 0;
+          currentBalance = userDoc.data().balance || 0;
+        }
+
+        const newHighScore = Math.max(currentHighScore, score);
+        const earnedReward = parseFloat((score * 0.001).toFixed(2));
+
+        // Veritabanını güncelle
+        await setDoc(userRef, {
+          highScore: newHighScore,
+          balance: currentBalance + earnedReward,
+          email: currentUser.email,
+          lastPlayed: Date.now()
+        }, { merge: true });
+
+        alert(`🎯 SYNC COMPLETE! High Score: ${newHighScore} | Balance: +${earnedReward}`);
+        loadLeaderboard(); // Skor gönderildiği an listeyi yenile!
+
+      } catch (err) {
+        console.error("Database updates failed:", err);
+      }
+    } else {
+      alert("⚠️ NOTICE: You are playing anonymously. Login to secure your place on the leaderboard!");
+    }
   }
 
   function runStartCountdown(callback) {
     isCountingDown = true;
     let count = 3;
-    
     let countInterval = setInterval(() => {
-      context.fillStyle = "#13141c";
-      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = "#13141c"; context.fillRect(0, 0, canvas.width, canvas.height);
       for (let r = 0; r < ROW; r++) {
         for (let c = 0; c < COL; c++) {
           let cell = board[r][c];
-          if (cell !== VACANT) {
-            drawSquare(c, r, cell.color, cell.crypto);
-          } else {
-            drawSquare(c, r, VACANT);
-          }
+          if (cell !== VACANT) drawSquare(c, r, cell.color, cell.crypto);
+          else drawSquare(c, r, VACANT);
         }
       }
-      
-      context.fillStyle = "#ff007a";
-      context.font = `bold ${Math.floor(BLOCK_SIZE * 1.2)}px sans-serif`;
-      context.textAlign = "center";
-      context.textBaseline = "middle";
-      
-      if (count > 0) {
-        context.fillText(count, canvas.width / 2, canvas.height / 2);
-      } else if (count === 0) {
-        context.fillStyle = "#00ff88";
-        context.fillText("START!", canvas.width / 2, canvas.height / 2);
-      }
-
+      context.fillStyle = "#ff007a"; context.font = `bold ${Math.floor(BLOCK_SIZE * 1.2)}px sans-serif`;
+      context.textAlign = "center"; context.textBaseline = "middle";
+      if (count > 0) context.fillText(count, canvas.width / 2, canvas.height / 2);
+      else if (count === 0) { context.fillStyle = "#00ff88"; context.fillText("START!", canvas.width / 2, canvas.height / 2); }
       count--;
-
-      if (count < -1) {
-        clearInterval(countInterval);
-        isCountingDown = false;
-        callback();
-      }
+      if (count < -1) { clearInterval(countInterval); isCountingDown = false; callback(); }
     }, 800);
   }
 
@@ -571,15 +614,13 @@ title: Protetris - Crypto Arcade
       isPlaying = true;
       p = randomPiece();
       drawLayout();
-
-      gameInterval = setInterval(() => {
-        if (isPlaying && !isCountingDown) p.moveDown();
-      }, 450); 
+      gameInterval = setInterval(() => { if (isPlaying && !isCountingDown) p.moveDown(); }, 450); 
     });
   }
 
   startOverlayBtn.addEventListener('click', startGameEngine);
 
+  // Klavye ve D-Pad dinleyicileri stabil kaldı
   document.addEventListener('keydown', (e) => {
     if (!isPlaying || isCountingDown || !p) return;
     if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a") p.moveLeft();
@@ -594,15 +635,12 @@ title: Protetris - Crypto Arcade
   document.getElementById('btnDown').addEventListener('click', () => { if (isPlaying && !isCountingDown && p) p.moveDown(); });
   document.getElementById('btnUp').addEventListener('click', () => {
     if (isPlaying && !isCountingDown && p) {
-      while (!p.collision(0, 1, p.activeTetromino)) {
-        p.y++;
-      }
-      p.lock();
-      p = randomPiece();
+      while (!p.collision(0, 1, p.activeTetromino)) { p.y++; }
+      p.lock(); p = randomPiece();
     }
   });
 
-  // RUN DEPLOYMENT
   initBoard();
   resizeGame();
+  loadLeaderboard(); // İlk açılışta verileri çek
 </script>
