@@ -15,15 +15,22 @@ title: Coin-Match Simulator
   
   .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 25px; background: #13141c; padding: 15px; border-radius: 8px; border: 2px solid #2f3245; }
   
-  .card { height: 100px; background: #2e3142; border: 3px solid #1a1b23; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; user-select: none; }
-  .card::before { content: ""; position: absolute; width: 70px; height: 70px; background: radial-gradient(circle, #00f0ff 20%, transparent 21%), repeating-conic-gradient(from 0deg, #00f0ff 0deg 30deg, #13141c 30deg 60deg); border-radius: 50%; border: 2px solid #00f0ff; box-shadow: 0 0 8px rgba(0,240,255,0.4); opacity: 1; }
+  .card { height: 100px; background: #2e3142; border: 3px solid #1a1b23; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; user-select: none; transition: transform 0.2s ease, border-color 0.2s; }
   
-  .card.flipped { background: #13141c; border-color: #00f0ff; }
+  /* Kartın Ön Yüzü (Kapalı Hali) - Siberpunk Çark Logosu */
+  .card::before { content: ""; position: absolute; width: 60px; height: 60px; background: radial-gradient(circle, #00f0ff 20%, transparent 21%), repeating-conic-gradient(from 0deg, #00f0ff 0deg 30deg, #13141c 30deg 60deg); border-radius: 50%; border: 2px solid #00f0ff; box-shadow: 0 0 8px rgba(0,240,255,0.4); opacity: 1; z-index: 2; transition: opacity 0.2s; }
+  
+  .card.flipped { background: #13141c; border-color: #00f0ff; transform: rotateY(180deg); }
   .card.flipped::before { opacity: 0; }
-  .card.flipped::after { content: attr(data-crypto); font-size: 28px; font-weight: 900; color: #00f0ff; text-shadow: 0 0 10px rgba(0,240,255,0.6); }
   
-  .card.matched { background: #0f1015 !important; border: 2px dashed #2f3245 !important; cursor: default; box-shadow: inset 0 0 15px rgba(0,0,0,0.6); }
-  .card.matched::before, .card.matched::after { display: none !important; opacity: 0 !important; content: "" !important; }
+  /* İnternetten çekilen logoların kart içindeki yerleşimi */
+  .crypto-logo { width: 50px; height: 50px; object-fit: contain; opacity: 0; transform: scale(0.5); transition: all 0.2s ease; z-index: 1; filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.3)); }
+  .card.flipped .crypto-logo { opacity: 1; transform: scale(1) rotateY(180deg); }
+  
+  /* Kartlar Eşleştiğinde Alacağı Durum */
+  .card.matched { background: #0f141c !important; border: 2px solid #00ff88 !important; cursor: default; box-shadow: inset 0 0 15px rgba(0,255,136,0.1); }
+  .card.matched::before { display: none !important; }
+  .card.matched .crypto-logo { opacity: 0.85; filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.4)); transform: scale(0.95) rotateY(180deg); }
 
   .action-btn { background: #00e5ff; color: #000; border: none; padding: 10px 30px; font-size: 14px; border-radius: 6px; cursor: pointer; font-weight: bold; text-transform: uppercase; box-shadow: 0 4px 0 #00a8bc; }
   .action-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #00a8bc; }
@@ -75,7 +82,8 @@ title: Coin-Match Simulator
     }
   });
 
-  const cryptoIcons = ['BTC', 'ETH', 'LTC', 'SOL', 'TRX', 'BNB', 'DOGE', 'XRP', 'BTC', 'ETH', 'LTC', 'SOL', 'TRX', 'BNB', 'DOGE', 'XRP'];
+  // Ticker isimleri (Küçük harf olarak CDN linkine gömülecek)
+  const cryptoIcons = ['btc', 'eth', 'ltc', 'sol', 'trx', 'bnb', 'doge', 'xrp', 'btc', 'eth', 'ltc', 'sol', 'trx', 'bnb', 'doge', 'xrp'];
   let cardsChosen = []; let cardsChosenId = []; let cardsWon = [];
   let timer; let timeLeft = 45; let gameActive = false;
   const grid = document.getElementById('gameGrid');
@@ -92,6 +100,15 @@ title: Coin-Match Simulator
       card.setAttribute('class', 'card');
       card.setAttribute('data-id', i);
       card.setAttribute('data-crypto', shuffledIcons[i]);
+      
+      // İnternet üzerinden transparan siyah temalı vektörel logoyu çeken img elementi
+      const img = document.createElement('img');
+      img.setAttribute('src', `https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/128/icon/${shuffledIcons[i]}.png`);
+      img.setAttribute('class', 'crypto-logo');
+      // Eğer bir logonun yüklenmesinde hata olursa kırık resim görünmesin diye yedek hata kontrolü
+      img.onerror = function() { this.src = 'https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/128/icon/generic.png'; };
+      
+      card.appendChild(img);
       card.addEventListener('click', flipCard);
       grid.appendChild(card);
     }
@@ -124,7 +141,7 @@ title: Coin-Match Simulator
     const cards = grid.children;
     const oOneId = cardsChosenId[0]; const oTwoId = cardsChosenId[1];
     if (cardsChosen[0] === cardsChosen[1]) {
-      cards[oOneId].className = 'card matched'; cards[oTwoId].className = 'card matched';
+      cards[oOneId].className = 'card flipped matched'; cards[oTwoId].className = 'card flipped matched';
       cardsWon.push(cardsChosen);
       document.getElementById('score').innerText = cardsWon.length * 10;
     } else {
