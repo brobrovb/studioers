@@ -69,8 +69,7 @@ title: Free Crypto Arcade
     font-weight: bold; 
     font-size: 13px;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    text-overflow: ellipsis; white-space: nowrap;
   }
   .user-avatar { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #00f0ff; flex-shrink: 0; }
   
@@ -163,6 +162,19 @@ title: Free Crypto Arcade
   .faucet-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #b00052; }
   .faucet-btn:disabled { background: #4e5268 !important; box-shadow: none !important; cursor: not-allowed; color: #aaa; }
 
+  /* Cyberpunk Leaderboard UI Panel */
+  .leaderboard-section { margin: 30px 0; padding: 20px 15px; background: #242632; border: 1px solid #2f3245; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); width: 100%; }
+  .leaderboard-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; margin-top: 10px; }
+  .leaderboard-table th { color: #00f0ff; text-transform: uppercase; font-size: 11px; padding: 10px; border-bottom: 2px solid #2f3245; letter-spacing: 0.5px; }
+  .leaderboard-table td { padding: 10px; border-bottom: 1px solid #1e202b; vertical-align: middle; }
+  .leaderboard-table tr:hover { background: #1e202b; }
+  .rank-badge { font-weight: bold; display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center; border-radius: 4px; background: #13141c; color: #94a3b8; }
+  .rank-1 { background: #ffd700 !important; color: #000 !important; box-shadow: 0 0 8px #ffd700; }
+  .rank-2 { background: #c0c0c0 !important; color: #000 !important; }
+  .rank-3 { background: #cd7f32 !important; color: #000 !important; }
+  .leader-user { display: flex; align-items: center; gap: 8px; font-weight: 600; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .leader-avatar { width: 24px; height: 24px; border-radius: 50%; border: 1px solid #2f3245; background: #13141c; }
+
   /* Adsterra/Coinzilla Banner Placements */
   .ad-container {
     margin: 20px auto;
@@ -195,6 +207,7 @@ title: Free Crypto Arcade
     .game-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
     .rc-game-card { padding: 10px !important; gap: 10px !important; }
     .rc-game-image { width: 60px !important; height: 60px !important; font-size: 24px !important; }
+    .leader-user { max-width: 110px !important; }
   }
 </style>
 
@@ -224,9 +237,11 @@ title: Free Crypto Arcade
       <h5>Network Power</h5>
       <p>1,420.85 Ph/s</p>
     </div>
-    <div class="stat-card balance-card">
-      <h5>Your Wallet</h5>
-      <p id="userBalance">0.00 Points</p>
+    <div class="stats-container" style="margin:0; padding:0; flex:1; min-width:140px;">
+      <div class="stat-card balance-card" style="margin:0; width:100%;">
+        <h5>Your Wallet</h5>
+        <p id="userBalance">0.00 Points</p>
+      </div>
     </div>
   </div>
 
@@ -243,7 +258,7 @@ title: Free Crypto Arcade
       </div>
     </div>
     
-    <!-- Protetris Kartı - Link Bağlandı! -->
+    <!-- Protetris Kartı -->
     <div class="rc-game-card">
       <div class="rc-game-image" style="text-shadow: 0 0 10px #ff007a;">🧩</div>
       <div class="rc-game-details">
@@ -310,6 +325,25 @@ title: Free Crypto Arcade
     </div>
   </div>
 
+  <!-- LEADERBOARD COMPONENT PANEL -->
+  <div class="leaderboard-section">
+    <h3 style="margin-top:0; color:#00f0ff; font-size:16px; text-transform:uppercase; border-bottom:1px solid #2f3245; padding-bottom:8px; letter-spacing:1px;">🏆 TOP 10 BALANCES</h3>
+    <table class="leaderboard-table">
+      <thead>
+        <tr>
+          <th style="width: 50px;">Rank</th>
+          <th>Miner</th>
+          <th style="text-align: right;">Wallet Allocation</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboardBody">
+        <tr>
+          <td colspan="3" style="text-align:center; color:#94a3b8; padding:20px;">Syncing with decentralized network matrix...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
   <div class="faucet-section">
     <h3 style="margin-top:0; color:#ff007a;">🎁 Hourly Energy Refill</h3>
     <p style="color:#94a3b8; font-size:14px; margin-bottom:15px;">Claim an instant +5.00 points bonus directly to your wallet allocation.</p>
@@ -328,7 +362,7 @@ title: Free Crypto Arcade
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getFirestore, doc, onSnapshot, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore, doc, onSnapshot, setDoc, runTransaction, collection, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDi7xosmyNGJELn4KOpe8QEg5tNewkIsEc",
@@ -356,6 +390,7 @@ title: Free Crypto Arcade
   const userBalanceText = document.getElementById('userBalance');
   const faucetBtn = document.getElementById('faucetBtn');
   const faucetMsg = document.getElementById('faucetMsg');
+  const leaderboardBody = document.getElementById('leaderboardBody');
 
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
 
@@ -412,6 +447,62 @@ title: Free Crypto Arcade
 
   checkExistingTimer();
 
+  // --- REAL-TIME LEADERBOARD SENSOR ---
+  function initLeaderboard() {
+    const usersRef = collection(db, "users");
+    // Cüzdan puanına (balance) göre büyükten küçüğe sıralayıp ilk 10 dökümanı anlık dinliyoruz kanka
+    const q = query(usersRef, orderBy("balance", "desc"), limit(10));
+    
+    onSnapshot(q, (snapshot) => {
+      leaderboardBody.innerHTML = "";
+      if (snapshot.empty) {
+        leaderboardBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#94a3b8;">No miners found in core database matrix.</td></tr>`;
+        return;
+      }
+      
+      let index = 1;
+      snapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        const userId = docSnap.id;
+        
+        // İsmi veya avatarı yoksa fallback oluşturup siberpunk bir anonim isim uyduruyoruz kırılma olmasın diye
+        const displayName = data.displayName || (auth.currentUser && auth.currentUser.uid === userId ? auth.currentUser.displayName : `Gamer_${userId.substring(0, 4)}`);
+        const photoURL = data.photoURL || (auth.currentUser && auth.currentUser.uid === userId ? auth.currentUser.photoURL : "https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/anonymous.png");
+        const balance = parseFloat(data.balance || 0).toFixed(2);
+        
+        let rankClass = "";
+        if (index === 1) rankClass = "rank-1";
+        else if (index === 2) rankClass = "rank-2";
+        else if (index === 3) rankClass = "rank-3";
+        
+        const row = document.createElement('tr');
+        // Eğer sıralamadaki kişi o an giriş yapmış olan aktif kullanıcıysa satırı hafif parlatıyoruz kanka
+        if (currentUser && currentUser.uid === userId) {
+          row.style.background = "rgba(0, 240, 255, 0.08)";
+          row.style.borderLeft = "2px solid #00f0ff";
+        }
+        
+        row.innerHTML = `
+          <td><span class="rank-badge ${rankClass}">${index}</span></td>
+          <td>
+            <div class="leader-user">
+              <img src="${photoURL}" class="leader-avatar" alt="avatar" onerror="this.src='https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/anonymous.png'">
+              <span>${displayName}</span>
+            </div>
+          </td>
+          <td style="text-align: right; font-weight: bold; color: #ff007a;">${balance} Points</td>
+        `;
+        leaderboardBody.appendChild(row);
+        index++;
+      });
+    }, (error) => {
+      console.error("Leaderboard subscription matrix error:", error);
+    });
+  }
+
+  // İlk açılışta leaderboard'u tetikle kanka
+  initLeaderboard();
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       currentUser = user;
@@ -425,8 +516,21 @@ title: Free Crypto Arcade
           const data = snapshot.data();
           userPowerText.innerText = parseFloat(data.power || 0).toFixed(3) + " Th/s";
           userBalanceText.innerText = parseFloat(data.balance || 0).toFixed(2) + " Points";
+          
+          // Giriş yapınca dökümana ismini ve avatarını yazalım ki leaderboard'da boş gözükmesin kanka
+          if (!data.displayName || !data.photoURL) {
+            setDoc(userRef, { 
+              displayName: user.displayName, 
+              photoURL: user.photoURL 
+            }, { merge: true }).catch(err => console.error("Update profile metadata error:", err));
+          }
         } else {
-          setDoc(userRef, { power: 0, balance: 0 }).catch(err => console.error("Database initialization error:", err));
+          setDoc(userRef, { 
+            power: 0, 
+            balance: 0, 
+            displayName: user.displayName, 
+            photoURL: user.photoURL 
+          }).catch(err => console.error("Database initialization error:", err));
         }
       }, (error) => {
         console.error("Firestore subscription error:", error);
@@ -474,7 +578,11 @@ title: Free Crypto Arcade
     runTransaction(db, async (transaction) => {
       const userDoc = await transaction.get(userRef);
       let currentBalance = userDoc.exists() ? (userDoc.data().balance || 0) : 0;
-      transaction.update(userRef, { balance: currentBalance + 5.00 });
+      transaction.update(userRef, { 
+        balance: currentBalance + 5.00,
+        displayName: currentUser.displayName,
+        photoURL: currentUser.photoURL
+      });
     }).then(() => {
       faucetMsg.innerText = "⚡ Core Refilled! +5.00 Points saved.";
       
