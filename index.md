@@ -156,18 +156,43 @@ title: Free Crypto Arcade
   .faucet-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #b00052; }
   .faucet-btn:disabled { background: #4e5268 !important; box-shadow: none !important; cursor: not-allowed; color: #aaa; }
 
-  /* Cyberpunk Leaderboard UI Panel */
-  .leaderboard-section { margin: 30px 0; padding: 20px 15px; background: #242632; border: 1px solid #2f3245; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); width: 100%; }
-  .leaderboard-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; margin-top: 10px; }
-  .leaderboard-table th { color: #00f0ff; text-transform: uppercase; font-size: 11px; padding: 10px; border-bottom: 2px solid #2f3245; letter-spacing: 0.5px; }
-  .leaderboard-table td { padding: 10px; border-bottom: 1px solid #1e202b; vertical-align: middle; }
-  .leaderboard-table tr:hover { background: #1e202b; }
-  .rank-badge { font-weight: bold; display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center; border-radius: 4px; background: #13141c; color: #94a3b8; }
-  .rank-1 { background: #ffd700 !important; color: #000 !important; box-shadow: 0 0 8px #ffd700; }
-  .rank-2 { background: #c0c0c0 !important; color: #000 !important; }
-  .rank-3 { background: #cd7f32 !important; color: #000 !important; }
-  .leader-user { display: flex; align-items: center; gap: 8px; font-weight: 600; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .leader-avatar { width: 24px; height: 24px; border-radius: 50%; border: 1px solid #2f3245; background: #13141c; }
+  /* Cyberpunk Leaderboard UI Panel - REMODELLED */
+  .leaderboard-section { 
+    margin: 30px 0; 
+    padding: 24px 20px; 
+    background: #242632; 
+    border: 1px solid #2f3245; 
+    border-top: 4px solid #00f0ff;
+    border-radius: 12px; 
+    box-shadow: 0 6px 25px rgba(0,0,0,0.3); 
+    width: 100%; 
+  }
+  .leaderboard-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; text-align: left; font-size: 14px; margin-top: 15px; }
+  .leaderboard-table th { color: #94a3b8; text-transform: uppercase; font-size: 11px; font-weight: 700; padding: 12px 16px; letter-spacing: 1px; border-bottom: 1px solid #2f3245; }
+  .leaderboard-table td { padding: 14px 16px; background: #1e202b; vertical-align: middle; transition: all 0.2s ease; }
+  .leaderboard-table tr td:first-child { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+  .leaderboard-table tr td:last-child { border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
+  .leaderboard-table tr:hover td { background: #282b3d; color: #fff; box-shadow: inset 0 0 4px rgba(0, 240, 255, 0.2); }
+  
+  .rank-badge { 
+    font-weight: 800; 
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+    width: 28px; 
+    height: 28px; 
+    border-radius: 50%; 
+    background: #13141c; 
+    color: #64748b; 
+    font-size: 12px;
+    border: 1px solid #2f3245;
+  }
+  .rank-1 { background: linear-gradient(135deg, #ffe033 0%, #cc9900 100%) !important; color: #000 !important; box-shadow: 0 0 12px rgba(255, 215, 0, 0.4); border: none !important; }
+  .rank-2 { background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%) !important; color: #000 !important; box-shadow: 0 0 10px rgba(192, 192, 192, 0.3); border: none !important; }
+  .rank-3 { background: linear-gradient(135deg, #ffaa66 0%, #cd7f32 100%) !important; color: #000 !important; box-shadow: 0 0 10px rgba(205, 127, 50, 0.3); border: none !important; }
+  
+  .leader-user { display: flex; align-items: center; gap: 12px; font-weight: 600; max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .leader-avatar { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #2f3245; background: #13141c; object-fit: cover; }
 
   /* Adsterra/Coinzilla Banner Placements */
   .ad-container {
@@ -198,7 +223,10 @@ title: Free Crypto Arcade
     .game-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
     .rc-game-card { padding: 10px !important; gap: 10px !important; }
     .rc-game-image { width: 60px !important; height: 60px !important; font-size: 24px !important; }
-    .leader-user { max-width: 110px !important; }
+    .leader-user { max-width: 130px !important; gap: 8px !important; font-size: 13px; }
+    .leaderboard-section { padding: 15px 10px !important; }
+    .leaderboard-table th, .leaderboard-table td { padding: 10px 8px !important; font-size: 12px; }
+    .rank-badge { width: 24px; height: 24px; font-size: 11px; }
   }
 </style>
 
@@ -304,18 +332,18 @@ title: Free Crypto Arcade
   </div>
 
   <div class="leaderboard-section">
-    <h3 style="margin-top:0; color:#00f0ff; font-size:16px; text-transform:uppercase; border-bottom:1px solid #2f3245; padding-bottom:8px; letter-spacing:1px;">🏆 TOP 10 BALANCES</h3>
+    <h3 style="margin-top:0; color:#00f0ff; font-size:16px; text-transform:uppercase; border-bottom:1px solid #2f3245; padding-bottom:8px; letter-spacing:1px; display:flex; align-items:center; gap:8px;">🏆 TOP 10 BALANCES</h3>
     <table class="leaderboard-table">
       <thead>
         <tr>
-          <th style="width: 50px;">Rank</th>
+          <th style="width: 65px;">Rank</th>
           <th>Miner</th>
           <th style="text-align: right;">Wallet Allocation</th>
         </tr>
       </thead>
       <tbody id="leaderboardBody">
         <tr>
-          <td colspan="3" style="text-align:center; color:#94a3b8; padding:20px;">Syncing with decentralized network matrix...</td>
+          <td colspan="3" style="text-align:center; color:#94a3b8; padding:25px;">Syncing with decentralized network matrix...</td>
         </tr>
       </tbody>
     </table>
@@ -429,7 +457,7 @@ title: Free Crypto Arcade
     onSnapshot(q, (snapshot) => {
       leaderboardBody.innerHTML = "";
       if (snapshot.empty) {
-        leaderboardBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#94a3b8;">No miners found in core database matrix.</td></tr>`;
+        leaderboardBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#94a3b8; padding:30px;">No miners found in core database matrix.</td></tr>`;
         return;
       }
       
@@ -450,7 +478,7 @@ title: Free Crypto Arcade
         const row = document.createElement('tr');
         if (currentUser && currentUser.uid === userId) {
           row.style.background = "rgba(0, 240, 255, 0.08)";
-          row.style.borderLeft = "2px solid #00f0ff";
+          row.style.borderLeft = "3px solid #00f0ff";
         }
         
         row.innerHTML = `
@@ -461,7 +489,7 @@ title: Free Crypto Arcade
               <span>${displayName}</span>
             </div>
           </td>
-          <td style="text-align: right; font-weight: bold; color: #ff007a;">${balance} Points</td>
+          <td style="text-align: right; font-weight: bold; color: #ff007a; font-size: 15px;">${balance} Points</td>
         `;
         leaderboardBody.appendChild(row);
         index++;
@@ -524,7 +552,7 @@ title: Free Crypto Arcade
               alert("Popup blocked by browser! Please enable popups or access via mobile device.");
             }
           });
-      }
+    }
     } else {
       signOut(auth).catch(err => console.error("Sign out error:", err));
     }
