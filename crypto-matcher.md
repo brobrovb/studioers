@@ -13,24 +13,23 @@ title: Coin-Match Simulator
   .game-title { color: #00f0ff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
   .game-stats { display: flex; justify-content: space-around; margin-bottom: 20px; font-size: 16px; color: #ff007a; font-weight: bold; }
   
-  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 25px; background: #13141c; padding: 15px; border-radius: 8px; border: 2px solid #2f3245; }
+  /* 3D derinlik efekti için perspective eklendi */
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 25px; background: #13141c; padding: 15px; border-radius: 8px; border: 2px solid #2f3245; perspective: 1000px; }
   
-  .card { height: 100px; background: #2e3142; border: 3px solid #1a1b23; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; user-select: none; transition: transform 0.2s ease, border-color 0.2s; }
+  /* Kartların 3D Dönüş Altyapısı */
+  .card { height: 100px; background: #2e3142; border: 3px solid #1a1b23; border-radius: 6px; cursor: pointer; position: relative; user-select: none; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease; }
   
-  /* Kartın Ön Yüzü (Kapalı Hali) - Siberpunk Çark Logosu */
-  .card::before { content: ""; position: absolute; width: 60px; height: 60px; background: radial-gradient(circle, #00f0ff 20%, transparent 21%), repeating-conic-gradient(from 0deg, #00f0ff 0deg 30deg, #13141c 30deg 60deg); border-radius: 50%; border: 2px solid #00f0ff; box-shadow: 0 0 8px rgba(0,240,255,0.4); opacity: 1; z-index: 2; transition: opacity 0.2s; }
+  /* Kartın Ön Yüzü (Kapalı Hali) */
+  .card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle, #00f0ff 20%, transparent 21%), repeating-conic-gradient(from 0deg, #00f0ff 0deg 30deg, #13141c 30deg 60deg); border-radius: 4px; border: 2px solid #00f0ff; box-shadow: 0 0 8px rgba(0,240,255,0.4); backface-visibility: hidden; z-index: 2; }
   
-  .card.flipped { background: #13141c; border-color: #00f0ff; transform: rotateY(180deg); }
-  .card.flipped::before { opacity: 0; }
+  /* Kart Dönünce Tetiklenecek Sınıf */
+  .card.flipped { transform: rotateY(180deg); }
   
-  /* İnternetten çekilen logoların kart içindeki yerleşimi */
-  .crypto-logo { width: 50px; height: 50px; object-fit: contain; opacity: 0; transform: scale(0.5); transition: all 0.2s ease; z-index: 1; filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.3)); }
-  .card.flipped .crypto-logo { opacity: 1; transform: scale(1) rotateY(180deg); }
+  /* İnternetten çekilen logolar (Kartın Arka Yüzü) */
+  .crypto-logo { width: 55px; height: 55px; position: absolute; top: 50%; left: 50%; margin-top: -27.5px; margin-left: -27.5px; object-fit: contain; transform: rotateY(180deg); backface-visibility: hidden; z-index: 1; filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.6)); }
   
-  /* Kartlar Eşleştiğinde Alacağı Durum */
-  .card.matched { background: #0f141c !important; border: 2px solid #00ff88 !important; cursor: default; box-shadow: inset 0 0 15px rgba(0,255,136,0.1); }
-  .card.matched::before { display: none !important; }
-  .card.matched .crypto-logo { opacity: 0.85; filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.4)); transform: scale(0.95) rotateY(180deg); }
+  /* Bildiğimiz/Eşleşen Kartların Küçülerek Uçması ve Yok Olması */
+  .card.matched { opacity: 0; pointer-events: none; transform: scale(0) rotateY(180deg); transition: opacity 0.5s ease, transform 0.5s ease; }
 
   .action-btn { background: #00e5ff; color: #000; border: none; padding: 10px 30px; font-size: 14px; border-radius: 6px; cursor: pointer; font-weight: bold; text-transform: uppercase; box-shadow: 0 4px 0 #00a8bc; }
   .action-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #00a8bc; }
@@ -42,7 +41,7 @@ title: Coin-Match Simulator
   <p style="color: #94a3b8; font-size: 13px; margin-bottom: 20px;" id="authWarning">Skor kaydı için önce ana sayfada Google Girişi yapmalısın!</p>
 
   <div class="game-stats">
-    <div>TIME: <span id="timer">45</span>s</div>
+    <div>TIME: <span id="timer">60</span>s</div>
     <div>SCORE: <span id="score">0</span></div>
   </div>
 
@@ -82,10 +81,9 @@ title: Coin-Match Simulator
     }
   });
 
-  // Ticker isimleri (Küçük harf olarak CDN linkine gömülecek)
   const cryptoIcons = ['btc', 'eth', 'ltc', 'sol', 'trx', 'bnb', 'doge', 'xrp', 'btc', 'eth', 'ltc', 'sol', 'trx', 'bnb', 'doge', 'xrp'];
   let cardsChosen = []; let cardsChosenId = []; let cardsWon = [];
-  let timer; let timeLeft = 45; let gameActive = false;
+  let timer; let timeLeft = 60; let gameActive = false;
   const grid = document.getElementById('gameGrid');
   const startBtn = document.getElementById('startBtn');
   const winMessage = document.getElementById('winMessage');
@@ -101,11 +99,9 @@ title: Coin-Match Simulator
       card.setAttribute('data-id', i);
       card.setAttribute('data-crypto', shuffledIcons[i]);
       
-      // İnternet üzerinden transparan siyah temalı vektörel logoyu çeken img elementi
       const img = document.createElement('img');
       img.setAttribute('src', `https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/128/icon/${shuffledIcons[i]}.png`);
       img.setAttribute('class', 'crypto-logo');
-      // Eğer bir logonun yüklenmesinde hata olursa kırık resim görünmesin diye yedek hata kontrolü
       img.onerror = function() { this.src = 'https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/128/icon/generic.png'; };
       
       card.appendChild(img);
@@ -116,7 +112,7 @@ title: Coin-Match Simulator
 
   function startGame() {
     if (gameActive) return;
-    gameActive = true; timeLeft = 45; cardsWon = [];
+    gameActive = true; timeLeft = 60; cardsWon = [];
     document.getElementById('timer').innerText = timeLeft;
     document.getElementById('score').innerText = 0;
     winMessage.style.display = 'none'; startBtn.style.display = 'none';
@@ -141,7 +137,8 @@ title: Coin-Match Simulator
     const cards = grid.children;
     const oOneId = cardsChosenId[0]; const oTwoId = cardsChosenId[1];
     if (cardsChosen[0] === cardsChosen[1]) {
-      cards[oOneId].className = 'card flipped matched'; cards[oTwoId].className = 'card flipped matched';
+      // Sınıfları tamamen değiştirmek yerine .matched ekliyoruz ki dönme efekti korunsun ve yok olsun
+      cards[oOneId].classList.add('matched'); cards[oTwoId].classList.add('matched');
       cardsWon.push(cardsChosen);
       document.getElementById('score').innerText = cardsWon.length * 10;
     } else {
