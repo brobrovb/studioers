@@ -84,29 +84,23 @@ title: Free Crypto Arcade
   .logout-btn { background: #ff007a; color: #fff; box-shadow: 0 3px 0 #b00052; }
   .logout-btn:active { box-shadow: 0 1px 0 #b00052; }
 
-  /* Dashboard Telemetry Metrics */
+  /* Dashboard Telemetry Metrics - Wallet Tek Başına Tam Genişlik */
   .stats-container { 
     display: flex; 
-    gap: 12px; 
-    justify-content: space-between; 
     margin-bottom: 25px; 
-    flex-wrap: wrap; 
     width: 100%;
   }
   .stat-card { 
     background: #242632; 
     border: 1px solid #2f3245; 
-    border-left: 5px solid #00f0ff; 
-    padding: 12px 15px; 
+    border-left: 5px solid #ff007a; 
+    padding: 15px; 
     border-radius: 6px; 
-    flex: 1; 
-    min-width: 140px; 
+    width: 100%;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
   }
-  .stat-card h5 { margin: 0; color: #94a3b8; text-transform: uppercase; font-size: 10px; letter-spacing: 0.5px; }
-  .stat-card p { margin: 4px 0 0 0; font-size: 18px; font-weight: bold; color: #00f0ff; }
-  .stat-card.balance-card { border-left-color: #ff007a; }
-  .stat-card.balance-card p { color: #ff007a; }
+  .stat-card h5 { margin: 0; color: #94a3b8; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+  .stat-card p { margin: 6px 0 0 0; font-size: 22px; font-weight: bold; color: #ff007a; }
 
   /* Optimized Responsive Game Grid */
   .game-grid { 
@@ -200,10 +194,7 @@ title: Free Crypto Arcade
   /* Targeted Media Queries Adjusting Flex Rules For Specific Mobile Widths */
   @media (max-width: 580px) {
     h1 { font-size: 18px !important; margin-bottom: 15px !important; }
-    .stats-container { gap: 8px !important; }
-    .stat-card { min-width: 47% !important; padding: 10px !important; }
-    .stat-card.balance-card { min-width: 100% !important; }
-    .stat-card p { font-size: 15px !important; }
+    .stat-card p { font-size: 19px !important; }
     .game-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
     .rc-game-card { padding: 10px !important; gap: 10px !important; }
     .rc-game-image { width: 60px !important; height: 60px !important; font-size: 24px !important; }
@@ -213,11 +204,9 @@ title: Free Crypto Arcade
 
 <div class="arcade-body">
 
-  <!-- Üst Reklam Alanı -->
   <div class="ad-container">
     <span class="ad-label">Sponsored Mining Network</span>
-    <!-- Adsterra/Coinzilla Kodu Buraya -->
-  </div>
+    </div>
 
   <div class="auth-bar">
     <div id="authUser" class="user-info">
@@ -230,18 +219,8 @@ title: Free Crypto Arcade
 
   <div class="stats-container">
     <div class="stat-card">
-      <h5>Your Mining Power</h5>
-      <p id="userPower">0.000 Th/s</p>
-    </div>
-    <div class="stat-card">
-      <h5>Network Power</h5>
-      <p>1,420.85 Ph/s</p>
-    </div>
-    <div class="stats-container" style="margin:0; padding:0; flex:1; min-width:140px;">
-      <div class="stat-card balance-card" style="margin:0; width:100%;">
-        <h5>Your Wallet</h5>
-        <p id="userBalance">0.00 Points</p>
-      </div>
+      <h5>Your Wallet Allocation</h5>
+      <p id="userBalance">0.00 Points</p>
     </div>
   </div>
 
@@ -258,7 +237,6 @@ title: Free Crypto Arcade
       </div>
     </div>
     
-    <!-- Protetris Kartı -->
     <div class="rc-game-card">
       <div class="rc-game-image" style="text-shadow: 0 0 10px #ff007a;">🧩</div>
       <div class="rc-game-details">
@@ -325,7 +303,6 @@ title: Free Crypto Arcade
     </div>
   </div>
 
-  <!-- LEADERBOARD COMPONENT PANEL -->
   <div class="leaderboard-section">
     <h3 style="margin-top:0; color:#00f0ff; font-size:16px; text-transform:uppercase; border-bottom:1px solid #2f3245; padding-bottom:8px; letter-spacing:1px;">🏆 TOP 10 BALANCES</h3>
     <table class="leaderboard-table">
@@ -351,11 +328,9 @@ title: Free Crypto Arcade
     <p id="faucetMsg" style="margin-top: 12px; font-weight: bold; color: #00ff88; min-height: 20px;"></p>
   </div>
 
-  <!-- Alt Reklam Alanı -->
   <div class="ad-container" style="margin-top: 25px;">
     <span class="ad-label">Hardware Allocation Sponsor</span>
-    <!-- Adsterra/Coinzilla Kodu Buraya -->
-  </div>
+    </div>
 
 </div>
 
@@ -386,7 +361,6 @@ title: Free Crypto Arcade
 
   const authBtn = document.getElementById('authBtn');
   const authUserDiv = document.getElementById('authUser');
-  const userPowerText = document.getElementById('userPower');
   const userBalanceText = document.getElementById('userBalance');
   const faucetBtn = document.getElementById('faucetBtn');
   const faucetMsg = document.getElementById('faucetMsg');
@@ -450,7 +424,6 @@ title: Free Crypto Arcade
   // --- REAL-TIME LEADERBOARD SENSOR ---
   function initLeaderboard() {
     const usersRef = collection(db, "users");
-    // Cüzdan puanına (balance) göre büyükten küçüğe sıralayıp ilk 10 dökümanı anlık dinliyoruz kanka
     const q = query(usersRef, orderBy("balance", "desc"), limit(10));
     
     onSnapshot(q, (snapshot) => {
@@ -465,7 +438,6 @@ title: Free Crypto Arcade
         const data = docSnap.data();
         const userId = docSnap.id;
         
-        // İsmi veya avatarı yoksa fallback oluşturup siberpunk bir anonim isim uyduruyoruz kırılma olmasın diye
         const displayName = data.displayName || (auth.currentUser && auth.currentUser.uid === userId ? auth.currentUser.displayName : `Gamer_${userId.substring(0, 4)}`);
         const photoURL = data.photoURL || (auth.currentUser && auth.currentUser.uid === userId ? auth.currentUser.photoURL : "https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/anonymous.png");
         const balance = parseFloat(data.balance || 0).toFixed(2);
@@ -476,7 +448,6 @@ title: Free Crypto Arcade
         else if (index === 3) rankClass = "rank-3";
         
         const row = document.createElement('tr');
-        // Eğer sıralamadaki kişi o an giriş yapmış olan aktif kullanıcıysa satırı hafif parlatıyoruz kanka
         if (currentUser && currentUser.uid === userId) {
           row.style.background = "rgba(0, 240, 255, 0.08)";
           row.style.borderLeft = "2px solid #00f0ff";
@@ -500,7 +471,6 @@ title: Free Crypto Arcade
     });
   }
 
-  // İlk açılışta leaderboard'u tetikle kanka
   initLeaderboard();
 
   onAuthStateChanged(auth, (user) => {
@@ -514,10 +484,8 @@ title: Free Crypto Arcade
       onSnapshot(userRef, (snapshot) => {
         if (snapshot.exists()) {
           const data = snapshot.data();
-          userPowerText.innerText = parseFloat(data.power || 0).toFixed(3) + " Th/s";
           userBalanceText.innerText = parseFloat(data.balance || 0).toFixed(2) + " Points";
           
-          // Giriş yapınca dökümana ismini ve avatarını yazalım ki leaderboard'da boş gözükmesin kanka
           if (!data.displayName || !data.photoURL) {
             setDoc(userRef, { 
               displayName: user.displayName, 
@@ -526,7 +494,6 @@ title: Free Crypto Arcade
           }
         } else {
           setDoc(userRef, { 
-            power: 0, 
             balance: 0, 
             displayName: user.displayName, 
             photoURL: user.photoURL 
@@ -540,7 +507,6 @@ title: Free Crypto Arcade
       authBtn.innerText = "Sign In with Google";
       authBtn.classList.remove('logout-btn');
       authUserDiv.innerHTML = `<span style="color: #94a3b8; font-size: 14px;">Not authenticated. Scores will not be tracked!</span>`;
-      userPowerText.innerText = "0.000 Th/s";
       userBalanceText.innerText = "0.00 Points";
     }
   });
