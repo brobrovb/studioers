@@ -6,18 +6,14 @@ layout: null
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RollerCoin Mining Guide & Referral</title>
+  <title>RollerCoin Madencilik Rehberi & Bonus Kayıt</title>
   <style>
-    /* GitHub Pages Reset & Dark Theme */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    /* Reset & Dark Cyberpunk UI */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      background-color: #1a1b23 !important;
-      color: #e2e8f0 !important;
+      background-color: #12131a;
+      color: #e2e8f0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       line-height: 1.6;
       width: 100%;
@@ -26,19 +22,19 @@ layout: null
     }
 
     .container {
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 20px 16px;
     }
 
-    /* Ad Banner Containers */
+    /* Ad Container Placeholder */
     .ad-container {
-      margin: 20px 0;
+      margin: 15px 0;
       text-align: center;
       width: 100%;
       min-height: 90px;
-      background: #1e202b;
-      border: 1px solid #2f3245;
+      background: #181a24;
+      border: 1px dashed #2e3248;
       border-radius: 8px;
       display: flex;
       flex-direction: column;
@@ -56,13 +52,14 @@ layout: null
 
     /* Hero Section */
     .hero-card {
-      background: #242632;
+      background: linear-gradient(180deg, #1d1f2c 0%, #171822 100%);
       border: 2px solid #00f0ff;
-      border-radius: 12px;
+      border-radius: 16px;
       padding: 35px 20px;
       text-align: center;
-      box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
-      margin-bottom: 30px;
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);
+      margin-bottom: 35px;
+      position: relative;
     }
 
     .bonus-badge {
@@ -70,26 +67,27 @@ layout: null
       background: #ff007a;
       color: #ffffff;
       font-size: 12px;
-      font-weight: bold;
-      padding: 4px 12px;
+      font-weight: 800;
+      padding: 6px 16px;
       border-radius: 20px;
       margin-bottom: 15px;
       text-transform: uppercase;
       letter-spacing: 1px;
+      box-shadow: 0 0 10px rgba(255, 0, 122, 0.5);
     }
 
     .hero-title {
       color: #ffffff;
-      font-size: 28px;
+      font-size: 32px;
       margin-bottom: 12px;
-      font-weight: 800;
+      font-weight: 900;
       line-height: 1.2;
     }
 
     .hero-subtitle {
       color: #94a3b8;
       font-size: 15px;
-      max-width: 680px;
+      max-width: 720px;
       margin: 0 auto 25px auto;
     }
 
@@ -99,18 +97,19 @@ layout: null
       background: linear-gradient(135deg, #00f0ff 0%, #00a8bc 100%);
       color: #000000 !important;
       font-weight: 900;
-      font-size: 17px;
-      padding: 16px 32px;
-      border-radius: 8px;
+      font-size: 18px;
+      padding: 16px 36px;
+      border-radius: 10px;
       text-decoration: none !important;
       text-transform: uppercase;
-      box-shadow: 0 5px 0 #007785, 0 0 15px rgba(0, 240, 255, 0.3);
-      transition: all 0.1s ease-in-out;
+      box-shadow: 0 6px 0 #007785, 0 0 20px rgba(0, 240, 255, 0.4);
+      transition: all 0.15s ease-in-out;
+      cursor: pointer;
     }
 
     .cta-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 7px 0 #007785, 0 0 25px rgba(0, 240, 255, 0.5);
+      transform: translateY(-3px);
+      box-shadow: 0 9px 0 #007785, 0 0 30px rgba(0, 240, 255, 0.7);
     }
 
     .cta-btn:active {
@@ -118,55 +117,120 @@ layout: null
       box-shadow: 0 2px 0 #007785;
     }
 
-    /* Feature Grid */
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      margin-bottom: 30px;
+    /* Stats Counter Bar */
+    .stats-bar {
+      display: flex;
+      justify-content: space-around;
+      background: #1a1c28;
+      border: 1px solid #2e3248;
+      border-radius: 12px;
+      padding: 15px 10px;
+      margin-bottom: 35px;
+      text-align: center;
+      flex-wrap: wrap;
+      gap: 15px;
     }
 
-    .info-card {
-      background: #242632;
-      border: 1px solid #2f3245;
-      border-radius: 8px;
-      padding: 20px;
-      border-left: 4px solid #00f0ff;
-    }
-
-    .info-card h3 {
+    .stat-item h4 {
       color: #00f0ff;
-      font-size: 18px;
-      margin-bottom: 8px;
+      font-size: 20px;
+      font-weight: 800;
     }
 
-    .info-card p {
+    .stat-item p {
+      color: #64748b;
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* Screenshot Showcases */
+    .screenshot-section {
+      background: #181a24;
+      border: 1px solid #2e3248;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 35px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .section-header h2 {
+      color: #ffffff;
+      font-size: 24px;
+    }
+
+    .section-header p {
       color: #94a3b8;
       font-size: 14px;
-      margin: 0;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .preview-card {
+      background: #202332;
+      border: 1px solid #2e3248;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+
+    .preview-card:hover {
+      transform: translateY(-4px);
+      border-color: #00f0ff;
+    }
+
+    .preview-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 1px solid #2e3248;
+    }
+
+    .preview-card-body {
+      padding: 15px;
+    }
+
+    .preview-card-body h3 {
+      color: #00f0ff;
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    .preview-card-body p {
+      color: #cbd5e1;
+      font-size: 13px;
     }
 
     /* Detailed Guide Section */
     .guide-section {
-      background: #242632;
-      border: 1px solid #2f3245;
-      border-radius: 10px;
+      background: #181a24;
+      border: 1px solid #2e3248;
+      border-radius: 12px;
       padding: 30px;
-      margin-bottom: 30px;
+      margin-bottom: 35px;
     }
 
     .guide-section h2 {
       color: #ff007a;
-      border-bottom: 1px solid #2f3245;
-      padding-bottom: 10px;
+      border-bottom: 1px solid #2e3248;
+      padding-bottom: 12px;
       margin-bottom: 20px;
       font-size: 22px;
     }
 
     .guide-section h3 {
       color: #00f0ff;
-      margin: 20px 0 8px 0;
-      font-size: 16px;
+      margin: 22px 0 8px 0;
+      font-size: 17px;
     }
 
     .guide-section p, .guide-section li {
@@ -180,14 +244,27 @@ layout: null
     }
 
     .guide-section li {
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+    }
+
+    /* Live Proof Badge */
+    .proof-box {
+      background: #202332;
+      border-left: 4px solid #00ff88;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 20px;
+    }
+
+    .proof-box strong {
+      color: #00ff88;
     }
 
     @media (max-width: 600px) {
-      .hero-title { font-size: 22px; }
+      .hero-title { font-size: 24px; }
       .hero-subtitle { font-size: 14px; }
       .cta-btn { font-size: 15px; padding: 14px 20px; width: 100%; text-align: center; }
-      .guide-section { padding: 20px 15px; }
+      .guide-section, .screenshot-section { padding: 20px 15px; }
     }
   </style>
 </head>
@@ -202,73 +279,104 @@ layout: null
 
     <!-- HERO SECTION -->
     <div class="hero-card">
-      <span class="bonus-badge">🎁 1000 SATOSHI BONUS</span>
-      <h1 class="hero-title">ROLLERCOIN CRYPTO MINING SIMULATOR</h1>
+      <span class="bonus-badge">🎁 ANINDA 1000 SATOSHI BONUSU</span>
+      <h1 class="hero-title">ROLLERCOIN GERÇEK MİNİNG SİMÜLATÖRÜ</h1>
       <p class="hero-subtitle">
-        Oyun oynayarak gerçek Bitcoin, Ethereum, Dogecoin ve USDT kazanabileceğin en büyük kripto madencilik simülasyonu. Hemen kaydol ve başlama bonusunu kap!
+        Mini oyunlar oynayarak sanal madencilik gücü (Hashrate) topla, kendi madencilik çiftliğini kur ve Bitcoin, Ethereum, Dogecoin kazancı elde et.
       </p>
       <a href="https://rollercoin.com/?r=mqg589d7" target="_blank" rel="noopener noreferrer" class="cta-btn">
-        🚀 ROLLERCOIN'E ÜCRETSİZ KAYDOL
+        🚀 BONUSLA BİRLİKTE ÜCRETSİZ BAŞLA
       </a>
     </div>
 
-    <!-- FEATURES -->
-    <div class="info-grid">
-      <div class="info-card">
-        <h3>🎮 Mini Oyunlar Oyna</h3>
-        <p>Oyun oynayarak sanal madencilik gücü (Hashrate) elde et. Gücün arttıkça kazandığın kripto miktarı katlanır.</p>
+    <!-- STATS COUNTER -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <h4>4M+</h4>
+        <p>Aktif Oyuncu</p>
       </div>
-      <div class="info-card" style="border-left-color: #ff007a;">
-        <h3>⛏️ Madencilik Odası Kur</h3>
-        <p>Kazandığın güçler veya RLT (RollerToken) ile raf ve madencilik cihazları (Miners) alarak pasif gelir elde et.</p>
+      <div class="stat-item">
+        <h4>$5.2M+</h4>
+        <p>Ödenen Ödül</p>
       </div>
-      <div class="info-card" style="border-left-color: #00ff88;">
-        <h3>💰 Gerçek Kripto Çekimi</h3>
-        <p>Biriken BTC, ETH, DOGE, LTC veya SOL bakiyelerini doğrudan kendi borsa veya soğuk cüzdanına aktar.</p>
+      <div class="stat-item">
+        <h4>7+ Yıl</h4>
+        <p>Kesintisiz Hizmet</p>
+      </div>
+      <div class="stat-item">
+        <h4>0 TRTL</h4>
+        <p>Yatırım Şartı</p>
       </div>
     </div>
 
-    <!-- REHBER -->
+    <!-- SCREENSHOTS SHOWCASE -->
+    <div class="screenshot-section">
+      <div class="section-header">
+        <h2>🎮 Oyun İçi Arayüz ve Sistem Görselleri</h2>
+        <p>RollerCoin ekosisteminin gerçek panelleri ve madencilik odası yapısı</p>
+      </div>
+
+      <div class="preview-grid">
+        <!-- Card 1 -->
+        <div class="preview-card">
+          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Mining Room Concept">
+          <div class="preview-card-body">
+            <h3>⛏️ Kendi Madencilik Odanı Kur</h3>
+            <p>Oyunlardan ve etkinliklerden kazandığın madenci (Miner) cihazlarını raflara yerleştirerek 7/24 pasif kazım gücü oluştur.</p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="preview-card">
+          <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop" alt="Arcade Mini Games">
+          <div class="preview-card-body">
+            <h3>🕹️ Nostaljik Mini Oyunlar</h3>
+            <p>Coin-Flip, Flappy Rocket ve Token Surfer gibi eğlenceli oyunları oynayarak madencilik gücünü (TH/s) katla.</p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="preview-card">
+          <img src="https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=800&auto=format&fit=crop" alt="Crypto Withdrawals">
+          <div class="preview-card-body">
+            <h3>💰 Doğrudan Kripto Çekimi</h3>
+            <p>Biriken BTC, DOGE, ETH veya Solana bakiyelerini alt limitlere ulaştığında komisyonsuz kişisel cüzdanına çek.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAILED GUIDE -->
     <div class="guide-section">
-      <h2>📖 RollerCoin Nedir ve Nasıl Çalışır? (Detaylı Rehber)</h2>
+      <h2>📖 RollerCoin Strateji ve Başlangıç Rehberi</h2>
       <p>
-        RollerCoin, gerçek kripto para madenciliği konseptini eğlenceli mini oyunlarla birleştiren bir online simülatördür. Sistemde hesap açtıktan sonra yatırım yapmadan sadece oyun oynayarak veya zamanla madencilik cihazları yatırımı yaparak kripto birikimi sağlayabilirsin.
+        RollerCoin, yatırımsız olarak gerçek kripto biriktirmenize olanak tanıyan dünyanın en büyük madencilik simülatörüdür. Oyundaki temel amaç, mini oyunlarla veya cihaz yatırımlarıyla sanal kazım gücünüzü (GH/s - TH/s - EH/s) artırmaktır.
       </p>
 
-      <h3>1. Başlangıç & Hash Gücü (GH/s - TH/s)</h3>
+      <h3>1. Oyun Oynayarak Kazım Gücü Elde Etme</h3>
       <p>
-        Sisteme kaydolduğunda ilk yapman gereken mini oyunları oynamaktır. Kazandığın her oyun sana 7 gün boyunca geçerli olabilen sanal kazım gücü verir. Gücün ne kadar yüksek olursa, her 10 dakikada bir dağıtılan blok ödülünden o kadar fazla pay alırsın.
+        Sisteme kaydolduktan sonra "Games" sekmesinden istediğiniz mini oyunu oynayın. Kazandığınız her oyun size sanal güç sağlar. Ne kadar çok oyun kazanırsanız sanal bilgisayarınızın seviyesi (PC Level) o kadar yükselir ve gücünüzün kalıcılık süresi 7 güne kadar çıkar.
       </p>
 
-      <h3>2. Oyun Bilgisayarını Yükseltme</h3>
+      <h3>2. Pasif Gelir Odası Oluşturma</h3>
       <p>
-        Günde ne kadar çok oyun kazanırsan, odandaki sanal bilgisayar o kadar gelişir (Level 1'den Level 4'e kadar). Bilgisayarın seviyesi yükseldikçe oynadığın oyunlardan kazandığın gücün kalıcılık süresi artar.
+        Sürekli oyun oynamak istemiyorsanız, sezonsal etkinliklerden (Event Pass), kutulardan veya pazar yerinden (Marketplace) madenci cihazları (Miners) toplayabilirsiniz. Bu cihazlar odanızda durduğu sürece siz çevrimdışı olsanız dahi size kripto para kazandırmaya devam eder.
       </p>
 
-      <h3>3. Pasif Gelir: Cihazlar ve Raflar</h3>
-      <p>
-        Sadece oyun oynamak yerine, sezonsal etkinliklerden (Event Pass), kutulardan veya pazar yerinden (Marketplace) madenci cihazları (Miners) satın alabilirsin. Bu cihazlar odana yerleştirilir ve siz oyunda olmasanız bile 7/24 kazım yapmaya devam eder.
-      </p>
-
-      <h3>4. Hangi Kripto Paralar Kazılabilir?</h3>
+      <h3>3. Hangi Coin'i Kazmalısınız?</h3>
       <ul>
-        <li><strong>Bitcoin (BTC)</strong> - Güvenilir ve klasik çekim tercihi.</li>
-        <li><strong>Ethereum (ETH) & Solana (SOL)</strong> - Altcoin portföyü yapmak isteyenler için.</li>
-        <li><strong>Dogecoin (DOGE) & Litecoin (LTC)</strong> - Düşük çekim limitleri için ideal.</li>
-        <li><strong>RollerToken (RLT)</strong> - Oyun içi cihaz ve raf alımında kullanılan ana para birimi.</li>
+        <li><strong>Bitcoin (BTC):</strong> En yüksek güvenilirlik ve uzun vadeli birikim için.</li>
+        <li><strong>Dogecoin (DOGE) / Litecoin (LTC):</strong> Düşük çekim limitlerine hızlı ulaşmak için.</li>
+        <li><strong>RollerToken (RLT):</strong> Oyun içi madenci cihazı ve raf almak için ana para birimi.</li>
       </ul>
 
-      <h3>💡 Yeni Başlayanlar İçin İpuçları</h3>
-      <ol>
-        <li>Her gün en az 10-20 mini oyun oynayarak bilgisayar seviyeni maksimumda tut.</li>
-        <li>Günlük ve haftalık görevleri (Tasks) tamamlayarak ücretsiz RLT ve RST biriktir.</li>
-        <li>Etkinlik zamanlarında (Event Pass) ücretsiz verilen cihazları kaçırma.</li>
-        <li>Gelişmek için kazandığın ilk gelirleri RLT'ye dönüştürüp raf ve cihaz alımına ayır.</li>
-      </ol>
+      <div class="proof-box">
+        <strong>💡 Hızlı İpucu:</strong> Kaydolduktan hemen sonra "My Power" kısmından kazım gücünüzü %100 oranında istediğiniz tek bir koin türüne veya RLT'ye yönlendirebilirsiniz.
+      </div>
 
       <div style="text-align: center; margin-top: 35px;">
-        <a href="https://rollercoin.com/?r=mqg589d7" target="_blank" rel="noopener noreferrer" class="cta-btn" style="background: linear-gradient(135deg, #ff007a 0%, #b00052 100%); color: #fff !important; box-shadow: 0 5px 0 #730035;">
-          ⚡ HEMEN KAYDOL VE MADENCİLİĞE BAŞLA
+        <a href="https://rollercoin.com/?r=mqg589d7" target="_blank" rel="noopener noreferrer" class="cta-btn" style="background: linear-gradient(135deg, #ff007a 0%, #b00052 100%); color: #fff !important; box-shadow: 0 6px 0 #730035;">
+          ⚡ 1000 SATOSHI BONUS İLE HESAP AÇ
         </a>
       </div>
     </div>
