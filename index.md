@@ -1,595 +1,284 @@
 ---
-layout: default
-title: Free Crypto Arcade
+layout: null
 ---
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RollerCoin Mining Guide & Referral</title>
+  <style>
+    /* GitHub Pages Reset & Dark Theme */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-<style>
-  /* Global CSS Styling & Absolute Mobile Constraint */
-  html, body {
-    background-color: #1a1b23 !important;
-    color: #e2e8f0 !important;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    box-sizing: border-box;
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
-    overflow-x: hidden !important; /* Prevents layout breakdown on mobile viewports */
-    -webkit-text-size-adjust: 100%;
-  }
+    body {
+      background-color: #1a1b23 !important;
+      color: #e2e8f0 !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-  *, *:before, *:after {
-    box-sizing: inherit;
-  }
-  
-  /* Force Jekyll theme structure to respect layout boundaries and eliminate hidden padding overflow */
-  .site-header, .site-footer, .page-content, .wrapper, .arcade-body {
-    background-color: #1a1b23 !important;
-    max-width: 100% !important;
-    width: 100% !important;
-    overflow-x: hidden !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-  
-  /* Desktop constraints for readability */
-  .wrapper { 
-    max-width: 1200px !important; 
-    box-shadow: none !important; 
-    border: none !important; 
-    padding: 0 12px !important;
-  }
-  
-  .site-title, .site-title:visited, .site-nav .page-link { 
-    color: #00f0ff !important; 
-    font-weight: bold; 
-    text-transform: uppercase; 
-  }
-  
-  .arcade-body { 
-    padding: 10px 0; 
-  }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
 
-  /* Authentication Control Bar */
-  .auth-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #242632;
-    padding: 10px 15px;
-    border-radius: 6px;
-    border: 1px solid #2f3245;
-    margin-bottom: 20px;
-    gap: 10px;
-    width: 100%;
-  }
-  .user-info { 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-    font-weight: bold; 
-    font-size: 13px;
-    overflow: hidden;
-    text-overflow: ellipsis; white-space: nowrap;
-  }
-  .user-avatar { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #00f0ff; flex-shrink: 0; }
-  
-  .auth-btn {
-    background: #00e5ff; color: #000; border: none; padding: 6px 12px;
-    font-weight: bold; border-radius: 4px; cursor: pointer; text-transform: uppercase;
-    box-shadow: 0 3px 0 #00a8bc; font-size: 11px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .auth-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #00a8bc; }
-  .logout-btn { background: #ff007a; color: #fff; box-shadow: 0 3px 0 #b00052; }
-  .logout-btn:active { box-shadow: 0 1px 0 #b00052; }
+    /* Ad Banner Containers */
+    .ad-container {
+      margin: 20px 0;
+      text-align: center;
+      width: 100%;
+      min-height: 90px;
+      background: #1e202b;
+      border: 1px solid #2f3245;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
 
-  /* Dashboard Telemetry Metrics - Wallet Tek Başına Tam Genişlik */
-  .stats-container { 
-    display: flex; 
-    margin-bottom: 25px; 
-    width: 100%;
-  }
-  .stat-card { 
-    background: #242632; 
-    border: 1px solid #2f3245; 
-    border-left: 5px solid #ff007a; 
-    padding: 15px; 
-    border-radius: 6px; 
-    width: 100%;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
-  }
-  .stat-card h5 { margin: 0; color: #94a3b8; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
-  .stat-card p { margin: 6px 0 0 0; font-size: 22px; font-weight: bold; color: #ff007a; }
+    .ad-label {
+      font-size: 10px;
+      color: #64748b;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
 
-  /* Optimized Responsive Game Grid */
-  .game-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-    gap: 15px; 
-    margin-top: 20px; 
-    width: 100%;
-  }
-  
-  /* Individual Game Interface Component */
-  .rc-game-card { 
-    background: #242632; 
-    border: 1px solid #2f3245; 
-    border-radius: 8px; 
-    padding: 12px; 
-    display: flex; 
-    gap: 12px; 
-    align-items: center; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
-    width: 100%;
-  }
-  .rc-game-image { 
-    width: 70px; 
-    height: 70px; 
-    background: #13141c; 
-    border-radius: 8px; 
-    border: 1px solid #2f3245; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-size: 30px; 
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.6); 
-    flex-shrink: 0;
-  }
-  .rc-game-details { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-  .rc-game-name { margin: 0; font-size: 14px; font-weight: bold; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .rc-difficulty-label { font-size: 10px; color: #00f0ff; margin: 0; text-transform: uppercase; }
-  .rc-difficulty-bar { display: flex; gap: 2px; margin-bottom: 4px; }
-  .rc-dot { width: 8px; height: 4px; background: #3a3f58; border-radius: 1px; }
-  .rc-dot.active { background: #ff007a; box-shadow: 0 0 4px #ff007a; }
-  
-  .rc-start-btn { 
-    background: #00e5ff; color: #000; border: none; padding: 6px 0; border-radius: 6px; 
-    font-weight: bold; font-size: 11px; text-align: center; text-decoration: none; 
-    text-transform: uppercase; box-shadow: 0 3px 0 #00a8bc; display: block; width: 100%; 
-  }
-  .rc-start-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #00a8bc; }
+    /* Hero Section */
+    .hero-card {
+      background: #242632;
+      border: 2px solid #00f0ff;
+      border-radius: 12px;
+      padding: 35px 20px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+      margin-bottom: 30px;
+    }
 
-  /* Faucet Interaction Space */
-  .faucet-section { margin: 30px 0; padding: 20px 15px; background: #242632; border: 2px dashed #ff007a; border-radius: 8px; text-align: center; width: 100%; }
-  .faucet-btn { background: #ff007a; color: #fff; border: none; padding: 10px 35px; font-size: 14px; border-radius: 6px; cursor: pointer; font-weight: bold; text-transform: uppercase; box-shadow: 0 4px 0 #b00052; max-width: 100%; }
-  .faucet-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #b00052; }
-  .faucet-btn:disabled { background: #4e5268 !important; box-shadow: none !important; cursor: not-allowed; color: #aaa; }
+    .bonus-badge {
+      display: inline-block;
+      background: #ff007a;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
 
-  /* Cyberpunk Leaderboard UI Panel - REMODELLED */
-  .leaderboard-section { 
-    margin: 30px 0; 
-    padding: 24px 20px; 
-    background: #242632; 
-    border: 1px solid #2f3245; 
-    border-top: 4px solid #00f0ff;
-    border-radius: 12px; 
-    box-shadow: 0 6px 25px rgba(0,0,0,0.3); 
-    width: 100%; 
-  }
-  .leaderboard-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; text-align: left; font-size: 14px; margin-top: 15px; }
-  .leaderboard-table th { color: #94a3b8; text-transform: uppercase; font-size: 11px; font-weight: 700; padding: 12px 16px; letter-spacing: 1px; border-bottom: 1px solid #2f3245; }
-  .leaderboard-table td { padding: 14px 16px; background: #1e202b; vertical-align: middle; transition: all 0.2s ease; }
-  .leaderboard-table tr td:first-child { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
-  .leaderboard-table tr td:last-child { border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
-  .leaderboard-table tr:hover td { background: #282b3d; color: #fff; box-shadow: inset 0 0 4px rgba(0, 240, 255, 0.2); }
-  
-  .rank-badge { 
-    font-weight: 800; 
-    display: inline-flex; 
-    align-items: center; 
-    justify-content: center; 
-    width: 28px; 
-    height: 28px; 
-    border-radius: 50%; 
-    background: #13141c; 
-    color: #64748b; 
-    font-size: 12px;
-    border: 1px solid #2f3245;
-  }
-  .rank-1 { background: linear-gradient(135deg, #ffe033 0%, #cc9900 100%) !important; color: #000 !important; box-shadow: 0 0 12px rgba(255, 215, 0, 0.4); border: none !important; }
-  .rank-2 { background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%) !important; color: #000 !important; box-shadow: 0 0 10px rgba(192, 192, 192, 0.3); border: none !important; }
-  .rank-3 { background: linear-gradient(135deg, #ffaa66 0%, #cd7f32 100%) !important; color: #000 !important; box-shadow: 0 0 10px rgba(205, 127, 50, 0.3); border: none !important; }
-  
-  .leader-user { display: flex; align-items: center; gap: 12px; font-weight: 600; max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .leader-avatar { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #2f3245; background: #13141c; object-fit: cover; }
+    .hero-title {
+      color: #ffffff;
+      font-size: 28px;
+      margin-bottom: 12px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
 
-  /* Adsterra/Coinzilla Banner Placements */
-  .ad-container {
-    margin: 20px auto;
-    text-align: center;
-    width: 100%;
-    min-height: 90px;
-    background: #1e202b;
-    border: 1px solid #2f3245;
-    border-radius: 6px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .ad-label {
-    font-size: 9px;
-    color: #4f5675;
-    letter-spacing: 1px;
-    margin-bottom: 4px;
-    text-transform: uppercase;
-  }
+    .hero-subtitle {
+      color: #94a3b8;
+      font-size: 15px;
+      max-width: 680px;
+      margin: 0 auto 25px auto;
+    }
 
-  /* Targeted Media Queries Adjusting Flex Rules For Specific Mobile Widths */
-  @media (max-width: 580px) {
-    h1 { font-size: 18px !important; margin-bottom: 15px !important; }
-    .stat-card p { font-size: 19px !important; }
-    .game-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
-    .rc-game-card { padding: 10px !important; gap: 10px !important; }
-    .rc-game-image { width: 60px !important; height: 60px !important; font-size: 24px !important; }
-    .leader-user { max-width: 130px !important; gap: 8px !important; font-size: 13px; }
-    .leaderboard-section { padding: 15px 10px !important; }
-    .leaderboard-table th, .leaderboard-table td { padding: 10px 8px !important; font-size: 12px; }
-    .rank-badge { width: 24px; height: 24px; font-size: 11px; }
-  }
-</style>
+    /* CTA Button */
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #00f0ff 0%, #00a8bc 100%);
+      color: #000000 !important;
+      font-weight: 900;
+      font-size: 17px;
+      padding: 16px 32px;
+      border-radius: 8px;
+      text-decoration: none !important;
+      text-transform: uppercase;
+      box-shadow: 0 5px 0 #007785, 0 0 15px rgba(0, 240, 255, 0.3);
+      transition: all 0.1s ease-in-out;
+    }
 
-<div class="arcade-body">
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 0 #007785, 0 0 25px rgba(0, 240, 255, 0.5);
+    }
 
-  <div class="ad-container">
-    <span class="ad-label">Sponsored Mining Network</span>
+    .cta-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #007785;
+    }
+
+    /* Feature Grid */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .info-card {
+      background: #242632;
+      border: 1px solid #2f3245;
+      border-radius: 8px;
+      padding: 20px;
+      border-left: 4px solid #00f0ff;
+    }
+
+    .info-card h3 {
+      color: #00f0ff;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .info-card p {
+      color: #94a3b8;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    /* Detailed Guide Section */
+    .guide-section {
+      background: #242632;
+      border: 1px solid #2f3245;
+      border-radius: 10px;
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+
+    .guide-section h2 {
+      color: #ff007a;
+      border-bottom: 1px solid #2f3245;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    .guide-section h3 {
+      color: #00f0ff;
+      margin: 20px 0 8px 0;
+      font-size: 16px;
+    }
+
+    .guide-section p, .guide-section li {
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .guide-section ul, .guide-section ol {
+      padding-left: 20px;
+      margin-bottom: 15px;
+    }
+
+    .guide-section li {
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 600px) {
+      .hero-title { font-size: 22px; }
+      .hero-subtitle { font-size: 14px; }
+      .cta-btn { font-size: 15px; padding: 14px 20px; width: 100%; text-align: center; }
+      .guide-section { padding: 20px 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- TOP AD SPONSOR -->
+    <div class="ad-container">
+      <span class="ad-label">Sponsored Mining Network</span>
     </div>
 
-  <div class="auth-bar">
-    <div id="authUser" class="user-info">
-      <span style="color: #94a3b8; font-size: 14px;">Checking status...</span>
+    <!-- HERO SECTION -->
+    <div class="hero-card">
+      <span class="bonus-badge">🎁 1000 SATOSHI BONUS</span>
+      <h1 class="hero-title">ROLLERCOIN CRYPTO MINING SIMULATOR</h1>
+      <p class="hero-subtitle">
+        Oyun oynayarak gerçek Bitcoin, Ethereum, Dogecoin ve USDT kazanabileceğin en büyük kripto madencilik simülasyonu. Hemen kaydol ve başlama bonusunu kap!
+      </p>
+      <a href="https://rollercoin.com/?r=k4476a6e" target="_blank" rel="noopener noreferrer" class="cta-btn">
+        🚀 ROLLERCOIN'E ÜCRETSİZ KAYDOL
+      </a>
     </div>
-    <button id="authBtn" class="auth-btn">Sign In with Google</button>
+
+    <!-- FEATURES -->
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>🎮 Mini Oyunlar Oyna</h3>
+        <p>Oyun oynayarak sanal madencilik gücü (Hashrate) elde et. Gücün arttıkça kazandığın kripto miktarı katlanır.</p>
+      </div>
+      <div class="info-card" style="border-left-color: #ff007a;">
+        <h3>⛏️ Madencilik Odası Kur</h3>
+        <p>Kazandığın güçler veya RLT (RollerToken) ile raf ve madencilik cihazları (Miners) alarak pasif gelir elde et.</p>
+      </div>
+      <div class="info-card" style="border-left-color: #00ff88;">
+        <h3>💰 Gerçek Kripto Çekimi</h3>
+        <p>Biriken BTC, ETH, DOGE, LTC veya SOL bakiyelerini doğrudan kendi borsa veya soğuk cüzdanına aktar.</p>
+      </div>
+    </div>
+
+    <!-- REHBER -->
+    <div class="guide-section">
+      <h2>📖 RollerCoin Nedir ve Nasıl Çalışır? (Detaylı Rehber)</h2>
+      <p>
+        RollerCoin, gerçek kripto para madenciliği konseptini eğlenceli mini oyunlarla birleştiren bir online simülatördür. Sistemde hesap açtıktan sonra yatırım yapmadan sadece oyun oynayarak veya zamanla madencilik cihazları yatırımı yaparak kripto birikimi sağlayabilirsin.
+      </p>
+
+      <h3>1. Başlangıç & Hash Gücü (GH/s - TH/s)</h3>
+      <p>
+        Sisteme kaydolduğunda ilk yapman gereken mini oyunları oynamaktır. Kazandığın her oyun sana 7 gün boyunca geçerli olabilen sanal kazım gücü verir. Gücün ne kadar yüksek olursa, her 10 dakikada bir dağıtılan blok ödülünden o kadar fazla pay alırsın.
+      </p>
+
+      <h3>2. Oyun Bilgisayarını Yükseltme</h3>
+      <p>
+        Günde ne kadar çok oyun kazanırsan, odandaki sanal bilgisayar o kadar gelişir (Level 1'den Level 4'e kadar). Bilgisayarın seviyesi yükseldikçe oynadığın oyunlardan kazandığın gücün kalıcılık süresi artar.
+      </p>
+
+      <h3>3. Pasif Gelir: Cihazlar ve Raflar</h3>
+      <p>
+        Sadece oyun oynamak yerine, sezonsal etkinliklerden (Event Pass), kutulardan veya pazar yerinden (Marketplace) madenci cihazları (Miners) satın alabilirsin. Bu cihazlar odana yerleştirilir ve siz oyunda olmasanız bile 7/24 kazım yapmaya devam eder.
+      </p>
+
+      <h3>4. Hangi Kripto Paralar Kazılabilir?</h3>
+      <ul>
+        <li><strong>Bitcoin (BTC)</strong> - Güvenilir ve klasik çekim tercihi.</li>
+        <li><strong>Ethereum (ETH) & Solana (SOL)</strong> - Altcoin portföyü yapmak isteyenler için.</li>
+        <li><strong>Dogecoin (DOGE) & Litecoin (LTC)</strong> - Düşük çekim limitleri için ideal.</li>
+        <li><strong>RollerToken (RLT)</strong> - Oyun içi cihaz ve raf alımında kullanılan ana para birimi.</li>
+      </ul>
+
+      <h3>💡 Yeni Başlayanlar İçin İpuçları</h3>
+      <ol>
+        <li>Her gün en az 10-20 mini oyun oynayarak bilgisayar seviyeni maksimumda tut.</li>
+        <li>Günlük ve haftalık görevleri (Tasks) tamamlayarak ücretsiz RLT ve RST biriktir.</li>
+        <li>Etkinlik zamanlarında (Event Pass) ücretsiz verilen cihazları kaçırma.</li>
+        <li>Gelişmek için kazandığın ilk gelirleri RLT'ye dönüştürüp raf ve cihaz alımına ayır.</li>
+      </ol>
+
+      <div style="text-align: center; margin-top: 35px;">
+        <a href="https://rollercoin.com/?r=k4476a6e" target="_blank" rel="noopener noreferrer" class="cta-btn" style="background: linear-gradient(135deg, #ff007a 0%, #b00052 100%); color: #fff !important; box-shadow: 0 5px 0 #730035;">
+          ⚡ HEMEN KAYDOL VE MADENCİLİĞE BAŞLA
+        </a>
+      </div>
+    </div>
+
+    <!-- BOTTOM AD SPONSOR -->
+    <div class="ad-container">
+      <span class="ad-label">Hardware Allocation Sponsor</span>
+    </div>
+
   </div>
 
-  <h1 style="text-align:center; font-size: 24px; color: #ffffff; margin-bottom: 25px;">🎮 STUDIOERS ARCADE STATION</h1>
-
-  <div class="stats-container">
-    <div class="stat-card">
-      <h5>Your Wallet Allocation</h5>
-      <p id="userBalance">0.00 Points</p>
-    </div>
-  </div>
-
-  <h3 style="border-bottom: 1px solid #2f3245; padding-bottom: 10px; color: #94a3b8; font-size: 16px; text-transform: uppercase;">🕹️ Arcade Lobby</h3>
-
-  <div class="game-grid">
-    <div class="rc-game-card">
-      <div class="rc-game-image" style="text-shadow: 0 0 10px #00f0ff;">⚡</div>
-      <div class="rc-game-details">
-        <h4 class="rc-game-name">Coin-match</h4>
-        <p class="rc-difficulty-label">difficulty: 3</p>
-        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div></div>
-        <a href="/crypto-matcher" class="rc-start-btn">🏁 START</a>
-      </div>
-    </div>
-    
-    <div class="rc-game-card">
-      <div class="rc-game-image" style="text-shadow: 0 0 10px #ff007a;">🧩</div>
-      <div class="rc-game-details">
-        <h4 class="rc-game-name">Protetris</h4>
-        <p class="rc-difficulty-label">difficulty: 5</p>
-        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot"></div><div class="rc-dot"></div></div>
-        <a href="/protetris" class="rc-start-btn" style="background:#ff007a; box-shadow: 0 3px 0 #b00052; color:white;">🏁 START</a>
-      </div>
-    </div>
-    
-    <div class="rc-game-card">
-      <div class="rc-game-image">🚀</div>
-      <div class="rc-game-details">
-        <h4 class="rc-game-name">Token Blaster</h4>
-        <p class="rc-difficulty-label">difficulty: 4</p>
-        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div></div>
-        <a href="#" class="rc-start-btn">🏁 START</a>
-      </div>
-    </div>
-    <div class="rc-game-card">
-      <div class="rc-game-image">🐹</div>
-      <div class="rc-game-details">
-        <h4 class="rc-game-name">Hamster Surfer</h4>
-        <p class="rc-difficulty-label">difficulty: 2</p>
-        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div></div>
-        <a href="#" class="rc-start-btn">🏁 START</a>
-      </div>
-    </div>
-    <div class="rc-game-card">
-      <div class="rc-game-image">🎣</div>
-      <div class="rc-game-details">
-        <h4 class="rc-game-name">Coin Fisher</h4>
-        <p class="rc-difficulty-label">difficulty: 6</p>
-        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot"></div></div>
-        <a href="#" class="rc-start-btn">🏁 START</a>
-      </div>
-    </div>
-    <div class="rc-game-card">
-      <div class="rc-game-image">🐦</div>
-      <div class="rc-game-details">
-        <h4 class="rc-game-name">Flappy Rocket</h4>
-        <p class="rc-difficulty-label">difficulty: 7</p>
-        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot"></div></div>
-        <a href="#" class="rc-start-btn">🏁 START</a>
-      </div>
-    </div>
-    <div class="rc-game-card">
-      <div class="rc-game-image">🧱</div>
-      <div class="rc-game-details">
-        <h4 class="rc-game-name">Block Blocker</h4>
-        <p class="rc-difficulty-label">difficulty: 1</p>
-        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div></div>
-        <a href="#" class="rc-start-btn">🏁 START</a>
-      </div>
-    </div>
-    <div class="rc-game-card">
-      <div class="rc-game-image">🔢</div>
-      <div class="rc-game-details">
-        <h4 class="rc-game-name">Crypto 2048</h4>
-        <p class="rc-difficulty-label">difficulty: 4</p>
-        <div class="rc-difficulty-bar"><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot active"></div><div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div></div>
-        <a href="#" class="rc-start-btn">🏁 START</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="leaderboard-section">
-    <h3 style="margin-top:0; color:#00f0ff; font-size:16px; text-transform:uppercase; border-bottom:1px solid #2f3245; padding-bottom:8px; letter-spacing:1px; display:flex; align-items:center; gap:8px;">🏆 TOP 10 BALANCES</h3>
-    <table class="leaderboard-table">
-      <thead>
-        <tr>
-          <th style="width: 65px;">Rank</th>
-          <th>Miner</th>
-          <th style="text-align: right;">Wallet Allocation</th>
-        </tr>
-      </thead>
-      <tbody id="leaderboardBody">
-        <tr>
-          <td colspan="3" style="text-align:center; color:#94a3b8; padding:25px;">Syncing with decentralized network matrix...</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="faucet-section">
-    <h3 style="margin-top:0; color:#ff007a;">🎁 Hourly Energy Refill</h3>
-    <p style="color:#94a3b8; font-size:14px; margin-bottom:15px;">Claim an instant +5.00 points bonus directly to your wallet allocation.</p>
-    <button id="faucetBtn" class="faucet-btn">CLAIM BONUS</button>
-    <p id="faucetMsg" style="margin-top: 12px; font-weight: bold; color: #00ff88; min-height: 20px;"></p>
-  </div>
-
-  <div class="ad-container" style="margin-top: 25px;">
-    <span class="ad-label">Hardware Allocation Sponsor</span>
-    </div>
-
-</div>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getFirestore, doc, onSnapshot, setDoc, runTransaction, collection, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDi7xosmyNGJELn4KOpe8QEg5tNewkIsEc",
-    authDomain: "studioers-arcade.firebaseapp.com",
-    projectId: "studioers-arcade",
-    storageBucket: "studioers-arcade.firebasestorage.app",
-    messagingSenderId: "1096473829075",
-    appId: "1:1096473829075:web:a0f0e3023ab7ac02847e26",
-    measurementId: "G-0HYW1H5FV2"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  const provider = new GoogleAuthProvider();
-
-  provider.setCustomParameters({ prompt: 'select_account' });
-
-  let currentUser = null;
-  let countdownInterval = null;
-
-  const authBtn = document.getElementById('authBtn');
-  const authUserDiv = document.getElementById('authUser');
-  const userBalanceText = document.getElementById('userBalance');
-  const faucetBtn = document.getElementById('faucetBtn');
-  const faucetMsg = document.getElementById('faucetMsg');
-  const leaderboardBody = document.getElementById('leaderboardBody');
-
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-
-  if (isMobile) {
-    getRedirectResult(auth)
-      .then((result) => {
-        if (result?.user) {
-          console.log("Redirect login successful:", result.user);
-        }
-      })
-      .catch((error) => {
-        console.error("Redirect authentication error:", error);
-      });
-  }
-
-  function startFaucetCountdown(durationInSeconds) {
-    if (countdownInterval) clearInterval(countdownInterval);
-    
-    faucetBtn.disabled = true;
-    
-    let timer = durationInSeconds;
-    countdownInterval = setInterval(() => {
-      const minutes = Math.floor(timer / 60);
-      const seconds = timer % 60;
-      
-      const displayMinutes = minutes < 10 ? "0" + minutes : minutes;
-      const displaySeconds = seconds < 10 ? "0" + seconds : seconds;
-      
-      faucetBtn.innerText = `NEXT CLAIM IN ${displayMinutes}:${displaySeconds}`;
-      
-      if (--timer < 0) {
-        clearInterval(countdownInterval);
-        faucetBtn.disabled = false;
-        faucetBtn.innerText = "CLAIM BONUS";
-        faucetMsg.innerText = "";
-        localStorage.removeItem('faucetNextClaim');
-      }
-    }, 1000);
-  }
-
-  function checkExistingTimer() {
-    const nextClaimTime = localStorage.getItem('faucetNextClaim');
-    if (nextClaimTime) {
-      const currentTime = Date.now();
-      const timeLeft = Math.floor((parseInt(nextClaimTime) - currentTime) / 1000);
-      
-      if (timeLeft > 0) {
-        startFaucetCountdown(timeLeft);
-      } else {
-        localStorage.removeItem('faucetNextClaim');
-      }
-    }
-  }
-
-  checkExistingTimer();
-
-  // --- REAL-TIME LEADERBOARD SENSOR ---
-  function initLeaderboard() {
-    const usersRef = collection(db, "users");
-    const q = query(usersRef, orderBy("balance", "desc"), limit(10));
-    
-    onSnapshot(q, (snapshot) => {
-      leaderboardBody.innerHTML = "";
-      if (snapshot.empty) {
-        leaderboardBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#94a3b8; padding:30px;">No miners found in core database matrix.</td></tr>`;
-        return;
-      }
-      
-      let index = 1;
-      snapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        const userId = docSnap.id;
-        
-        const displayName = data.displayName || (auth.currentUser && auth.currentUser.uid === userId ? auth.currentUser.displayName : `Gamer_${userId.substring(0, 4)}`);
-        const photoURL = data.photoURL || (auth.currentUser && auth.currentUser.uid === userId ? auth.currentUser.photoURL : "https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/anonymous.png");
-        const balance = parseFloat(data.balance || 0).toFixed(2);
-        
-        let rankClass = "";
-        if (index === 1) rankClass = "rank-1";
-        else if (index === 2) rankClass = "rank-2";
-        else if (index === 3) rankClass = "rank-3";
-        
-        const row = document.createElement('tr');
-        if (currentUser && currentUser.uid === userId) {
-          row.style.background = "rgba(0, 240, 255, 0.08)";
-          row.style.borderLeft = "3px solid #00f0ff";
-        }
-        
-        row.innerHTML = `
-          <td><span class="rank-badge ${rankClass}">${index}</span></td>
-          <td>
-            <div class="leader-user">
-              <img src="${photoURL}" class="leader-avatar" alt="avatar" onerror="this.src='https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/anonymous.png'">
-              <span>${displayName}</span>
-            </div>
-          </td>
-          <td style="text-align: right; font-weight: bold; color: #ff007a; font-size: 15px;">${balance} Points</td>
-        `;
-        leaderboardBody.appendChild(row);
-        index++;
-      });
-    }, (error) => {
-      console.error("Leaderboard subscription matrix error:", error);
-    });
-  }
-
-  initLeaderboard();
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      currentUser = user;
-      authBtn.innerText = "Sign Out";
-      authBtn.classList.add('logout-btn');
-      authUserDiv.innerHTML = `<img src="${user.photoURL}" class="user-avatar" alt="avatar"> <span>${user.displayName}</span>`;
-      
-      const userRef = doc(db, "users", user.uid);
-      onSnapshot(userRef, (snapshot) => {
-        if (snapshot.exists()) {
-          const data = snapshot.data();
-          userBalanceText.innerText = parseFloat(data.balance || 0).toFixed(2) + " Points";
-          
-          if (!data.displayName || !data.photoURL) {
-            setDoc(userRef, { 
-              displayName: user.displayName, 
-              photoURL: user.photoURL 
-            }, { merge: true }).catch(err => console.error("Update profile metadata error:", err));
-          }
-        } else {
-          setDoc(userRef, { 
-            balance: 0, 
-            displayName: user.displayName, 
-            photoURL: user.photoURL 
-          }).catch(err => console.error("Database initialization error:", err));
-        }
-      }, (error) => {
-        console.error("Firestore subscription error:", error);
-      });
-    } else {
-      currentUser = null;
-      authBtn.innerText = "Sign In with Google";
-      authBtn.classList.remove('logout-btn');
-      authUserDiv.innerHTML = `<span style="color: #94a3b8; font-size: 14px;">Not authenticated. Scores will not be tracked!</span>`;
-      userBalanceText.innerText = "0.00 Points";
-    }
-  });
-
-  authBtn.addEventListener('click', () => {
-    if (!currentUser) {
-      if (isMobile) {
-        signInWithRedirect(auth, provider);
-      } else {
-        signInWithPopup(auth, provider)
-          .then((result) => { console.log("Desktop login successful:", result.user); })
-          .catch((error) => {
-            console.error("Authentication error:", error);
-            if (error.code === 'auth/popup-blocked') {
-              alert("Popup blocked by browser! Please enable popups or access via mobile device.");
-            }
-          });
-    }
-    } else {
-      signOut(auth).catch(err => console.error("Sign out error:", err));
-    }
-  });
-
-  faucetBtn.addEventListener('click', function() {
-    if (!currentUser) {
-      alert("Please authenticate using Google before claiming rewards!");
-      return;
-    }
-    
-    const userRef = doc(db, "users", currentUser.uid);
-    
-    faucetBtn.disabled = true;
-    faucetBtn.innerText = "PROCESSING...";
-
-    runTransaction(db, async (transaction) => {
-      const userDoc = await transaction.get(userRef);
-      let currentBalance = userDoc.exists() ? (userDoc.data().balance || 0) : 0;
-      transaction.update(userRef, { 
-        balance: currentBalance + 5.00,
-        displayName: currentUser.displayName,
-        photoURL: currentUser.photoURL
-      });
-    }).then(() => {
-      faucetMsg.innerText = "⚡ Core Refilled! +5.00 Points saved.";
-      
-      const oneHourInSeconds = 3600;
-      const nextClaimTimestamp = Date.now() + (oneHourInSeconds * 1000);
-      localStorage.setItem('faucetNextClaim', nextClaimTimestamp);
-      
-      startFaucetCountdown(oneHourInSeconds);
-    }).catch(err => {
-      console.error("Transaction processing error:", err);
-      faucetBtn.disabled = false;
-      faucetBtn.innerText = "CLAIM BONUS";
-      faucetMsg.innerText = "Error processing transaction. Try again.";
-    });
-  });
-</script>
+</body>
+</html>
