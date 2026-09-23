@@ -1,7 +1,6 @@
 ---
 layout: null
 ---
-<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
@@ -12,8 +11,8 @@ layout: null
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
     body {
-      background-color: #12131a;
-      color: #e2e8f0;
+      background-color: #12131a !important;
+      color: #e2e8f0 !important;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       line-height: 1.6;
       width: 100%;
@@ -25,6 +24,18 @@ layout: null
       max-width: 960px;
       margin: 0 auto;
       padding: 20px 16px;
+    }
+
+    /* Top Logo Header */
+    .brand-header {
+      text-align: center;
+      padding: 15px 0 25px 0;
+    }
+
+    .brand-logo {
+      max-width: 260px;
+      height: auto;
+      filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.4));
     }
 
     /* Ad Container Placeholder */
@@ -59,7 +70,6 @@ layout: null
       text-align: center;
       box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);
       margin-bottom: 35px;
-      position: relative;
     }
 
     .bonus-badge {
@@ -191,6 +201,7 @@ layout: null
       width: 100%;
       height: 180px;
       object-fit: cover;
+      background-color: #12131a;
       display: block;
       border-bottom: 1px solid #2e3248;
     }
@@ -272,6 +283,13 @@ layout: null
 
   <div class="container">
 
+    <!-- ROLLERCOIN LOGO HEADER -->
+    <div class="brand-header">
+      <a href="https://rollercoin.com/?r=mqg589d7" target="_blank" rel="noopener noreferrer">
+        <img src="https://rollercoin.com/static/images/logo.svg" alt="RollerCoin Logo" class="brand-logo">
+      </a>
+    </div>
+
     <!-- TOP AD SPONSOR -->
     <div class="ad-container">
       <span class="ad-label">Sponsored Mining Network</span>
@@ -309,38 +327,38 @@ layout: null
       </div>
     </div>
 
-    <!-- SCREENSHOTS SHOWCASE -->
+    <!-- ROLLERCOIN SHOWCASE SCREENSHOTS -->
     <div class="screenshot-section">
       <div class="section-header">
-        <h2>🎮 Oyun İçi Arayüz ve Sistem Görselleri</h2>
-        <p>RollerCoin ekosisteminin gerçek panelleri ve madencilik odası yapısı</p>
+        <h2>🎮 RollerCoin Oyun ve Panel Arayüzü</h2>
+        <p>Gerçek oyun içi madencilik odası ve sistem görselleri</p>
       </div>
 
       <div class="preview-grid">
-        <!-- Card 1 -->
+        <!-- Card 1: Mining Room -->
         <div class="preview-card">
-          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Mining Room Concept">
+          <img src="https://rollercoin.com/static/images/blog/posts/mining_room_customization/room_customization_cover.png" alt="RollerCoin Mining Room">
           <div class="preview-card-body">
-            <h3>⛏️ Kendi Madencilik Odanı Kur</h3>
-            <p>Oyunlardan ve etkinliklerden kazandığın madenci (Miner) cihazlarını raflara yerleştirerek 7/24 pasif kazım gücü oluştur.</p>
+            <h3>⛏️ Sanal Madencilik Odan</h3>
+            <p>Kazandığın veya satın aldığın rafları ve miner cihazlarını odana dizerek 7/24 pasif kripto kazımı yap.</p>
           </div>
         </div>
 
-        <!-- Card 2 -->
+        <!-- Card 2: Games -->
         <div class="preview-card">
-          <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop" alt="Arcade Mini Games">
+          <img src="https://rollercoin.com/static/images/blog/posts/games_update/games_update_cover.jpg" alt="RollerCoin Mini Games">
           <div class="preview-card-body">
-            <h3>🕹️ Nostaljik Mini Oyunlar</h3>
-            <p>Coin-Flip, Flappy Rocket ve Token Surfer gibi eğlenceli oyunları oynayarak madencilik gücünü (TH/s) katla.</p>
+            <h3>🕹️ Mini Oyunlar ile Güç Kazan</h3>
+            <p>Coin-Flip, Flappy Rocket, Token Surfer ve Dr. Hamster gibi oyunları geçerek kazım gücünü (TH/s) katla.</p>
           </div>
         </div>
 
-        <!-- Card 3 -->
+        <!-- Card 3: Marketplace & Rewards -->
         <div class="preview-card">
-          <img src="https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=800&auto=format&fit=crop" alt="Crypto Withdrawals">
+          <img src="https://rollercoin.com/static/images/blog/posts/marketplace_launch/marketplace_cover.jpg" alt="RollerCoin Marketplace">
           <div class="preview-card-body">
-            <h3>💰 Doğrudan Kripto Çekimi</h3>
-            <p>Biriken BTC, DOGE, ETH veya Solana bakiyelerini alt limitlere ulaştığında komisyonsuz kişisel cüzdanına çek.</p>
+            <h3>🏪 Pazar Yeri & Kripto Çekimi</h3>
+            <p>Cihazlarını diğer oyunculara sat ya da biriken BTC, ETH, DOGE ve SOL bakiyelerini doğrudan cüzdanına çek.</p>
           </div>
         </div>
       </div>
@@ -350,7 +368,7 @@ layout: null
     <div class="guide-section">
       <h2>📖 RollerCoin Strateji ve Başlangıç Rehberi</h2>
       <p>
-        RollerCoin, yatırımsız olarak gerçek kripto biriktirmenize olanak tanıyan dünyanın en büyük madencilik simülatörüdür. Oyundaki temel amaç, mini oyunlarla veya cihaz yatırımlarıyla sanal kazım gücünüzü (GH/s - TH/s - EH/s) artırmaktır.
+        RollerCoin, yatırımsız olarak gerçek kripto biriktirmenize olanak tanır. Oyundaki temel amaç, mini oyunlarla veya cihaz yatırımlarıyla sanal kazım gücünüzü (GH/s - TH/s - EH/s) artırmaktır.
       </p>
 
       <h3>1. Oyun Oynayarak Kazım Gücü Elde Etme</h3>
