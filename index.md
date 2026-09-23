@@ -207,7 +207,7 @@ layout: null
       <p class="hero-subtitle">
         Oyun oynayarak gerçek Bitcoin, Ethereum, Dogecoin ve USDT kazanabileceğin en büyük kripto madencilik simülasyonu. Hemen kaydol ve başlama bonusunu kap!
       </p>
-      <a href="https://rollercoin.com/?r=k4476a6e" target="_blank" rel="noopener noreferrer" class="cta-btn">
+      <a href="https://rollercoin.com/?r=mqg589d7" target="_blank" rel="noopener noreferrer" class="cta-btn">
         🚀 ROLLERCOIN'E ÜCRETSİZ KAYDOL
       </a>
     </div>
@@ -267,7 +267,7 @@ layout: null
       </ol>
 
       <div style="text-align: center; margin-top: 35px;">
-        <a href="https://rollercoin.com/?r=k4476a6e" target="_blank" rel="noopener noreferrer" class="cta-btn" style="background: linear-gradient(135deg, #ff007a 0%, #b00052 100%); color: #fff !important; box-shadow: 0 5px 0 #730035;">
+        <a href="https://rollercoin.com/?r=mqg589d7" target="_blank" rel="noopener noreferrer" class="cta-btn" style="background: linear-gradient(135deg, #ff007a 0%, #b00052 100%); color: #fff !important; box-shadow: 0 5px 0 #730035;">
           ⚡ HEMEN KAYDOL VE MADENCİLİĞE BAŞLA
         </a>
       </div>
