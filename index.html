@@ -1,189 +1,467 @@
----
-layout: null
----
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RollerCoin Detaylı İnceleme & Bonus Kayıt</title>
+
+  <title>RollerCoin Nedir? Nasıl Çalışır? Ücretsiz Kripto Madenciliği Rehberi 2026</title>
+  <meta name="description" content="RollerCoin nedir, nasıl çalışır, ücretsiz kripto nasıl kazanılır? Oyunlar, mining power, minerlar, DOGE-BTC-ETH madenciliği, çekim ve başlangıç stratejisini detaylı öğrenin.">
+  <meta name="keywords" content="RollerCoin, RollerCoin nedir, RollerCoin nasıl çalışır, RollerCoin mining, ücretsiz Bitcoin, ücretsiz Dogecoin, DOGE mining, BTC mining, kripto oyun, play to earn, RollerCoin referral">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Karavan">
+  <meta name="theme-color" content="#2563eb">
+
+  <link rel="canonical" href="https://rollercoin.com/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:title" content="RollerCoin Nedir? Nasıl Çalışır? Ücretsiz Kripto Madenciliği Rehberi">
+  <meta property="og:description" content="RollerCoin hakkında kapsamlı Türkçe rehber: oyunlar, mining power, minerlar, DOGE/BTC/ETH, çekim ve başlangıç adımları.">
+  <meta property="og:url" content="https://rollercoin.com/">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=1600&q=85">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RollerCoin Nedir? Nasıl Çalışır?">
+  <meta name="twitter:description" content="2026 RollerCoin başlangıç ve mining rehberi.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=1600&q=85">
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: #f8fafc !important; color: #334155 !important; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; width: 100%; min-height: 100vh; overflow-x: hidden; }
-    .container { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
-    .brand-header { text-align: center; margin-bottom: 25px; }
-    .brand-title { font-size: 30px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px; }
-    .brand-subtitle { font-size: 15px; color: #64748b; margin-top: 5px; }
-    .ad-container { margin: 20px 0; text-align: center; width: 100%; min-height: 90px; background: #ffffff; border: 1px dashed #cbd5e1; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    .ad-label { font-size: 11px; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
-    .hero-card { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #2563eb; border-radius: 16px; padding: 40px 25px; text-align: center; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); margin-bottom: 30px; }
-    .bonus-badge { display: inline-block; background: #dbeafe; color: #1e40af; font-size: 13px; font-weight: 700; padding: 6px 16px; border-radius: 20px; margin-bottom: 18px; }
-    .hero-title { color: #0f172a; font-size: 32px; margin-bottom: 15px; font-weight: 800; line-height: 1.3; }
-    .hero-subtitle { color: #475569; font-size: 16px; max-width: 720px; margin: 0 auto 28px auto; }
-    a.ref-link { color: #2563eb; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
-    a.ref-link:hover { color: #1d4ed8; }
-    .cta-btn { display: inline-block; background: #2563eb; color: #ffffff !important; font-weight: 700; font-size: 17px; padding: 16px 36px; border-radius: 10px; text-decoration: none !important; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); transition: all 0.2s ease; cursor: pointer; }
-    .cta-btn:hover { background: #1d4ed8; transform: translateY(-2px); }
-    .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 35px; }
-    .stat-item { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; text-align: center; }
-    .stat-item h4 { color: #2563eb; font-size: 24px; font-weight: 800; }
-    .stat-item p { color: #64748b; font-size: 13px; font-weight: 600; margin-top: 4px; }
-    .screenshot-section { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 30px; margin-bottom: 35px; }
-    .section-header { margin-bottom: 25px; text-align: center; }
-    .section-header h2 { color: #0f172a; font-size: 24px; font-weight: 800; }
-    .section-header p { color: #64748b; font-size: 14px; margin-top: 4px; }
-    .preview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-    .preview-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; }
-    .preview-card img { width: 100%; height: 170px; object-fit: cover; display: block; border-bottom: 1px solid #e2e8f0; }
-    .preview-card-body { padding: 16px; }
-    .preview-card-body h3 { color: #0f172a; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-    .preview-card-body p { color: #475569; font-size: 13px; line-height: 1.5; }
-    .content-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 35px; margin-bottom: 35px; }
-    .content-card h2 { color: #0f172a; font-size: 22px; font-weight: 800; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; margin-bottom: 20px; }
-    .content-card h3 { color: #1e293b; font-size: 18px; font-weight: 700; margin: 26px 0 10px 0; }
-    .content-card p, .content-card li { color: #334155; font-size: 15px; }
-    .content-card p { margin-bottom: 15px; }
-    .content-card ul, .content-card ol { padding-left: 22px; margin-bottom: 20px; }
-    .content-card li { margin-bottom: 10px; }
-    .info-box { background: #eff6ff; border-left: 4px solid #2563eb; padding: 18px 20px; border-radius: 8px; margin: 25px 0; }
-    .info-box strong { color: #1e40af; }
-    @media (max-width: 600px) {
-      .hero-title { font-size: 24px; }
-      .hero-card, .content-card, .screenshot-section { padding: 22px 16px; }
-      .cta-btn { font-size: 15px; padding: 14px 24px; width: 100%; text-align: center; }
+    :root{
+      --bg:#f5f7fb; --card:#fff; --text:#172033; --muted:#64748b;
+      --blue:#2563eb; --blue2:#1d4ed8; --line:#e5e7eb;
+      --green:#16a34a; --shadow:0 12px 35px rgba(15,23,42,.08);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--bg); color:var(--text);
+      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      line-height:1.75; overflow-x:hidden;
+    }
+    a{color:var(--blue)}
+    img{max-width:100%;height:auto}
+    .wrap{width:min(1040px,calc(100% - 32px));margin:auto}
+    .topbar{background:#0f172a;color:#cbd5e1;font-size:13px;padding:8px 0;text-align:center}
+    header{padding:30px 0 20px;text-align:center}
+    .eyebrow{display:inline-block;background:#dbeafe;color:#1e40af;padding:6px 13px;border-radius:999px;font-weight:800;font-size:12px;margin-bottom:14px}
+    h1{font-size:clamp(30px,5vw,52px);line-height:1.12;letter-spacing:-1.3px;margin-bottom:16px}
+    .lead{max-width:820px;margin:auto;color:var(--muted);font-size:18px}
+    .hero{
+      margin:20px 0 32px;background:linear-gradient(135deg,#eff6ff,#fff);
+      border:1px solid #bfdbfe;border-radius:24px;padding:34px;
+      box-shadow:var(--shadow);display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;
+    }
+    .hero h2{font-size:30px;line-height:1.2;margin-bottom:12px}
+    .hero p{color:#475569;margin-bottom:20px}
+    .cta{
+      display:inline-block;background:var(--blue);color:#fff!important;text-decoration:none;
+      font-weight:900;padding:15px 24px;border-radius:12px;box-shadow:0 8px 20px rgba(37,99,235,.25);
+      transition:.2s;
+    }
+    .cta:hover{background:var(--blue2);transform:translateY(-2px)}
+    .small{font-size:12px;color:var(--muted);margin-top:10px}
+    .hero img{width:100%;height:280px;object-fit:cover;border-radius:18px}
+    .toc,.card{
+      background:var(--card);border:1px solid var(--line);border-radius:18px;
+      box-shadow:0 8px 25px rgba(15,23,42,.04);
+    }
+    .toc{padding:24px;margin-bottom:28px}
+    .toc h2{font-size:20px;margin-bottom:12px}
+    .toc ol{padding-left:22px}
+    .toc li{margin:4px 0}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0}
+    .stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;text-align:center}
+    .stat strong{display:block;color:var(--blue);font-size:28px}
+    .stat span{font-size:13px;color:var(--muted);font-weight:700}
+    .card{padding:32px;margin-bottom:28px}
+    h2{font-size:29px;line-height:1.25;margin-bottom:15px}
+    h3{font-size:20px;margin:26px 0 9px}
+    p{margin-bottom:15px}
+    ul,ol{padding-left:23px;margin-bottom:16px}
+    li{margin:7px 0}
+    .note{background:#eff6ff;border-left:5px solid var(--blue);padding:17px 18px;border-radius:10px;margin:20px 0}
+    .warn{background:#fff7ed;border-left:5px solid #f97316;padding:17px 18px;border-radius:10px;margin:20px 0}
+    .image-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:22px 0}
+    .image-card{overflow:hidden;border:1px solid var(--line);border-radius:15px;background:#fff}
+    .image-card img{width:100%;height:190px;object-fit:cover;display:block}
+    .image-card div{padding:14px}
+    .image-card strong{display:block;margin-bottom:4px}
+    .table-wrap{overflow-x:auto}
+    table{width:100%;border-collapse:collapse;margin:18px 0;min-width:620px}
+    th,td{border:1px solid var(--line);padding:12px;text-align:left}
+    th{background:#f8fafc}
+    .faq details{border-bottom:1px solid var(--line);padding:15px 0}
+    .faq summary{cursor:pointer;font-weight:800}
+    .faq p{padding-top:10px;color:#475569}
+    .sources{font-size:13px;color:#64748b}
+    .sources a{display:block;margin:7px 0}
+    .final-cta{text-align:center;background:#0f172a;color:#fff;border-radius:20px;padding:35px;margin:35px 0}
+    .final-cta p{color:#cbd5e1}
+    footer{text-align:center;color:#64748b;font-size:13px;padding:15px 0 80px}
+    .sticky{
+      position:fixed;left:16px;right:16px;bottom:15px;z-index:50;
+      display:flex;justify-content:center;pointer-events:none;
+    }
+    .sticky a{pointer-events:auto}
+    @media(max-width:800px){
+      .hero{grid-template-columns:1fr;padding:23px}
+      .hero img{height:220px}
+      .grid,.image-grid{grid-template-columns:1fr}
+      .card{padding:22px}
+      .lead{font-size:16px}
     }
   </style>
+
+  <!-- FAQ + Article structured data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Article",
+    "headline":"RollerCoin Nedir? Nasıl Çalışır? Ücretsiz Kripto Madenciliği Rehberi",
+    "description":"RollerCoin oyun ve kripto madenciliği simülatörü hakkında Türkçe başlangıç rehberi.",
+    "inLanguage":"tr-TR",
+    "author":{"@type":"Person","name":"Karavan"},
+    "mainEntityOfPage":{"@type":"WebPage","@id":"https://rollercoin.com/"}
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"RollerCoin nedir?",
+        "acceptedAnswer":{"@type":"Answer","text":"RollerCoin, kripto madenciliği fikrini mini oyunlar, sanal madenciler ve mining power sistemiyle birleştiren ücretsiz oynanabilen bir mining simulator oyunudur."}
+      },
+      {
+        "@type":"Question",
+        "name":"RollerCoin gerçekten bilgisayarımın gücüyle madencilik yapıyor mu?",
+        "acceptedAnswer":{"@type":"Answer","text":"Hayır. RollerCoin kendi açıklamasında bunun gerçek donanımla yapılan blockchain madenciliği değil, sanal bir madencilik simülasyonu olduğunu belirtmektedir."}
+      },
+      {
+        "@type":"Question",
+        "name":"RollerCoin ücretsiz mi?",
+        "acceptedAnswer":{"@type":"Answer","text":"Hesap açmak ve oyunları oynamak ücretsizdir. Platform ayrıca sanal minerlar, raflar ve oyun içi öğeler sunar."}
+      },
+      {
+        "@type":"Question",
+        "name":"RollerCoin'den DOGE veya BTC çekilebilir mi?",
+        "acceptedAnswer":{"@type":"Answer","text":"Platformun güncel açıklamalarında BTC, DOGE, ETH ve diğer desteklenen kripto varlıklarla çoklu madencilik ve cüzdana çekim özellikleri yer almaktadır. Çekim limitleri ve desteklenen varlıklar zamanla değişebileceğinden işlem öncesi güncel cüzdan ekranı kontrol edilmelidir."}
+      }
+    ]
+  }
+  </script>
 </head>
+
 <body>
+  <div class="topbar">🎮 RollerCoin rehberi • Güncel bilgiler için resmi platform sayfalarını kontrol edin</div>
 
-  <div class="container">
-
-    <div class="brand-header">
-      <div class="brand-title">RollerCoin Kapsamlı İnceleme & Rehber</div>
-      <div class="brand-subtitle">Sanal Madencilik Simülatörü İle Gerçek Kripto Kazanma Stratejileri</div>
-    </div>
-
-    <div class="ad-container">
-      <span class="ad-label">Sponsorlu Bağlantı Alanı</span>
-    </div>
-
-    <div class="hero-card">
-      <span class="bonus-badge">🎁 Hoş Geldin Hediyesi: 1000 Satoshi</span>
-      <h1 class="hero-title">Oyun Oynayarak Kripto Madencilik Çiftliği Kurun</h1>
-      <p class="hero-subtitle">
-        Sermaye riski almadan, mini arcade oyunları oynayarak veya sanal raflara madenci cihazları dizerek 
-        <a href="https://rollercoin.com/?r=mqg589d7" target="_blank" rel="noopener noreferrer" class="ref-link">RollerCoin platformunda</a> 
-        Bitcoin, Ethereum, Dogecoin ve Solana bakiyesi biriktirin.
+  <main class="wrap">
+    <header>
+      <span class="eyebrow">2026 TÜRKÇE ROLLERCOIN REHBERİ</span>
+      <h1>RollerCoin Nedir? Nasıl Çalışır ve Ücretsiz Kripto Nasıl Kazanılır?</h1>
+      <p class="lead">
+        Mini oyunlar oynayarak mining power oluşturmayı, sanal minerlarla kalıcı güç kurmayı,
+        DOGE/BTC/ETH gibi kripto varlıklara yönelmeyi ve başlangıçta nelere dikkat etmeniz gerektiğini adım adım öğrenin.
       </p>
-      <a href="https://rollercoin.com/?r=mqg589d7" target="_blank" rel="noopener noreferrer" class="cta-btn">
-        Ücretsiz Hesabınızı Oluşturun ve 1000 Satoshi Alın
-      </a>
-    </div>
+    </header>
 
-    <div class="stats-bar">
-      <div class="stat-item">
-        <h4>4M+</h4>
-        <p>Kayıtlı Kullanıcı</p>
-      </div>
-      <div class="stat-item">
-        <h4>$5.2M+</h4>
-        <p>Dağıtılan Toplam Ödül</p>
-      </div>
-      <div class="stat-item">
-        <h4>7+ Yıl</h4>
-        <p>Aktif Yayın Süresi</p>
-      </div>
-      <div class="stat-item">
-        <h4>0 TL</h4>
-        <p>Başlangıç Maliyeti</p>
-      </div>
-    </div>
-
-    <div class="screenshot-section">
-      <div class="section-header">
-        <h2>Oyun İçi Ekosistem ve Modüller</h2>
-        <p>Sanal odalardan pazaryerine kadar platformun temel bileşenleri</p>
-      </div>
-
-      <div class="preview-grid">
-        <div class="preview-card">
-          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="Sanal Oda Tasarımı">
-          <div class="preview-card-body">
-            <h3>⛏️ Sanal Madencilik Odaları</h3>
-            <p>Satın aldığınız veya etkinliklerden ücretsiz kazandığınız madencileri raflara dizerek 7/24 pasif kazım gücü elde edin.</p>
-          </div>
-        </div>
-
-        <div class="preview-card">
-          <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80" alt="Arcade Oyunlar">
-          <div class="preview-card-body">
-            <h3>🕹️ Nostaljik Mini Oyunlar</h3>
-            <p>Coin-Flip, Flappy Rocket ve Token Surfer gibi beceri oyunlarını tamamlayarak geçici kazım gücünüzü yükseltin.</p>
-          </div>
-        </div>
-
-        <div class="preview-card">
-          <img src="https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=600&q=80" alt="Pazaryeri ve Kripto">
-          <div class="preview-card-body">
-            <h3>🏪 Oyuncu Pazarı & Çekimler</h3>
-            <p>Ürettiğiniz parçaları ve madencileri diğer oyunculara satın veya biriken kripto paralarınızı kişisel cüzdanınıza çekin.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="content-card">
-      <h2>RollerCoin Nedir ve Nasıl Çalışır?</h2>
-      <p>
-        <a href="https://rollercoin.com/?r=mqg589d7" target="_blank" rel="noopener noreferrer" class="ref-link">RollerCoin</a>, 
-        gerçek dünya kripto para madenciliği matematiğini (Proof of Work) bir nostaljik pikselli oyun simülasyonuna dönüştüren çevrimiçi bir platformdur. Oyunda elde ettiğiniz her bir GH/s, TH/s veya EH/s türündeki kazım gücü, gerçek blok ödüllerinden pay almanızı sağlar. Her 10 dakikada bir sistemde bir blok kazılır ve o bloktaki ödül, platformdaki tüm oyuncuların toplam kazım gücündeki payına göre dağıtılır.
-      </p>
-
-      <h3>1. Kazım Gücü (Hashrate) Nasıl Elde Edilir?</h3>
-      <p>Sistemde güç toplamanın temel olarak iki farklı yolu bulunmaktadır:</p>
-      <ul>
-        <li>
-          <strong>Oyun Oynayarak (Ücretsiz Yöntem):</strong> Platform içerisinde yer alan 10'dan fazla mini oyunu oynayarak kazandığınız her seviye size belirli miktarda GH/s kazandırır. Ne kadar çok oyun kazanırsanız sanal bilgisayarınızın seviyesi (PC Level) artar. 4. seviye bilgisayara ulaştığınızda kazandığınız oyun güçleri 7 gün boyunca aktif kalır.
-        </li>
-        <li>
-          <strong>Madenci Cihazları (Miner) İle (Pasif Gelir):</strong>
-          <a href="https://rollercoin.com/?r=mqg589d7" target="_blank" rel="noopener noreferrer" class="ref-link">RollerCoin kayıt adresi</a> üzerinden erişebileceğiniz mağazadan veya pazaryerinden edindiğiniz madenci cihazları sanal odanıza yerleştirilir. Bu cihazlar çevrimdışı olsanız dahi gücünüzü kalıcı olarak korur.
-        </li>
-      </ul>
-
-      <h3>2. Oyun İçi Para Birimleri ve Ekonomi</h3>
-      <ul>
-        <li><strong>RollerToken (RLT):</strong> Oyunun ana simgesel para birimidir. Cihaz alımı, raf alımı ve sezon biletleri için kullanılır. Değeri 1 USDT'ye sabitlenmiştir.</li>
-        <li><strong>RollerSeason Token (RST):</strong> Günlük/haftalık görevlerden kazanılır ve sezon mağazasında özel kutular ile parçalar satın almak için kullanılır.</li>
-        <li><strong>Gerçek Kripto Paralar:</strong> Bitcoin (BTC), Ethereum (ETH), Dogecoin (DOGE), Solana (SOL), Polygon (MATIC), BNB ve Litecoin (LTC) kazılabilir ve kişisel cüzdanlara çekilebilir.</li>
-      </ul>
-
-      <div class="info-box">
-        <strong>💡 Başlangıç Stratejisi:</strong> Sisteme <a href="https://rollercoin.com/?r=mqg589d7" target="_blank" rel="noopener noreferrer" class="ref-link">bonus kayıt bağlantısı</a> ile üye olduktan sonra "My Power" paneline gidip gücünüzü %100 oranında RLT'ye veya düşük çekim limitli Dogecoin/Litecoin'e yönlendirmeniz gelişiminizi hızlandıracaktır.
-      </div>
-
-      <h3>3. Crafting (Parça Birleştirme) ve Yükseltmeler</h3>
-      <p>
-        Oyunda yer alan miner cihazlarını parçalar (Fan, Wire, Hashboard) kullanarak bir üst seviyeye yükseltebilirsiniz. Örneğin iki adet başlangıç seviyesi miner cihazını birleştirerek (Merge) kapladığı alanı yarıya indirebilir ve toplam gücü ile bonus yüzdesini önemli ölçüde artırabilirsiniz. Parçaları oyun oynayarak düşürebilir veya oyuncular arası pazar yerinden alabilirsiniz.
-      </p>
-
-      <h3>4. Sezon Biletleri (Event Pass) ve Mini Etkinlikler</h3>
-      <p>
-        Düzenli aralıklarla yenilenen sezonlarda verilen görevleri (oyun oynama, sosyal medya takibi, pazar yeri hacmi vb.) tamamlayarak Sezon Seviyenizi yükseltebilir ve tamamen ücretsiz olarak üst düzey kazım gücüne sahip özel miner cihazları kazanabilirsiniz.
-      </p>
-
-      <div style="text-align: center; margin-top: 35px;">
-        <a href="https://rollercoin.com/?r=mqg589d7" target="_blank" rel="noopener noreferrer" class="cta-btn">
-          🚀 RollerCoin'e Şimdi Katılın & 1000 Satoshi Bonusu Kapın
+    <section class="hero">
+      <div>
+        <h2>RollerCoin'e Ücretsiz Başla</h2>
+        <p>
+          RollerCoin, klasik cloud mining mantığından farklı olarak kripto madenciliğini oyunlaştıran bir
+          simülasyondur. Hesabınızı ücretsiz açıp mini oyunlarla mining power oluşturmaya başlayabilirsiniz.
+        </p>
+        <a class="cta" href="https://rollercoin.com/?r=mqg589d7" target="_blank" rel="nofollow sponsored noopener">
+          🚀 RollerCoin'e Katıl
         </a>
+        <div class="small">Referans bağlantısı: Bu bağlantı üzerinden kayıt olursanız referans programına dahil olabilirsiniz.</div>
       </div>
+      <img
+        src="https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=1000&q=85"
+        alt="Kripto para ve dijital madencilik konsepti"
+        loading="eager">
+    </section>
+
+    <nav class="toc" aria-label="İçindekiler">
+      <h2>📚 İçindekiler</h2>
+      <ol>
+        <li><a href="#nedir">RollerCoin nedir?</a></li>
+        <li><a href="#calisma">RollerCoin nasıl çalışır?</a></li>
+        <li><a href="#power">Mining power nedir?</a></li>
+        <li><a href="#oyunlar">Oyun oynayarak güç kazanma</a></li>
+        <li><a href="#miner">Minerlar ve sanal madencilik odası</a></li>
+        <li><a href="#coinler">Hangi kripto paralar kazanılabilir?</a></li>
+        <li><a href="#cekme">Kripto para çekme</a></li>
+        <li><a href="#strateji">Yeni başlayanlar için yol haritası</a></li>
+        <li><a href="#riskler">Dikkat edilmesi gerekenler</a></li>
+        <li><a href="#sss">Sık sorulan sorular</a></li>
+      </ol>
+    </nav>
+
+    <div class="grid">
+      <div class="stat"><strong>5,6M+</strong><span>Resmi sitede belirtilen oyuncu sayısı</span></div>
+      <div class="stat"><strong>2018</strong><span>Resmi ana sayfada belirtilen başlangıç yılı</span></div>
+      <div class="stat"><strong>~10 dk</strong><span>Resmi rehberde belirtilen blok aralığı</span></div>
     </div>
 
-    <div class="ad-container">
-      <span class="ad-label">Sponsorlu Bağlantı Alanı</span>
-    </div>
+    <article>
+      <section id="nedir" class="card">
+        <h2>RollerCoin Nedir?</h2>
+        <p>
+          <a href="https://rollercoin.com/" target="_blank" rel="noopener">RollerCoin</a>,
+          kripto madenciliği konseptini arcade oyunları ve sanal madencilik odasıyla birleştiren
+          ücretsiz oynanabilen bir mining simulator oyunudur.
+        </p>
+        <p>
+          Buradaki önemli ayrım şudur: RollerCoin, bilgisayarınızın ekran kartını veya işlemcisini kullanarak
+          gerçek blockchain node'larında madencilik yaptırmaz. Platform kendi açıklamasında sistemi
+          bir <strong>madencilik simülasyonu</strong> olarak tanımlar. Kazandığınız mining power,
+          platformdaki ödül dağıtım mekanizmasında payınızı belirleyen sanal güçtür.
+        </p>
+        <div class="note">
+          <strong>Önemli:</strong> RollerCoin'i gerçek ASIC/ekran kartı madenciliğiyle aynı şey olarak düşünmeyin.
+          Oyun içindeki minerlar sanal varlıklardır; platformun çalışma modeli simülasyona dayanır.
+        </div>
+      </section>
 
+      <section id="calisma" class="card">
+        <h2>RollerCoin Nasıl Çalışır?</h2>
+        <p>
+          Temel mantık basit: hesabınızda <strong>My Power</strong> adı verilen bir mining power bulunur.
+          Bu gücü mini oyunlardan, sanal minerlar ve çeşitli oyun içi aktivitelerden artırabilirsiniz.
+          Gücünüz, bulunduğunuz league içindeki toplam güce göre ödül paylaşımındaki payınızı etkiler.
+        </p>
+        <p>
+          Resmi rehbere göre yaklaşık her 10 dakikada yeni bir blok oluşturulur ve blok ödülü,
+          oyuncuların ilgili league içindeki mining power oranına göre dağıtılır.
+        </p>
+
+        <div class="image-grid">
+          <figure class="image-card">
+            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=85" alt="Arcade oyunları ve bilgisayar konsepti" loading="lazy">
+            <div><strong>🎮 Mini Oyunlar</strong><span>Oyunlar geçici mining power oluşturmanın temel yollarından biridir.</span></div>
+          </figure>
+          <figure class="image-card">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=85" alt="Bilgisayar donanımı ve mining cihazı konsepti" loading="lazy">
+            <div><strong>⛏️ Minerlar</strong><span>Odaya yerleştirilen minerlar kalıcı mining power sağlar.</span></div>
+          </figure>
+          <figure class="image-card">
+            <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=900&q=85" alt="Blockchain ve kripto para konsepti" loading="lazy">
+            <div><strong>₿ Kripto Ödülleri</strong><span>Gücünüzü desteklenen kripto varlıklara yönlendirebilirsiniz.</span></div>
+          </figure>
+        </div>
+      </section>
+
+      <section id="power" class="card">
+        <h2>Mining Power Nedir?</h2>
+        <p>
+          RollerCoin'de en önemli kavramlardan biri mining power'dır. Gücünüz arttıkça, ilgili ödül havuzundaki
+          payınız da artar. Ancak toplam oyuncu gücü de sürekli değişebildiği için aynı mining power miktarı
+          her zaman aynı miktarda kripto ödülü anlamına gelmez.
+        </p>
+
+        <h3>Kalıcı Power: Minerlar</h3>
+        <p>
+          Odanıza yerleştirdiğiniz minerlar kalıcı power sağlar. Resmi rehbere göre bu minerlar siz çevrimdışıyken
+          de çalışmaya devam eder. Envanterde duran veya Marketplace'te satışta olan minerlar ise odaya
+          yerleştirilmedikleri sürece power üretmez.
+        </p>
+
+        <h3>Geçici Power: Oyunlar ve Bonuslar</h3>
+        <p>
+          Mini oyunlardan kazanılan power geçicidir. Süresi hesap seviyenize ve güncel oyun mekaniklerine göre
+          değişebilir. Etkinlikler, görevler, keşifler ve sınırlı süreli bonuslar da ek power sağlayabilir.
+        </p>
+      </section>
+
+      <section id="oyunlar" class="card">
+        <h2>Oyun Oynayarak Ücretsiz Mining Power Kazanma</h2>
+        <p>
+          Başlangıç için en önemli avantajlardan biri, para yatırmadan mini oyunları oynayarak mining power
+          oluşturabilmenizdir. Bu nedenle RollerCoin'e yeni giren bir oyuncunun ilk adımı genellikle oyunları
+          keşfetmek olmalıdır.
+        </p>
+        <ol>
+          <li>Ücretsiz hesabınızı oluşturun.</li>
+          <li>Mining/oyun bölümüne geçin.</li>
+          <li>Size uygun mini oyunları seçin.</li>
+          <li>Oyunlardan gelen mining power'ı aktif edin.</li>
+          <li>My Power bölümünden gücünüzün hangi kripto varlığa yönlendirildiğini kontrol edin.</li>
+        </ol>
+        <div class="note">
+          <strong>Pratik fikir:</strong> Düzenli oyun oynayabiliyorsanız başlangıçta miner satın almadan sistemi
+          deneyimleyebilir, ödül mekanizmasını anlayabilir ve daha sonra sanal odanızı büyütmeye karar verebilirsiniz.
+        </div>
+      </section>
+
+      <section id="miner" class="card">
+        <h2>Minerlar ve Sanal Madencilik Odası</h2>
+        <p>
+          RollerCoin'in ikinci temel ayağı sanal mining room sistemidir. Minerlar ve rack'ler odanıza
+          yerleştirilir ve size kalıcı power sağlar. Platformda ayrıca miner craft/merge, Marketplace,
+          görevler ve sezon etkinlikleri gibi ilerleme mekanikleri bulunur.
+        </p>
+
+        <h3>Miner almak şart mı?</h3>
+        <p>
+          Hayır. Ücretsiz başlayabilir ve oyunlardan gelen geçici power ile sistemi deneyebilirsiniz.
+          Minerlar ise daha uzun vadeli bir sanal mining setup oluşturmak isteyen kullanıcılar için kalıcı
+          power mekanizması sağlar.
+        </p>
+
+        <h3>Crafting ve Merge</h3>
+        <p>
+          Platformda bazı miner ve parçaları birleştirerek daha gelişmiş ekipmanlara ulaşmaya yönelik
+          crafting/merge mekanikleri bulunur. Bu mekaniklerin şartları ve maliyetleri zaman içinde değişebileceği
+          için işlem yapmadan önce güncel oyun ekranını kontrol edin.
+        </p>
+      </section>
+
+      <section id="coinler" class="card">
+        <h2>RollerCoin'de Hangi Kripto Paralar Kazanılabilir?</h2>
+        <p>
+          Resmi güncel açıklamalarda çoklu madencilik kapsamında BTC, ETH, DOGE, MATIC, BNB ve RLT;
+          bazı resmi sayfalarda SOL da listelenmektedir. Desteklenen varlıklar ve çekim koşulları
+          değişebileceğinden, işlem yapmadan önce kendi Wallet ekranınızdaki güncel listeyi kontrol etmek gerekir.
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Varlık</th><th>Rol</th><th>Not</th></tr></thead>
+            <tbody>
+              <tr><td>BTC</td><td>Kripto ödülü</td><td>Bitcoin madencilik havuzuna power yönlendirilebilir.</td></tr>
+              <tr><td>DOGE</td><td>Kripto ödülü</td><td>Dogecoin odaklı başlangıç stratejilerinde sık tercih edilen seçeneklerden biridir.</td></tr>
+              <tr><td>ETH</td><td>Kripto ödülü</td><td>Platformun resmi çoklu madencilik sayfalarında yer alır.</td></tr>
+              <tr><td>RLT</td><td>Oyun içi token</td><td>Miner, rack, boost ve çeşitli oyun içi öğelerde kullanılabilir.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="cekme" class="card">
+        <h2>RollerCoin'den Kripto Para Nasıl Çekilir?</h2>
+        <p>
+          RollerCoin'in resmi açıklamalarına göre kazanılan kripto, platform içindeki cüzdanda tutulabilir,
+          oyun içinde yeniden kullanılabilir veya uygun çekim koşulları karşılandığında kişisel kripto cüzdanına
+          gönderilebilir.
+        </p>
+        <ol>
+          <li>Wallet bölümünü açın.</li>
+          <li>Çekmek istediğiniz kripto varlığı seçin.</li>
+          <li>Güncel minimum çekim miktarını kontrol edin.</li>
+          <li>Kişisel cüzdan adresinizi ve ağı dikkatle doğrulayın.</li>
+          <li>Çekim işlemini onaylamadan önce adresin doğru olduğunu tekrar kontrol edin.</li>
+        </ol>
+        <div class="warn">
+          <strong>⚠️ Kritik:</strong> Minimum çekim limitleri, desteklenen coinler ve ağlar değişebilir.
+          Bu yüzden eski bir blog yazısındaki minimum limiti güncel kabul etmeyin; çekim anındaki RollerCoin
+          Wallet ekranını esas alın.
+        </div>
+      </section>
+
+      <section id="strateji" class="card">
+        <h2>Yeni Başlayanlar İçin RollerCoin Yol Haritası</h2>
+        <h3>1. Önce ücretsiz dene</h3>
+        <p>Hesap açıp oyunları oynayın. Sistemin power ve ödül mantığını anlamadan para harcamayın.</p>
+
+        <h3>2. My Power ekranını öğren</h3>
+        <p>Toplam power, geçici power, kalıcı miner power ve hangi coin'e yönlendirme yaptığınızı düzenli kontrol edin.</p>
+
+        <h3>3. Odayı yavaş yavaş büyüt</h3>
+        <p>Miner, rack ve yükseltmelerin maliyetini elde ettiğiniz ödülle karşılaştırın. Harcama yapmadan önce geri dönüş süresini kendiniz hesaplayın.</p>
+
+        <h3>4. Tek coin'e odaklanma kararını bilinçli ver</h3>
+        <p>
+          Power'ı farklı varlıklar arasında bölebilir veya tek bir varlığa yoğunlaştırabilirsiniz.
+          Hangi seçeneğin size uygun olduğu hedefinize, çekim limitlerine ve güncel oyun ekonomisine bağlıdır.
+        </p>
+
+        <h3>5. Çekim kanıtını kendi hesabında test et</h3>
+        <p>
+          Küçük bir tutarla çekim sürecini anlamak, cüzdan adresi/ağ gibi teknik ayrıntıları öğrenmek açısından
+          pratik olabilir. Kripto işlemlerinde yanlış ağ veya adres seçimi para kaybına yol açabilir.
+        </p>
+      </section>
+
+      <section id="riskler" class="card">
+        <h2>RollerCoin Kullanırken Nelere Dikkat Edilmeli?</h2>
+        <ul>
+          <li><strong>Bu bir simülasyondur:</strong> Gerçek ASIC madenciliği veya bilgisayarınızın gerçek hash gücü değildir.</li>
+          <li><strong>Ödül sabit değildir:</strong> Toplam oyuncu power'ı ve oyun ekonomisi değiştikçe aynı power farklı sonuçlar verebilir.</li>
+          <li><strong>Kripto fiyatı değişkendir:</strong> Kazandığınız coin'in piyasa değeri zaman içinde artabilir veya azalabilir.</li>
+          <li><strong>Oyun içi harcama şart değildir:</strong> Önce ücretsiz sistemi deneyebilirsiniz.</li>
+          <li><strong>Güncel kuralları kontrol edin:</strong> Çekim limitleri, coin listesi, etkinlikler ve ödül mekanikleri değişebilir.</li>
+        </ul>
+        <div class="note">
+          <strong>Şeffaflık:</strong> Bu sayfadaki RollerCoin bağlantısı bir referans bağlantısıdır.
+          Kayıt olmadan önce platformun güncel şartlarını, ücretlerini, çekim limitlerini ve risklerini kendiniz inceleyin.
+        </div>
+      </section>
+
+      <section id="sss" class="card faq">
+        <h2>RollerCoin Sık Sorulan Sorular</h2>
+
+        <details>
+          <summary>RollerCoin nedir?</summary>
+          <p>Kripto madenciliği fikrini mini oyunlar, sanal minerlar ve mining power sistemiyle birleştiren ücretsiz oynanabilen bir mining simulator oyunudur.</p>
+        </details>
+
+        <details>
+          <summary>RollerCoin gerçek madencilik yapıyor mu?</summary>
+          <p>Hayır. Platformun kendi açıklamasına göre RollerCoin bir mining simulator'dır; gerçek blockchain node'larında sizin cihazınızla madencilik yaptırmaz.</p>
+        </details>
+
+        <details>
+          <summary>RollerCoin ücretsiz kullanılabilir mi?</summary>
+          <p>Evet. Hesap açıp oyun oynayarak ücretsiz şekilde başlayabilirsiniz. İsteğe bağlı oyun içi satın alımlar ve sanal minerlar da bulunmaktadır.</p>
+        </details>
+
+        <details>
+          <summary>RollerCoin'de DOGE kazanabilir miyim?</summary>
+          <p>Resmi RollerCoin sayfalarında DOGE madenciliği ve DOGE çekimi desteklenen özellikler arasında gösterilmektedir. Güncel çekim koşullarını Wallet ekranından kontrol edin.</p>
+        </details>
+
+        <details>
+          <summary>RollerCoin'de para yatırmak zorunda mıyım?</summary>
+          <p>Hayır. Platform ücretsiz hesap ve oyunlarla başlamaya izin verir. Para yatırmak veya oyun içi varlık satın almak ayrı bir tercihtir.</p>
+        </details>
+
+        <details>
+          <summary>Oyunlardan gelen mining power kalıcı mı?</summary>
+          <p>Hayır. Oyunlardan gelen power geçicidir. Minerlar ise odaya yerleştirildiğinde kalıcı power mekanizması sağlar.</p>
+        </details>
+      </section>
+
+      <section class="card sources">
+        <h2>Kaynaklar ve Güncel Kontrol</h2>
+        <p>Bu rehber hazırlanırken RollerCoin'in resmi açıklamaları ve resmi rehber sayfaları esas alınmıştır:</p>
+        <a href="https://rollercoin.com/how-it-works" target="_blank" rel="noopener">RollerCoin — How it Works</a>
+        <a href="https://rollercoin.com/how-it-works/basics" target="_blank" rel="noopener">RollerCoin — Mining Basics</a>
+        <a href="https://rollercoin.com/how-it-works/power-building" target="_blank" rel="noopener">RollerCoin — Power Building</a>
+        <a href="https://rollercoin.com/how-it-works/multi-mining" target="_blank" rel="noopener">RollerCoin — Multi-Mining</a>
+        <a href="https://rollercoin.com/blog/how-rollercoin-works" target="_blank" rel="noopener">RollerCoin — How RollerCoin Actually Works</a>
+      </section>
+    </article>
+
+    <section class="final-cta">
+      <h2>🎮 RollerCoin'i Ücretsiz Denemek İster misin?</h2>
+      <p>Hesabını oluştur, mini oyunları keşfet ve kendi sanal mining odanı kurmaya başla.</p>
+      <a class="cta" href="https://rollercoin.com/?r=mqg589d7" target="_blank" rel="nofollow sponsored noopener">
+        🚀 Ücretsiz RollerCoin Hesabı Aç
+      </a>
+    </section>
+
+    <footer>
+      © 2026 RollerCoin Türkçe Rehber • Bilgilendirme amaçlıdır; kripto kazancı garanti edilmez.
+    </footer>
+  </main>
+
+  <div class="sticky">
+    <a class="cta" href="https://rollercoin.com/?r=mqg589d7" target="_blank" rel="nofollow sponsored noopener">🚀 RollerCoin'e Katıl</a>
   </div>
-
 </body>
 </html>
