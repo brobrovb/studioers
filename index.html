@@ -1,298 +1,52 @@
 ---
 layout: null
 ---
+<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RollerCoin Detaylı İnceleme, Strateji Rehberi ve Kayıt Bonusu</title>
+  <title>RollerCoin Detaylı İnceleme & Bonus Kayıt</title>
   <style>
-    /* Light Theme & Modern UI */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body {
-      background-color: #f8fafc !important;
-      color: #334155 !important;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.7;
-      width: 100%;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 30px 20px;
-    }
-
-    /* Brand Header */
-    .brand-header {
-      text-align: center;
-      margin-bottom: 25px;
-    }
-
-    .brand-title {
-      font-size: 30px;
-      font-weight: 800;
-      color: #0f172a;
-      letter-spacing: -0.5px;
-    }
-
-    .brand-subtitle {
-      font-size: 15px;
-      color: #64748b;
-      margin-top: 5px;
-    }
-
-    /* Ad Container Placeholder */
-    .ad-container {
-      margin: 20px 0;
-      text-align: center;
-      width: 100%;
-      min-height: 90px;
-      background: #ffffff;
-      border: 1px dashed #cbd5e1;
-      border-radius: 12px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
-
-    .ad-label {
-      font-size: 11px;
-      color: #94a3b8;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-
-    /* Hero Card */
-    .hero-card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-top: 4px solid #2563eb;
-      border-radius: 16px;
-      padding: 40px 25px;
-      text-align: center;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
-      margin-bottom: 30px;
-    }
-
-    .bonus-badge {
-      display: inline-block;
-      background: #dbeafe;
-      color: #1e40af;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 6px 16px;
-      border-radius: 20px;
-      margin-bottom: 18px;
-    }
-
-    .hero-title {
-      color: #0f172a;
-      font-size: 32px;
-      margin-bottom: 15px;
-      font-weight: 800;
-      line-height: 1.3;
-    }
-
-    .hero-subtitle {
-      color: #475569;
-      font-size: 16px;
-      max-width: 720px;
-      margin: 0 auto 28px auto;
-    }
-
-    /* Inline Ref Link Styling */
-    a.ref-link {
-      color: #2563eb;
-      font-weight: 700;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      transition: color 0.15s ease;
-    }
-
-    a.ref-link:hover {
-      color: #1d4ed8;
-    }
-
-    /* CTA Button */
-    .cta-btn {
-      display: inline-block;
-      background: #2563eb;
-      color: #ffffff !important;
-      font-weight: 700;
-      font-size: 17px;
-      padding: 16px 36px;
-      border-radius: 10px;
-      text-decoration: none !important;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-
-    .cta-btn:hover {
-      background: #1d4ed8;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
-    }
-
-    /* Stats Counter Bar */
-    .stats-bar {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-      margin-bottom: 35px;
-    }
-
-    .stat-item {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-    }
-
-    .stat-item h4 {
-      color: #2563eb;
-      font-size: 24px;
-      font-weight: 800;
-    }
-
-    .stat-item p {
-      color: #64748b;
-      font-size: 13px;
-      font-weight: 600;
-      margin-top: 4px;
-    }
-
-    /* Screenshot Showcases */
-    .screenshot-section {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 30px;
-      margin-bottom: 35px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-    }
-
-    .section-header {
-      margin-bottom: 25px;
-      text-align: center;
-    }
-
-    .section-header h2 {
-      color: #0f172a;
-      font-size: 24px;
-      font-weight: 800;
-    }
-
-    .section-header p {
-      color: #64748b;
-      font-size: 14px;
-      margin-top: 4px;
-    }
-
-    .preview-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-
-    .preview-card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .preview-card img {
-      width: 100%;
-      height: 170px;
-      object-fit: cover;
-      display: block;
-      border-bottom: 1px solid #e2e8f0;
-    }
-
-    .preview-card-body {
-      padding: 16px;
-    }
-
-    .preview-card-body h3 {
-      color: #0f172a;
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .preview-card-body p {
-      color: #475569;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    /* Detailed Content Section */
-    .content-card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 35px;
-      margin-bottom: 35px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-    }
-
-    .content-card h2 {
-      color: #0f172a;
-      font-size: 22px;
-      font-weight: 800;
-      border-bottom: 2px solid #f1f5f9;
-      padding-bottom: 12px;
-      margin-bottom: 20px;
-    }
-
-    .content-card h3 {
-      color: #1e293b;
-      font-size: 18px;
-      font-weight: 700;
-      margin: 26px 0 10px 0;
-    }
-
-    .content-card p, .content-card li {
-      color: #334155;
-      font-size: 15px;
-    }
-
-    .content-card p {
-      margin-bottom: 15px;
-    }
-
-    .content-card ul, .content-card ol {
-      padding-left: 22px;
-      margin-bottom: 20px;
-    }
-
-    .content-card li {
-      margin-bottom: 10px;
-    }
-
-    /* Tip / Highlight Box */
-    .info-box {
-      background: #eff6ff;
-      border-left: 4px solid #2563eb;
-      padding: 18px 20px;
-      border-radius: 8px;
-      margin: 25px 0;
-    }
-
-    .info-box strong {
-      color: #1e40af;
-    }
-
+    body { background-color: #f8fafc !important; color: #334155 !important; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; width: 100%; min-height: 100vh; overflow-x: hidden; }
+    .container { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
+    .brand-header { text-align: center; margin-bottom: 25px; }
+    .brand-title { font-size: 30px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px; }
+    .brand-subtitle { font-size: 15px; color: #64748b; margin-top: 5px; }
+    .ad-container { margin: 20px 0; text-align: center; width: 100%; min-height: 90px; background: #ffffff; border: 1px dashed #cbd5e1; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .ad-label { font-size: 11px; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
+    .hero-card { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #2563eb; border-radius: 16px; padding: 40px 25px; text-align: center; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); margin-bottom: 30px; }
+    .bonus-badge { display: inline-block; background: #dbeafe; color: #1e40af; font-size: 13px; font-weight: 700; padding: 6px 16px; border-radius: 20px; margin-bottom: 18px; }
+    .hero-title { color: #0f172a; font-size: 32px; margin-bottom: 15px; font-weight: 800; line-height: 1.3; }
+    .hero-subtitle { color: #475569; font-size: 16px; max-width: 720px; margin: 0 auto 28px auto; }
+    a.ref-link { color: #2563eb; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+    a.ref-link:hover { color: #1d4ed8; }
+    .cta-btn { display: inline-block; background: #2563eb; color: #ffffff !important; font-weight: 700; font-size: 17px; padding: 16px 36px; border-radius: 10px; text-decoration: none !important; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); transition: all 0.2s ease; cursor: pointer; }
+    .cta-btn:hover { background: #1d4ed8; transform: translateY(-2px); }
+    .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 35px; }
+    .stat-item { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; text-align: center; }
+    .stat-item h4 { color: #2563eb; font-size: 24px; font-weight: 800; }
+    .stat-item p { color: #64748b; font-size: 13px; font-weight: 600; margin-top: 4px; }
+    .screenshot-section { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 30px; margin-bottom: 35px; }
+    .section-header { margin-bottom: 25px; text-align: center; }
+    .section-header h2 { color: #0f172a; font-size: 24px; font-weight: 800; }
+    .section-header p { color: #64748b; font-size: 14px; margin-top: 4px; }
+    .preview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .preview-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; }
+    .preview-card img { width: 100%; height: 170px; object-fit: cover; display: block; border-bottom: 1px solid #e2e8f0; }
+    .preview-card-body { padding: 16px; }
+    .preview-card-body h3 { color: #0f172a; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .preview-card-body p { color: #475569; font-size: 13px; line-height: 1.5; }
+    .content-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 35px; margin-bottom: 35px; }
+    .content-card h2 { color: #0f172a; font-size: 22px; font-weight: 800; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; margin-bottom: 20px; }
+    .content-card h3 { color: #1e293b; font-size: 18px; font-weight: 700; margin: 26px 0 10px 0; }
+    .content-card p, .content-card li { color: #334155; font-size: 15px; }
+    .content-card p { margin-bottom: 15px; }
+    .content-card ul, .content-card ol { padding-left: 22px; margin-bottom: 20px; }
+    .content-card li { margin-bottom: 10px; }
+    .info-box { background: #eff6ff; border-left: 4px solid #2563eb; padding: 18px 20px; border-radius: 8px; margin: 25px 0; }
+    .info-box strong { color: #1e40af; }
     @media (max-width: 600px) {
       .hero-title { font-size: 24px; }
       .hero-card, .content-card, .screenshot-section { padding: 22px 16px; }
@@ -304,18 +58,15 @@ layout: null
 
   <div class="container">
 
-    <!-- BRAND HEADER -->
     <div class="brand-header">
       <div class="brand-title">RollerCoin Kapsamlı İnceleme & Rehber</div>
       <div class="brand-subtitle">Sanal Madencilik Simülatörü İle Gerçek Kripto Kazanma Stratejileri</div>
     </div>
 
-    <!-- TOP AD SPONSOR -->
     <div class="ad-container">
       <span class="ad-label">Sponsorlu Bağlantı Alanı</span>
     </div>
 
-    <!-- HERO SECTION -->
     <div class="hero-card">
       <span class="bonus-badge">🎁 Hoş Geldin Hediyesi: 1000 Satoshi</span>
       <h1 class="hero-title">Oyun Oynayarak Kripto Madencilik Çiftliği Kurun</h1>
@@ -329,7 +80,6 @@ layout: null
       </a>
     </div>
 
-    <!-- STATS COUNTER -->
     <div class="stats-bar">
       <div class="stat-item">
         <h4>4M+</h4>
@@ -349,7 +99,6 @@ layout: null
       </div>
     </div>
 
-    <!-- VISUAL SHOWCASE -->
     <div class="screenshot-section">
       <div class="section-header">
         <h2>Oyun İçi Ekosistem ve Modüller</h2>
@@ -383,7 +132,6 @@ layout: null
       </div>
     </div>
 
-    <!-- DETAILED GAMEPLAY GUIDE -->
     <div class="content-card">
       <h2>RollerCoin Nedir ve Nasıl Çalışır?</h2>
       <p>
@@ -395,7 +143,7 @@ layout: null
       <p>Sistemde güç toplamanın temel olarak iki farklı yolu bulunmaktadır:</p>
       <ul>
         <li>
-          <strong>Oyun Oynayarak (Ücretsiz Yöntem):</strong> Platform içerisinde yer alan 10'dan fazla mini oyunu oynayarak kazandığınız her seviye size belirli miktarda GH/s kazandırır. Ne kadar çok oyun kazanırsanız sanal bilgisayarınızın seviyesi (PC Level) artar. 4. seviye bilgisayara ulaştığınızda kazandığınız oyun güçleri <strong>7 gün boyunca</strong> aktif kalır.
+          <strong>Oyun Oynayarak (Ücretsiz Yöntem):</strong> Platform içerisinde yer alan 10'dan fazla mini oyunu oynayarak kazandığınız her seviye size belirli miktarda GH/s kazandırır. Ne kadar çok oyun kazanırsanız sanal bilgisayarınızın seviyesi (PC Level) artar. 4. seviye bilgisayara ulaştığınızda kazandığınız oyun güçleri 7 gün boyunca aktif kalır.
         </li>
         <li>
           <strong>Madenci Cihazları (Miner) İle (Pasif Gelir):</strong>
@@ -417,7 +165,7 @@ layout: null
       <h3>3. Crafting (Parça Birleştirme) ve Yükseltmeler</h3>
       <p>
         Oyunda yer alan miner cihazlarını parçalar (Fan, Wire, Hashboard) kullanarak bir üst seviyeye yükseltebilirsiniz. Örneğin iki adet başlangıç seviyesi miner cihazını birleştirerek (Merge) kapladığı alanı yarıya indirebilir ve toplam gücü ile bonus yüzdesini önemli ölçüde artırabilirsiniz. Parçaları oyun oynayarak düşürebilir veya oyuncular arası pazar yerinden alabilirsiniz.
-      </h3>
+      </p>
 
       <h3>4. Sezon Biletleri (Event Pass) ve Mini Etkinlikler</h3>
       <p>
@@ -431,7 +179,6 @@ layout: null
       </div>
     </div>
 
-    <!-- BOTTOM AD SPONSOR -->
     <div class="ad-container">
       <span class="ad-label">Sponsorlu Bağlantı Alanı</span>
     </div>
